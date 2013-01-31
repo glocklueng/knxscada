@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="application_name">KNX iHouse</string>
+    <string name="toast_icon_description">Ikona aplikacji</string>
+    
+    <string name="connection_service_connecting">Nawiązywanie połączenia z magistralą KNX</string>
+    <string name="connection_service_connected">Połączenie nawiązane</string>
+    <string name="connection_service_disconnecting">Rozłączanie z magistralą KNX</string>
+    <string name="connection_service_disconnected">Rozłączono z magistralą KNX</string>
+    <string name="connection_service_failed">Nie udało się nawiązać połączenia z magistralą KNX</string>
+    <string name="connection_service_unknown">Nieznany status połaczenia</string>
+    
+    <string name="webserver_service_starting">Uruchamianie serwera WWW</string>
+    <string name="webserver_service_started">Serwer WWW uruchomiony</string>
+    <string name="webserver_service_stopping">Zatrzymywanie serwera WWW</string>
+    <string name="webserver_service_stopped">Serwer WWW został zatrzymany</string>
+    <string name="webserver_service_failed">Błąd serwera WWW</string>
+    <string name="webserver_service_unknown">Nieznany status serwera WWW</string>
+    <string name="webserver_service_deploy">Przygotowywanie aplikacji webowej</string>
+    
+    <string name="connection_service_title">Połączenie z magistralą KNX</string>
+    <string name="connection_service_message">Połączono</string>
+    <string name="webserver_service_title">Serwer WWW</string>
+    <string name="webserver_service_message">Uruchomiono</string>
+    
+	<string name="connected">Połączono</string>    
+
+	<string name="menu_preferences">Ustawienia</string>
+</resources>

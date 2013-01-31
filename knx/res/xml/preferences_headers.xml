@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+	
+    <header
+        android:title="Połączenie KNX"
+        />
+    <header
+        android:id="@+android:id/toggle"
+        android:title="Połączenie"
+
+        
+        android:fragment="pl.marek.knx.preferences.SettingsFragment"
+    >
+        <extra android:name="type" android:value="knxConnection" />
+        <extra android:name="title" android:value="Połączenie" />
+        <extra android:name="switchTextOn" android:value="On" />
+        <extra android:name="switchTextOff" android:value="Off" />
+        <extra android:name="summaryOn" android:value="Włączone"/>
+        <extra android:name="summaryOff" android:value="Wyłączone"/>
+    </header>
+    
+    <header
+        android:title="Serwer WWW"
+    />
+    <header
+        android:id="@+android:id/toggle"
+        android:title="Połączenie"
+        android:summary="dupa"
+        
+        android:fragment="pl.marek.knx.preferences.SettingsFragment"
+     >
+        <extra android:name="type" android:value="webServer" />
+        <extra android:name="title" android:value="Połączenie" />
+        <extra android:name="switchTextOn" android:value="On" />
+        <extra android:name="switchTextOff" android:value="Off" />
+        <extra android:name="summaryOn" android:value="Włączone"/>
+        <extra android:name="summaryOff" android:value="Wyłączone"/>
+    </header>
+       
+</preference-headers>

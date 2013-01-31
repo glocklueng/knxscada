@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- CONNECTION PREFERENCES NAMES -->
+    <string name="connection_switcher">connection_switcher</string>
+    <string name="service_mode">service_mode</string>
+    <string name="local_ip">local_ip</string>
+    <string name="local_port">local_port</string>
+    <string name="remote_ip">remote_ip</string>
+    <string name="remote_port">remote_port</string>
+    <string name="use_nat">use_nat</string>
+    <string name="individual_address">individual_address</string>
+    <string name="use_tp1">use_tp1</string>
+    <string name="timeout">timeout</string>
+    <string name="discover_while_connecting">discover_while_connecting</string>
+    <string name="discover_timeout">discover_timeout</string>
+    
+    <!-- WEBSERVER PREFERENCES NAMES -->
+    <string name="webserver_switcher">webserver_switcher</string>
+    <string name="webserver_port">webserver_port</string>
+    <string name="use_ssl">use_ssl</string>
+    <string name="webserver_ssl_port">webserver_ssl_port</string>
+    
+    <!-- CONNECTION DEFAULT VALUES -->
+    <string name="service_mode_default_value">1</string>
+    <string name="local_ip_default_value">0.0.0.0</string>
+    <string name="local_port_default_value">3681</string>
+    <string name="remote_ip_default_value">0.0.0.0</string>
+    <string name="remote_port_default_value">3671</string>
+    <string name="use_nat_default_value">false</string>
+    <string name="individual_address_default_value">0.0.0</string>
+    <string name="use_tp1_default_value">true</string>
+    <string name="timeout_default_value">30</string>
+    <string name="discover_while_connecting_default_value">false</string>
+    <string name="discover_timeout_default_value">10</string>
+	
+    <!-- WEBSERVER DEFAULT VALUES -->
+    <string name="webserver_port_default_value">8080</string>
+    <string name="use_ssl_default_value">false</string>
+    <string name="webserver_ssl_port_default_value">8443</string>
+
+</resources>

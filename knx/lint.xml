@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/main/java/pl/marek/knx/utils/DataRepresentation.java" />
+    </issue>
+    <issue id="SimpleDateFormat">
+        <ignore path="src/main/java/pl/marek/knx/database/TelegramDao.java" />
+        <ignore path="src/main/java/pl/marek/knx/utils/DateConversion.java" />
+    </issue>
+</lint>
