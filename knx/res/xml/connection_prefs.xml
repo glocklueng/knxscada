@@ -1,8 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:title="Szczegoly polaczenia">
-    
-    <CheckBoxPreference
-        android:key="check_pref"
-        android:title="connection"/>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    	        
+        <Preference
+            android:key="@string/local_ip_key"
+            android:title="@string/local_ip_title"
+            android:summary="@string/local_ip_summary"    
+        />
+        
+        <pl.marek.knx.preferences.IntegerEditTextPreference
+            android:key="@string/local_port_key"
+            android:title="@string/local_port_title"
+            android:summary="@string/local_port_summary"
+            android:defaultValue="@integer/local_port_default_value"
+      		android:numeric="integer"
+        />
+        
+        <Preference
+            android:key="@string/remote_ip_key"
+            android:title="@string/remote_ip_title"
+            android:summary="@string/remote_ip_summary"
+            android:fragment="pl.marek.knx.preferences.DiscovererFragment"
+            
+            />
+        
+        <pl.marek.knx.preferences.IntegerEditTextPreference
+            android:key="@string/remote_port_key"
+            android:title="@string/remote_port_title"
+            android:summary="@string/remote_port_summary"
+            android:defaultValue="@integer/remote_port_default_value"
+      		android:numeric="integer"
+        />
+        
+        <pl.marek.knx.preferences.CustomEditTextPreference
+            android:key="@string/individual_address_key"
+            android:title="@string/individual_address_title"
+            android:summary="@string/individual_address_summary"
+            android:defaultValue="@string/individual_address_default_value"
+        />
+		
+		<pl.marek.knx.preferences.IntegerListPreference
+            android:key="@string/service_mode_key"
+            android:title="@string/service_mode_title"
+            android:summary="@string/service_mode_summary"
+            android:defaultValue="@integer/service_mode_default_value" 
+            android:entries="@array/service_modes"
+            android:entryValues="@array/service_mode_values"
+        />
+        
+        <CheckBoxPreference
+        	android:key="@string/use_nat_key"
+        	android:title="@string/use_nat_title"
+        	android:summaryOn="@string/use_nat_summary_on"
+        	android:summaryOff="@string/use_nat_summary_off"
+        	android:defaultValue="@bool/use_nat_default_value"
+        />
+                
+    	<CheckBoxPreference
+        	android:key="@string/use_tp1_key"
+        	android:title="@string/use_tp1_title"
+        	android:summaryOn="@string/use_tp1_summary_on"
+        	android:summaryOff="@string/use_tp1_summary_off"
+        	android:defaultValue="@bool/use_tp1_default_value"
+        />
+        
+		<pl.marek.knx.preferences.IntegerEditTextPreference
+		    android:key="@string/timeout_key"
+            android:title="@string/timeout_title"
+            android:summary="@string/timeout_summary"
+            android:defaultValue="@integer/timeout_default_value"
+            android:numeric="integer"
+		/>
+    	
 </PreferenceScreen>

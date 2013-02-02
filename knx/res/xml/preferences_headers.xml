@@ -7,7 +7,7 @@
     <header
         android:id="@+android:id/toggle"
         android:title="@string/knx_connection_toggle_title"
-        android:fragment="pl.marek.knx.preferences.SettingsFragment"
+        android:fragment="pl.marek.knx.preferences.KNXConnectionSettingsFragment"
     >
         <extra android:name="type" android:value="@string/knx_connection_toggle" />
         <extra android:name="title" android:value="@string/knx_connection_toggle_title" />
@@ -18,12 +18,21 @@
     </header>
     
     <header
+        android:title="@string/discoverer_item_title"
+        android:summary="@string/discoverer_item_summary"
+        android:fragment="pl.marek.knx.preferences.DiscovererFragment"
+    >
+        <extra android:name="title" android:value="@string/discoverer_item_title" />
+    </header>
+    
+    <header
         android:title="@string/webserver_title"
     />
+    
     <header
         android:id="@+android:id/toggle"
         android:title="@string/webserver_toggle_title"
-        android:fragment="pl.marek.knx.preferences.SettingsFragment"
+        android:fragment="pl.marek.knx.preferences.WebServerSettingsFragment"
      >
         <extra android:name="type" android:value="@string/webserver_toggle" />
         <extra android:name="title" android:value="@string/webserver_toggle_title" />

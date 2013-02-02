@@ -8,7 +8,27 @@
 package pl.marek.knx;
 
 public final class R {
+    public static final class array {
+        public static final int service_mode_values=0x7f080001;
+        public static final int service_modes=0x7f080000;
+    }
     public static final class attr {
+    }
+    public static final class bool {
+        /**  CONNECTION PREFERENCES 
+         */
+        public static final int connection_switcher=0x7f060000;
+        public static final int discover_while_connecting=0x7f060003;
+        public static final int discover_while_connecting_default_value=0x7f060008;
+        public static final int use_nat=0x7f060001;
+        public static final int use_nat_default_value=0x7f060006;
+        public static final int use_ssl=0x7f060005;
+        public static final int use_ssl_default_value=0x7f060009;
+        public static final int use_tp1=0x7f060002;
+        public static final int use_tp1_default_value=0x7f060007;
+        /**  WEBSERVER PREFERENCES 
+         */
+        public static final int webserver_switcher=0x7f060004;
     }
     public static final class drawable {
         public static final int background=0x7f020000;
@@ -23,11 +43,31 @@ public final class R {
         public static final int www_logo=0x7f020009;
     }
     public static final class id {
-        public static final int menu=0x7f080004;
-        public static final int text=0x7f080003;
-        public static final int toast_image=0x7f080001;
-        public static final int toast_layout_root=0x7f080000;
-        public static final int toast_message=0x7f080002;
+        public static final int menu=0x7f0b0004;
+        public static final int text=0x7f0b0003;
+        public static final int toast_image=0x7f0b0001;
+        public static final int toast_layout_root=0x7f0b0000;
+        public static final int toast_message=0x7f0b0002;
+    }
+    public static final class integer {
+        public static final int discover_timeout=0x7f070004;
+        public static final int discover_timeout_default_value=0x7f07000b;
+        public static final int local_port=0x7f070001;
+        public static final int local_port_default_value=0x7f070008;
+        public static final int remote_port=0x7f070002;
+        public static final int remote_port_default_value=0x7f070009;
+        public static final int service_mode=0x7f070000;
+        /**  CONNECTION DEFAULT VALUES 
+         */
+        public static final int service_mode_default_value=0x7f070007;
+        public static final int timeout=0x7f070003;
+        public static final int timeout_default_value=0x7f07000a;
+        public static final int webserver_port=0x7f070005;
+        /**  WEBSERVER DEFAULT VALUES 
+         */
+        public static final int webserver_port_default_value=0x7f07000c;
+        public static final int webserver_ssl_port=0x7f070006;
+        public static final int webserver_ssl_port_default_value=0x7f07000d;
     }
     public static final class layout {
         public static final int application=0x7f030000;
@@ -38,92 +78,117 @@ public final class R {
         public static final int preference_header_switch_item=0x7f030005;
     }
     public static final class menu {
-        public static final int menu=0x7f070000;
+        public static final int menu=0x7f0a0000;
     }
     public static final class string {
-        public static final int application_name=0x7f05002d;
-        public static final int connected=0x7f050040;
-        public static final int connection_service_connected=0x7f050030;
-        public static final int connection_service_connecting=0x7f05002f;
-        public static final int connection_service_disconnected=0x7f050032;
-        public static final int connection_service_disconnecting=0x7f050031;
-        public static final int connection_service_failed=0x7f050033;
-        public static final int connection_service_message=0x7f05003d;
-        public static final int connection_service_title=0x7f05003c;
-        public static final int connection_service_unknown=0x7f050034;
-        /**  CONNECTION PREFERENCES NAMES 
+        public static final int application_name=0x7f050045;
+        public static final int connected=0x7f050058;
+        public static final int connection_service_connected=0x7f050048;
+        public static final int connection_service_connecting=0x7f050047;
+        public static final int connection_service_disconnected=0x7f05004a;
+        public static final int connection_service_disconnecting=0x7f050049;
+        public static final int connection_service_failed=0x7f05004b;
+        public static final int connection_service_message=0x7f050055;
+        public static final int connection_service_title=0x7f050054;
+        public static final int connection_service_unknown=0x7f05004c;
+        /**  PREFERENCES KEYS 
          */
-        public static final int connection_switcher=0x7f050002;
-        public static final int discover_timeout=0x7f05000d;
-        public static final int discover_timeout_default_value=0x7f05001c;
-        public static final int discover_while_connecting=0x7f05000c;
-        public static final int discover_while_connecting_default_value=0x7f05001b;
-        public static final int individual_address=0x7f050009;
-        public static final int individual_address_default_value=0x7f050018;
-        public static final int knx_connection_title=0x7f050025;
+        public static final int connection_switcher_key=0x7f050002;
+        public static final int discover_timeout_key=0x7f05000d;
+        public static final int discover_timeout_summary=0x7f05003e;
+        public static final int discover_timeout_title=0x7f05003d;
+        public static final int discover_while_connecting_key=0x7f05000c;
+        public static final int discover_while_connecting_summary=0x7f05003c;
+        /**  Discoverer Settings 
+         */
+        public static final int discover_while_connecting_title=0x7f05003b;
+        public static final int discoverer_item_summary=0x7f050026;
+        public static final int discoverer_item_title=0x7f050025;
+        public static final int individual_address=0x7f050014;
+        public static final int individual_address_default_value=0x7f050017;
+        public static final int individual_address_key=0x7f050009;
+        public static final int individual_address_summary=0x7f050035;
+        public static final int individual_address_title=0x7f050034;
+        public static final int knx_connection_title=0x7f05001d;
         public static final int knx_connection_toggle=0x7f050000;
-        public static final int knx_connection_toggle_summary_off=0x7f050028;
-        public static final int knx_connection_toggle_summary_on=0x7f050027;
-        public static final int knx_connection_toggle_title=0x7f050026;
-        public static final int local_ip=0x7f050004;
-        public static final int local_ip_default_value=0x7f050013;
-        public static final int local_port=0x7f050005;
-        public static final int local_port_default_value=0x7f050014;
-        public static final int menu_preferences=0x7f050041;
-        public static final int remote_ip=0x7f050006;
-        public static final int remote_ip_default_value=0x7f050015;
-        public static final int remote_port=0x7f050007;
-        public static final int remote_port_default_value=0x7f050016;
-        public static final int service_mode=0x7f050003;
-        /**  CONNECTION DEFAULT VALUES 
+        public static final int knx_connection_toggle_summary_off=0x7f050020;
+        public static final int knx_connection_toggle_summary_on=0x7f05001f;
+        public static final int knx_connection_toggle_title=0x7f05001e;
+        public static final int local_ip=0x7f050012;
+        public static final int local_ip_default_value=0x7f050015;
+        public static final int local_ip_key=0x7f050004;
+        public static final int local_ip_summary=0x7f05002a;
+        public static final int local_ip_title=0x7f050029;
+        public static final int local_port_key=0x7f050005;
+        public static final int local_port_summary=0x7f05002c;
+        public static final int local_port_title=0x7f05002b;
+        public static final int menu_preferences=0x7f050059;
+        public static final int remote_ip=0x7f050013;
+        public static final int remote_ip_default_value=0x7f050016;
+        public static final int remote_ip_key=0x7f050006;
+        public static final int remote_ip_summary=0x7f05002e;
+        public static final int remote_ip_title=0x7f05002d;
+        public static final int remote_port_key=0x7f050007;
+        public static final int remote_port_summary=0x7f050030;
+        public static final int remote_port_title=0x7f05002f;
+        public static final int service_mode_key=0x7f050003;
+        public static final int service_mode_summary=0x7f050028;
+        /**  KNX Connection Settings 
          */
-        public static final int service_mode_default_value=0x7f050012;
-        public static final int settings=0x7f050020;
-        public static final int settings_swith_summary_off=0x7f050024;
-        public static final int settings_swith_summary_on=0x7f050023;
-        public static final int settings_swith_text_off=0x7f050022;
-        public static final int settings_swith_text_on=0x7f050021;
-        public static final int timeout=0x7f05000b;
-        public static final int timeout_default_value=0x7f05001a;
-        public static final int toast_icon_description=0x7f05002e;
-        public static final int use_nat=0x7f050008;
-        public static final int use_nat_default_value=0x7f050017;
-        public static final int use_ssl=0x7f050010;
-        public static final int use_ssl_default_value=0x7f05001e;
-        public static final int use_tp1=0x7f05000a;
-        public static final int use_tp1_default_value=0x7f050019;
-        public static final int webserver_port=0x7f05000f;
-        /**  WEBSERVER DEFAULT VALUES 
+        public static final int service_mode_title=0x7f050027;
+        public static final int settings=0x7f050018;
+        public static final int settings_swith_summary_off=0x7f05001c;
+        public static final int settings_swith_summary_on=0x7f05001b;
+        public static final int settings_swith_text_off=0x7f05001a;
+        public static final int settings_swith_text_on=0x7f050019;
+        public static final int timeout_key=0x7f05000b;
+        public static final int timeout_summary=0x7f05003a;
+        public static final int timeout_title=0x7f050039;
+        public static final int toast_icon_description=0x7f050046;
+        public static final int use_nat_key=0x7f050008;
+        public static final int use_nat_summary_off=0x7f050033;
+        public static final int use_nat_summary_on=0x7f050032;
+        public static final int use_nat_title=0x7f050031;
+        public static final int use_ssl_key=0x7f050010;
+        public static final int use_ssl_summary=0x7f050042;
+        public static final int use_ssl_title=0x7f050041;
+        public static final int use_tp1_key=0x7f05000a;
+        public static final int use_tp1_summary_off=0x7f050038;
+        public static final int use_tp1_summary_on=0x7f050037;
+        public static final int use_tp1_title=0x7f050036;
+        public static final int webserver_port_key=0x7f05000f;
+        public static final int webserver_port_summary=0x7f050040;
+        /**  WebServer Settings 
          */
-        public static final int webserver_port_default_value=0x7f05001d;
-        public static final int webserver_service_deploy=0x7f05003b;
-        public static final int webserver_service_failed=0x7f050039;
-        public static final int webserver_service_message=0x7f05003f;
-        public static final int webserver_service_started=0x7f050036;
-        public static final int webserver_service_starting=0x7f050035;
-        public static final int webserver_service_stopped=0x7f050038;
-        public static final int webserver_service_stopping=0x7f050037;
-        public static final int webserver_service_title=0x7f05003e;
-        public static final int webserver_service_unknown=0x7f05003a;
-        public static final int webserver_ssl_port=0x7f050011;
-        public static final int webserver_ssl_port_default_value=0x7f05001f;
-        /**  WEBSERVER PREFERENCES NAMES 
-         */
-        public static final int webserver_switcher=0x7f05000e;
-        public static final int webserver_title=0x7f050029;
+        public static final int webserver_port_title=0x7f05003f;
+        public static final int webserver_service_deploy=0x7f050053;
+        public static final int webserver_service_failed=0x7f050051;
+        public static final int webserver_service_message=0x7f050057;
+        public static final int webserver_service_started=0x7f05004e;
+        public static final int webserver_service_starting=0x7f05004d;
+        public static final int webserver_service_stopped=0x7f050050;
+        public static final int webserver_service_stopping=0x7f05004f;
+        public static final int webserver_service_title=0x7f050056;
+        public static final int webserver_service_unknown=0x7f050052;
+        public static final int webserver_ssl_port_key=0x7f050011;
+        public static final int webserver_ssl_port_summary=0x7f050044;
+        public static final int webserver_ssl_port_title=0x7f050043;
+        public static final int webserver_switcher_key=0x7f05000e;
+        public static final int webserver_title=0x7f050021;
         public static final int webserver_toggle=0x7f050001;
-        public static final int webserver_toggle_summary_off=0x7f05002c;
-        public static final int webserver_toggle_summary_on=0x7f05002b;
-        public static final int webserver_toggle_title=0x7f05002a;
+        public static final int webserver_toggle_summary_off=0x7f050024;
+        public static final int webserver_toggle_summary_on=0x7f050023;
+        public static final int webserver_toggle_title=0x7f050022;
     }
     public static final class style {
-        public static final int actionBarStyle=0x7f060002;
-        public static final int iHousePreferencesTheme=0x7f060001;
-        public static final int iHouseTheme=0x7f060000;
+        public static final int actionBarStyle=0x7f090002;
+        public static final int iHousePreferencesTheme=0x7f090001;
+        public static final int iHouseTheme=0x7f090000;
     }
     public static final class xml {
         public static final int connection_prefs=0x7f040000;
-        public static final int preferences_headers=0x7f040001;
-        public static final int webserver_prefs=0x7f040002;
+        public static final int discoverer_prefs=0x7f040001;
+        public static final int preferences_headers=0x7f040002;
+        public static final int webserver_prefs=0x7f040003;
     }
 }

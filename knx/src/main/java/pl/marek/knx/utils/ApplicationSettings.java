@@ -32,10 +32,10 @@ public class ApplicationSettings {
 	}
 	
 	protected int getIntByResId(int id){
-		return Integer.valueOf(context.getString(id));
+		return Integer.valueOf(context.getString(id)).intValue();
 	}
 	
 	protected boolean getBoolByResId(int id){
-		return Boolean.valueOf(context.getString(id));
+		return Boolean.valueOf(context.getString(id)).booleanValue();
 	}
 }

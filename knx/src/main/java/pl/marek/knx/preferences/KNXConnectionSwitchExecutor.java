@@ -1,6 +1,9 @@
 package pl.marek.knx.preferences;
 
+import pl.marek.knx.R;
+import pl.marek.knx.log.LogTags;
 import android.content.Context;
+import android.util.Log;
 
 public class KNXConnectionSwitchExecutor extends SwitchExecutor{
 	
@@ -10,19 +13,18 @@ public class KNXConnectionSwitchExecutor extends SwitchExecutor{
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		Log.d(LogTags.KNX_CONNECTION, "Starting KNX");
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		
+		Log.d(LogTags.KNX_CONNECTION, "Stopping KNX");
 	}
 
 	@Override
 	public void updateSwitchState(boolean state) {
 		application.setKnxConnected(state);
+		setSwitchState(context.getString(R.string.connection_switcher_key), !state);
 	}
 
 	@Override

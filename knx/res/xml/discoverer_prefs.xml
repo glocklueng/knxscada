@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    	<CheckBoxPreference
+    	    android:key="@string/discover_while_connecting_key"
+        	android:title="@string/discover_while_connecting_title"
+        	android:summary="@string/discover_while_connecting_summary"
+        	android:defaultValue="@bool/discover_while_connecting_default_value"
+        	android:numeric="integer"
+        />
+    	
+        <pl.marek.knx.preferences.IntegerEditTextPreference
+		    android:key="@string/discover_timeout_key"
+            android:title="@string/discover_timeout_title"
+            android:summary="@string/discover_timeout_summary"
+            android:defaultValue="@integer/discover_timeout_default_value"
+            android:numeric="integer"
+		/>
+</PreferenceScreen>

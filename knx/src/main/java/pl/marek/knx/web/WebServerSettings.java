@@ -13,27 +13,27 @@ public class WebServerSettings extends ApplicationSettings{
 	}
 	
 	public int getPort(){
-		return preferences.getInt(getStringByResId(R.string.webserver_port), getIntByResId(R.string.webserver_port_default_value));
+		return preferences.getInt(getStringByResId(R.string.webserver_port_key), getIntByResId(R.integer.webserver_port_default_value));
 	}
 	
 	public void setPort(int port){
-		setInt(getStringByResId(R.string.webserver_port), port);
+		setInt(getStringByResId(R.string.webserver_port_key), port);
 	}
 	
 	public int getSSLPort(){
-		return preferences.getInt(getStringByResId(R.string.webserver_ssl_port), getIntByResId(R.string.webserver_ssl_port_default_value));
+		return preferences.getInt(getStringByResId(R.string.webserver_ssl_port_key), getIntByResId(R.integer.webserver_ssl_port_default_value));
 	}
 	
 	public void setSSLPort(int port){
-		setInt(getStringByResId(R.string.webserver_ssl_port), port);
+		setInt(getStringByResId(R.string.webserver_ssl_port_key), port);
 	}
 	
 	public boolean isUseSSL(){
-		return preferences.getBoolean(getStringByResId(R.string.use_ssl), getBoolByResId(R.string.use_ssl_default_value));
+		return preferences.getBoolean(getStringByResId(R.string.use_ssl_key), getBoolByResId(R.bool.use_ssl_default_value));
 	}
 	
 	public void setUseSSL(boolean useSSL){
-		setBoolean(getStringByResId(R.string.use_ssl), useSSL);
+		setBoolean(getStringByResId(R.string.use_ssl_key), useSSL);
 	}
 	
 }

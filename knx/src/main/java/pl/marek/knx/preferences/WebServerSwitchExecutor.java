@@ -1,6 +1,9 @@
 package pl.marek.knx.preferences;
 
+import pl.marek.knx.R;
+import pl.marek.knx.log.LogTags;
 import android.content.Context;
+import android.util.Log;
 
 public class WebServerSwitchExecutor extends SwitchExecutor{
 
@@ -10,19 +13,19 @@ public class WebServerSwitchExecutor extends SwitchExecutor{
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		Log.d(LogTags.WEB_SERVER, "Starting WWW");
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		
+		Log.d(LogTags.WEB_SERVER, "Stopping WWW");
+			
 	}
 
 	@Override
 	public void updateSwitchState(boolean state) {
 		application.setWebServerStarted(state);
+		setSwitchState(context.getString(R.string.webserver_switcher_key), !state);
 	}
 
 	@Override

@@ -4,42 +4,62 @@
     <string name="knx_connection_toggle">knxconnection</string>
 	<string name="webserver_toggle">webserver</string>
     
-    <!-- CONNECTION PREFERENCES NAMES -->
-    <string name="connection_switcher">connection_switcher</string>
-    <string name="service_mode">service_mode</string>
-    <string name="local_ip">local_ip</string>
-    <string name="local_port">local_port</string>
-    <string name="remote_ip">remote_ip</string>
-    <string name="remote_port">remote_port</string>
-    <string name="use_nat">use_nat</string>
-    <string name="individual_address">individual_address</string>
-    <string name="use_tp1">use_tp1</string>
-    <string name="timeout">timeout</string>
-    <string name="discover_while_connecting">discover_while_connecting</string>
-    <string name="discover_timeout">discover_timeout</string>
+	<!-- PREFERENCES KEYS -->
+	
+    <string name="connection_switcher_key">connection_switcher</string>
+    <string name="service_mode_key">service_mode</string>
+    <string name="local_ip_key">local_ip</string>
+    <string name="local_port_key">local_port</string>
+    <string name="remote_ip_key">remote_ip</string>
+    <string name="remote_port_key">remote_port</string>
+    <string name="use_nat_key">use_nat</string>
+    <string name="individual_address_key">individual_address</string>
+    <string name="use_tp1_key">use_tp1</string>
+    <string name="timeout_key">timeout</string>
+    <string name="discover_while_connecting_key">discover_while_connecting</string>
+    <string name="discover_timeout_key">discover_timeout</string>
 
-    <!-- WEBSERVER PREFERENCES NAMES -->
-    <string name="webserver_switcher">webserver_switcher</string>
-    <string name="webserver_port">webserver_port</string>
-    <string name="use_ssl">use_ssl</string>
-    <string name="webserver_ssl_port">webserver_ssl_port</string>
+    <string name="webserver_switcher_key">webserver_switcher</string>
+    <string name="webserver_port_key">webserver_port</string>
+    <string name="use_ssl_key">use_ssl</string>
+    <string name="webserver_ssl_port_key">webserver_ssl_port</string>
+	
+    <!-- CONNECTION PREFERENCES -->
+    <bool name="connection_switcher">false</bool>
+    <integer name="service_mode">1</integer>
+    <string name="local_ip"></string>
+    <integer name="local_port">3681</integer>
+    <string name="remote_ip"></string>
+    <integer name="remote_port">3671</integer>
+    <bool name="use_nat">false</bool>
+    <string name="individual_address"></string>
+    <bool name="use_tp1">true</bool>
+    <integer name="timeout">30</integer>
+    <bool name="discover_while_connecting">false</bool>
+    <integer name="discover_timeout">10</integer>
+    
+    <!-- WEBSERVER PREFERENCES -->
+    <bool name="webserver_switcher">false</bool>
+    <integer name="webserver_port">8080</integer>
+    <bool name="use_ssl">false</bool>
+    <integer name="webserver_ssl_port">8443</integer>
 
     <!-- CONNECTION DEFAULT VALUES -->
-    <string name="service_mode_default_value">1</string>
+    <integer name="service_mode_default_value">1</integer>
     <string name="local_ip_default_value">0.0.0.0</string>
-    <string name="local_port_default_value">3681</string>
+    <integer name="local_port_default_value">3681</integer>
     <string name="remote_ip_default_value">0.0.0.0</string>
-    <string name="remote_port_default_value">3671</string>
-    <string name="use_nat_default_value">false</string>
+    <integer name="remote_port_default_value">3671</integer>
+    <bool name="use_nat_default_value">false</bool>
     <string name="individual_address_default_value">0.0.0</string>
-    <string name="use_tp1_default_value">true</string>
-    <string name="timeout_default_value">30</string>
-    <string name="discover_while_connecting_default_value">false</string>
-    <string name="discover_timeout_default_value">10</string>
+    <bool name="use_tp1_default_value">true</bool>
+    <integer name="timeout_default_value">30</integer>
+    <bool name="discover_while_connecting_default_value">false</bool>
+    <integer name="discover_timeout_default_value">10</integer>
 
     <!-- WEBSERVER DEFAULT VALUES -->
-    <string name="webserver_port_default_value">8080</string>
-    <string name="use_ssl_default_value">false</string>
-    <string name="webserver_ssl_port_default_value">8443</string>
+    <integer name="webserver_port_default_value">8080</integer>
+    <bool name="use_ssl_default_value">false</bool>
+    <integer name="webserver_ssl_port_default_value">8443</integer>
 
 </resources>

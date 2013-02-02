@@ -2,6 +2,7 @@ package pl.marek.knx.preferences;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceScreen;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -15,6 +16,7 @@ public class SwitchStateListener implements OnCheckedChangeListener{
 	private Bundle bundle;
 	private Context context;
 	private SwitchExecutor executor;
+	private PreferenceScreen preferenceScreen;
 	
 	public SwitchStateListener(Context context, Switch controlSwitch, TextView summary, Bundle bundle){
 		this.summary = summary;
@@ -69,16 +71,27 @@ public class SwitchStateListener implements OnCheckedChangeListener{
 	
 	private void updateSwitchState(boolean state){
 		executor.updateSwitchState(state);
+		if(preferenceScreen != null){
+			preferenceScreen.setEnabled(!state);
+		}
 	}
 	
 	private void execute(boolean state){
 		if (executor != null){
 			if(state){
-				executor.start();
+				if(!executor.getSwitchState()){
+					executor.start();
+				}
 			} else{
-				executor.stop();
+				if(executor.getSwitchState()){
+					executor.stop();
+				}
 			}
 		}
+	}
+	
+	public void setPreferenceScreen(PreferenceScreen preferenceScreen){
+		this.preferenceScreen = preferenceScreen;
 	}
 	
 	public void resume(){
