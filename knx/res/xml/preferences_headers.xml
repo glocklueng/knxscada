@@ -2,39 +2,35 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 	
     <header
-        android:title="Połączenie KNX"
-        />
-    <header
-        android:id="@+android:id/toggle"
-        android:title="Połączenie"
-
-        
-        android:fragment="pl.marek.knx.preferences.SettingsFragment"
-    >
-        <extra android:name="type" android:value="knxConnection" />
-        <extra android:name="title" android:value="Połączenie" />
-        <extra android:name="switchTextOn" android:value="On" />
-        <extra android:name="switchTextOff" android:value="Off" />
-        <extra android:name="summaryOn" android:value="Włączone"/>
-        <extra android:name="summaryOff" android:value="Wyłączone"/>
-    </header>
-    
-    <header
-        android:title="Serwer WWW"
+        android:title="@string/knx_connection_title"
     />
     <header
         android:id="@+android:id/toggle"
-        android:title="Połączenie"
-        android:summary="dupa"
-        
+        android:title="@string/knx_connection_toggle_title"
+        android:fragment="pl.marek.knx.preferences.SettingsFragment"
+    >
+        <extra android:name="type" android:value="@string/knx_connection_toggle" />
+        <extra android:name="title" android:value="@string/knx_connection_toggle_title" />
+        <extra android:name="switchTextOn" android:value="@string/settings_swith_text_on" />
+        <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
+        <extra android:name="summaryOn" android:value="@string/knx_connection_toggle_summary_on"/>
+        <extra android:name="summaryOff" android:value="@string/knx_connection_toggle_summary_off"/>
+    </header>
+    
+    <header
+        android:title="@string/webserver_title"
+    />
+    <header
+        android:id="@+android:id/toggle"
+        android:title="@string/webserver_toggle_title"
         android:fragment="pl.marek.knx.preferences.SettingsFragment"
      >
-        <extra android:name="type" android:value="webServer" />
-        <extra android:name="title" android:value="Połączenie" />
-        <extra android:name="switchTextOn" android:value="On" />
-        <extra android:name="switchTextOff" android:value="Off" />
-        <extra android:name="summaryOn" android:value="Włączone"/>
-        <extra android:name="summaryOff" android:value="Wyłączone"/>
+        <extra android:name="type" android:value="@string/webserver_toggle" />
+        <extra android:name="title" android:value="@string/webserver_toggle_title" />
+        <extra android:name="switchTextOn" android:value="@string/settings_swith_text_on" />
+        <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
+        <extra android:name="summaryOn" android:value="@string/webserver_toggle_summary_on"/>
+        <extra android:name="summaryOff" android:value="@string/webserver_toggle_summary_off"/>
     </header>
        
 </preference-headers>

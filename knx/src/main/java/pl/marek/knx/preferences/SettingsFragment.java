@@ -1,5 +1,6 @@
 package pl.marek.knx.preferences;
 
+import pl.marek.knx.MainApplication;
 import pl.marek.knx.R;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,16 +11,19 @@ import android.widget.Switch;
 
 public class SettingsFragment extends PreferenceFragment{
 	
+	private MainApplication application;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		application = (MainApplication)getActivity().getApplicationContext();
 		
 		addActionBar();
 		
         String settings = getArguments().getString("type");
-        if ("knxConnection".equals(settings)) {
+        if (getString(R.string.knx_connection_toggle).equals(settings)) {
             addPreferencesFromResource(R.xml.connection_prefs);
-        } else if ("webServer".equals(settings)) {
+        } else if (getString(R.string.webserver_toggle).equals(settings)) {
             addPreferencesFromResource(R.xml.webserver_prefs);
         }
 	}
@@ -29,6 +33,8 @@ public class SettingsFragment extends PreferenceFragment{
 		Activity activity = getActivity();
 		ActionBar actionbar = activity.getActionBar();
 		Switch actionBarSwitch = new Switch(activity);
+		
+		new SwitchStateListener(getActivity(), actionBarSwitch, null, getArguments());
 		
 		actionBarSwitch.setTextOn(getArguments().getString("switchTextOn"));
 		actionBarSwitch.setTextOff(getArguments().getString("switchTextOff"));

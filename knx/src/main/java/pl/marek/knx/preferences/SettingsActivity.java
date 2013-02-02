@@ -12,24 +12,27 @@ import android.widget.ListAdapter;
 public class SettingsActivity extends PreferenceActivity{
     
 	private List<Header> headers;
+	private PreferencesHeaderAdapter headerAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 	
-//	protected void onResume() {
-//		super.onResume();
-//				
-//		if (getListAdapter() instanceof PreferencesHeaderAdapter)
-//			((PreferencesHeaderAdapter) getListAdapter()).resume();
-//	}
-//
-//	protected void onPause() {
-//		super.onPause();
-//		if (getListAdapter() instanceof PreferencesHeaderAdapter)
-//			((PreferencesHeaderAdapter) getListAdapter()).pause();
-//	}
+	protected void onResume() {
+		super.onResume();
+		getActionBar().setTitle(getString(R.string.settings));
+		if(headerAdapter != null){
+			headerAdapter.resume();
+		}		
+	}
+
+	protected void onPause() {
+		super.onPause();
+		if(headerAdapter != null){
+			headerAdapter.pause();
+		}	
+	}
 	
     @Override
     public void onBuildHeaders(List<Header> target) {
@@ -43,7 +46,7 @@ public class SettingsActivity extends PreferenceActivity{
 			for (int i = 0; i < adapter.getCount(); ++i)
 				headers.add((Header) adapter.getItem(i));
 		}
-		getActionBar().setTitle("Ustawienia");
-		super.setListAdapter(new PreferencesHeaderAdapter(this, headers));
+		headerAdapter = new PreferencesHeaderAdapter(this, headers);
+		super.setListAdapter(headerAdapter);
 	}
 }
