@@ -28,49 +28,37 @@ public class SwitchStateListener implements OnCheckedChangeListener{
 	
 	private void createExecutor(){
 		if(bundle != null){
-			executor = SwitchExecutor.create(context, bundle.getString("type"));
+			executor = SwitchExecutor.create(context, bundle.getString("type"), this);
 		}
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		execute(isChecked);
-		setSummary(isChecked);
-		updateSwitchState(isChecked);
+		updatePreferenceScreen(isChecked);
+	}
+	
+	public boolean isSwitchOn(){
+		if(executor.getSwitchState().equals(SwitchState.ON))
+			return true;
+		return false;
 	}
 	
 	public void setSwitch(Switch controlSwitch){
 		
 		if (this.controlSwitch == controlSwitch)
 			return;
-
+		
+		this.controlSwitch = controlSwitch;
+		
 		if (controlSwitch != null){
 			controlSwitch.setOnCheckedChangeListener(this);
-			controlSwitch.setChecked(isSwitchOn());
-			setSummary(isSwitchOn());
-		}
-		
-	    this.controlSwitch = controlSwitch;
-		
-	}
-	
-	public boolean isSwitchOn(){
-		return executor.getSwitchState();
-	}
-	
-	private void setSummary(boolean isChecked){
-		if(summary != null && bundle != null){
-			summary.setVisibility(View.VISIBLE);
-			if(isChecked){
-				summary.setText(bundle.getString("summaryOn"));
-			} else{
-				summary.setText(bundle.getString("summaryOff"));	
-			}
+			setSwitchState(executor.getSwitchState());
+			executor.registerState();
 		}
 	}
-	
-	private void updateSwitchState(boolean state){
-		executor.updateSwitchState(state);
+		
+	private void updatePreferenceScreen(boolean state){
 		if(preferenceScreen != null){
 			preferenceScreen.setEnabled(!state);
 		}
@@ -79,11 +67,11 @@ public class SwitchStateListener implements OnCheckedChangeListener{
 	private void execute(boolean state){
 		if (executor != null){
 			if(state){
-				if(!executor.getSwitchState()){
+				if(executor.getSwitchState().equals(SwitchState.OFF)){
 					executor.start();
 				}
 			} else{
-				if(executor.getSwitchState()){
+				if(executor.getSwitchState().equals(SwitchState.ON)){
 					executor.stop();
 				}
 			}
@@ -96,10 +84,43 @@ public class SwitchStateListener implements OnCheckedChangeListener{
 	
 	public void resume(){
 		controlSwitch.setOnCheckedChangeListener(this);
-		controlSwitch.setChecked(isSwitchOn());
+		setSwitchState(executor.getSwitchState());
+		executor.registerState();
 	}
 	
 	public void pause(){
 		controlSwitch.setOnCheckedChangeListener(null);
+		executor.unregisterState();
+		
+	}
+	
+	public void setSwitchState(SwitchState state){
+		state.setSwitchMode(controlSwitch);
+		setSummary(state);
+		if(state.equals(SwitchState.OFF)){
+			updatePreferenceScreen(false);
+		}else{
+			updatePreferenceScreen(true);	
+		}
+	}
+	
+	private void setSummary(SwitchState state){
+		if(summary != null && bundle != null){
+			summary.setVisibility(View.VISIBLE);
+			switch(state){
+			case ON:
+				summary.setText(bundle.getString("summaryOn"));
+				break;
+			case ON_OFF_CHANGE:
+				summary.setText(bundle.getString("summaryOnOff"));
+				break;
+			case OFF:
+				summary.setText(bundle.getString("summaryOff"));
+				break;
+			case OFF_ON_CHANGE:
+				summary.setText(bundle.getString("summaryOffOn"));
+				break;
+			}
+		}
 	}
 }

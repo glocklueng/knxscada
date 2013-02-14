@@ -1,6 +1,5 @@
 package pl.marek.knx.preferences;
 
-import pl.marek.knx.MainApplication;
 import pl.marek.knx.R;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,33 +9,34 @@ import android.preference.PreferenceManager;
 public abstract class SwitchExecutor {
 	
 	protected Context context;
-	protected MainApplication application;
 	protected SharedPreferences preferences;
+	protected SwitchStateListener listener;
 	
-	public SwitchExecutor(Context context){
+	public SwitchExecutor(Context context, SwitchStateListener listener){
 		this.context = context;
-		application = (MainApplication)context.getApplicationContext();
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		this.listener = listener;
 	}
 	
 	public abstract void start();
 	public abstract void stop();
-	public abstract boolean getSwitchState();
-	public abstract void updateSwitchState(boolean state);
+	public abstract void registerState();
+	public abstract void unregisterState();
+	public abstract SwitchState getSwitchState();
 	
-	public static SwitchExecutor create(Context context, String type){
+	public static SwitchExecutor create(Context context, String type, SwitchStateListener listener){
         SwitchExecutor executor = null;
 		if (context.getString(R.string.knx_connection_toggle).equals(type)) {
-			executor = new KNXConnectionSwitchExecutor(context);
+			executor = new KNXConnectionSwitchExecutor(context, listener);
         } else if (context.getString(R.string.webserver_toggle).equals(type)) {
-        	executor = new WebServerSwitchExecutor(context);
+        	executor = new WebServerSwitchExecutor(context, listener);
         }
 		return executor;
 	}
 	
-	protected void setSwitchState(String name, boolean value){
+	protected void setState(String switchKey, String value){
 		Editor editor = preferences.edit();
-		editor.putBoolean(name, value);
+		editor.putString(switchKey, value);
 		editor.commit();
 	}
 }

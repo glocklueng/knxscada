@@ -5,7 +5,6 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import pl.marek.knx.R;
 import pl.marek.knx.exceptions.WrongParameterException;
@@ -22,7 +21,7 @@ public class KNXConnectionSettings extends ApplicationSettings{
 		
     public KNXConnectionSettings(Context context){
     	this.context = context;
-    	preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    	preferences = context.getSharedPreferences(context.getString(R.string.default_preference_file), Context.MODE_MULTI_PROCESS);
     }
     
 	public int getServiceMode() {
@@ -40,7 +39,7 @@ public class KNXConnectionSettings extends ApplicationSettings{
 	}
 
 	public InetSocketAddress getLocalEndPoint() throws UnknownHostException {
-		String ip = preferences.getString(getStringByResId(R.string.local_ip), getStringByResId(R.string.local_ip_default_value));
+		String ip = preferences.getString(getStringByResId(R.string.local_ip_key), getStringByResId(R.string.local_ip_default_value));
 		int port = preferences.getInt(getStringByResId(R.string.local_port_key), getIntByResId(R.integer.local_port_default_value));
 		if(ip.equals(getStringByResId(R.string.local_ip_default_value))){
 			ip = NetworkInformator.getIPAddress();
@@ -51,12 +50,12 @@ public class KNXConnectionSettings extends ApplicationSettings{
 	
 	public void setLocalEndpoint(String ip, int port) throws UnknownHostException{
 		InetSocketAddress address = new InetSocketAddress(InetAddress.getByName(ip), port);
-		setString(getStringByResId(R.string.local_ip), address.getAddress().getHostAddress());
+		setString(getStringByResId(R.string.local_ip_key), address.getAddress().getHostAddress());
 		setInt(getStringByResId(R.string.local_port_key), address.getPort());
 	}
 
 	public InetSocketAddress getRemoteEndPoint() throws UnknownHostException {
-		String ip = preferences.getString(getStringByResId(R.string.remote_ip), getStringByResId(R.string.remote_ip_default_value));
+		String ip = preferences.getString(getStringByResId(R.string.remote_ip_key), getStringByResId(R.string.remote_ip_default_value));
 		int port = preferences.getInt(getStringByResId(R.string.remote_port_key), getIntByResId(R.integer.remote_port_default_value));
 		InetSocketAddress address = new InetSocketAddress(InetAddress.getByName(ip), port);
 		return address;
@@ -64,7 +63,7 @@ public class KNXConnectionSettings extends ApplicationSettings{
 
 	public void setRemoteEndPoint(String ip, int port) throws UnknownHostException {
 		InetSocketAddress address = new InetSocketAddress(InetAddress.getByName(ip), port);
-		setString(getStringByResId(R.string.remote_ip), address.getAddress().getHostAddress());
+		setString(getStringByResId(R.string.remote_ip_key), address.getAddress().getHostAddress());
 		setInt(getStringByResId(R.string.remote_port_key), address.getPort());
 	}
 

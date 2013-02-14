@@ -4,6 +4,7 @@
     <header
         android:title="@string/knx_connection_title"
     />
+    
     <header
         android:id="@+android:id/toggle"
         android:title="@string/knx_connection_toggle_title"
@@ -15,6 +16,8 @@
         <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
         <extra android:name="summaryOn" android:value="@string/knx_connection_toggle_summary_on"/>
         <extra android:name="summaryOff" android:value="@string/knx_connection_toggle_summary_off"/>
+        <extra android:name="summaryOnOff" android:value="@string/knx_connection_toggle_summary_on_off"/>
+        <extra android:name="summaryOffOn" android:value="@string/knx_connection_toggle_summary_off_on"/>
     </header>
     
     <header
@@ -40,6 +43,8 @@
         <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
         <extra android:name="summaryOn" android:value="@string/webserver_toggle_summary_on"/>
         <extra android:name="summaryOff" android:value="@string/webserver_toggle_summary_off"/>
+        <extra android:name="summaryOnOff" android:value="@string/webserver_toggle_summary_on_off"/>
+        <extra android:name="summaryOffOn" android:value="@string/webserver_toggle_summary_off_on"/>
     </header>
        
 </preference-headers>

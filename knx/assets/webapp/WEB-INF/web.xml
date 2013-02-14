@@ -7,16 +7,28 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
-	
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>hello</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
 	<servlet>
 		<servlet-name>hello</servlet-name>
 		<servlet-class>HelloServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>hello</servlet-name>
 		<url-pattern>/servlet</url-pattern>
 	</servlet-mapping>
-		
+
 </web-app>

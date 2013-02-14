@@ -31,6 +31,11 @@
         <activity android:name=".preferences.SettingsActivity" 
             android:theme="@style/iHousePreferencesTheme"/>
         
+        <activity android:name=".TelegramActivity"
+            android:theme="@style/iHouseTelegramsTheme" />
+        <activity android:name=".TelegramDetailActivity"
+            android:theme="@style/iHouseTelegramsTheme" />
+        
         <service
             android:name=".KNXConnectionService"
             android:exported="false"

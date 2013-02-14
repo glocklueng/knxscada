@@ -3,13 +3,12 @@ package pl.marek.knx.web;
 import pl.marek.knx.R;
 import pl.marek.knx.utils.ApplicationSettings;
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 public class WebServerSettings extends ApplicationSettings{
 		
 	public WebServerSettings(Context context){
 		this.context = context;
-		preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		preferences = context.getSharedPreferences(context.getString(R.string.default_preference_file), Context.MODE_MULTI_PROCESS);
 	}
 	
 	public int getPort(){

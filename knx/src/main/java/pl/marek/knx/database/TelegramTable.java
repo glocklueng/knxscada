@@ -26,7 +26,7 @@ public class TelegramTable {
 	public static final String TABLE_NAME = "telegrams";
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE "+TelegramTable.TABLE_NAME+" ("
 												   + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-												   + TelegramColumns.TIME + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+												   + TelegramColumns.TIME + " TIMESTAMP DEFAULT (datetime('now','localtime')), "
 												   + TelegramColumns.PRIORITY + " TEXT, "
 												   + TelegramColumns.SOURCE_ADDRESS + " TEXT, "
 												   + TelegramColumns.DESTINATION_ADDRESS + " TEXT, "
@@ -41,6 +41,7 @@ public class TelegramTable {
 												   + TelegramColumns.ACK + " INTEGER, "
 												   + TelegramColumns.CONFIRMATION + " INTEGER, "
 												   + TelegramColumns.REPEATED + " INTEGER);";
+	
 	public static final String DROP_TABLE_QUERY = "DROP TABLE IF EXISTS "+ TelegramTable.TABLE_NAME;
 	public static final String TRUNCATE_TABLE_QUERY = "TRUNCATE TABLE IF EXISTS "+ TelegramTable.TABLE_NAME;
 	

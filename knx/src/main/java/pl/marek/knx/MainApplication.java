@@ -1,33 +1,35 @@
 package pl.marek.knx;
 
+import pl.marek.knx.connection.ConnectionState;
+import pl.marek.knx.web.WebServerState;
 import android.app.Application;
 
 public class MainApplication extends Application{
 	
-	private boolean knxConnected;
-	private boolean webServerStarted;
+	private ConnectionState knxConnectionState;
+	private WebServerState webServerState;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
-		knxConnected = false;
-		webServerStarted = false;
+		knxConnectionState = ConnectionState.UNKNOWN;
+		webServerState = WebServerState.UNKNOWN;
 	}
 
-	public boolean isKnxConnected() {
-		return knxConnected;
+	public ConnectionState getKNXConnectionState(){
+		return knxConnectionState;
+	}
+	
+	public void setKNXConnectionState(ConnectionState state){
+		knxConnectionState = state;
 	}
 
-	public void setKnxConnected(boolean knxConnected) {
-		this.knxConnected = knxConnected;
+	public WebServerState getWebServerState(){
+		return webServerState;
 	}
-
-	public boolean isWebServerStarted() {
-		return webServerStarted;
-	}
-
-	public void setWebServerStarted(boolean webServerStarted) {
-		this.webServerStarted = webServerStarted;
+	
+	public void setWebServerState(WebServerState state){
+		webServerState = state;
 	}
 }

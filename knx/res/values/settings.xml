@@ -9,12 +9,21 @@
     <string name="knx_connection_toggle_title">Połączenie KNX</string>
     <string name="knx_connection_toggle_summary_on">Połączono</string>
     <string name="knx_connection_toggle_summary_off">Brak połączenia</string>
+    <string name="knx_connection_toggle_summary_on_off">Rozłączanie...</string>
+    <string name="knx_connection_toggle_summary_off_on">Łączenie...</string>
     <string name="webserver_title">Interfejs webowy</string>
     <string name="webserver_toggle_title">Serwer WWW</string>
     <string name="webserver_toggle_summary_on">Uruchomiony</string>
     <string name="webserver_toggle_summary_off">Zatrzymany</string>
+    <string name="webserver_toggle_summary_on_off">Zatrzymywanie...</string>
+    <string name="webserver_toggle_summary_off_on">Uruchamianie...</string>
+    
     <string name="discoverer_item_title">Interfejsy KNX</string>
     <string name="discoverer_item_summary">Wybierz interfejs KNX, z którym chcesz się połączyć.</string>
+    <string name="discoverer_dialog_title">Interfejsy KNX/IP</string>
+    <string name="discoverer_dialog_text_searching">Wyszukiwanie interfejsów</string>
+    <string name="discoverer_dialog_text_finished">Zakończono wyszukiwanie</string>
+    <string name="discoverer_dialog_text_not_found">Nie znaleziono żadnych interfejsów KNX/IP</string>
     
     <!-- KNX Connection Settings -->
     
@@ -37,7 +46,7 @@
     <string name="local_port_summary"></string>
     
     <string name="remote_ip_title">Adres IP</string>
-    <string name="remote_ip_summary"></string>
+    <string name="remote_ip_summary">Kliknij, aby wybrać...</string>
     <string name="remote_port_title">Port</string>
     <string name="remote_port_summary"></string>
     
@@ -57,6 +66,8 @@
     <string name="discover_while_connecting_summary">Wykrywa parametry interfejsu KNX podczas łączenia</string> 
     <string name="discover_timeout_title">Czas wyszukiwania</string>
     <string name="discover_timeout_summary">Określa czas wyszukiwania urządzeń KNX</string>
+    <string name="discover_item_title">Wyszukaj</string>
+    <string name="discover_item_summary">Wyszukaj podłączone do sieci interfejsy KNXnet/IP</string>
     
     <!-- WebServer Settings -->
     

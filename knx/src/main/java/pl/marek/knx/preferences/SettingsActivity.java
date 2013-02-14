@@ -38,6 +38,7 @@ public class SettingsActivity extends PreferenceActivity{
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
         headers = target;
+        setSelection(1);
     }
     
 	public void setListAdapter(ListAdapter adapter) {

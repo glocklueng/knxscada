@@ -22,9 +22,14 @@ import tuwien.auto.calimero.exception.KNXFormatException;
 import tuwien.auto.calimero.process.ProcessCommunicator;
 import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 public class KNXConnectionService extends Service implements KNXTelegramListener, KNXDataTransceiver, StateSender{
@@ -39,6 +44,8 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 	private KNXDataBroadcastReceiver dataReceiver;
 	private IntentFilter dataReceiverFilter;
 	private KNXLinkListener linkListener;
+	private static Handler messageHandler;
+	
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -48,37 +55,8 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		dbManager = new DatabaseManagerImpl(this);
-		if (connectToKNX()) {
-			setState(ConnectionState.CONNECTED);
-			Notification notification = notificationManager.createConnectionServiceNotification();
-			startForeground(SERVICE_ID, notification);
-			registerReceiver(dataReceiver, dataReceiverFilter);
-			addConnectionListeners();
-		} else{
-			setState(ConnectionState.FAILED);
-			stopSelf();
-		}
+		new ConnectTask().execute();
 		return super.onStartCommand(intent, flags, startId);
-	}
-
-	private boolean connectToKNX() {
-		setState(ConnectionState.CONNECTING);
-		boolean isConnected = false;
-		KNXConnectionSettings settings = new KNXConnectionSettings(this);
-		connection = new KNXIPConnection(settings);
-		try {
-			isConnected = connection.connect();
-		} catch (Exception e) {
-			notificationManager.showExceptionNotification(e);
-			connection = null;
-		}
-		return isConnected;
-	}
-	
-	private void addConnectionListeners(){
-		linkListener = new KNXLinkListener(this, dbManager);
-		connection.addLinkListener(linkListener);
-		connection.addProcessListener(new KNXProcessListener());
 	}
 	
 	@Override
@@ -92,27 +70,56 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 		
 		stateRequestReceiver = new StateRequestReceiver(this);
 		registerReceiver(stateRequestReceiver, new IntentFilter(GET_CONNECTION_STATE));
+		
+		messageHandler = new MessageHandler(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		stopForeground(true);
-		if(connection != null){
-			connection.disconnect();
-			unregisterReceiver(dataReceiver);
-		}
 		if(dbManager != null){
 			dbManager.close();
 		}
-		setState(ConnectionState.DISCONNECTED);
 		unregisterReceiver(stateRequestReceiver);
+		setState(ConnectionState.DISCONNECTING);
 	}
 	
 	private void setState(ConnectionState state){		
 		this.state = state;
 		state.showToast(this);
 		sendState();
+		doActionByState();
+	}
+	
+	private void doActionByState(){
+		switch(state){
+			case CONNECTED:
+				Notification notification = notificationManager.createConnectionServiceNotification();
+				startForeground(SERVICE_ID, notification);
+				registerReceiver(dataReceiver, dataReceiverFilter);
+				addConnectionListeners();
+				break;
+			case DISCONNECTING:
+				if(connection != null && connection.isConnected()){
+					connection.disconnect();
+					unregisterReceiver(dataReceiver);
+					connection = null;
+				}
+				setState(ConnectionState.DISCONNECTED);
+				break;
+			case FAILED:
+				stopSelf();
+				break;
+		default:
+			break;
+		}
+	}
+	
+	private void addConnectionListeners(){
+		linkListener = new KNXLinkListener(this, dbManager);
+		connection.addLinkListener(linkListener);
+		connection.addProcessListener(new KNXProcessListener());
 	}
 	
 	@Override
@@ -137,36 +144,15 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 	@Override
 	public void readData(String groupAddress, String dptId) {
 		Datapoint dp = createDatapoint(groupAddress, dptId, "READ");
-		
-		if (dp != null){
-            linkListener.setTmpDatapoint(dp);
-			linkListener.setWaitForReadResponseFlag();
-			
-			ProcessCommunicator communicator = connection.getProcessCommunicator();
-			try {
-				communicator.read(dp);
-			} catch (KNXException e) {
-				linkListener.clearWaitForReadResponseFlag();
-				Log.e(LogTags.KNX_CONNECTION, e.getMessage());
-			}
-		}
+		Thread read = new ReadThread(dp);
+		read.start();
 	}
 
 	@Override
-	public void writeData(String groupAddress, String dptId, String value) {
+	public void writeData(String groupAddress, String dptId, final String value) {
 		Datapoint dp = createDatapoint(groupAddress, dptId, "WRITE");
-		
-		if (dp != null){
-			linkListener.setTmpDatapoint(dp);
-			linkListener.setWaitForWriteResponseFlag();
-			ProcessCommunicator communicator = connection.getProcessCommunicator();
-			try {
-				communicator.read(dp);
-			} catch (KNXException e) {
-				linkListener.clearWaitForWriteResponseFlag();
-				Log.e(LogTags.KNX_CONNECTION, e.getMessage());
-			}
-		}
+		Thread write = new WriteThread(dp, value);
+		write.start();
 	}
 	
 	private Datapoint createDatapoint(String groupAddress, String dptId, String name){
@@ -178,5 +164,109 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
         	Log.e(LogTags.KNX_CONNECTION, ex.getMessage());
         }
         return dp;
+	}
+	
+	private static class MessageHandler extends Handler{
+		
+		private Context context;
+		
+		public MessageHandler(Context context){
+			this.context = context;
+		}
+		
+		@Override
+		public void handleMessage(Message msg) {
+			CustomToast.showShortToast(context, msg.getData().getString("message"));
+		}
+	}
+	
+	private class ConnectTask extends AsyncTask<Void, ConnectionState, Boolean>{
+		
+		private KNXConnectionSettings settings;
+		private boolean isConnected;
+		
+		@Override
+		protected void onPreExecute() {
+			settings = new KNXConnectionSettings(getApplicationContext());
+			isConnected = false;
+		}
+		
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			
+			publishProgress(ConnectionState.CONNECTING);
+			connection = new KNXIPConnection(settings);
+			try {
+				isConnected = connection.connect();
+				publishProgress(ConnectionState.CONNECTED);
+			} catch (Exception e) {
+				Log.w(LogTags.KNX_CONNECTION, e.getMessage());
+				connection = null;
+				publishProgress(ConnectionState.FAILED);
+			}
+			return isConnected;
+		}
+		
+		@Override
+		protected void onProgressUpdate(ConnectionState... values) {
+			setState(values[0]);
+		}
+	}
+	
+	private class ReadThread extends Thread{
+		
+		private Datapoint dp;
+
+		public ReadThread(Datapoint dp){
+			this.dp = dp;
+		}
+		
+		@Override
+		public void run() {
+			if (dp != null){
+	            linkListener.setTmpDatapoint(dp);
+				linkListener.setWaitForReadResponseFlag();
+				
+				ProcessCommunicator communicator = connection.getProcessCommunicator();
+				try {
+					communicator.read(dp);
+				} catch (KNXException e) {
+					linkListener.clearWaitForReadResponseFlag();
+					Log.e(LogTags.KNX_CONNECTION, e.getMessage());
+					
+					Bundle bundle = new Bundle();
+					bundle.putString("message", String.format(getApplicationContext().getString(R.string.telegram_response_timeout), dp.getMainAddress().toString()));
+					Message msg = new Message();
+					msg.setData(bundle);
+					messageHandler.sendMessage(msg);
+				}
+			}
+		}
+	}
+	
+	private class WriteThread extends Thread{
+		
+		private Datapoint dp;
+		private String value;
+		
+		public WriteThread(Datapoint dp, String value){
+			this.dp = dp;
+			this.value = value;
+		}
+		
+		@Override
+		public void run() {
+			if (dp != null){
+				linkListener.setTmpDatapoint(dp);
+				linkListener.setWaitForWriteResponseFlag();
+				ProcessCommunicator communicator = connection.getProcessCommunicator();
+				try {
+					communicator.write(dp, value);
+				} catch (KNXException e) {
+					linkListener.clearWaitForWriteResponseFlag();
+					Log.e(LogTags.KNX_CONNECTION, e.getMessage());
+				}
+			}
+		}
 	}
 }

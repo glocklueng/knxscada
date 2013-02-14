@@ -7,6 +7,7 @@
         	android:summary="@string/discover_while_connecting_summary"
         	android:defaultValue="@bool/discover_while_connecting_default_value"
         	android:numeric="integer"
+        	android:disableDependentsState="true"
         />
     	
         <pl.marek.knx.preferences.IntegerEditTextPreference
@@ -16,4 +17,21 @@
             android:defaultValue="@integer/discover_timeout_default_value"
             android:numeric="integer"
 		/>
+        
+        <Preference
+            android:key="@string/discover_search_key"
+            android:title="@string/discover_item_title"
+        	android:summary="@string/discover_item_summary"
+            android:dependency="@string/discover_while_connecting_key"  
+        />
+        
+        <pl.marek.knx.preferences.CustomEditTextPreference
+            android:key="@string/remote_ip_key"
+            android:title="@string/remote_ip_title"
+            android:summary="@string/remote_ip_summary"
+            android:defaultValue="@string/remote_ip_default_value"
+            android:dependency="@string/discover_while_connecting_key"
+            android:numeric="integer"
+        />
+        
 </PreferenceScreen>

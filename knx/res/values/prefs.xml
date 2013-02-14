@@ -6,7 +6,7 @@
     
 	<!-- PREFERENCES KEYS -->
 	
-    <string name="connection_switcher_key">connection_switcher</string>
+    <string name="connection_state_key">connection_state</string>
     <string name="service_mode_key">service_mode</string>
     <string name="local_ip_key">local_ip</string>
     <string name="local_port_key">local_port</string>
@@ -18,14 +18,14 @@
     <string name="timeout_key">timeout</string>
     <string name="discover_while_connecting_key">discover_while_connecting</string>
     <string name="discover_timeout_key">discover_timeout</string>
+    <string name="discover_search_key">discover_search</string>
 
-    <string name="webserver_switcher_key">webserver_switcher</string>
+    <string name="webserver_state_key">webserver_state</string>
     <string name="webserver_port_key">webserver_port</string>
     <string name="use_ssl_key">use_ssl</string>
     <string name="webserver_ssl_port_key">webserver_ssl_port</string>
 	
     <!-- CONNECTION PREFERENCES -->
-    <bool name="connection_switcher">false</bool>
     <integer name="service_mode">1</integer>
     <string name="local_ip"></string>
     <integer name="local_port">3681</integer>
@@ -39,7 +39,6 @@
     <integer name="discover_timeout">10</integer>
     
     <!-- WEBSERVER PREFERENCES -->
-    <bool name="webserver_switcher">false</bool>
     <integer name="webserver_port">8080</integer>
     <bool name="use_ssl">false</bool>
     <integer name="webserver_ssl_port">8443</integer>

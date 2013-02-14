@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">KNX iHouse</string>
-    <string name="toast_icon_description">Ikona aplikacji</string>
     
+    <!-- BASIC STRINGS -->
+    <string name="application_name">KNX iHouse</string>
+    <string name="default_preference_file">pl.marek.knx_preferences</string>
+    <string name="toast_icon_description">Ikona aplikacji</string>
+    <string name="connected">Połączono</string>	
+    <string name="menu_preferences">Ustawienia</string>
+    <string name="telegram_ab_item">Telegramy</string>
+    <string name="yes">Tak</string> 
+    <string name="no">Nie</string> 
+    
+    
+    <!-- KNX CONNECTION STRINGS -->
     <string name="connection_service_connecting">Nawiązywanie połączenia z magistralą KNX</string>
     <string name="connection_service_connected">Połączenie nawiązane</string>
     <string name="connection_service_disconnecting">Rozłączanie z magistralą KNX</string>
     <string name="connection_service_disconnected">Rozłączono z magistralą KNX</string>
     <string name="connection_service_failed">Nie udało się nawiązać połączenia z magistralą KNX</string>
     <string name="connection_service_unknown">Nieznany status połaczenia</string>
+    <string name="connection_service_title">Połączenie z magistralą KNX</string>
+    <string name="connection_service_message">Połączono</string>
     
+    <!-- WEBSERVER STRINGS -->
     <string name="webserver_service_starting">Uruchamianie serwera WWW</string>
     <string name="webserver_service_started">Serwer WWW uruchomiony</string>
     <string name="webserver_service_stopping">Zatrzymywanie serwera WWW</string>
@@ -17,13 +30,33 @@
     <string name="webserver_service_failed">Błąd serwera WWW</string>
     <string name="webserver_service_unknown">Nieznany status serwera WWW</string>
     <string name="webserver_service_deploy">Przygotowywanie aplikacji webowej</string>
-    
-    <string name="connection_service_title">Połączenie z magistralą KNX</string>
-    <string name="connection_service_message">Połączono</string>
     <string name="webserver_service_title">Serwer WWW</string>
     <string name="webserver_service_message">Uruchomiono</string>
     
-	<string name="connected">Połączono</string>    
+	
+	<!-- TELEGRAM DETAILS -->
+	<string name="telegrams_activity_title">Telegramy</string>
+	<string name="telegrams_activity_details_title">Telegram - szczegóły</string>
+	<string name="telegrams_item_from_label">OD:</string>
+	<string name="telegrams_item_to_label">DO:</string>
+	<string name="telegrams_item_image_description">Ikona priorytetu</string>
+	<string name="telegram_detail_id_label">ID</string>
+	<string name="telegram_detail_time_label">Odebrany</string>
+	<string name="telegram_detail_priority_label">Priorytet</string>
+	<string name="telegram_detail_source_address_label">Źródło</string>
+	<string name="telegram_detail_destination_address_label">Cel</string>
+	<string name="telegram_detail_hopcount_label">Ilość przeskoków</string>
+	<string name="telegram_detail_type_label">Typ</string>
+	<string name="telegram_detail_msgCode_label">Kod</string>
+	<string name="telegram_detail_rawdata_label">Dane</string>
+	<string name="telegram_detail_data_label">Wartość</string>
+	<string name="telegram_detail_rawframe_label">Ramka</string>
+	<string name="telegram_detail_framelength_label">Długość ramki</string>
+	<string name="telegram_detail_dptid_label">Typ danych</string>
+	<string name="telegram_detail_ack_label">Zatwierdzony</string>
+	<string name="telegram_detail_confirmation_label">Potwierdzony</string>
+	<string name="telegram_detail_repeated_label">Powtórzony</string>
 
-	<string name="menu_preferences">Ustawienia</string>
+	
+	<string name="telegram_response_timeout">Czas oczekiwania na odpowiedź z adresu %s minął!</string>
 </resources>

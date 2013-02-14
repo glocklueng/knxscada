@@ -56,7 +56,7 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 	public DatapointEntity get(Object id) {
 		DatapointEntity datapoint = null;
 		Cursor c = 
-				db.query(TelegramTable.TABLE_NAME, 
+				db.query(DatapointsTable.TABLE_NAME, 
 						new String[]{DatapointsColumns.GROUP_ADDRESS,
 									 DatapointsColumns.DPT_ID,
 									 DatapointsColumns.STATE,
@@ -77,7 +77,7 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 	public List<DatapointEntity> getAll() {
 		List<DatapointEntity> datapoints = new ArrayList<DatapointEntity>();
 		Cursor c = 
-				db.query(TelegramTable.TABLE_NAME, 
+				db.query(DatapointsTable.TABLE_NAME, 
 						new String[]{DatapointsColumns.GROUP_ADDRESS,
 									 DatapointsColumns.DPT_ID,
 									 DatapointsColumns.STATE,

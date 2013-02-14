@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:id="@+id/telegram_ab_item"
+          android:icon="@drawable/telegram_icon"
+          android:title="@string/telegram_ab_item"
+          android:showAsAction="ifRoom|withText" />
+    
     <item android:id="@+id/menu"
           android:icon="@drawable/ic_menu_preferences"
           android:title="@string/menu_preferences"

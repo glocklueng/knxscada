@@ -18,6 +18,13 @@ public class WebServerSettingsFragment extends SettingsFragment{
 		addSwitchToActionBar();
 		updateScreenPreferenceEnabled();
 		switchListener.setPreferenceScreen(getPreferenceScreen());
+		switchListener.resume();
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		switchListener.pause();
 	}
 
 }

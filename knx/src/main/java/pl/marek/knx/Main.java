@@ -75,6 +75,11 @@ public class Main extends Activity implements KNXTelegramListener, KNXConnection
 	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	         startActivity(intent);
 	         break;
+	      case R.id.telegram_ab_item:
+	    	  
+	    	  startActivity(new Intent(this, TelegramActivity.class));
+	    	  
+	    	  break;
 	      case R.id.menu:
 	    	  
 	    	  startActivity(new Intent(this, SettingsActivity.class));
@@ -123,11 +128,14 @@ public class Main extends Activity implements KNXTelegramListener, KNXConnection
 	}
 	
 	public void test(View view){
-		Intent intent = new Intent(KNXConnectionService.WRITE_DATA);
-		intent.putExtra(KNXDataTransceiver.GROUP_ADDRESS, "0/0/1");
-		intent.putExtra(KNXDataTransceiver.DPT_IP, "1.001");
-		intent.putExtra(KNXDataTransceiver.VALUE, "on");
-		sendBroadcast(intent);
+//		Intent intent = new Intent(KNXConnectionService.WRITE_DATA);
+//		intent.putExtra(KNXDataTransceiver.GROUP_ADDRESS, "0/0/3");
+//		intent.putExtra(KNXDataTransceiver.DPT_IP, "1.001");
+//		intent.putExtra(KNXDataTransceiver.VALUE, "off");
+//		sendBroadcast(intent);
+		
+		startActivity(new Intent(this, TelegramActivity.class));
+		
 //		
 //		Intent intent = new Intent(KNXConnectionService.GET_CONNECTION_STATE);
 //		sendBroadcast(intent);

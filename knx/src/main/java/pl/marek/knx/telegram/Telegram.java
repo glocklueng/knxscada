@@ -226,10 +226,11 @@ public class Telegram implements Parcelable{
 	    parcel.writeByte(hopcount);
 	    parcel.writeString(type);
 	    parcel.writeString(msgCode);
+	    parcel.writeInt(rawdata.length);
 	    parcel.writeByteArray(rawdata);
 	    parcel.writeString(data);
-	    parcel.writeByteArray(rawframe);
 	    parcel.writeInt(frameLength);
+	    parcel.writeByteArray(rawframe);
 	    parcel.writeString(dptId);
 	    parcel.writeParcelable(flags, parcelFlags);
 	}
@@ -243,10 +244,13 @@ public class Telegram implements Parcelable{
 		hopcount = parcel.readByte();
 		type = parcel.readString();
 		msgCode = parcel.readString();
+		int dataLength = parcel.readInt();
+		rawdata = new byte[dataLength];
 		parcel.readByteArray(rawdata);
 		data = parcel.readString();
-		parcel.readByteArray(rawframe);
 		frameLength = parcel.readInt();
+		rawframe = new byte[frameLength];
+		parcel.readByteArray(rawframe);
 		dptId = parcel.readString();
 		flags = parcel.readParcelable(TelegramFlags.class.getClassLoader());
 	}

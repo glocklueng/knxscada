@@ -94,6 +94,14 @@ public class TelegramDao implements Dao<Telegram>{
 
 	@Override
 	public Telegram get(Object id) {
+		return getById(id);
+	}
+		
+	public Telegram getById(Object id) {
+		return get(id, BaseColumns._ID);
+	}
+	
+	public Telegram get(Object value, String column){
 		Telegram telegram = null;
 		Cursor c = 
 				db.query(TelegramTable.TABLE_NAME, 
@@ -115,7 +123,7 @@ public class TelegramDao implements Dao<Telegram>{
 								    TelegramColumns.REPEATED
 						
 						}, 
-						BaseColumns._ID + " = ?", new String[]{String.valueOf(String.valueOf(id))}, 
+						column + " = ?", new String[]{String.valueOf(value)}, 
 						null, null ,null, "1");
 		if(c.moveToFirst()){
 			telegram = this.buildTelegram(c);
@@ -125,9 +133,35 @@ public class TelegramDao implements Dao<Telegram>{
 		}
 		return telegram;
 	}
-
+	
+	public List<Telegram> getBySrcAddr(String addr) {
+		return getList(TelegramColumns.SOURCE_ADDRESS, addr, null, null, null, null);
+	}
+	
+	public List<Telegram> getByDstAddr(String addr) {
+		return getList(TelegramColumns.DESTINATION_ADDRESS, addr, null, null, null,null);
+	}
+	
+	public List<Telegram> getRecentTelegrams(int limit){
+		return getList(null, null, null, null, TelegramColumns.TIME+" DESC", String.valueOf(limit));
+	}
+	
 	@Override
 	public List<Telegram> getAll() {
+		return getList(null,null,null,null,null,null);
+	}
+	
+	private List<Telegram> getList(String column, String arg, String groupBy, String having, String orderBy, String limit){
+		
+		String selection = null;
+		if(column != null)
+			selection = column + " = ?";
+		
+		String[] selectionArgs = null;
+		if(arg != null)
+			selectionArgs = new String[]{String.valueOf(arg)};
+		
+		
 		List<Telegram> telegrams = new ArrayList<Telegram>();
 		Cursor c = 
 				db.query(TelegramTable.TABLE_NAME, 
@@ -147,9 +181,8 @@ public class TelegramDao implements Dao<Telegram>{
 								    TelegramColumns.ACK,
 								    TelegramColumns.CONFIRMATION,
 								    TelegramColumns.REPEATED
-						
 						}, 
-						null,null, null ,null, null);
+						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
 			do{
 				Telegram telegram = this.buildTelegram(c);

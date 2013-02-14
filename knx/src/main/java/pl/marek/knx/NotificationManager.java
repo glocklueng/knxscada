@@ -1,10 +1,12 @@
 package pl.marek.knx;
 
+import pl.marek.knx.preferences.SettingsActivity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 public class NotificationManager {
 
@@ -20,7 +22,7 @@ public class NotificationManager {
 				context).setSmallIcon(R.drawable.knx_logo)
 				.setContentTitle(context.getString(R.string.connection_service_title))
 				.setContentText(context.getString(R.string.connection_service_message));
-		Intent resultIntent = new Intent(context, Main.class);
+		Intent resultIntent = new Intent(context, SettingsActivity.class);
 		resultIntent.putExtra(Main.CONNECTION_RECEIVER_REGISTERED, true);
 
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -33,7 +35,7 @@ public class NotificationManager {
 				context).setSmallIcon(R.drawable.www_logo)
 				.setContentTitle(context.getString(R.string.webserver_service_title))
 				.setContentText(context.getString(R.string.webserver_service_message));
-		Intent resultIntent = new Intent(context, Main.class);
+		Intent resultIntent = new Intent(context, SettingsActivity.class);
 		
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		mBuilder.setContentIntent(resultPendingIntent);
@@ -41,6 +43,6 @@ public class NotificationManager {
 	}
 
 	public void showExceptionNotification(Exception e) {
-
+		Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 	}
 }

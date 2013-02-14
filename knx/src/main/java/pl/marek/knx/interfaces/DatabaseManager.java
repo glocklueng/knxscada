@@ -1,6 +1,6 @@
 package pl.marek.knx.interfaces;
 
-import java.sql.SQLException;
+import java.util.List;
 
 import pl.marek.knx.database.DPTEntity;
 import pl.marek.knx.database.DatapointEntity;
@@ -12,7 +12,7 @@ public interface DatabaseManager {
 	
 	public void open();
 	public void close();
-	public void addTelegram(Telegram telegram);
+	
 	public void addGroup(Group group);
 	public void addDevice(Device device);
 	public void addDPT(DPTEntity dpt);
@@ -20,4 +20,13 @@ public interface DatabaseManager {
 	public DatapointEntity getDatapointEntityByAddress(String groupAddress);
 	public Group getGroupByAddress(String address);
 	public Device getDeviceByAddress(String address);
+	
+	//Telegram Operations
+	public void addTelegram(Telegram telegram);
+	public List<Telegram> getAllTelegrams();
+	public Telegram getTelegramById(int id);
+	public List<Telegram> getTelegramBySourceAddr(String sourceAddr);
+	public List<Telegram> getTelegramByDestAddr(String destAddr);
+	public List<Telegram> getRecentTelegrams(int number);
+	
 }

@@ -2,12 +2,11 @@ package pl.marek.knx.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
@@ -17,6 +16,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 import dalvik.system.DexClassLoader;
 
+import pl.marek.knx.R;
 import pl.marek.knx.log.LogTags;
 import pl.marek.knx.utils.FileUtils;
 import android.content.Context;
@@ -31,6 +31,7 @@ public class WebServer {
 	public static final String DEX_JAR_PATH = "/WEB-INF/lib/classes.jar";
 	public static final String WEBAPP_LIB_DIRECTORY = "/WEB-INF/lib/";
 	public static final String WEBAPP_CONTEXT_PATH = "/";
+	public static final String KEYSTORE_FILE="/WEB-INF/etc/keystore";
 	
 	public static final int SERVER_SHUTDOWN_TIMEOUT = 500; // In miliseconds
 	
@@ -65,7 +66,7 @@ public class WebServer {
 	
 	private Handler createHandlers(){
 		HandlerList handlers = new HandlerList();
-	    handlers.setHandlers(new Handler[]{createWebAppContext(), createResourceHandler()});
+	    handlers.setHandlers(new Handler[]{createWebAppContext(), createResourceHandler(), new DefaultHandler()});
 	    return handlers;
 	}
 	
@@ -90,34 +91,26 @@ public class WebServer {
 	}
 	
 	private Connector createSSLConnector(){
-		SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
-	    sslConnector.setPort(settings.getSSLPort());
-	    SslContextFactory cf = sslConnector.getSslContextFactory();
-	    
-	    //TODO Implement usage of keystore etc.
+		
+	    SslContextFactory cf = new SslContextFactory(getKeystoreFile().getAbsolutePath());
 
-//		  Kod z aplikacji i-Jetty	    
-//        SslContextFactory sslContextFactory = new SslContextFactory();
-//        sslContextFactory.setKeyStore(_keystoreFile);
-//        sslContextFactory.setTrustStore(_truststoreFile);
-//        sslContextFactory.setKeyStorePassword(_keystorePassword);
-//        sslContextFactory.setKeyManagerPassword(_keymgrPassword);
-//        sslContextFactory.setKeyStoreType("bks");
-//        sslContextFactory.setTrustStorePassword(_truststorePassword);
-//        sslContextFactory.setTrustStoreType("bks");
-	    
 	    try {
-	    	KeyStore keyStore = KeyStore.getInstance("JKS");
-	    	
-			cf.setKeyStore(keyStore);
-		    cf.setKeyStorePassword("OBF:1vny1zlo1x8e1vnw1vn61x8g1zlu1vn4");
-		    cf.setKeyManagerPassword("OBF:1u2u1wml1z7s1z7a1wnl1u2g");
+	    	cf.setKeyStoreType("BKS");
+	    	cf.setKeyStorePassword(appContext.getString(R.string.jetty_keystore_password));
 		    
-		} catch (KeyStoreException e) {
+		    cf.setNeedClientAuth(false);
+		    cf.setTrustStore(getKeystoreFile().getAbsolutePath());
+		    cf.setTrustStoreType("BKS");
+		    cf.setKeyManagerPassword(appContext.getString(R.string.jetty_keymanager_password));
+		    cf.setTrustStorePassword(appContext.getString(R.string.jetty_truststore_password));
+		    
+		} catch (Exception e) {
 			Log.d(LogTags.WEB_SERVER, e.getMessage());
 		}
+	    SslSelectChannelConnector sslConnector = new SslSelectChannelConnector(cf);
+	    sslConnector.setPort(settings.getSSLPort());
+	    sslConnector.setConfidentialPort(settings.getSSLPort());
 
-		
 		return sslConnector;
 	}
 	
@@ -157,5 +150,9 @@ public class WebServer {
 		if(!tmpDir.exists())
 			tmpDir.mkdirs();
 		return tmpDir;
+	}
+	
+	private File getKeystoreFile(){
+		return new File(getWebAppDirectoryPath(),KEYSTORE_FILE);
 	}
 }

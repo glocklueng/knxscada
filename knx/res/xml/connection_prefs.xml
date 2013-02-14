@@ -19,8 +19,8 @@
             android:key="@string/remote_ip_key"
             android:title="@string/remote_ip_title"
             android:summary="@string/remote_ip_summary"
+            android:defaultValue="@string/remote_ip_default_value"
             android:fragment="pl.marek.knx.preferences.DiscovererFragment"
-            
             />
         
         <pl.marek.knx.preferences.IntegerEditTextPreference
@@ -36,6 +36,7 @@
             android:title="@string/individual_address_title"
             android:summary="@string/individual_address_summary"
             android:defaultValue="@string/individual_address_default_value"
+            android:numeric="integer"
         />
 		
 		<pl.marek.knx.preferences.IntegerListPreference

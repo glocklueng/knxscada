@@ -15,20 +15,14 @@ public final class R {
     public static final class attr {
     }
     public static final class bool {
-        /**  CONNECTION PREFERENCES 
-         */
-        public static final int connection_switcher=0x7f060000;
-        public static final int discover_while_connecting=0x7f060003;
-        public static final int discover_while_connecting_default_value=0x7f060008;
-        public static final int use_nat=0x7f060001;
-        public static final int use_nat_default_value=0x7f060006;
-        public static final int use_ssl=0x7f060005;
-        public static final int use_ssl_default_value=0x7f060009;
-        public static final int use_tp1=0x7f060002;
-        public static final int use_tp1_default_value=0x7f060007;
-        /**  WEBSERVER PREFERENCES 
-         */
-        public static final int webserver_switcher=0x7f060004;
+        public static final int discover_while_connecting=0x7f070002;
+        public static final int discover_while_connecting_default_value=0x7f070006;
+        public static final int use_nat=0x7f070000;
+        public static final int use_nat_default_value=0x7f070004;
+        public static final int use_ssl=0x7f070003;
+        public static final int use_ssl_default_value=0x7f070007;
+        public static final int use_tp1=0x7f070001;
+        public static final int use_tp1_default_value=0x7f070005;
     }
     public static final class drawable {
         public static final int background=0x7f020000;
@@ -40,150 +34,268 @@ public final class R {
         public static final int phone_knx_logo=0x7f020006;
         public static final int phone_logo=0x7f020007;
         public static final int phone_www_logo=0x7f020008;
-        public static final int www_logo=0x7f020009;
+        public static final int telegram_icon=0x7f020009;
+        public static final int telegram_list_selector=0x7f02000a;
+        public static final int telegram_priority_low=0x7f02000b;
+        public static final int telegram_priority_normal=0x7f02000c;
+        public static final int telegram_priority_system=0x7f02000d;
+        public static final int telegram_priority_urgent=0x7f02000e;
+        public static final int www_logo=0x7f02000f;
     }
     public static final class id {
-        public static final int menu=0x7f0b0004;
-        public static final int text=0x7f0b0003;
+        public static final int discoverer_list=0x7f0b0005;
+        public static final int discoverer_progress=0x7f0b0003;
+        public static final int discoverer_text=0x7f0b0004;
+        public static final int knx_interface_item_address=0x7f0b0007;
+        public static final int knx_interface_item_name=0x7f0b0006;
+        public static final int menu=0x7f0b0033;
+        public static final int telegram_ab_item=0x7f0b0032;
+        public static final int telegram_detail_ack=0x7f0b0024;
+        public static final int telegram_detail_ack_label=0x7f0b0023;
+        public static final int telegram_detail_confirmation=0x7f0b0026;
+        public static final int telegram_detail_confirmation_label=0x7f0b0025;
+        public static final int telegram_detail_data=0x7f0b001c;
+        public static final int telegram_detail_data_label=0x7f0b001b;
+        public static final int telegram_detail_destination_address=0x7f0b0012;
+        public static final int telegram_detail_destination_address_label=0x7f0b0011;
+        public static final int telegram_detail_dptid=0x7f0b0022;
+        public static final int telegram_detail_dptid_label=0x7f0b0021;
+        public static final int telegram_detail_framelength=0x7f0b0020;
+        public static final int telegram_detail_framelength_label=0x7f0b001f;
+        public static final int telegram_detail_hopcount=0x7f0b0014;
+        public static final int telegram_detail_hopcount_label=0x7f0b0013;
+        public static final int telegram_detail_id=0x7f0b000a;
+        public static final int telegram_detail_id_label=0x7f0b0009;
+        public static final int telegram_detail_msgcode=0x7f0b0018;
+        public static final int telegram_detail_msgcode_label=0x7f0b0017;
+        public static final int telegram_detail_priority=0x7f0b000e;
+        public static final int telegram_detail_priority_label=0x7f0b000d;
+        public static final int telegram_detail_rawdata=0x7f0b001a;
+        public static final int telegram_detail_rawdata_label=0x7f0b0019;
+        public static final int telegram_detail_rawframe=0x7f0b001e;
+        public static final int telegram_detail_rawframe_label=0x7f0b001d;
+        public static final int telegram_detail_repeated=0x7f0b0028;
+        public static final int telegram_detail_repeated_label=0x7f0b0027;
+        public static final int telegram_detail_source_address=0x7f0b0010;
+        public static final int telegram_detail_source_address_label=0x7f0b000f;
+        public static final int telegram_detail_time=0x7f0b000c;
+        public static final int telegram_detail_time_label=0x7f0b000b;
+        public static final int telegram_detail_type=0x7f0b0016;
+        public static final int telegram_detail_type_label=0x7f0b0015;
+        public static final int telegram_item_from=0x7f0b002f;
+        public static final int telegram_item_from_label=0x7f0b002c;
+        public static final int telegram_item_labels=0x7f0b002b;
+        public static final int telegram_item_priority_addresses=0x7f0b002e;
+        public static final int telegram_item_priority_image=0x7f0b002a;
+        public static final int telegram_item_table_row=0x7f0b0029;
+        public static final int telegram_item_to=0x7f0b0030;
+        public static final int telegram_item_to_label=0x7f0b002d;
+        public static final int telegram_item_value=0x7f0b0031;
+        public static final int telegram_menu_item=0x7f0b0034;
+        public static final int text=0x7f0b0008;
         public static final int toast_image=0x7f0b0001;
         public static final int toast_layout_root=0x7f0b0000;
         public static final int toast_message=0x7f0b0002;
     }
     public static final class integer {
-        public static final int discover_timeout=0x7f070004;
-        public static final int discover_timeout_default_value=0x7f07000b;
-        public static final int local_port=0x7f070001;
-        public static final int local_port_default_value=0x7f070008;
-        public static final int remote_port=0x7f070002;
-        public static final int remote_port_default_value=0x7f070009;
-        public static final int service_mode=0x7f070000;
+        public static final int discover_timeout=0x7f060004;
+        public static final int discover_timeout_default_value=0x7f06000b;
+        public static final int local_port=0x7f060001;
+        public static final int local_port_default_value=0x7f060008;
+        public static final int remote_port=0x7f060002;
+        public static final int remote_port_default_value=0x7f060009;
+        /**  CONNECTION PREFERENCES 
+         */
+        public static final int service_mode=0x7f060000;
         /**  CONNECTION DEFAULT VALUES 
          */
-        public static final int service_mode_default_value=0x7f070007;
-        public static final int timeout=0x7f070003;
-        public static final int timeout_default_value=0x7f07000a;
-        public static final int webserver_port=0x7f070005;
+        public static final int service_mode_default_value=0x7f060007;
+        public static final int timeout=0x7f060003;
+        public static final int timeout_default_value=0x7f06000a;
+        /**  WEBSERVER PREFERENCES 
+         */
+        public static final int webserver_port=0x7f060005;
         /**  WEBSERVER DEFAULT VALUES 
          */
-        public static final int webserver_port_default_value=0x7f07000c;
-        public static final int webserver_ssl_port=0x7f070006;
-        public static final int webserver_ssl_port_default_value=0x7f07000d;
+        public static final int webserver_port_default_value=0x7f06000c;
+        public static final int webserver_ssl_port=0x7f060006;
+        public static final int webserver_ssl_port_default_value=0x7f06000d;
     }
     public static final class layout {
         public static final int application=0x7f030000;
         public static final int custom_toast=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int preference_category=0x7f030003;
-        public static final int preference_header_item=0x7f030004;
-        public static final int preference_header_switch_item=0x7f030005;
+        public static final int discover_dialog=0x7f030002;
+        public static final int knx_interface_item=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int preference_category=0x7f030005;
+        public static final int preference_header_item=0x7f030006;
+        public static final int preference_header_switch_item=0x7f030007;
+        public static final int telegram_detail=0x7f030008;
+        public static final int telegram_item=0x7f030009;
+        public static final int telegram_list=0x7f03000a;
     }
     public static final class menu {
         public static final int menu=0x7f0a0000;
+        public static final int telegram_menu=0x7f0a0001;
     }
     public static final class string {
-        public static final int application_name=0x7f050045;
-        public static final int connected=0x7f050058;
-        public static final int connection_service_connected=0x7f050048;
-        public static final int connection_service_connecting=0x7f050047;
-        public static final int connection_service_disconnected=0x7f05004a;
-        public static final int connection_service_disconnecting=0x7f050049;
-        public static final int connection_service_failed=0x7f05004b;
-        public static final int connection_service_message=0x7f050055;
-        public static final int connection_service_title=0x7f050054;
-        public static final int connection_service_unknown=0x7f05004c;
+        /**  BASIC STRINGS 
+         */
+        public static final int application_name=0x7f050053;
+        public static final int connected=0x7f050056;
+        public static final int connection_service_connected=0x7f05005c;
+        /**  KNX CONNECTION STRINGS 
+         */
+        public static final int connection_service_connecting=0x7f05005b;
+        public static final int connection_service_disconnected=0x7f05005e;
+        public static final int connection_service_disconnecting=0x7f05005d;
+        public static final int connection_service_failed=0x7f05005f;
+        public static final int connection_service_message=0x7f050062;
+        public static final int connection_service_title=0x7f050061;
+        public static final int connection_service_unknown=0x7f050060;
         /**  PREFERENCES KEYS 
          */
-        public static final int connection_switcher_key=0x7f050002;
-        public static final int discover_timeout_key=0x7f05000d;
-        public static final int discover_timeout_summary=0x7f05003e;
-        public static final int discover_timeout_title=0x7f05003d;
-        public static final int discover_while_connecting_key=0x7f05000c;
-        public static final int discover_while_connecting_summary=0x7f05003c;
+        public static final int connection_state_key=0x7f050005;
+        public static final int default_preference_file=0x7f050054;
+        public static final int discover_item_summary=0x7f05004c;
+        public static final int discover_item_title=0x7f05004b;
+        public static final int discover_search_key=0x7f050011;
+        public static final int discover_timeout_key=0x7f050010;
+        public static final int discover_timeout_summary=0x7f05004a;
+        public static final int discover_timeout_title=0x7f050049;
+        public static final int discover_while_connecting_key=0x7f05000f;
+        public static final int discover_while_connecting_summary=0x7f050048;
         /**  Discoverer Settings 
          */
-        public static final int discover_while_connecting_title=0x7f05003b;
-        public static final int discoverer_item_summary=0x7f050026;
-        public static final int discoverer_item_title=0x7f050025;
-        public static final int individual_address=0x7f050014;
-        public static final int individual_address_default_value=0x7f050017;
-        public static final int individual_address_key=0x7f050009;
-        public static final int individual_address_summary=0x7f050035;
-        public static final int individual_address_title=0x7f050034;
-        public static final int knx_connection_title=0x7f05001d;
-        public static final int knx_connection_toggle=0x7f050000;
-        public static final int knx_connection_toggle_summary_off=0x7f050020;
-        public static final int knx_connection_toggle_summary_on=0x7f05001f;
-        public static final int knx_connection_toggle_title=0x7f05001e;
-        public static final int local_ip=0x7f050012;
-        public static final int local_ip_default_value=0x7f050015;
-        public static final int local_ip_key=0x7f050004;
-        public static final int local_ip_summary=0x7f05002a;
-        public static final int local_ip_title=0x7f050029;
-        public static final int local_port_key=0x7f050005;
-        public static final int local_port_summary=0x7f05002c;
-        public static final int local_port_title=0x7f05002b;
-        public static final int menu_preferences=0x7f050059;
-        public static final int remote_ip=0x7f050013;
-        public static final int remote_ip_default_value=0x7f050016;
-        public static final int remote_ip_key=0x7f050006;
-        public static final int remote_ip_summary=0x7f05002e;
-        public static final int remote_ip_title=0x7f05002d;
-        public static final int remote_port_key=0x7f050007;
-        public static final int remote_port_summary=0x7f050030;
-        public static final int remote_port_title=0x7f05002f;
-        public static final int service_mode_key=0x7f050003;
-        public static final int service_mode_summary=0x7f050028;
+        public static final int discover_while_connecting_title=0x7f050047;
+        public static final int discoverer_dialog_text_finished=0x7f050031;
+        public static final int discoverer_dialog_text_not_found=0x7f050032;
+        public static final int discoverer_dialog_text_searching=0x7f050030;
+        public static final int discoverer_dialog_title=0x7f05002f;
+        public static final int discoverer_item_summary=0x7f05002e;
+        public static final int discoverer_item_title=0x7f05002d;
+        public static final int individual_address=0x7f050018;
+        public static final int individual_address_default_value=0x7f05001b;
+        public static final int individual_address_key=0x7f05000c;
+        public static final int individual_address_summary=0x7f050041;
+        public static final int individual_address_title=0x7f050040;
+        public static final int jetty_keymanager_password=0x7f050001;
+        public static final int jetty_keystore_password=0x7f050000;
+        public static final int jetty_truststore_password=0x7f050002;
+        public static final int knx_connection_title=0x7f050021;
+        public static final int knx_connection_toggle=0x7f050003;
+        public static final int knx_connection_toggle_summary_off=0x7f050024;
+        public static final int knx_connection_toggle_summary_off_on=0x7f050026;
+        public static final int knx_connection_toggle_summary_on=0x7f050023;
+        public static final int knx_connection_toggle_summary_on_off=0x7f050025;
+        public static final int knx_connection_toggle_title=0x7f050022;
+        public static final int local_ip=0x7f050016;
+        public static final int local_ip_default_value=0x7f050019;
+        public static final int local_ip_key=0x7f050007;
+        public static final int local_ip_summary=0x7f050036;
+        public static final int local_ip_title=0x7f050035;
+        public static final int local_port_key=0x7f050008;
+        public static final int local_port_summary=0x7f050038;
+        public static final int local_port_title=0x7f050037;
+        public static final int menu_preferences=0x7f050057;
+        public static final int no=0x7f05005a;
+        public static final int remote_ip=0x7f050017;
+        public static final int remote_ip_default_value=0x7f05001a;
+        public static final int remote_ip_key=0x7f050009;
+        public static final int remote_ip_summary=0x7f05003a;
+        public static final int remote_ip_title=0x7f050039;
+        public static final int remote_port_key=0x7f05000a;
+        public static final int remote_port_summary=0x7f05003c;
+        public static final int remote_port_title=0x7f05003b;
+        public static final int service_mode_key=0x7f050006;
+        public static final int service_mode_summary=0x7f050034;
         /**  KNX Connection Settings 
          */
-        public static final int service_mode_title=0x7f050027;
-        public static final int settings=0x7f050018;
-        public static final int settings_swith_summary_off=0x7f05001c;
-        public static final int settings_swith_summary_on=0x7f05001b;
-        public static final int settings_swith_text_off=0x7f05001a;
-        public static final int settings_swith_text_on=0x7f050019;
-        public static final int timeout_key=0x7f05000b;
-        public static final int timeout_summary=0x7f05003a;
-        public static final int timeout_title=0x7f050039;
-        public static final int toast_icon_description=0x7f050046;
-        public static final int use_nat_key=0x7f050008;
-        public static final int use_nat_summary_off=0x7f050033;
-        public static final int use_nat_summary_on=0x7f050032;
-        public static final int use_nat_title=0x7f050031;
-        public static final int use_ssl_key=0x7f050010;
-        public static final int use_ssl_summary=0x7f050042;
-        public static final int use_ssl_title=0x7f050041;
-        public static final int use_tp1_key=0x7f05000a;
-        public static final int use_tp1_summary_off=0x7f050038;
-        public static final int use_tp1_summary_on=0x7f050037;
-        public static final int use_tp1_title=0x7f050036;
-        public static final int webserver_port_key=0x7f05000f;
-        public static final int webserver_port_summary=0x7f050040;
+        public static final int service_mode_title=0x7f050033;
+        public static final int settings=0x7f05001c;
+        public static final int settings_swith_summary_off=0x7f050020;
+        public static final int settings_swith_summary_on=0x7f05001f;
+        public static final int settings_swith_text_off=0x7f05001e;
+        public static final int settings_swith_text_on=0x7f05001d;
+        public static final int telegram_ab_item=0x7f050058;
+        public static final int telegram_detail_ack_label=0x7f05007e;
+        public static final int telegram_detail_confirmation_label=0x7f05007f;
+        public static final int telegram_detail_data_label=0x7f05007a;
+        public static final int telegram_detail_destination_address_label=0x7f050075;
+        public static final int telegram_detail_dptid_label=0x7f05007d;
+        public static final int telegram_detail_framelength_label=0x7f05007c;
+        public static final int telegram_detail_hopcount_label=0x7f050076;
+        public static final int telegram_detail_id_label=0x7f050071;
+        public static final int telegram_detail_msgCode_label=0x7f050078;
+        public static final int telegram_detail_priority_label=0x7f050073;
+        public static final int telegram_detail_rawdata_label=0x7f050079;
+        public static final int telegram_detail_rawframe_label=0x7f05007b;
+        public static final int telegram_detail_repeated_label=0x7f050080;
+        public static final int telegram_detail_source_address_label=0x7f050074;
+        public static final int telegram_detail_time_label=0x7f050072;
+        public static final int telegram_detail_type_label=0x7f050077;
+        public static final int telegram_response_timeout=0x7f050081;
+        public static final int telegrams_activity_details_title=0x7f05006d;
+        /**  TELEGRAM DETAILS 
+         */
+        public static final int telegrams_activity_title=0x7f05006c;
+        public static final int telegrams_item_from_label=0x7f05006e;
+        public static final int telegrams_item_image_description=0x7f050070;
+        public static final int telegrams_item_to_label=0x7f05006f;
+        public static final int timeout_key=0x7f05000e;
+        public static final int timeout_summary=0x7f050046;
+        public static final int timeout_title=0x7f050045;
+        public static final int toast_icon_description=0x7f050055;
+        public static final int use_nat_key=0x7f05000b;
+        public static final int use_nat_summary_off=0x7f05003f;
+        public static final int use_nat_summary_on=0x7f05003e;
+        public static final int use_nat_title=0x7f05003d;
+        public static final int use_ssl_key=0x7f050014;
+        public static final int use_ssl_summary=0x7f050050;
+        public static final int use_ssl_title=0x7f05004f;
+        public static final int use_tp1_key=0x7f05000d;
+        public static final int use_tp1_summary_off=0x7f050044;
+        public static final int use_tp1_summary_on=0x7f050043;
+        public static final int use_tp1_title=0x7f050042;
+        public static final int webserver_port_key=0x7f050013;
+        public static final int webserver_port_summary=0x7f05004e;
         /**  WebServer Settings 
          */
-        public static final int webserver_port_title=0x7f05003f;
-        public static final int webserver_service_deploy=0x7f050053;
-        public static final int webserver_service_failed=0x7f050051;
-        public static final int webserver_service_message=0x7f050057;
-        public static final int webserver_service_started=0x7f05004e;
-        public static final int webserver_service_starting=0x7f05004d;
-        public static final int webserver_service_stopped=0x7f050050;
-        public static final int webserver_service_stopping=0x7f05004f;
-        public static final int webserver_service_title=0x7f050056;
-        public static final int webserver_service_unknown=0x7f050052;
-        public static final int webserver_ssl_port_key=0x7f050011;
-        public static final int webserver_ssl_port_summary=0x7f050044;
-        public static final int webserver_ssl_port_title=0x7f050043;
-        public static final int webserver_switcher_key=0x7f05000e;
-        public static final int webserver_title=0x7f050021;
-        public static final int webserver_toggle=0x7f050001;
-        public static final int webserver_toggle_summary_off=0x7f050024;
-        public static final int webserver_toggle_summary_on=0x7f050023;
-        public static final int webserver_toggle_title=0x7f050022;
+        public static final int webserver_port_title=0x7f05004d;
+        public static final int webserver_service_deploy=0x7f050069;
+        public static final int webserver_service_failed=0x7f050067;
+        public static final int webserver_service_message=0x7f05006b;
+        public static final int webserver_service_started=0x7f050064;
+        /**  WEBSERVER STRINGS 
+         */
+        public static final int webserver_service_starting=0x7f050063;
+        public static final int webserver_service_stopped=0x7f050066;
+        public static final int webserver_service_stopping=0x7f050065;
+        public static final int webserver_service_title=0x7f05006a;
+        public static final int webserver_service_unknown=0x7f050068;
+        public static final int webserver_ssl_port_key=0x7f050015;
+        public static final int webserver_ssl_port_summary=0x7f050052;
+        public static final int webserver_ssl_port_title=0x7f050051;
+        public static final int webserver_state_key=0x7f050012;
+        public static final int webserver_title=0x7f050027;
+        public static final int webserver_toggle=0x7f050004;
+        public static final int webserver_toggle_summary_off=0x7f05002a;
+        public static final int webserver_toggle_summary_off_on=0x7f05002c;
+        public static final int webserver_toggle_summary_on=0x7f050029;
+        public static final int webserver_toggle_summary_on_off=0x7f05002b;
+        public static final int webserver_toggle_title=0x7f050028;
+        public static final int yes=0x7f050059;
     }
     public static final class style {
-        public static final int actionBarStyle=0x7f090002;
+        public static final int actionBarPreferencesStyle=0x7f090006;
+        public static final int actionBarStyle=0x7f090008;
+        public static final int actionBarStyleNoTitle=0x7f090004;
+        public static final int actionBarStyleTitle=0x7f090005;
+        public static final int actionBarTelegramsStyle=0x7f090007;
         public static final int iHousePreferencesTheme=0x7f090001;
+        public static final int iHouseTelegramsTheme=0x7f090002;
         public static final int iHouseTheme=0x7f090000;
+        public static final int iHouseTitleTheme=0x7f090003;
     }
     public static final class xml {
         public static final int connection_prefs=0x7f040000;

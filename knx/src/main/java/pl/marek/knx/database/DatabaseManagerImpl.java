@@ -1,5 +1,7 @@
 package pl.marek.knx.database;
 
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -40,18 +42,6 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public void close() {
 		openHelper.close();
 	}
-	
-	@Override
-	public void addTelegram(Telegram telegram) {
-		db.beginTransaction();
-		try{
-			telegramDao.save(telegram);
-			db.setTransactionSuccessful();
-		} finally{
-			db.endTransaction();
-		}
-	}
-
 
 	@Override
 	public void addGroup(Group group){
@@ -113,5 +103,43 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	@Override
 	public Device getDeviceByAddress(String address) {
 		return devicesDao.get(address);
+	}
+
+	
+	//Telegram Operations
+	@Override
+	public void addTelegram(Telegram telegram) {
+		db.beginTransaction();
+		try{
+			telegramDao.save(telegram);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+	
+	@Override
+	public List<Telegram> getAllTelegrams() {
+		return telegramDao.getAll();
+	}
+
+	@Override
+	public Telegram getTelegramById(int id) {
+		return telegramDao.get(id);
+	}
+
+	@Override
+	public List<Telegram> getTelegramBySourceAddr(String sourceAddr) {
+		return telegramDao.getBySrcAddr(sourceAddr);
+	}
+
+	@Override
+	public List<Telegram> getTelegramByDestAddr(String destAddr) {
+		return telegramDao.getByDstAddr(destAddr);
+	}
+
+	@Override
+	public List<Telegram> getRecentTelegrams(int limit) {
+		return telegramDao.getRecentTelegrams(limit);
 	}
 }
