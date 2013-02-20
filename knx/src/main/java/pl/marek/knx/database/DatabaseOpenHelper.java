@@ -1,5 +1,6 @@
 package pl.marek.knx.database;
 
+import pl.marek.knx.database.tables.*;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -24,6 +25,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		DevicesTable.onCreate(db);
 		GroupsTable.onCreate(db);
 		DPTTable.onCreate(db);
+		ProjectTable.onCreate(db);
 	}
 
 	@Override
@@ -33,5 +35,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		DevicesTable.onUpgrade(db, oldVersion, newVersion);
 		GroupsTable.onUpgrade(db, oldVersion, newVersion);
 		DPTTable.onUpgrade(db, oldVersion, newVersion);
+		ProjectTable.onUpgrade(db, oldVersion, newVersion);
 	}
 }

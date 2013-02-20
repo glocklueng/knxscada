@@ -1,4 +1,4 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import pl.marek.knx.database.DPTTable.DPTColumns;
+import pl.marek.knx.database.DPTEntity;
+import pl.marek.knx.database.tables.DPTTable;
+import pl.marek.knx.database.tables.DPTTable.DPTColumns;
 import pl.marek.knx.interfaces.Dao;
 
 public class DPTDao implements Dao<DPTEntity>{

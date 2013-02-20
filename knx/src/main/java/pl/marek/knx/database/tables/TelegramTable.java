@@ -1,11 +1,13 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.tables;
 
+import pl.marek.knx.database.tables.ProjectTable.ProjectColumns;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class TelegramTable {
 	
 	public static class TelegramColumns implements BaseColumns{
+		public static final String PROJECT_ID = "project_id";
 		public static final String TIME = "time";
 		public static final String PRIORITY = "priority";
 		public static final String SOURCE_ADDRESS = "source_address";
@@ -26,6 +28,7 @@ public class TelegramTable {
 	public static final String TABLE_NAME = "telegrams";
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE "+TelegramTable.TABLE_NAME+" ("
 												   + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+												   + TelegramColumns.PROJECT_ID + " INTEGER, "
 												   + TelegramColumns.TIME + " TIMESTAMP DEFAULT (datetime('now','localtime')), "
 												   + TelegramColumns.PRIORITY + " TEXT, "
 												   + TelegramColumns.SOURCE_ADDRESS + " TEXT, "
@@ -40,7 +43,9 @@ public class TelegramTable {
 												   + TelegramColumns.TYPE + " TEXT, "
 												   + TelegramColumns.ACK + " INTEGER, "
 												   + TelegramColumns.CONFIRMATION + " INTEGER, "
-												   + TelegramColumns.REPEATED + " INTEGER);";
+												   + TelegramColumns.REPEATED + " INTEGER, "
+												   + "FOREIGN KEY("+TelegramColumns.PROJECT_ID+") REFERENCES "
+												   + ProjectTable.TABLE_NAME + "("+ProjectColumns._ID+"));";
 	
 	public static final String DROP_TABLE_QUERY = "DROP TABLE IF EXISTS "+ TelegramTable.TABLE_NAME;
 	public static final String TRUNCATE_TABLE_QUERY = "TRUNCATE TABLE IF EXISTS "+ TelegramTable.TABLE_NAME;

@@ -39,7 +39,7 @@ public class Main extends Activity implements KNXTelegramListener, KNXConnection
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.application);
+		setContentView(R.layout.project_list);
 		
 		telegramReceiver = new TelegramBroadcastReceiver(this);
 		connectionStateReceiver = new KNXConnectionStateBroadcastReceiver(this);
@@ -75,12 +75,12 @@ public class Main extends Activity implements KNXTelegramListener, KNXConnection
 	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	         startActivity(intent);
 	         break;
-	      case R.id.telegram_ab_item:
+	      case R.id.ab_telegram_item:
 	    	  
 	    	  startActivity(new Intent(this, TelegramActivity.class));
 	    	  
 	    	  break;
-	      case R.id.menu:
+	      case R.id.ab_preferences_item:
 	    	  
 	    	  startActivity(new Intent(this, SettingsActivity.class));
 	    	  

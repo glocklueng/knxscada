@@ -101,7 +101,11 @@ public class KNXLinkListener implements NetworkLinkListener{
         TelegramFlags flags = new TelegramFlags(ack, confirmation, repeated);
         
         tmpDatapoint = null;
-        return new Telegram(time, priority, sourceAddr, destinationAddr, hopcount, type, msgCode, rawdata, data, dptId, flags, rawframe, framelength);   
+        
+        int projectId = 0;
+        //TODO Pobierać projectId na podstawie połączenia?
+        
+        return new Telegram(projectId,time, priority, sourceAddr, destinationAddr, hopcount, type, msgCode, rawdata, data, dptId, flags, rawframe, framelength);   
     }
     
     private String getMessageCode(FrameEvent e){

@@ -5,14 +5,16 @@ import java.util.Date;
 public class DatapointEntity {
 	
 	private String groupAddress;
+	private int projectId;
 	private String dptId;
 	private String state;
 	private Date modifyDate;
 	
 	public DatapointEntity(){}
 	
-	public DatapointEntity(String groupAddress, String dptId, String state, Date modifyDate){
+	public DatapointEntity(String groupAddress, int projectId, String dptId, String state, Date modifyDate){
 		this.groupAddress = groupAddress;
+		this.projectId = projectId;
 		this.dptId = dptId;
 		this.state = state;
 		this.modifyDate = modifyDate;
@@ -24,6 +26,14 @@ public class DatapointEntity {
 
 	public void setGroupAddress(String groupAddress) {
 		this.groupAddress = groupAddress;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public String getDptId() {

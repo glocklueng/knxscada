@@ -39,6 +39,7 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 		
 		telegramAdapter = new TelegramAdapter(this,telegrams);
 		setListAdapter(telegramAdapter);
+//		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
 	}
 	
 	@Override
@@ -97,10 +98,11 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 
 	@Override
 	public void telegramReceived(Telegram telegram) {
-		if(!telegrams.isEmpty())
+		if(telegrams.size() == NUMBER_OF_SHOW_TELEGRAMS){
 			telegrams.removeLast();
+		}
 		telegrams.addFirst(telegram);
 		telegramAdapter.notifyDataSetChanged();
+		
 	}
-
 }

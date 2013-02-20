@@ -22,15 +22,16 @@
         android:icon="@drawable/phone_logo"
         android:label="@string/application_name"
         android:theme="@style/iHouseTheme" >
-        <activity android:name=".Main" >
+        <activity android:name=".ProjectsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ProjectActivity"
+            android:theme="@style/iHouseProjectTheme" />
         <activity android:name=".preferences.SettingsActivity" 
             android:theme="@style/iHousePreferencesTheme"/>
-        
         <activity android:name=".TelegramActivity"
             android:theme="@style/iHouseTelegramsTheme" />
         <activity android:name=".TelegramDetailActivity"

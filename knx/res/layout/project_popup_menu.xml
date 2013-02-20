@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-	<include layout="@layout/list_view"/>
-
+    
+    <include layout="@layout/project_dialog_header"/>
+    <include layout="@layout/list_view"/>
+    
 </LinearLayout>

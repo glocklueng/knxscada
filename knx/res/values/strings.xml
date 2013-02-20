@@ -7,10 +7,34 @@
     <string name="toast_icon_description">Ikona aplikacji</string>
     <string name="connected">Połączono</string>	
     <string name="menu_preferences">Ustawienia</string>
-    <string name="telegram_ab_item">Telegramy</string>
+    <string name="ab_telegram_item">Telegramy</string>
+    <string name="ab_new_project_item">Nowy projekt</string>
     <string name="yes">Tak</string> 
     <string name="no">Nie</string> 
     
+    
+    <!-- NEW PROJECT DIALOG -->
+    <string name="dialog_new_project_title">Nowy projekt</string>
+    <string name="dialog_edit_project_title">Edycja projektu</string>
+    <string name="dialog_new_project_name">Nazwa projektu</string>
+    <string name="dialog_new_project_name_hint">Wpisz nazwę projektu</string>
+    <string name="dialog_new_project_description">Opis</string>
+    <string name="dialog_new_project_description_hint">Opisz nowy projekt</string>
+    <string name="dialog_project_add_button">Utwórz projekt</string>
+    <string name="dialog_project_edit_button">Zapisz zmiany</string>
+    <string name="dialog_project_cancel_button">Anuluj</string>
+    
+    <!-- PROJECT POPUP MENU -->
+    <string name="project_popup_menu_item_edit">Edytuj projekt</string>
+    <string name="project_popup_menu_item_delete">Usuń projekt</string>
+    
+    <!-- PROJECT DELETE CONFIRMATION -->
+    <string name="project_delete_confirmation_title">Potwierdzenie usunięcia</string>
+    <string name="project_delete_confirmation_text">Czy napewno chcesz usunąć projekt \"%s\"?</string>
+    
+    <!-- PROJECT INFORMATION DIALOG -->
+    <string name="project_name_empty_title">Brak nazwy</string>
+    <string name="project_name_empty_text">Podaj nazwę projektu!</string>
     
     <!-- KNX CONNECTION STRINGS -->
     <string name="connection_service_connecting">Nawiązywanie połączenia z magistralą KNX</string>

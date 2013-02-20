@@ -3,13 +3,15 @@ package pl.marek.knx.database;
 public class BasicBlock {
 	
 	protected String address;
+	protected int projectId;
 	protected String name;
 	protected String description;
 	
 	public BasicBlock(){}
 	
-	public BasicBlock(String address, String name, String description){
+	public BasicBlock(String address, int projectId, String name, String description){
 		this.address = address;
+		this.projectId = projectId;
 		this.name = name;
 		this.description = description;
 	}
@@ -20,6 +22,14 @@ public class BasicBlock {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public String getName() {

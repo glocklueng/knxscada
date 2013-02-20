@@ -1,4 +1,4 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.tables;
 
 import android.database.sqlite.SQLiteDatabase;
 

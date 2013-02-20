@@ -1,4 +1,4 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import pl.marek.knx.database.BasicBlockColumns;
+import pl.marek.knx.database.BasicBlock;
+import pl.marek.knx.database.tables.BasicBlockColumns;
 import pl.marek.knx.interfaces.Dao;
 
 public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
@@ -26,17 +27,19 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 	private String createInsertQuery(String tableName){
 		return "INSERT INTO " + tableName + " ("
 				   + BasicBlockColumns.ADDRESS + ", "
+				   + BasicBlockColumns.PROJECT_ID + ", "
 				   + BasicBlockColumns.NAME + ", "
 				   + BasicBlockColumns.DESCRIPTION + ") "
-				   + "values(?,?,?);";
+				   + "values(?,?,?,?);";
 	}
 	
 	@Override
 	public long save(T block){
 		insertStatement.clearBindings();
 		insertStatement.bindString(1, block.getAddress());
-		insertStatement.bindString(2, block.getName());
-		insertStatement.bindString(3, block.getDescription());
+		insertStatement.bindString(2, String.valueOf(block.getProjectId()));
+		insertStatement.bindString(3, block.getName());
+		insertStatement.bindString(4, block.getDescription());
 		long rowId = insertStatement.executeInsert();
 		return rowId;
 	}
@@ -46,12 +49,12 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 		final ContentValues values = new ContentValues();
 		values.put(BasicBlockColumns.NAME, block.getName());
 		values.put(BasicBlockColumns.DESCRIPTION, block.getDescription());
-		db.update(tableName, values, BasicBlockColumns.ADDRESS + " = ?", new String[]{block.getAddress()});
+		db.update(tableName, values, BasicBlockColumns.ADDRESS + " = ? and "+ BasicBlockColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
 	}
 
 	@Override
 	public void delete(T block) {
-		db.delete(tableName, BasicBlockColumns.ADDRESS + " = ?", new String[]{block.getAddress()});
+		db.delete(tableName, BasicBlockColumns.ADDRESS + " = ? and "+ BasicBlockColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 		Cursor c = 
 				db.query(tableName, 
 						new String[]{BasicBlockColumns.ADDRESS,
+									 BasicBlockColumns.PROJECT_ID,
 									 BasicBlockColumns.NAME,
 									 BasicBlockColumns.DESCRIPTION
 						}, 
@@ -73,17 +77,34 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 		}
 		return block;
 	}
+	
+	public List<T> getByProjectId(int id){
+		return getList(BasicBlockColumns.PROJECT_ID, String.valueOf(id), null, null, null, null);
+	}
 
 	@Override
 	public List<T> getAll() {
+		return getList(null, null, null, null, null, null);
+	}
+	
+	private List<T> getList(String column, String arg, String groupBy, String having, String orderBy, String limit){
+		
+		String selection = null;
+		if(column != null)
+			selection = column + " = ?";
+		
+		String[] selectionArgs = null;
+		if(arg != null)
+			selectionArgs = new String[]{String.valueOf(arg)};
 		List<T> blocks = new ArrayList<T>();
 		Cursor c = 
 				db.query(tableName, 
 						new String[]{BasicBlockColumns.ADDRESS,
+									 BasicBlockColumns.PROJECT_ID,
 									 BasicBlockColumns.NAME,
 									 BasicBlockColumns.DESCRIPTION
 						}, 
-						null,null,null,null,null);
+						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
 			do{
 				T block = this.build(c);

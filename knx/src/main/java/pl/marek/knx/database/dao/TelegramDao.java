@@ -1,4 +1,4 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
 
-import pl.marek.knx.database.TelegramTable.TelegramColumns;
+import pl.marek.knx.database.tables.TelegramTable;
+import pl.marek.knx.database.tables.TelegramTable.TelegramColumns;
 import pl.marek.knx.interfaces.Dao;
 import pl.marek.knx.telegram.Telegram;
 import pl.marek.knx.telegram.TelegramFlags;
@@ -19,6 +20,7 @@ import pl.marek.knx.utils.DateConversion;
 public class TelegramDao implements Dao<Telegram>{
 	
 	private static final String INSERT_QUERY  = "INSERT INTO " + TelegramTable.TABLE_NAME + " ("
+											   + TelegramColumns.PROJECT_ID + ", "
 											   + TelegramColumns.PRIORITY + ", "
 											   + TelegramColumns.SOURCE_ADDRESS + ", "
 											   + TelegramColumns.DESTINATION_ADDRESS + ", "
@@ -33,7 +35,7 @@ public class TelegramDao implements Dao<Telegram>{
 											   + TelegramColumns.ACK + ", "
 											   + TelegramColumns.CONFIRMATION + ", "
 											   + TelegramColumns.REPEATED + ") "
-											   + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+											   + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 			
 	
 	
@@ -48,26 +50,28 @@ public class TelegramDao implements Dao<Telegram>{
 	@Override
 	public long save(Telegram telegram) {
 		insertStatement.clearBindings();
-		insertStatement.bindString(1, telegram.getPriority());
-		insertStatement.bindString(2, telegram.getSourceAddress());
-		insertStatement.bindString(3, telegram.getDestinationAddress());
-		insertStatement.bindString(4, Byte.toString(telegram.getHopcount()));
-		insertStatement.bindString(5, telegram.getMsgCode());
-		insertStatement.bindString(6, telegram.getDptId());
-		insertStatement.bindString(7, DataRepresentation.byteArrayToHexString(telegram.getRawdata()));
-		insertStatement.bindString(8, telegram.getData());
-		insertStatement.bindString(9, DataRepresentation.byteArrayToHexString(telegram.getRawframe()));
-		insertStatement.bindLong(10, telegram.getFrameLength());
-		insertStatement.bindString(11, telegram.getType());
-		insertStatement.bindLong(12, telegram.getFlags().isAck() ? 0 : 1);
-		insertStatement.bindLong(13, telegram.getFlags().isConfirmation() ? 0 : 1);
-		insertStatement.bindLong(14, telegram.getFlags().isRepeated() ? 0 : 1);
+		insertStatement.bindString(1, String.valueOf(telegram.getProjectId()));
+		insertStatement.bindString(2, telegram.getPriority());
+		insertStatement.bindString(3, telegram.getSourceAddress());
+		insertStatement.bindString(4, telegram.getDestinationAddress());
+		insertStatement.bindString(5, Byte.toString(telegram.getHopcount()));
+		insertStatement.bindString(6, telegram.getMsgCode());
+		insertStatement.bindString(7, telegram.getDptId());
+		insertStatement.bindString(8, DataRepresentation.byteArrayToHexString(telegram.getRawdata()));
+		insertStatement.bindString(9, telegram.getData());
+		insertStatement.bindString(10, DataRepresentation.byteArrayToHexString(telegram.getRawframe()));
+		insertStatement.bindLong(11, telegram.getFrameLength());
+		insertStatement.bindString(12, telegram.getType());
+		insertStatement.bindLong(13, telegram.getFlags().isAck() ? 0 : 1);
+		insertStatement.bindLong(14, telegram.getFlags().isConfirmation() ? 0 : 1);
+		insertStatement.bindLong(15, telegram.getFlags().isRepeated() ? 0 : 1);
 		return insertStatement.executeInsert();
 	}
 
 	@Override
 	public void update(Telegram telegram) {
 		final ContentValues values = new ContentValues();
+		values.put(TelegramColumns.PROJECT_ID, telegram.getProjectId());
 		values.put(TelegramColumns.PRIORITY, telegram.getPriority());
 		values.put(TelegramColumns.SOURCE_ADDRESS, telegram.getSourceAddress());
 		values.put(TelegramColumns.DESTINATION_ADDRESS, telegram.getDestinationAddress());
@@ -105,7 +109,8 @@ public class TelegramDao implements Dao<Telegram>{
 		Telegram telegram = null;
 		Cursor c = 
 				db.query(TelegramTable.TABLE_NAME, 
-						new String[]{BaseColumns._ID, 
+						new String[]{BaseColumns._ID,
+									TelegramColumns.PROJECT_ID,
 									TelegramColumns.TIME,
 									TelegramColumns.PRIORITY,
 								    TelegramColumns.SOURCE_ADDRESS,
@@ -146,6 +151,10 @@ public class TelegramDao implements Dao<Telegram>{
 		return getList(null, null, null, null, TelegramColumns.TIME+" DESC", String.valueOf(limit));
 	}
 	
+	public List<Telegram> getByProjectId(int id){
+		return getList(TelegramColumns.PROJECT_ID, String.valueOf(id), null, null, TelegramColumns.TIME+" DESC", null);
+	}
+	
 	@Override
 	public List<Telegram> getAll() {
 		return getList(null,null,null,null,null,null);
@@ -165,7 +174,8 @@ public class TelegramDao implements Dao<Telegram>{
 		List<Telegram> telegrams = new ArrayList<Telegram>();
 		Cursor c = 
 				db.query(TelegramTable.TABLE_NAME, 
-						new String[]{BaseColumns._ID, 
+						new String[]{BaseColumns._ID,
+									TelegramColumns.PROJECT_ID,
 									TelegramColumns.TIME,
 									TelegramColumns.PRIORITY,
 								    TelegramColumns.SOURCE_ADDRESS,
@@ -202,23 +212,24 @@ public class TelegramDao implements Dao<Telegram>{
 		if(cursor != null){
 			telegram = new Telegram();
 			telegram.setId(cursor.getLong(0));
-			telegram.setTime(new DateConversion().getDateFromString(cursor.getString(1)));
-			telegram.setPriority(cursor.getString(2));
-			telegram.setSourceAddress(cursor.getString(3));
-			telegram.setDestinationAddress(cursor.getString(4));
-			telegram.setHopcount(Byte.decode(cursor.getString(5)));
-			telegram.setMsgCode(cursor.getString(6));
-			telegram.setDptId(cursor.getString(7));
-			telegram.setRawdata(DataRepresentation.hexStringToByteArray(cursor.getString(8)));
-			telegram.setData(cursor.getString(9));
-			telegram.setRawframe(DataRepresentation.hexStringToByteArray(cursor.getString(10)));
-			telegram.setFrameLength(cursor.getInt(11));
-			telegram.setType(cursor.getString(12));
+			telegram.setProjectId(cursor.getInt(1));
+			telegram.setTime(new DateConversion().getDateFromString(cursor.getString(2)));
+			telegram.setPriority(cursor.getString(3));
+			telegram.setSourceAddress(cursor.getString(4));
+			telegram.setDestinationAddress(cursor.getString(5));
+			telegram.setHopcount(Byte.decode(cursor.getString(6)));
+			telegram.setMsgCode(cursor.getString(7));
+			telegram.setDptId(cursor.getString(8));
+			telegram.setRawdata(DataRepresentation.hexStringToByteArray(cursor.getString(9)));
+			telegram.setData(cursor.getString(10));
+			telegram.setRawframe(DataRepresentation.hexStringToByteArray(cursor.getString(11)));
+			telegram.setFrameLength(cursor.getInt(12));
+			telegram.setType(cursor.getString(13));
 			
 			TelegramFlags flags = new TelegramFlags();
-			flags.setAck(cursor.getInt(13) != 0 ? true : false);
-			flags.setConfirmation(cursor.getInt(14) != 0 ? true : false);
-			flags.setRepeated(cursor.getInt(15) != 0 ? true : false);
+			flags.setAck(cursor.getInt(14) != 0 ? true : false);
+			flags.setConfirmation(cursor.getInt(15) != 0 ? true : false);
+			flags.setRepeated(cursor.getInt(16) != 0 ? true : false);
 
 			telegram.setFlags(flags);
 		}

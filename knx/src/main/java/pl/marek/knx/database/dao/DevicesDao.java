@@ -1,5 +1,7 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.dao;
 
+import pl.marek.knx.database.Device;
+import pl.marek.knx.database.tables.DevicesTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -15,8 +17,9 @@ public class DevicesDao extends BasicBlockDao<Device>{
 		if(cursor != null){
 			device = new Device();
 			device.setAddress(cursor.getString(0));
-			device.setName(cursor.getString(1));
-			device.setDescription(cursor.getString(2));
+			device.setProjectId(cursor.getInt(1));
+			device.setName(cursor.getString(2));
+			device.setDescription(cursor.getString(3));
 		}
 		return device;
 	}

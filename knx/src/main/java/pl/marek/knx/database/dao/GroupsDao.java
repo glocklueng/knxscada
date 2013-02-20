@@ -1,5 +1,7 @@
-package pl.marek.knx.database;
+package pl.marek.knx.database.dao;
 
+import pl.marek.knx.database.Group;
+import pl.marek.knx.database.tables.GroupsTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -15,8 +17,9 @@ public class GroupsDao extends BasicBlockDao<Group> {
 		if(cursor != null){
 			group = new Group();
 			group.setAddress(cursor.getString(0));
-			group.setName(cursor.getString(1));
-			group.setDescription(cursor.getString(2));
+			group.setProjectId(cursor.getInt(1));
+			group.setName(cursor.getString(2));
+			group.setDescription(cursor.getString(3));
 		}
 		return group;
 	}

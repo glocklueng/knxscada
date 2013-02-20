@@ -138,7 +138,8 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 	}
 	
 	private void addToDatabase(Telegram telegram){
-		dbManager.addTelegram(telegram);
+		long rowId = dbManager.addTelegram(telegram);
+		telegram.setId(rowId);
 	}
 
 	@Override

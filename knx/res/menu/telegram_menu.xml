@@ -3,7 +3,7 @@
 
     <item android:id="@+id/telegram_menu_item"
           android:icon="@drawable/telegram_icon"
-          android:title="@string/telegram_ab_item"
+          android:title="@string/ab_telegram_item"
           android:showAsAction="ifRoom|withText" />
     
 </menu>

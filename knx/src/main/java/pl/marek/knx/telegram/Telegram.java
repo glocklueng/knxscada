@@ -11,6 +11,7 @@ public class Telegram implements Parcelable{
 	public static final String TELEGRAM = "TELEGRAM";
 	
 	private long id;
+	private int projectId;
     private Date time;
     private String priority;
     private String sourceAddress;
@@ -43,10 +44,11 @@ public class Telegram implements Parcelable{
 		readFromParcel(parcel);
 	}
     
-    public Telegram(Date time, String priority, String sourceAddress, String destinationAddress,
+    public Telegram(int projectId, Date time, String priority, String sourceAddress, String destinationAddress,
             byte hopcount, String type, String msgCode,  byte[] rawdata, String data, String dptId, 
             TelegramFlags flags, byte[] rawframe, int frameLength){
-        this.time = time;
+        this.projectId = projectId;
+    	this.time = time;
         this.priority = priority; 
         this.sourceAddress = sourceAddress;
         this.destinationAddress = destinationAddress;
@@ -61,10 +63,10 @@ public class Telegram implements Parcelable{
         this.flags = flags;
     }
     
-    public Telegram(long id, Date time, String priority,  String sourceAddress, String destinationAddress,
+    public Telegram(long id, int projectId, Date time, String priority,  String sourceAddress, String destinationAddress,
             byte hopcount, String type, String msgCode,  byte[] rawdata, String data, String dptId, 
             TelegramFlags flags, byte[] rawframe, int frameLength){
-        this(time, priority, sourceAddress, destinationAddress, hopcount,type,msgCode,rawdata,data,dptId,flags,rawframe,frameLength);
+        this(projectId, time, priority, sourceAddress, destinationAddress, hopcount,type,msgCode,rawdata,data,dptId,flags,rawframe,frameLength);
         this.id = id;
     }
     
@@ -74,6 +76,14 @@ public class Telegram implements Parcelable{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public Date getTime() {
@@ -219,6 +229,7 @@ public class Telegram implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel parcel, int parcelFlags) {
 	    parcel.writeLong(id);
+	    parcel.writeInt(projectId);
 		parcel.writeSerializable(time);
 	    parcel.writeString(priority);
 	    parcel.writeString(sourceAddress);
@@ -237,6 +248,7 @@ public class Telegram implements Parcelable{
 	
 	private void readFromParcel(Parcel parcel){
 		id = parcel.readLong();
+		projectId = parcel.readInt();
 		time = (Date)parcel.readSerializable();
 		priority = parcel.readString();
 		sourceAddress = parcel.readString();
