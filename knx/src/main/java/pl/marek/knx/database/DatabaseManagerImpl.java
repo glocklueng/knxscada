@@ -45,6 +45,11 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public void close() {
 		openHelper.close();
 	}
+	
+	@Override
+	public boolean isOpen(){
+		return db.isOpen();
+	}
 
 	@Override
 	public void addGroup(Group group){
@@ -154,7 +159,8 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public void addProject(Project project) {
 		db.beginTransaction();
 		try{
-			projectDao.save(project);
+			int id = (int)projectDao.save(project);
+			project.setId(id);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();

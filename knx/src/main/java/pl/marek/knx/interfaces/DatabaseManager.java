@@ -13,6 +13,7 @@ public interface DatabaseManager {
 	
 	public void open();
 	public void close();
+	public boolean isOpen();
 	
 	public void addGroup(Group group);
 	public void addDevice(Device device);

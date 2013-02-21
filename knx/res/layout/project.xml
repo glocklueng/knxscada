@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
+    <pl.marek.knx.SideBarView
+        android:id="@+id/left_side_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <pl.marek.knx.SideBarView
+        android:id="@+id/right_side_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
 </LinearLayout>

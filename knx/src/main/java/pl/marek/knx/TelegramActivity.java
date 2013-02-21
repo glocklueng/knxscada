@@ -47,6 +47,15 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 		super.onResume();
 		getActionBar().setTitle(getString(R.string.telegrams_activity_title));
 		getActionBar().setHomeButtonEnabled(true);
+		if(dbManager != null && !dbManager.isOpen())
+			dbManager.open();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if(dbManager != null && dbManager.isOpen())
+			dbManager.close();
 	}
 	
 	@Override
@@ -54,6 +63,7 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 		super.onDestroy();
 		unregisterReceiver(telegramReceiver);
 	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,7 +78,7 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	   switch (item.getItemId()) 
 	   {        
 	      case android.R.id.home:            
-	         Intent intent = new Intent(this, Main.class);            
+	         Intent intent = new Intent(this, TelegramActivity.class);            
 	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	         startActivity(intent);
 	         break;

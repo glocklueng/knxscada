@@ -48,19 +48,28 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project_list);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		dbManager = new DatabaseManagerImpl(this);
+		projects = new LinkedList<Project>(dbManager.getAllProjects());
+		projectAdapter = new ProjectAdapter(this, getListView(), projects);
+		setListAdapter(projectAdapter);
+		getListView().setOnItemLongClickListener(this);
+		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getActionBar().setHomeButtonEnabled(true);
-		
-		dbManager = new DatabaseManagerImpl(this);
-		projects = new LinkedList<Project>(dbManager.getAllProjects());
-		projectAdapter = new ProjectAdapter(this, projects);
-		setListAdapter(projectAdapter);
-		getListView().setOnItemLongClickListener(this);
-		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+		if(dbManager != null && !dbManager.isOpen())
+			dbManager.open();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if(dbManager != null && dbManager.isOpen())
+			dbManager.close();
 	}
 	
 	@Override
@@ -216,6 +225,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		
 		projects.add(project);
 		Collections.sort(projects, new ProjectComparator());
+		projectAdapter.setAnimatedProject(project);
 		projectAdapter.notifyDataSetChanged();
 		
 		dbManager.addProject(project);
@@ -225,9 +235,9 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	public boolean editProject(Project project){
 		if(!projectConditionCheck())
 			return false;
-		
 		dbManager.updateProject(project);
 		projects.set(findProjectIndex(project), project);
+		projectAdapter.setAnimatedProject(project);
 		projectAdapter.notifyDataSetChanged();
 		return true;
 	}
@@ -251,8 +261,8 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	
 	public void deleteProject(Project project){
 		dbManager.removeProject(project);
+		projectAdapter.delete(project);
 		projects.remove(project);
-		projectAdapter.notifyDataSetChanged();
 	}
 		
 	public class ProjectDialog extends Dialog implements View.OnClickListener{

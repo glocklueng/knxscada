@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -19,11 +21,15 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 	
 	private LayoutInflater inflater;
 	private Context context;
+	private Project animatedProject;
+	private ListView listView;
 	
-	public ProjectAdapter(Context context, List<Project> projects) {
+	public ProjectAdapter(Context context, ListView listView, List<Project> projects) {
 		super(context, android.R.layout.simple_list_item_single_choice, projects);
 		this.context = context;
+		this.listView = listView;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
 	}
 	
 	@Override
@@ -48,10 +54,50 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 			RelativeLayout v = (RelativeLayout)view.findViewById(R.id.project_item_text_views);
 			v.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		}
-		
-		Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-	    view.startAnimation(animation);
+		if(project.equals(animatedProject)){
+			showAddAnimation(view);
+			animatedProject = null;
+		}
 		
 		return view;
+	}
+	
+	public void setAnimatedProject(Project project){
+		animatedProject = project;
+	}
+	
+	public void delete(Project project){
+		int position = getPosition(project);
+		View view = listView.getChildAt(position);
+		showDeleteAnimation(view,project);
+	}
+	
+	private void showAddAnimation(View view){
+		view.startAnimation(getAnimation(android.R.anim.slide_in_left));
+	}
+	
+	private void showDeleteAnimation(View view, final Project project){
+		Animation animation = getAnimation(android.R.anim.slide_out_right);
+		animation.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				remove(project);
+				notifyDataSetChanged();
+			}
+		});
+		view.startAnimation(animation);
+	}
+	
+	private Animation getAnimation(int animationId){
+		Animation animation  = AnimationUtils.loadAnimation(context, animationId);
+		animation.setDuration(500);
+		return animation;
 	}
 }
