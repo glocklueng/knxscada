@@ -288,12 +288,9 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			requestWindowFeature(Window.FEATURE_NO_TITLE);
 			setContentView(R.layout.project_dialog);
 	        
-			DisplayMetrics metrics = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			int width = (int)(metrics.widthPixels * 0.95f);
-			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
+			setDialogSize();
 			
-			TextView titleView = (TextView)findViewById(R.id.dialog_project_title);
+			TextView titleView = (TextView)findViewById(R.id.dialog_title_text);
 			nameView = (TextView)findViewById(R.id.dialog_new_project_name);
 			descView = (TextView)findViewById(R.id.dialog_new_project_description);			
 			
@@ -307,7 +304,16 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 				addButton.setText(getString(R.string.dialog_project_edit_button));
 				nameView.setText(project.getName());
 				descView.setText(project.getDescription());
+			}else{
+				titleView.setText(getString(R.string.dialog_new_project_title));
 			}
+		}
+		
+		private void setDialogSize(){
+			DisplayMetrics metrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			int width = (int)(metrics.widthPixels * 0.95f);
+			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
 		}
 		
 		public String getName(){
@@ -377,7 +383,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			int width = (int)(metrics.widthPixels * 0.95f);
 			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
 			
-			TextView titleView = (TextView)findViewById(R.id.dialog_project_title);
+			TextView titleView = (TextView)findViewById(R.id.dialog_title_text);
 			ListView listView = (ListView)findViewById(android.R.id.list);
 			
 			String[] items = new String[]{

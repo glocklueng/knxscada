@@ -18,11 +18,11 @@ public class KNXDataBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		if(intent.getAction().equals(KNXConnectionService.READ_DATA)){
 			String groupAddress = intent.getStringExtra(KNXDataTransceiver.GROUP_ADDRESS);
-			String dptId = intent.getStringExtra(KNXDataTransceiver.DPT_IP);
+			String dptId = intent.getStringExtra(KNXDataTransceiver.DPT_ID);
 			transceiver.readData(groupAddress,dptId);
 		}else if(intent.getAction().equals(KNXConnectionService.WRITE_DATA)){
 			String groupAddress = intent.getStringExtra(KNXDataTransceiver.GROUP_ADDRESS);
-			String dptId = intent.getStringExtra(KNXDataTransceiver.DPT_IP);
+			String dptId = intent.getStringExtra(KNXDataTransceiver.DPT_ID);
 			String value = intent.getStringExtra(KNXDataTransceiver.VALUE);
 			transceiver.writeData(groupAddress,dptId,value);
 		}

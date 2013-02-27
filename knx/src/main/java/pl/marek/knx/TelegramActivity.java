@@ -2,12 +2,14 @@ package pl.marek.knx;
 
 import java.util.LinkedList;
 
+import pl.marek.knx.ReadWriteDialog.ReadWriteListener;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.interfaces.KNXDataTransceiver;
 import pl.marek.knx.interfaces.KNXTelegramListener;
 import pl.marek.knx.receivers.TelegramBroadcastReceiver;
 import pl.marek.knx.telegram.Telegram;
+import tuwien.auto.calimero.dptxlator.DPT;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-public class TelegramActivity extends ListActivity implements KNXTelegramListener{
+public class TelegramActivity extends ListActivity implements KNXTelegramListener, ReadWriteListener{
 	
 	public static int NUMBER_OF_SHOW_TELEGRAMS = 1000;
 	
@@ -82,14 +84,12 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	         startActivity(intent);
 	         break;
-	      case R.id.telegram_menu_item:
+	      case R.id.telegram_menu_read_write_item:
 	    	  
-	  		Intent dataIntent = new Intent(KNXConnectionService.WRITE_DATA);
-	  		dataIntent.putExtra(KNXDataTransceiver.GROUP_ADDRESS, "0/0/3");
-	  		dataIntent.putExtra(KNXDataTransceiver.DPT_IP, "1.001");
-	  		dataIntent.putExtra(KNXDataTransceiver.VALUE, "off");
-	  		sendBroadcast(dataIntent);
-	    	  
+	    	  ReadWriteDialog dialog = new ReadWriteDialog(this);
+	    	  dialog.setListener(this);
+	    	  dialog.show();
+	    	  	    	  
 	    	  break;
 	      default:            
 	         return super.onOptionsItemSelected(item);    
@@ -114,5 +114,24 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 		telegrams.addFirst(telegram);
 		telegramAdapter.notifyDataSetChanged();
 		
+	}
+
+	@Override
+	public void read(String address, DPT dpt) {
+		transferData(KNXDataTransceiver.READ_DATA, address, dpt, null);
+	}
+
+	@Override
+	public void write(String address, DPT dpt, String value) {
+		transferData(KNXDataTransceiver.WRITE_DATA, address, dpt, value);
+	}
+	
+	private void transferData(String type,String address, DPT dpt, String value){
+  		Intent dataIntent = new Intent(type);
+  		dataIntent.putExtra(KNXDataTransceiver.GROUP_ADDRESS, address);
+  		dataIntent.putExtra(KNXDataTransceiver.DPT_ID, dpt.getID());
+  		if(value != null)
+  			dataIntent.putExtra(KNXDataTransceiver.VALUE, value);
+  		sendBroadcast(dataIntent);
 	}
 }

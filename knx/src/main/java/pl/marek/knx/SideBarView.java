@@ -26,7 +26,6 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
 	private static final int ACCEPT_SLIDE_MOVE = 150;
 	private static final int ACCEPT_SLIDE_START_MARGIN = 100;
 	
-	private View container;
     private LinearLayout sidebarView;
     private ListView listView;
     private View outsideView;
@@ -57,7 +56,7 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
         removeAllViews();
         
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        container = inflater.inflate(mode.getResource(), this, true);
+        View container = inflater.inflate(mode.getResource(), this, true);
         sidebarView = (LinearLayout) container.findViewById(android.R.id.content);
         listView = (ListView) container.findViewById(android.R.id.list);
         outsideView = (View) container.findViewById(android.R.id.background);
@@ -132,15 +131,13 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     }
         
     public void show() {
-    	container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-        outsideView.setVisibility(View.VISIBLE);
+    	outsideView.setVisibility(View.VISIBLE);
         outsideView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.sidebar_fade_in));
         sidebarView.setVisibility(View.VISIBLE);
         sidebarView.startAnimation(mode.getInAnimation(getContext()));
     }
     
     public void hide() {
-    	container.setLayoutParams(new LinearLayout.LayoutParams(0,0));
         outsideView.setVisibility(View.GONE);
         outsideView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.sidebar_fade_out));
         sidebarView.setVisibility(View.GONE);
@@ -285,21 +282,33 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-        		
+        	
         	SideBarItem item = (SideBarItem)getItem(position);
-               
-        	View view = inflater.inflate(R.layout.sidebar_item, null);
-            TextView textView = (TextView) view.findViewById(R.id.sidebar_item_text);
-            ImageView imageView = (ImageView) view.findViewById(R.id.sidebar_item_icon);
-         
-            textView.setText(items.get(position).getName());
-            if (item.getIcon() != SideBarItem.DEFAULT_ICON_VALUE) {
-                imageView.setVisibility(View.VISIBLE);
-                imageView.setImageResource(items.get(position).getIcon());
+        	
+        	ViewHolder holder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.sidebar_item, null);
+                holder = new ViewHolder();
+                holder.text = (TextView) convertView.findViewById(R.id.sidebar_item_text);
+                holder.icon = (ImageView) convertView.findViewById(R.id.sidebar_item_icon);
+                convertView.setTag(holder);
             } else {
-                imageView.setVisibility(View.GONE);
+                holder = (ViewHolder) convertView.getTag();
             }
-            return view;
+            
+            holder.text.setText(item.getName());
+            if (item.getIcon() != SideBarItem.DEFAULT_ICON_VALUE) {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon.setImageResource(item.getIcon());
+            } else {
+                holder.icon.setVisibility(View.GONE);
+            }
+            return convertView;
+        }
+        
+        private class ViewHolder {
+            TextView text;
+            ImageView icon;
         }
     }
 }

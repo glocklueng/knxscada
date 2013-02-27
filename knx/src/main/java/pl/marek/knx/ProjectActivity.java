@@ -42,7 +42,7 @@ public class ProjectActivity extends Activity implements SideBarListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.project, menu);
+	    inflater.inflate(R.menu.project_menu, menu);
 	    return true;
 	}
 	

@@ -37,10 +37,23 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 		
 		Project project = getItem(position);
 		
-		View view = inflater.inflate(R.layout.project_item, parent, false);
-		TextView nameView = (TextView)view.findViewById(R.id.project_item_name);
-		TextView descriptionView = (TextView)view.findViewById(R.id.project_item_description);
-		ImageView imageView = (ImageView)view.findViewById(R.id.project_item_image);
+		View view = inflater.inflate(R.layout.project_item, null);
+		TextView nameView = null;
+		TextView descriptionView = null;
+		ImageView imageView = null;
+		
+		ViewHolder holder = (ViewHolder)view.getTag();
+		if(holder != null){
+			nameView = holder.getName();
+			descriptionView = holder.getDescription();
+			imageView = holder.getImage();
+		} else{
+			nameView = (TextView)view.findViewById(R.id.project_item_name);
+			descriptionView = (TextView)view.findViewById(R.id.project_item_description);
+			imageView = (ImageView)view.findViewById(R.id.project_item_image);
+			holder = new ViewHolder(nameView, descriptionView, imageView);
+			view.setTag(holder);
+		}
 		
 		nameView.setText(project.getName());
 		descriptionView.setText(project.getDescription());
@@ -99,5 +112,29 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 		Animation animation  = AnimationUtils.loadAnimation(context, animationId);
 		animation.setDuration(500);
 		return animation;
+	}
+	
+	private class ViewHolder{
+		private TextView name;
+		private TextView description;
+		private ImageView image;
+		
+		public ViewHolder(TextView name, TextView description, ImageView image){
+			this.name = name;
+			this.description = description;
+			this.image = image;
+		}
+		
+		public TextView getName() {
+			return name;
+		}
+
+		public TextView getDescription() {
+			return description;
+		}
+
+		public ImageView getImage() {
+			return image;
+		}
 	}
 }

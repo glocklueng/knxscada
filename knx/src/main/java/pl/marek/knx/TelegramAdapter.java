@@ -29,10 +29,26 @@ public class TelegramAdapter extends ArrayAdapter<Telegram>{
 		Telegram telegram = getItem(position);
 		View view = inflater.inflate(R.layout.telegram_item, parent, false);
 		
-		ImageView imageView = (ImageView)view.findViewById(R.id.telegram_item_priority_image);
-		TextView srcAddrView = (TextView) view.findViewById(R.id.telegram_item_from);
-		TextView dstAddrView = (TextView) view.findViewById(R.id.telegram_item_to);
-		TextView valueView = (TextView) view.findViewById(R.id.telegram_item_value);
+		ImageView imageView = null;
+		TextView srcAddrView = null;
+		TextView dstAddrView = null;
+		TextView valueView = null;
+		
+		ViewHolder holder = (ViewHolder)view.getTag();
+		if(holder != null){
+			imageView = holder.getImage();
+			srcAddrView = holder.getSrcAddr();
+			dstAddrView = holder.getDstAddr();
+			valueView = holder.getValue();
+		
+		} else{
+			imageView = (ImageView)view.findViewById(R.id.telegram_item_priority_image);
+			srcAddrView = (TextView) view.findViewById(R.id.telegram_item_from);
+			dstAddrView = (TextView) view.findViewById(R.id.telegram_item_to);
+			valueView = (TextView) view.findViewById(R.id.telegram_item_value);
+			holder = new ViewHolder(imageView, srcAddrView, dstAddrView, valueView);
+			view.setTag(holder);
+		}
 		
 		srcAddrView.setText(telegram.getSourceAddress());
 		dstAddrView.setText(telegram.getDestinationAddress());
@@ -56,6 +72,36 @@ public class TelegramAdapter extends ArrayAdapter<Telegram>{
 			icon = context.getResources().getDrawable(R.drawable.telegram_priority_urgent);
 		}
 		return icon;
+	}
+	
+	private class ViewHolder{
+		private ImageView image;
+		private TextView srcAddr;
+		private TextView dstAddr;
+		private TextView value;
+		
+		public ViewHolder(ImageView image, TextView srcAddr, TextView dstAddr, TextView value){
+			this.image = image;
+			this.srcAddr = srcAddr;
+			this.dstAddr = dstAddr;
+			this.value = value;
+		}
+
+		public ImageView getImage() {
+			return image;
+		}
+
+		public TextView getSrcAddr() {
+			return srcAddr;
+		}
+
+		public TextView getDstAddr() {
+			return dstAddr;
+		}
+
+		public TextView getValue() {
+			return value;
+		}
 	}
 
 }

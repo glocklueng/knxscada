@@ -5,6 +5,7 @@
     android:showDividers="none" >
 
     <ImageView
+        android:id="@+id/dialog_title_icon"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:layout_weight="0.20"
@@ -13,16 +14,16 @@
         android:src="@drawable/logo" />
 
     <TextView
-        android:id="@+id/dialog_project_title"
+        android:id="@+id/dialog_title_text"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:layout_weight="0.80"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:scaleType="center"
-        android:text="@string/dialog_new_project_title"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:textIsSelectable="false" />
 
 </LinearLayout>

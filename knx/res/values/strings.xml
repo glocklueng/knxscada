@@ -11,6 +11,7 @@
     <string name="ab_new_project_item">Nowy projekt</string>
     <string name="yes">Tak</string> 
     <string name="no">Nie</string> 
+    <string name="group_address_separator">/</string>
     
     
     <!-- NEW PROJECT DIALOG -->
@@ -35,6 +36,33 @@
     <!-- PROJECT INFORMATION DIALOG -->
     <string name="project_name_empty_title">Brak nazwy</string>
     <string name="project_name_empty_text">Podaj nazwę projektu!</string>
+    
+    <!-- TELEGRAM ACTIVITY/DIALOG -->
+    <string name="telegram_ab_read_write_item">Wyślij telegram</string>
+    <string name="dialog_rw_telegram_title">Wyślij telegram</string>
+    <string name="dialog_rw_telegram_cancel_button">Anuluj</string>
+    <string name="dialog_rw_telegram_read_button">Czytaj</string>
+    <string name="dialog_rw_telegram_write_button">Zapisz</string>
+    <string name="dialog_rw_telegram_address">Adres</string>
+    <string name="dialog_rw_telegram_data_type">Typ danych</string>
+    <string name="dialog_rw_telegram_function">Funkcja</string>
+    <string name="dialog_rw_telegram_value">Wartość</string>
+
+    <string-array name="dialog_rw_data_types">
+        <item name="data_type_binary">Binarne (1 bit)</item>
+        <item name="data_type_controlled">Kontrolne (3 bity)</item>
+        <item name="data_type_unsigned_1byte">Całkowite (1 bajt)</item>
+        <item name="data_type_unsigned_2bytes">Całkowite (2 bajty)</item>
+        <item name="data_type_unsigned_4bytes">Całkowite (4 bajty)</item>
+		<item name="data_type_float">Zmiennopozycyjne (2 bajty)</item>
+		<item name="data_type_date">Data</item>
+		<item name="data_type_time">Czas</item>
+		<item name="data_type_datetime">Data i czas</item>
+		<item name="data_type_string">Tekst</item>
+    </string-array>
+    <string name="dialog_rw_telegram_wrong_address_title">Ostrzeżenie</string>
+    <string name="dialog_rw_telegram_wrong_address_msg">Podano niepoprawny adres KNX!</string>
+    
     
     <!-- KNX CONNECTION STRINGS -->
     <string name="connection_service_connecting">Nawiązywanie połączenia z magistralą KNX</string>

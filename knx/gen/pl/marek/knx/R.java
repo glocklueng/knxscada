@@ -17,6 +17,7 @@ public final class R {
         public static final int sidebar_out_to_right=0x7f040005;
     }
     public static final class array {
+        public static final int dialog_rw_data_types=0x7f090002;
         public static final int service_mode_values=0x7f090001;
         public static final int service_modes=0x7f090000;
     }
@@ -53,79 +54,95 @@ public final class R {
         public static final int telegram_priority_normal=0x7f020011;
         public static final int telegram_priority_system=0x7f020012;
         public static final int telegram_priority_urgent=0x7f020013;
-        public static final int trash_icon=0x7f020014;
-        public static final int www_logo=0x7f020015;
+        public static final int telegram_rw=0x7f020014;
+        public static final int trash_icon=0x7f020015;
+        public static final int www_logo=0x7f020016;
     }
     public static final class id {
-        public static final int ab_new_project_item=0x7f0c0043;
-        public static final int ab_preferences_item=0x7f0c0045;
-        public static final int ab_telegram_item=0x7f0c0044;
-        public static final int dialog_new_project_cancel_button=0x7f0c000d;
-        public static final int dialog_new_project_description=0x7f0c000c;
-        public static final int dialog_new_project_name=0x7f0c000b;
-        public static final int dialog_project_add_button=0x7f0c000e;
-        public static final int dialog_project_title=0x7f0c000f;
-        public static final int discoverer_list=0x7f0c0005;
-        public static final int discoverer_progress=0x7f0c0003;
-        public static final int discoverer_text=0x7f0c0004;
-        public static final int knx_interface_item_address=0x7f0c0007;
-        public static final int knx_interface_item_name=0x7f0c0006;
-        public static final int left_side_navigation_view=0x7f0c0009;
-        public static final int project_ab_features=0x7f0c0046;
-        public static final int project_item_description=0x7f0c0013;
-        public static final int project_item_image=0x7f0c0014;
-        public static final int project_item_name=0x7f0c0011;
-        public static final int project_item_separator=0x7f0c0012;
-        public static final int project_item_text_views=0x7f0c0010;
-        public static final int project_popup_menu_item_icon=0x7f0c0015;
-        public static final int project_popup_menu_item_name=0x7f0c0016;
-        public static final int right_side_navigation_view=0x7f0c000a;
-        public static final int shadow=0x7f0c0019;
-        public static final int sidebar_item_icon=0x7f0c0017;
-        public static final int sidebar_item_text=0x7f0c0018;
-        public static final int telegram_detail_ack=0x7f0c0035;
-        public static final int telegram_detail_ack_label=0x7f0c0034;
-        public static final int telegram_detail_confirmation=0x7f0c0037;
-        public static final int telegram_detail_confirmation_label=0x7f0c0036;
-        public static final int telegram_detail_data=0x7f0c002d;
-        public static final int telegram_detail_data_label=0x7f0c002c;
-        public static final int telegram_detail_destination_address=0x7f0c0023;
-        public static final int telegram_detail_destination_address_label=0x7f0c0022;
-        public static final int telegram_detail_dptid=0x7f0c0033;
-        public static final int telegram_detail_dptid_label=0x7f0c0032;
-        public static final int telegram_detail_framelength=0x7f0c0031;
-        public static final int telegram_detail_framelength_label=0x7f0c0030;
-        public static final int telegram_detail_hopcount=0x7f0c0025;
-        public static final int telegram_detail_hopcount_label=0x7f0c0024;
-        public static final int telegram_detail_id=0x7f0c001b;
-        public static final int telegram_detail_id_label=0x7f0c001a;
-        public static final int telegram_detail_msgcode=0x7f0c0029;
-        public static final int telegram_detail_msgcode_label=0x7f0c0028;
-        public static final int telegram_detail_priority=0x7f0c001f;
-        public static final int telegram_detail_priority_label=0x7f0c001e;
-        public static final int telegram_detail_rawdata=0x7f0c002b;
-        public static final int telegram_detail_rawdata_label=0x7f0c002a;
-        public static final int telegram_detail_rawframe=0x7f0c002f;
-        public static final int telegram_detail_rawframe_label=0x7f0c002e;
-        public static final int telegram_detail_repeated=0x7f0c0039;
-        public static final int telegram_detail_repeated_label=0x7f0c0038;
-        public static final int telegram_detail_source_address=0x7f0c0021;
-        public static final int telegram_detail_source_address_label=0x7f0c0020;
-        public static final int telegram_detail_time=0x7f0c001d;
-        public static final int telegram_detail_time_label=0x7f0c001c;
-        public static final int telegram_detail_type=0x7f0c0027;
-        public static final int telegram_detail_type_label=0x7f0c0026;
-        public static final int telegram_item_from=0x7f0c0040;
-        public static final int telegram_item_from_label=0x7f0c003d;
-        public static final int telegram_item_labels=0x7f0c003c;
-        public static final int telegram_item_priority_addresses=0x7f0c003f;
-        public static final int telegram_item_priority_image=0x7f0c003b;
-        public static final int telegram_item_table_row=0x7f0c003a;
-        public static final int telegram_item_to=0x7f0c0041;
-        public static final int telegram_item_to_label=0x7f0c003e;
-        public static final int telegram_item_value=0x7f0c0042;
-        public static final int telegram_menu_item=0x7f0c0047;
-        public static final int text=0x7f0c0008;
+        public static final int ab_new_project_item=0x7f0c0052;
+        public static final int ab_preferences_item=0x7f0c0054;
+        public static final int ab_telegram_item=0x7f0c0053;
+        public static final int dialog_new_project_cancel_button=0x7f0c0012;
+        public static final int dialog_new_project_description=0x7f0c0011;
+        public static final int dialog_new_project_name=0x7f0c0010;
+        public static final int dialog_project_add_button=0x7f0c0013;
+        public static final int dialog_rw_group_address=0x7f0c003e;
+        public static final int dialog_rw_telegram_cancel_button=0x7f0c0046;
+        public static final int dialog_rw_telegram_data_type_spinner=0x7f0c003f;
+        public static final int dialog_rw_telegram_function_spinner=0x7f0c0040;
+        public static final int dialog_rw_telegram_read_button=0x7f0c0047;
+        public static final int dialog_rw_telegram_value_field=0x7f0c0041;
+        public static final int dialog_rw_telegram_value_spinner=0x7f0c0042;
+        public static final int dialog_rw_telegram_value_text=0x7f0c0044;
+        public static final int dialog_rw_telegram_value_text_fields=0x7f0c0043;
+        public static final int dialog_rw_telegram_value_unit=0x7f0c0045;
+        public static final int dialog_rw_telegram_write_button=0x7f0c0048;
+        public static final int dialog_title_icon=0x7f0c0003;
+        public static final int dialog_title_text=0x7f0c0004;
+        public static final int discoverer_list=0x7f0c0007;
+        public static final int discoverer_progress=0x7f0c0005;
+        public static final int discoverer_text=0x7f0c0006;
+        public static final int group_address_group=0x7f0c000a;
+        public static final int group_address_main_group=0x7f0c0008;
+        public static final int group_address_sub_group=0x7f0c0009;
+        public static final int knx_interface_item_address=0x7f0c000c;
+        public static final int knx_interface_item_name=0x7f0c000b;
+        public static final int left_side_navigation_view=0x7f0c000e;
+        public static final int project_ab_features=0x7f0c0055;
+        public static final int project_item_description=0x7f0c0017;
+        public static final int project_item_image=0x7f0c0018;
+        public static final int project_item_name=0x7f0c0015;
+        public static final int project_item_separator=0x7f0c0016;
+        public static final int project_item_text_views=0x7f0c0014;
+        public static final int project_popup_menu_item_icon=0x7f0c0019;
+        public static final int project_popup_menu_item_name=0x7f0c001a;
+        public static final int right_side_navigation_view=0x7f0c000f;
+        public static final int shadow=0x7f0c001d;
+        public static final int sidebar_item_icon=0x7f0c001b;
+        public static final int sidebar_item_text=0x7f0c001c;
+        public static final int telegram_detail_ack=0x7f0c0039;
+        public static final int telegram_detail_ack_label=0x7f0c0038;
+        public static final int telegram_detail_confirmation=0x7f0c003b;
+        public static final int telegram_detail_confirmation_label=0x7f0c003a;
+        public static final int telegram_detail_data=0x7f0c0031;
+        public static final int telegram_detail_data_label=0x7f0c0030;
+        public static final int telegram_detail_destination_address=0x7f0c0027;
+        public static final int telegram_detail_destination_address_label=0x7f0c0026;
+        public static final int telegram_detail_dptid=0x7f0c0037;
+        public static final int telegram_detail_dptid_label=0x7f0c0036;
+        public static final int telegram_detail_framelength=0x7f0c0035;
+        public static final int telegram_detail_framelength_label=0x7f0c0034;
+        public static final int telegram_detail_hopcount=0x7f0c0029;
+        public static final int telegram_detail_hopcount_label=0x7f0c0028;
+        public static final int telegram_detail_id=0x7f0c001f;
+        public static final int telegram_detail_id_label=0x7f0c001e;
+        public static final int telegram_detail_msgcode=0x7f0c002d;
+        public static final int telegram_detail_msgcode_label=0x7f0c002c;
+        public static final int telegram_detail_priority=0x7f0c0023;
+        public static final int telegram_detail_priority_label=0x7f0c0022;
+        public static final int telegram_detail_rawdata=0x7f0c002f;
+        public static final int telegram_detail_rawdata_label=0x7f0c002e;
+        public static final int telegram_detail_rawframe=0x7f0c0033;
+        public static final int telegram_detail_rawframe_label=0x7f0c0032;
+        public static final int telegram_detail_repeated=0x7f0c003d;
+        public static final int telegram_detail_repeated_label=0x7f0c003c;
+        public static final int telegram_detail_source_address=0x7f0c0025;
+        public static final int telegram_detail_source_address_label=0x7f0c0024;
+        public static final int telegram_detail_time=0x7f0c0021;
+        public static final int telegram_detail_time_label=0x7f0c0020;
+        public static final int telegram_detail_type=0x7f0c002b;
+        public static final int telegram_detail_type_label=0x7f0c002a;
+        public static final int telegram_item_from=0x7f0c004f;
+        public static final int telegram_item_from_label=0x7f0c004c;
+        public static final int telegram_item_labels=0x7f0c004b;
+        public static final int telegram_item_priority_addresses=0x7f0c004e;
+        public static final int telegram_item_priority_image=0x7f0c004a;
+        public static final int telegram_item_table_row=0x7f0c0049;
+        public static final int telegram_item_to=0x7f0c0050;
+        public static final int telegram_item_to_label=0x7f0c004d;
+        public static final int telegram_item_value=0x7f0c0051;
+        public static final int telegram_menu_read_write_item=0x7f0c0056;
+        public static final int text=0x7f0c000d;
         public static final int toast_image=0x7f0c0001;
         public static final int toast_layout_root=0x7f0c0000;
         public static final int toast_message=0x7f0c0002;
@@ -156,30 +173,32 @@ public final class R {
     }
     public static final class layout {
         public static final int custom_toast=0x7f030000;
-        public static final int discover_dialog=0x7f030001;
-        public static final int knx_interface_item=0x7f030002;
-        public static final int list_view=0x7f030003;
-        public static final int main=0x7f030004;
-        public static final int preference_category=0x7f030005;
-        public static final int preference_header_item=0x7f030006;
-        public static final int preference_header_switch_item=0x7f030007;
-        public static final int project=0x7f030008;
-        public static final int project_dialog=0x7f030009;
-        public static final int project_dialog_header=0x7f03000a;
-        public static final int project_item=0x7f03000b;
-        public static final int project_list=0x7f03000c;
-        public static final int project_popup_menu=0x7f03000d;
-        public static final int project_popup_menu_item=0x7f03000e;
-        public static final int sidebar_item=0x7f03000f;
-        public static final int sidebar_left=0x7f030010;
-        public static final int sidebar_right=0x7f030011;
-        public static final int telegram_detail=0x7f030012;
-        public static final int telegram_item=0x7f030013;
-        public static final int telegram_list=0x7f030014;
+        public static final int dialog_header=0x7f030001;
+        public static final int discover_dialog=0x7f030002;
+        public static final int group_address_view=0x7f030003;
+        public static final int knx_interface_item=0x7f030004;
+        public static final int list_view=0x7f030005;
+        public static final int main=0x7f030006;
+        public static final int preference_category=0x7f030007;
+        public static final int preference_header_item=0x7f030008;
+        public static final int preference_header_switch_item=0x7f030009;
+        public static final int project=0x7f03000a;
+        public static final int project_dialog=0x7f03000b;
+        public static final int project_item=0x7f03000c;
+        public static final int project_list=0x7f03000d;
+        public static final int project_popup_menu=0x7f03000e;
+        public static final int project_popup_menu_item=0x7f03000f;
+        public static final int sidebar_item=0x7f030010;
+        public static final int sidebar_left=0x7f030011;
+        public static final int sidebar_right=0x7f030012;
+        public static final int telegram_detail=0x7f030013;
+        public static final int telegram_dialog_read_write=0x7f030014;
+        public static final int telegram_item=0x7f030015;
+        public static final int telegram_list=0x7f030016;
     }
     public static final class menu {
         public static final int menu=0x7f0b0000;
-        public static final int project=0x7f0b0001;
+        public static final int project_menu=0x7f0b0001;
         public static final int telegram_menu=0x7f0b0002;
     }
     public static final class string {
@@ -189,31 +208,41 @@ public final class R {
          */
         public static final int application_name=0x7f060053;
         public static final int connected=0x7f060056;
-        public static final int connection_service_connected=0x7f06006c;
+        public static final int connection_service_connected=0x7f060078;
         /**  KNX CONNECTION STRINGS 
          */
-        public static final int connection_service_connecting=0x7f06006b;
-        public static final int connection_service_disconnected=0x7f06006e;
-        public static final int connection_service_disconnecting=0x7f06006d;
-        public static final int connection_service_failed=0x7f06006f;
-        public static final int connection_service_message=0x7f060072;
-        public static final int connection_service_title=0x7f060071;
-        public static final int connection_service_unknown=0x7f060070;
+        public static final int connection_service_connecting=0x7f060077;
+        public static final int connection_service_disconnected=0x7f06007a;
+        public static final int connection_service_disconnecting=0x7f060079;
+        public static final int connection_service_failed=0x7f06007b;
+        public static final int connection_service_message=0x7f06007e;
+        public static final int connection_service_title=0x7f06007d;
+        public static final int connection_service_unknown=0x7f06007c;
         /**  PREFERENCES KEYS 
          */
         public static final int connection_state_key=0x7f060005;
         public static final int default_preference_file=0x7f060054;
-        public static final int dialog_edit_project_title=0x7f06005d;
-        public static final int dialog_new_project_description=0x7f060060;
-        public static final int dialog_new_project_description_hint=0x7f060061;
-        public static final int dialog_new_project_name=0x7f06005e;
-        public static final int dialog_new_project_name_hint=0x7f06005f;
+        public static final int dialog_edit_project_title=0x7f06005e;
+        public static final int dialog_new_project_description=0x7f060061;
+        public static final int dialog_new_project_description_hint=0x7f060062;
+        public static final int dialog_new_project_name=0x7f06005f;
+        public static final int dialog_new_project_name_hint=0x7f060060;
         /**  NEW PROJECT DIALOG 
          */
-        public static final int dialog_new_project_title=0x7f06005c;
-        public static final int dialog_project_add_button=0x7f060062;
-        public static final int dialog_project_cancel_button=0x7f060064;
-        public static final int dialog_project_edit_button=0x7f060063;
+        public static final int dialog_new_project_title=0x7f06005d;
+        public static final int dialog_project_add_button=0x7f060063;
+        public static final int dialog_project_cancel_button=0x7f060065;
+        public static final int dialog_project_edit_button=0x7f060064;
+        public static final int dialog_rw_telegram_address=0x7f060071;
+        public static final int dialog_rw_telegram_cancel_button=0x7f06006e;
+        public static final int dialog_rw_telegram_data_type=0x7f060072;
+        public static final int dialog_rw_telegram_function=0x7f060073;
+        public static final int dialog_rw_telegram_read_button=0x7f06006f;
+        public static final int dialog_rw_telegram_title=0x7f06006d;
+        public static final int dialog_rw_telegram_value=0x7f060074;
+        public static final int dialog_rw_telegram_write_button=0x7f060070;
+        public static final int dialog_rw_telegram_wrong_address_msg=0x7f060076;
+        public static final int dialog_rw_telegram_wrong_address_title=0x7f060075;
         public static final int discover_item_summary=0x7f06004c;
         public static final int discover_item_title=0x7f06004b;
         public static final int discover_search_key=0x7f060011;
@@ -231,6 +260,7 @@ public final class R {
         public static final int discoverer_dialog_title=0x7f06002f;
         public static final int discoverer_item_summary=0x7f06002e;
         public static final int discoverer_item_title=0x7f06002d;
+        public static final int group_address_separator=0x7f06005c;
         public static final int individual_address=0x7f060018;
         public static final int individual_address_default_value=0x7f06001b;
         public static final int individual_address_key=0x7f06000c;
@@ -256,18 +286,18 @@ public final class R {
         public static final int local_port_title=0x7f060037;
         public static final int menu_preferences=0x7f060057;
         public static final int no=0x7f06005b;
-        public static final int project_delete_confirmation_text=0x7f060068;
+        public static final int project_delete_confirmation_text=0x7f060069;
         /**  PROJECT DELETE CONFIRMATION 
          */
-        public static final int project_delete_confirmation_title=0x7f060067;
-        public static final int project_name_empty_text=0x7f06006a;
+        public static final int project_delete_confirmation_title=0x7f060068;
+        public static final int project_name_empty_text=0x7f06006b;
         /**  PROJECT INFORMATION DIALOG 
          */
-        public static final int project_name_empty_title=0x7f060069;
-        public static final int project_popup_menu_item_delete=0x7f060066;
+        public static final int project_name_empty_title=0x7f06006a;
+        public static final int project_popup_menu_item_delete=0x7f060067;
         /**  PROJECT POPUP MENU 
          */
-        public static final int project_popup_menu_item_edit=0x7f060065;
+        public static final int project_popup_menu_item_edit=0x7f060066;
         public static final int remote_ip=0x7f060017;
         public static final int remote_ip_default_value=0x7f06001a;
         public static final int remote_ip_key=0x7f060009;
@@ -286,30 +316,33 @@ public final class R {
         public static final int settings_swith_summary_on=0x7f06001f;
         public static final int settings_swith_text_off=0x7f06001e;
         public static final int settings_swith_text_on=0x7f06001d;
-        public static final int telegram_detail_ack_label=0x7f06008e;
-        public static final int telegram_detail_confirmation_label=0x7f06008f;
-        public static final int telegram_detail_data_label=0x7f06008a;
-        public static final int telegram_detail_destination_address_label=0x7f060085;
-        public static final int telegram_detail_dptid_label=0x7f06008d;
-        public static final int telegram_detail_framelength_label=0x7f06008c;
-        public static final int telegram_detail_hopcount_label=0x7f060086;
-        public static final int telegram_detail_id_label=0x7f060081;
-        public static final int telegram_detail_msgCode_label=0x7f060088;
-        public static final int telegram_detail_priority_label=0x7f060083;
-        public static final int telegram_detail_rawdata_label=0x7f060089;
-        public static final int telegram_detail_rawframe_label=0x7f06008b;
-        public static final int telegram_detail_repeated_label=0x7f060090;
-        public static final int telegram_detail_source_address_label=0x7f060084;
-        public static final int telegram_detail_time_label=0x7f060082;
-        public static final int telegram_detail_type_label=0x7f060087;
-        public static final int telegram_response_timeout=0x7f060091;
-        public static final int telegrams_activity_details_title=0x7f06007d;
+        /**  TELEGRAM ACTIVITY/DIALOG 
+         */
+        public static final int telegram_ab_read_write_item=0x7f06006c;
+        public static final int telegram_detail_ack_label=0x7f06009a;
+        public static final int telegram_detail_confirmation_label=0x7f06009b;
+        public static final int telegram_detail_data_label=0x7f060096;
+        public static final int telegram_detail_destination_address_label=0x7f060091;
+        public static final int telegram_detail_dptid_label=0x7f060099;
+        public static final int telegram_detail_framelength_label=0x7f060098;
+        public static final int telegram_detail_hopcount_label=0x7f060092;
+        public static final int telegram_detail_id_label=0x7f06008d;
+        public static final int telegram_detail_msgCode_label=0x7f060094;
+        public static final int telegram_detail_priority_label=0x7f06008f;
+        public static final int telegram_detail_rawdata_label=0x7f060095;
+        public static final int telegram_detail_rawframe_label=0x7f060097;
+        public static final int telegram_detail_repeated_label=0x7f06009c;
+        public static final int telegram_detail_source_address_label=0x7f060090;
+        public static final int telegram_detail_time_label=0x7f06008e;
+        public static final int telegram_detail_type_label=0x7f060093;
+        public static final int telegram_response_timeout=0x7f06009d;
+        public static final int telegrams_activity_details_title=0x7f060089;
         /**  TELEGRAM DETAILS 
          */
-        public static final int telegrams_activity_title=0x7f06007c;
-        public static final int telegrams_item_from_label=0x7f06007e;
-        public static final int telegrams_item_image_description=0x7f060080;
-        public static final int telegrams_item_to_label=0x7f06007f;
+        public static final int telegrams_activity_title=0x7f060088;
+        public static final int telegrams_item_from_label=0x7f06008a;
+        public static final int telegrams_item_image_description=0x7f06008c;
+        public static final int telegrams_item_to_label=0x7f06008b;
         public static final int timeout_key=0x7f06000e;
         public static final int timeout_summary=0x7f060046;
         public static final int timeout_title=0x7f060045;
@@ -330,17 +363,17 @@ public final class R {
         /**  WebServer Settings 
          */
         public static final int webserver_port_title=0x7f06004d;
-        public static final int webserver_service_deploy=0x7f060079;
-        public static final int webserver_service_failed=0x7f060077;
-        public static final int webserver_service_message=0x7f06007b;
-        public static final int webserver_service_started=0x7f060074;
+        public static final int webserver_service_deploy=0x7f060085;
+        public static final int webserver_service_failed=0x7f060083;
+        public static final int webserver_service_message=0x7f060087;
+        public static final int webserver_service_started=0x7f060080;
         /**  WEBSERVER STRINGS 
          */
-        public static final int webserver_service_starting=0x7f060073;
-        public static final int webserver_service_stopped=0x7f060076;
-        public static final int webserver_service_stopping=0x7f060075;
-        public static final int webserver_service_title=0x7f06007a;
-        public static final int webserver_service_unknown=0x7f060078;
+        public static final int webserver_service_starting=0x7f06007f;
+        public static final int webserver_service_stopped=0x7f060082;
+        public static final int webserver_service_stopping=0x7f060081;
+        public static final int webserver_service_title=0x7f060086;
+        public static final int webserver_service_unknown=0x7f060084;
         public static final int webserver_ssl_port_key=0x7f060015;
         public static final int webserver_ssl_port_summary=0x7f060052;
         public static final int webserver_ssl_port_title=0x7f060051;
