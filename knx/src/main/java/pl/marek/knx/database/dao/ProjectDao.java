@@ -14,6 +14,7 @@ import android.provider.BaseColumns;
 
 import pl.marek.knx.database.Device;
 import pl.marek.knx.database.Group;
+import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.DatapointEntity;
 import pl.marek.knx.database.tables.ProjectTable;
@@ -37,6 +38,7 @@ public class ProjectDao implements Dao<Project> {
 	private GroupsDao groupsDao;
 	private DevicesDao devicesDao;
 	private DatapointsDao datapointsDao;
+	private LayerDao layerDao;
 
 	public ProjectDao(SQLiteDatabase db) {
 		this.db = db;
@@ -46,6 +48,7 @@ public class ProjectDao implements Dao<Project> {
 		groupsDao = new GroupsDao(db);
 		devicesDao = new DevicesDao(db);
 		datapointsDao = new DatapointsDao(db);
+		layerDao = new LayerDao(db);
 	}
 
 	@Override
@@ -95,6 +98,7 @@ public class ProjectDao implements Dao<Project> {
 		project.setDevices((ArrayList<Device>)devicesDao.getByProjectId(id));
 		project.setGroups((ArrayList<Group>)groupsDao.getByProjectId(id));
 		project.setDatapoints((ArrayList<DatapointEntity>)datapointsDao.getByProjectId(id));
+		project.setLayers((ArrayList<Layer>)layerDao.getByProjectId(id));
 		return project;
 	}
 	

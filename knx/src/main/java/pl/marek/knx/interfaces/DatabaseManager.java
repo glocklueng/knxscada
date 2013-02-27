@@ -6,6 +6,7 @@ import pl.marek.knx.database.DPTEntity;
 import pl.marek.knx.database.DatapointEntity;
 import pl.marek.knx.database.Device;
 import pl.marek.knx.database.Group;
+import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.telegram.Telegram;
 
@@ -39,5 +40,13 @@ public interface DatabaseManager {
 	public List<Project> getAllProjects();
 	public void removeProject(Project project);
 	public void updateProject(Project project);
+	
+	//Layer Operations
+	public void addLayer(Layer layer);
+	public Layer getLayerById(int id);
+	public Layer getLayerByName(String name);
+	public List<Layer> getAllLayers();
+	public void removeLayer(Layer layer);
+	public void updateLayer(Layer layer);
 	
 }

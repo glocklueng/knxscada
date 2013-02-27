@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,15 +67,26 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
                 hide();
             }
         });
+        final SideBarView sideBarView = this;
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (listener != null) {
-                    listener.onSideBarItemClick(items.get(position));
+                    listener.onSideBarItemClick(sideBarView, items.get(position));
                 }
                 hide();
             }
         });
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listener != null) {
+                    listener.onSideBarItemLongClick(sideBarView, items.get(position));
+                }
+				return true;
+			}
+		});
         items = new ArrayList<SideBarItem>();
         sideBarAdapter = new SideBarAdapter();
         listView.setAdapter(sideBarAdapter);
@@ -104,6 +116,11 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     
     public void removeItem(SideBarItem item){
     	items.remove(item);
+    	notifySetDataChanged();
+    }
+    
+    public void removeItem(int index){
+    	items.remove(index);
     	notifySetDataChanged();
     }
     
@@ -193,7 +210,8 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     
     
 	public interface SideBarListener {
-		public void onSideBarItemClick(SideBarItem item);
+		public void onSideBarItemClick(SideBarView view, SideBarItem item);
+		public void onSideBarItemLongClick(SideBarView view, SideBarItem item);
 	}
     
     public static enum SideBarMode {

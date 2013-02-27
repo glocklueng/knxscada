@@ -21,6 +21,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	private DPTDao dptDao;
 	private TelegramDao telegramDao;
 	private ProjectDao projectDao;
+	private LayerDao layerDao;
 	
 	public DatabaseManagerImpl(Context context){
 		this.context = context;
@@ -33,6 +34,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		dptDao = new DPTDao(db);
 		telegramDao = new TelegramDao(db);
 		projectDao = new ProjectDao(db);
+		layerDao = new LayerDao(db);
 	}
 	
 	@Override
@@ -203,6 +205,58 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		db.beginTransaction();
 		try{
 			projectDao.update(project);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+	
+	
+	//Layer Operations
+	
+	@Override
+	public void addLayer(Layer layer) {
+		db.beginTransaction();
+		try{
+			int id = (int)layerDao.save(layer);
+			layer.setId(id);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public Layer getLayerById(int id) {
+		return layerDao.getById(id);
+	}
+
+	@Override
+	public Layer getLayerByName(String name) {
+		return layerDao.getByName(name);
+	}
+
+	@Override
+	public List<Layer> getAllLayers() {
+		return layerDao.getAll();
+	}
+
+	@Override
+	public void removeLayer(Layer layer) {
+		db.beginTransaction();
+		try{
+			layerDao.delete(layer);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public void updateLayer(Layer layer) {
+		db.beginTransaction();
+		try{
+			layerDao.update(layer);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();

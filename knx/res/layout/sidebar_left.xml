@@ -17,7 +17,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:visibility="gone" >
-
+                
         <ListView
             android:id="@android:id/list"
             android:layout_width="150dp"

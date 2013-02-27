@@ -37,6 +37,33 @@
     <string name="project_name_empty_title">Brak nazwy</string>
     <string name="project_name_empty_text">Podaj nazwę projektu!</string>
     
+    <!-- PROJECT -->
+    <string name="project_add_layer_item">Dodaj piętro</string>
+    
+    <!-- LAYER DIALOG -->
+    <string name="dialog_new_layer_title">Nowe piętro</string>
+    <string name="dialog_edit_layer_title">Edycja piętra</string>
+    <string name="dialog_new_layer_name">Nazwa piętra</string>
+    <string name="dialog_new_layer_name_hint">Wpisz nazwę piętra</string>
+    <string name="dialog_new_layer_description_hint">Opis</string>
+    <string name="dialog_new_layer_description">Opisz piętro</string>
+    <string name="dialog_layer_add_button">Utwórz projekt</string>
+    <string name="dialog_layer_edit_button">Zapisz zmiany</string>
+    <string name="dialog_layer_cancel_button">Anuluj</string>
+    
+    <!-- LAYER INFORMATION DIALOG -->
+    <string name="layer_name_empty_title">Brak nazwy</string>
+    <string name="layer_name_empty_text">Podaj nazwę piętra!</string>
+    
+    <!-- LAYER POPUP MENU -->
+    <string name="layer_popup_menu_item_edit">Edytuj piętro</string>
+    <string name="layer_popup_menu_item_delete">Usuń piętro</string>
+    
+    <!-- LAYER DELETE CONFIRMATION -->
+    <string name="layer_delete_confirmation_title">Potwierdzenie usunięcia</string>
+    <string name="layer_delete_confirmation_text">Czy napewno chcesz usunąć piętro \"%s\"?</string>
+    
+    
     <!-- TELEGRAM ACTIVITY/DIALOG -->
     <string name="telegram_ab_read_write_item">Wyślij telegram</string>
     <string name="dialog_rw_telegram_title">Wyślij telegram</string>

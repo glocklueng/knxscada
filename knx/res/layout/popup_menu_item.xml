@@ -7,7 +7,7 @@
     android:background="@drawable/list_selector" >
     
     <ImageView
-        android:id="@+id/project_popup_menu_item_icon"
+        android:id="@+id/popup_menu_item_icon"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
@@ -15,7 +15,7 @@
         android:contentDescription="@string/application_name"
         />
     <TextView
-        android:id="@+id/project_popup_menu_item_name"
+        android:id="@+id/popup_menu_item_name"
         android:layout_width="48dp"
         android:layout_height="fill_parent"
         android:layout_weight="0.8"

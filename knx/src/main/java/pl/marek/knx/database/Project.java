@@ -23,6 +23,7 @@ public class Project implements Parcelable{
 	private ArrayList<Device> devices;
 	private ArrayList<Group> groups;
 	private ArrayList<DatapointEntity> datapoints;
+	private ArrayList<Layer> layers;
 	
 	public Project(){}
 	
@@ -137,7 +138,13 @@ public class Project implements Parcelable{
 		this.datapoints = datapoints;
 	}
 	
-	
+	public ArrayList<Layer> getLayers() {
+		return layers;
+	}
+
+	public void setLayers(ArrayList<Layer> layers) {
+		this.layers = layers;
+	}
 
 	@Override
 	public int describeContents() {

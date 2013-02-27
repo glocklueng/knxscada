@@ -26,6 +26,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		GroupsTable.onCreate(db);
 		DPTTable.onCreate(db);
 		ProjectTable.onCreate(db);
+		LayerTable.onCreate(db);
 	}
 
 	@Override
@@ -36,5 +37,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		GroupsTable.onUpgrade(db, oldVersion, newVersion);
 		DPTTable.onUpgrade(db, oldVersion, newVersion);
 		ProjectTable.onUpgrade(db, oldVersion, newVersion);
+		LayerTable.onUpgrade(db, oldVersion, newVersion);
 	}
 }

@@ -1,7 +1,11 @@
 package pl.marek.knx;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+
+import pl.marek.knx.PopupMenuItem;
+import pl.marek.knx.PopupMenuDialog.PopupMenuItemListener;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.interfaces.DatabaseManager;
@@ -15,34 +19,29 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ProjectsActivity extends ListActivity implements OnItemLongClickListener{
+public class ProjectsActivity extends ListActivity implements OnItemLongClickListener, PopupMenuItemListener{
 	
 	private ProjectAdapter projectAdapter;
 	private DatabaseManager dbManager;
 	private LinkedList<Project> projects;
 	private ProjectDialog projectDialog;
-	private ProjectPopupMenu projectPopupMenu;
+	private PopupMenuDialog projectPopupMenu;
 	private AlertDialog projectDeleteConfirmation;
+	private Project editedProject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +145,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		}
 		if(projectPopupMenu != null){
 			if(projectPopupMenu.isShowing()){
-				outState.putParcelable(ProjectPopupMenu.PROJECT_OBJECT, projectPopupMenu.getProject());
+				outState.putParcelable(Project.PROJECT, editedProject);
 				projectPopupMenu.dismiss();
 			}
 		}
@@ -167,7 +166,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 				showProjectDialog(name, description, dialogProject);
 			}
 			
-			Project popupProject = state.getParcelable(ProjectPopupMenu.PROJECT_OBJECT);
+			Project popupProject = state.getParcelable(Project.PROJECT);
 			if(popupProject != null){
 				showProjectPopupMenu(popupProject);
 			}
@@ -184,8 +183,26 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	}
 	
 	public void showProjectPopupMenu(Project project){
-		projectPopupMenu = new ProjectPopupMenu(this, project);
+		editedProject = project;
+		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
+		PopupMenuItem editItem = new PopupMenuItem(getString(R.string.project_popup_menu_item_edit), getResources().getDrawable(R.drawable.edit_icon));
+		PopupMenuItem deleteItem = new PopupMenuItem(getString(R.string.project_popup_menu_item_delete), getResources().getDrawable(R.drawable.trash_icon));
+		items.add(editItem);
+		items.add(deleteItem);
+		
+		projectPopupMenu = new PopupMenuDialog(this,project.getName(), items);
+		projectPopupMenu.setPopupMenuItemListener(this);
 		projectPopupMenu.show();
+		
+	}
+	
+	@Override
+	public void onPopupMenuItemClick(int position, PopupMenuItem item) {
+		if(item.getName().equals(getString(R.string.project_popup_menu_item_edit))){
+			showProjectDialog(null, null, editedProject);
+		}else if(item.getName().equals(getString(R.string.project_popup_menu_item_delete))){
+			showDeleteConfirmation(editedProject);
+		}
 	}
 	
 	public void showDeleteConfirmation(final Project project){
@@ -205,6 +222,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
+				editedProject = null;
 			}
 		});
 		projectDeleteConfirmation = builder.create();
@@ -239,6 +257,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		projects.set(findProjectIndex(project), project);
 		projectAdapter.setAnimatedProject(project);
 		projectAdapter.notifyDataSetChanged();
+		editedProject = null;
 		return true;
 	}
 	
@@ -261,8 +280,9 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	
 	public void deleteProject(Project project){
 		dbManager.removeProject(project);
-		projectAdapter.delete(project);
+		projectAdapter.delete(projectAdapter.getItem(findProjectIndex(project)));
 		projects.remove(project);
+		editedProject = null;
 	}
 		
 	public class ProjectDialog extends Dialog implements View.OnClickListener{
@@ -358,95 +378,6 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			}else if(v.equals(cancelButton)){
 				cancel();
 			}
-		}
-	}
-	
-	public class ProjectPopupMenu extends Dialog implements OnItemClickListener{
-		
-		private static final String PROJECT_OBJECT = "popup_menu_project_object";
-		
-		private Project project;
-		private PopupMenuListAdapter adapter;
-
-		public ProjectPopupMenu(Context context, Project project) {
-			super(context, R.style.dialogTheme);
-			this.project = project;
-		}
-		
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.project_popup_menu);
-			
-			DisplayMetrics metrics = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			int width = (int)(metrics.widthPixels * 0.95f);
-			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
-			
-			TextView titleView = (TextView)findViewById(R.id.dialog_title_text);
-			ListView listView = (ListView)findViewById(android.R.id.list);
-			
-			String[] items = new String[]{
-					getString(R.string.project_popup_menu_item_edit),
-					getString(R.string.project_popup_menu_item_delete)
-			};
-			
-			titleView.setText(project.getName());
-			adapter = new PopupMenuListAdapter(getContext(), items);
-			listView.setAdapter(adapter);
-			listView.setOnItemClickListener(this);
-		}
-		
-		public Project getProject(){
-			return project;
-		} 
-
-		@Override
-		public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-			String item = adapter.getItem(position);
-			if(item.equals(getString(R.string.project_popup_menu_item_edit))){
-				showProjectDialog(null, null, project);
-			}else if(item.equals(getString(R.string.project_popup_menu_item_delete))){
-				showDeleteConfirmation(project);
-			}
-			this.dismiss();
-		}
-	}
-		
-	public class PopupMenuListAdapter extends ArrayAdapter<String>{
-		
-		private LayoutInflater inflater;
-		
-		public PopupMenuListAdapter(Context context, String[] items) {
-			super(context, android.R.layout.simple_list_item_single_choice, items);
-			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			
-			String itemName = getItem(position);
-			
-			View view = inflater.inflate(R.layout.project_popup_menu_item, parent, false);
-			
-			ImageView iconView = (ImageView)view.findViewById(R.id.project_popup_menu_item_icon);
-			TextView nameView = (TextView)view.findViewById(R.id.project_popup_menu_item_name);
-			
-			nameView.setText(itemName);
-			Drawable icon = getItemIcon(itemName);
-			if(icon != null){
-				iconView.setImageDrawable(icon);
-			}
-			return view;
-		}
-		
-		private Drawable getItemIcon(String itemName){
-			if(itemName.equals(getString(R.string.project_popup_menu_item_edit))){
-				return getResources().getDrawable(R.drawable.edit_icon);
-			}else if(itemName.equals(getString(R.string.project_popup_menu_item_delete))){
-				return getResources().getDrawable(R.drawable.trash_icon);
-			}
-			return null;
 		}
 	}
 }
