@@ -98,7 +98,7 @@ public class ProjectDao implements Dao<Project> {
 		project.setDevices((ArrayList<Device>)devicesDao.getByProjectId(id));
 		project.setGroups((ArrayList<Group>)groupsDao.getByProjectId(id));
 		project.setDatapoints((ArrayList<DatapointEntity>)datapointsDao.getByProjectId(id));
-		project.setLayers((ArrayList<Layer>)layerDao.getByProjectId(id));
+		project.setLayers((ArrayList<Layer>)layerDao.getByProjectIdWithDependencies(id));
 		return project;
 	}
 	

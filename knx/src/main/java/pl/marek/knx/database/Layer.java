@@ -1,17 +1,20 @@
 package pl.marek.knx.database;
 
+import java.util.ArrayList;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Layer implements Parcelable{
 	
-	public static final String PROJECT = "PROJECT";
+	public static final String LAYER = "LAYER";
 	
-	private int id;
-	private int projectId;
-	private String name;
-	private String description;
-	private String icon;
+	protected int id;
+	protected int projectId;
+	protected String name;
+	protected String description;
+	protected String icon;
+	private ArrayList<SubLayer> subLayers;
 	
 	public Layer(){}
 	
@@ -79,6 +82,14 @@ public class Layer implements Parcelable{
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+	
+	public ArrayList<SubLayer> getSubLayers() {
+		return subLayers;
+	}
+
+	public void setSubLayers(ArrayList<SubLayer> subLayers) {
+		this.subLayers = subLayers;
 	}
 
 	@Override

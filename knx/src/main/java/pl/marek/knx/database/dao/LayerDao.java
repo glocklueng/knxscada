@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
 
 import pl.marek.knx.database.Layer;
+import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.database.tables.LayerTable;
 import pl.marek.knx.database.tables.LayerTable.LayerColumns;
 import pl.marek.knx.interfaces.Dao;
@@ -25,10 +26,12 @@ public class LayerDao implements Dao<Layer>{
 
 	private SQLiteDatabase db;
 	private SQLiteStatement insertStatement;
+	private SubLayerDao subLayerDao;
 	
 	public LayerDao(SQLiteDatabase db) {
 		this.db = db;
-		insertStatement = db.compileStatement(LayerDao.INSERT_QUERY);	
+		insertStatement = db.compileStatement(LayerDao.INSERT_QUERY);
+		subLayerDao = new SubLayerDao(db);
 	}
 
 	@Override
@@ -68,6 +71,12 @@ public class LayerDao implements Dao<Layer>{
 		return get(name, LayerColumns.NAME);
 	}
 	
+	public Layer getByIdWithDependencies(int id){
+		Layer layer = getById(id);
+		layer.setSubLayers((ArrayList<SubLayer>)subLayerDao.getByLayerId(id));
+		return layer;
+	}
+	
 	public Layer get(Object value, String column){
 		Layer layer = null;
 		Cursor c = 
@@ -91,6 +100,14 @@ public class LayerDao implements Dao<Layer>{
 
 	public List<Layer> getByProjectId(int id){
 		return getList(LayerColumns.PROJECT_ID, String.valueOf(id), null, null, null, null);
+	}
+	
+	public List<Layer> getByProjectIdWithDependencies(int id){
+		List<Layer> layers = getList(LayerColumns.PROJECT_ID, String.valueOf(id), null, null, null, null);
+		for(Layer layer: layers){
+			layer.setSubLayers((ArrayList<SubLayer>)subLayerDao.getByLayerIdWithDependencies(layer.getId()));
+		}
+		return layers;
 	}
 
 	@Override

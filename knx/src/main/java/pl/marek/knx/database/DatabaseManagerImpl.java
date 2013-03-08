@@ -22,6 +22,8 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	private TelegramDao telegramDao;
 	private ProjectDao projectDao;
 	private LayerDao layerDao;
+	private SubLayerDao subLayerDao;
+	private ElementDao elementDao;
 	
 	public DatabaseManagerImpl(Context context){
 		this.context = context;
@@ -35,6 +37,8 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		telegramDao = new TelegramDao(db);
 		projectDao = new ProjectDao(db);
 		layerDao = new LayerDao(db);
+		subLayerDao = new SubLayerDao(db);
+		elementDao = new ElementDao(db);
 	}
 	
 	@Override
@@ -230,7 +234,12 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public Layer getLayerById(int id) {
 		return layerDao.getById(id);
 	}
-
+	
+	@Override
+	public Layer getLayerByIdWithDependencies(int id) {
+		return layerDao.getByIdWithDependencies(id);
+	}
+	
 	@Override
 	public Layer getLayerByName(String name) {
 		return layerDao.getByName(name);
@@ -259,6 +268,108 @@ public class DatabaseManagerImpl implements DatabaseManager{
 			layerDao.update(layer);
 			db.setTransactionSuccessful();
 		} finally{
+			db.endTransaction();
+		}
+	}
+	
+	//SubLayer Operations
+	
+	@Override
+	public void addSubLayer(SubLayer subLayer) {
+		db.beginTransaction();
+		try{
+			int id = (int)subLayerDao.save(subLayer);
+			subLayer.setId(id);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public Layer getSubLayerById(int id) {
+		return subLayerDao.getById(id);
+	}
+
+	@Override
+	public Layer getSubLayerByName(String name) {
+		return subLayerDao.getByName(name);
+	}
+
+	@Override
+	public List<SubLayer> getAllSubLayers() {
+		return subLayerDao.getAll();
+	}
+
+	@Override
+	public void removeSubLayer(SubLayer subLayer) {
+		db.beginTransaction();
+		try{
+			subLayerDao.delete(subLayer);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public void updateSubLayer(SubLayer subLayer) {
+		db.beginTransaction();
+		try{
+			subLayerDao.update(subLayer);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+	
+	
+	//Element operations
+	@Override
+	public void addElement(Element element) {
+		db.beginTransaction();
+		try{
+			int id = (int)elementDao.save(element);
+			element.setId(id);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public Element getElementById(int id) {
+		return elementDao.getById(id);
+	}
+
+	@Override
+	public Element getElementByName(String name) {
+		return elementDao.getByName(name);
+	}
+
+	@Override
+	public List<Element> getAllElementss() {
+		return elementDao.getAll();
+	}
+
+	@Override
+	public void removeElement(Element element) {
+		db.beginTransaction();
+		try{
+			elementDao.delete(element);
+			db.setTransactionSuccessful();
+		}finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public void updateElement(Element element) {
+		db.beginTransaction();
+		try{
+			elementDao.update(element);
+			db.setTransactionSuccessful();
+		}finally{
 			db.endTransaction();
 		}
 	}

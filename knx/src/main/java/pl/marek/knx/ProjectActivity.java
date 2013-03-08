@@ -9,16 +9,24 @@ import pl.marek.knx.SideBarView.SideBarMode;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
+import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.MessageDialog;
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +38,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
-public class ProjectActivity extends Activity implements SideBarListener, PopupMenuItemListener{
+public class ProjectActivity extends FragmentActivity implements SideBarListener, PopupMenuItemListener{
 	
 	private Project project;
 	private DatabaseManager dbManager;
@@ -42,6 +50,12 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 	private LayerDialog layerDialog;
 	private PopupMenuDialog layerPopupMenu;
 	private Layer editedLayer;
+	
+	private ActionBar actionBar;
+	
+    private ViewPager subLayerViewPager;
+    private SubLayerPagerAdapter subLayerPagerAdapter;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +70,7 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 		setActionBar();
 		setSideBar();
 		setLayersSideBar();
+		initialiseSubLayersPaging();
 	}
 	
 	@Override
@@ -66,11 +81,39 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 	}
 	
 	private void setActionBar(){
+		actionBar = getActionBar();
 		if(project != null){
-			getActionBar().setTitle(project.getName());
+			actionBar.setTitle(project.getName());
 		}
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);				
 	}
+	
+	private void initialiseSubLayersPaging(){
+        subLayerViewPager = (ViewPager) findViewById(R.id.viewpager);
+        subLayerViewPager.setOnPageChangeListener(new SubLayerPageChangeListener());
+		subLayerPagerAdapter = new SubLayerPagerAdapter(super.getSupportFragmentManager());
+		subLayerViewPager = (ViewPager)super.findViewById(R.id.viewpager);
+		subLayerViewPager.setAdapter(subLayerPagerAdapter);
+	}
+		
+	private void addSubLayer(SubLayer subLayer){
+		SubLayerTabListener<SubLayerFragment> tabListener = new SubLayerTabListener<SubLayerFragment>();
+		Tab tab = actionBar.newTab();
+		tab.setText(subLayer.getName());
+		tab.setTabListener(tabListener);
+		actionBar.addTab(tab);
+		
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(SubLayer.SUBLAYER, subLayer);
+		subLayerPagerAdapter.addPage(Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
+	}
+	
+	private void clearSubLayers(){
+		actionBar.removeAllTabs();
+		subLayerPagerAdapter.clear();
+	}
+	
 	
 	private void setLayersSideBar(){
 	    layersSideBarView = (SideBarView) findViewById(R.id.left_side_navigation_view);
@@ -124,6 +167,15 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 				showLayerDialog(null, null, null);
 			} else{
 				//TODO Dodać przełączanie pięter po kliknięciu
+				clearSubLayers();
+				
+				Log.i("TAG",String.format("%d", item.getId()));
+				Layer layer = dbManager.getLayerByIdWithDependencies(item.getId());
+				ArrayList<SubLayer> subLayers = layer.getSubLayers();
+				Log.i("TAG",String.format("%d", subLayers.size()));
+				for(SubLayer s:subLayers){
+					addSubLayer(s);
+				}
 			}
 		}
 	}
@@ -141,6 +193,7 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+	
 		layersGestureDetector.onTouchEvent(event);
 		rightGestureDetector.onTouchEvent(event);
 		return true;
@@ -310,6 +363,33 @@ public class ProjectActivity extends Activity implements SideBarListener, PopupM
 			}
 		}
 		return -1;
+	}
+	
+	public class SubLayerTabListener<T extends Fragment> implements ActionBar.TabListener {
+
+
+	    public SubLayerTabListener() {
+
+	    }
+
+
+	    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+
+	    	subLayerViewPager.setCurrentItem(tab.getPosition());
+	        Log.i("TAG", tab.getText().toString());
+	    
+	    }
+
+	    public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
+
+	    public void onTabReselected(Tab tab, FragmentTransaction ft) {}
+	}
+	
+	public class SubLayerPageChangeListener extends ViewPager.SimpleOnPageChangeListener{
+		@Override
+        public void onPageSelected(int position) {
+            actionBar.setSelectedNavigationItem(position);
+        }
 	}
 	
 	

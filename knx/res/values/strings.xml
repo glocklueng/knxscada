@@ -47,7 +47,7 @@
     <string name="dialog_new_layer_name_hint">Wpisz nazwę piętra</string>
     <string name="dialog_new_layer_description_hint">Opis</string>
     <string name="dialog_new_layer_description">Opisz piętro</string>
-    <string name="dialog_layer_add_button">Utwórz projekt</string>
+    <string name="dialog_layer_add_button">Utwórz piętro</string>
     <string name="dialog_layer_edit_button">Zapisz zmiany</string>
     <string name="dialog_layer_cancel_button">Anuluj</string>
     
