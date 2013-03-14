@@ -19,6 +19,7 @@ public class Project implements Parcelable{
 	private String author;
 	private Date createDate;
 	private Date editDate;
+	private String image;
 	private ArrayList<Telegram> telegrams;
 	private ArrayList<Device> devices;
 	private ArrayList<Group> groups;
@@ -32,16 +33,17 @@ public class Project implements Parcelable{
 	}
 	
 	public Project(int id, String name, String description, String author){
-		this(id, name, description, author, Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
+		this(id, name, description, author, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), "");
 	}
 	
-	public Project(int id, String name, String description, String author, Date createDate, Date editDate){
+	public Project(int id, String name, String description, String author, Date createDate, Date editDate, String image){
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.author = author;
 		this.createDate = createDate;
 		this.editDate = editDate;
+		this.image = image;
 	}
 	
 	public Project(Parcel parcel){
@@ -105,6 +107,14 @@ public class Project implements Parcelable{
 	public void setEditDate(Date editDate) {
 		this.editDate = editDate;
 	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public ArrayList<Telegram> getTelegrams() {
 		return telegrams;
@@ -159,6 +169,7 @@ public class Project implements Parcelable{
 		parcel.writeString(author);
 		parcel.writeSerializable(createDate);
 		parcel.writeSerializable(editDate);
+		parcel.writeString(image);
 	}
 	
 	public void readFromParcel(Parcel parcel){
@@ -168,5 +179,6 @@ public class Project implements Parcelable{
 		author = parcel.readString();
 		createDate = (Date)parcel.readSerializable();
 		editDate = (Date)parcel.readSerializable();
+		image = parcel.readString();
 	}
 }

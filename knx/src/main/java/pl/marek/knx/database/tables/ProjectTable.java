@@ -11,6 +11,7 @@ public class ProjectTable {
 		public static final String AUTHOR = "author";
 		public static final String CREATE_DATE = "create_date";
 		public static final String EDIT_DATE = "edit_date";
+		public static final String IMAGE = "image";
 		
 	}
 	public static final String TABLE_NAME = "projects";
@@ -20,7 +21,8 @@ public class ProjectTable {
 												   + ProjectColumns.DESCRIPTION + " TEXT, "
 												   + ProjectColumns.AUTHOR + " TEXT, "
 												   + ProjectColumns.CREATE_DATE + " TIMESTAMP DEFAULT (datetime('now','localtime')), "
-												   + ProjectColumns.EDIT_DATE + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
+												   + ProjectColumns.EDIT_DATE + " TIMESTAMP DEFAULT (datetime('now','localtime')), " 
+												   + ProjectColumns.IMAGE + " TEXT);";
 												 
 	
 	public static final String DROP_TABLE_QUERY = "DROP TABLE IF EXISTS "+ ProjectTable.TABLE_NAME;

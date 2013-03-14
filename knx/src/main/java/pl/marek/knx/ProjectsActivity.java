@@ -10,6 +10,7 @@ import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.preferences.SettingsActivity;
+import pl.marek.knx.utils.LoadScaledImageFromPath;
 import pl.marek.knx.utils.MessageDialog;
 import pl.marek.knx.utils.ProjectComparator;
 import android.app.AlertDialog;
@@ -19,8 +20,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,11 +34,15 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ProjectsActivity extends ListActivity implements OnItemLongClickListener, PopupMenuItemListener{
+	
+	public static final int SELECT_IMAGE = 1;
 	
 	private ProjectAdapter projectAdapter;
 	private DatabaseManager dbManager;
@@ -55,6 +64,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		setListAdapter(projectAdapter);
 		getListView().setOnItemLongClickListener(this);
 		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+		
 	}
 	
 	@Override
@@ -105,7 +115,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	    	  break;
 	      case R.id.ab_new_project_item:
 	    	  
-	    	  showProjectDialog(null, null, null);
+	    	  showProjectDialog(null, null, null, null);
 	    	  
 	    	  
 	    	  break;
@@ -139,7 +149,8 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			if(projectDialog.isShowing()){
 				outState.putString(ProjectDialog.PROJECT_NAME, projectDialog.getName());
 				outState.putString(ProjectDialog.PROJECT_DESCRIPTION, projectDialog.getDescription());
-				outState.putParcelable(ProjectDialog.PROJECT_OBJECT, projectDialog.getProject());
+				outState.putString(ProjectDialog.PROJECT_IMAGE, projectDialog.getImagePath());
+				outState.putParcelable(Project.PROJECT, projectDialog.getProject());
 				projectDialog.dismiss();
 			}
 		}
@@ -161,9 +172,10 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		if(state != null){
 			String name = state.getString(ProjectDialog.PROJECT_NAME);
 			String description = state.getString(ProjectDialog.PROJECT_DESCRIPTION);
-			Project dialogProject = state.getParcelable(ProjectDialog.PROJECT_OBJECT);
+			String imagePath = state.getString(ProjectDialog.PROJECT_IMAGE);
+			Project dialogProject = state.getParcelable(Project.PROJECT);
 			if(name != null){
-				showProjectDialog(name, description, dialogProject);
+				showProjectDialog(name, description, imagePath, dialogProject);
 			}
 			
 			Project popupProject = state.getParcelable(Project.PROJECT);
@@ -173,13 +185,15 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		}
 	}
 	
-	public void showProjectDialog(String name, String description, Project project){
+	public void showProjectDialog(String name, String description, String imagePath,  Project project){
 		projectDialog = new ProjectDialog(this, project);
 		projectDialog.show();
 		if(name != null)
 			projectDialog.setName(name);
 		if(description != null)
 			projectDialog.setDescription(description);
+		if(description != null)
+			projectDialog.setImage(imagePath);
 	}
 	
 	public void showProjectPopupMenu(Project project){
@@ -196,12 +210,30 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		
 	}
 	
+	public void showImagePopupMenu(){
+		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
+		PopupMenuItem chooseItem = new PopupMenuItem(getString(R.string.image_popup_menu_item_choose), getResources().getDrawable(R.drawable.new_item));
+		PopupMenuItem removeItem = new PopupMenuItem(getString(R.string.image_popup_menu_item_remove), getResources().getDrawable(R.drawable.trash_icon));
+		items.add(chooseItem);
+		items.add(removeItem);
+		
+		projectPopupMenu = new PopupMenuDialog(this,getString(R.string.image_popup_menu_title), items);
+		projectPopupMenu.setPopupMenuItemListener(this);
+		projectPopupMenu.show();
+	}
+	
 	@Override
 	public void onPopupMenuItemClick(int position, PopupMenuItem item) {
 		if(item.getName().equals(getString(R.string.project_popup_menu_item_edit))){
-			showProjectDialog(null, null, editedProject);
-		}else if(item.getName().equals(getString(R.string.project_popup_menu_item_delete))){
+			showProjectDialog(null, null,null, editedProject);
+		} else if(item.getName().equals(getString(R.string.project_popup_menu_item_delete))){
 			showDeleteConfirmation(editedProject);
+		} else if(item.getName().equals(getString(R.string.image_popup_menu_item_choose))){
+			selectImage();
+		} else if(item.getName().equals(getString(R.string.image_popup_menu_item_remove))){
+			if(projectDialog != null && projectDialog.isShowing()){
+				projectDialog.setImage(null);
+			}
 		}
 	}
 	
@@ -237,6 +269,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		Project project = new Project();
 		project.setName(projectDialog.getName());
 		project.setDescription(projectDialog.getDescription());
+		project.setImage(projectDialog.getImagePath());
 		
 		//TODO Przemyśleć czy pole author ma sens, i ewentualnie skąd je pobrać
 		project.setAuthor("");
@@ -284,18 +317,55 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		projects.remove(project);
 		editedProject = null;
 	}
+	
+	public void selectImage(){
+		Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_image)), SELECT_IMAGE);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			if (requestCode == SELECT_IMAGE) {
+		        Uri selectedImageUri = data.getData();
+		        String selectedImagePath = getImagePath(selectedImageUri);
+		        Log.i("IMAGE", selectedImagePath);
+		        if(projectDialog != null){
+		        	projectDialog.show();
+		        	projectDialog.setImage(selectedImagePath);
+		        }
+		    }
+		}
+	}
+	
+    public String getImagePath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };        
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(projection[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return picturePath;
+    }
 		
 	public class ProjectDialog extends Dialog implements View.OnClickListener{
 		
 		public static final String PROJECT_NAME = "project_name";
 		public static final String PROJECT_DESCRIPTION = "project_description";
-		public static final String PROJECT_OBJECT = "dialog_project_object";
+		public static final String PROJECT_IMAGE = "dialog_project_image";
 		
 		private TextView nameView;
 		private TextView descView;
+		private ImageView imageView;
+		private TextView imageHint;
 		private Button addButton;
 		private Button cancelButton;
+		private ProgressBar imageProgressBar;
+		
 		private Project project;
+		private String imagePath;
 
 		public ProjectDialog(Context context, Project project) {
 			super(context, R.style.dialogTheme);
@@ -312,18 +382,25 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			
 			TextView titleView = (TextView)findViewById(R.id.dialog_title_text);
 			nameView = (TextView)findViewById(R.id.dialog_new_project_name);
-			descView = (TextView)findViewById(R.id.dialog_new_project_description);			
+			descView = (TextView)findViewById(R.id.dialog_new_project_description);	
+			imageView = (ImageView)findViewById(R.id.dialog_new_project_image);
+			imageHint = (TextView)findViewById(R.id.dialog_new_project_image_hint);
+			imageProgressBar = (ProgressBar)findViewById(R.id.dialog_new_project_image_progressbar);
+			imagePath = "";
 			
 			addButton = (Button)findViewById(R.id.dialog_project_add_button);
 			cancelButton = (Button)findViewById(R.id.dialog_new_project_cancel_button);
 			addButton.setOnClickListener(this);
 			cancelButton.setOnClickListener(this);
+			imageView.setOnClickListener(this);
+			imageHint.setOnClickListener(this);
 			
 			if(project != null){
 				titleView.setText(getString(R.string.dialog_edit_project_title));
 				addButton.setText(getString(R.string.dialog_project_edit_button));
 				nameView.setText(project.getName());
 				descView.setText(project.getDescription());
+				setImage(project.getImage());
 			}else{
 				titleView.setText(getString(R.string.dialog_new_project_title));
 			}
@@ -352,6 +429,23 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 			descView.setText(description);
 		}
 		
+		public void setImage(String path){
+			if(path != null && !path.equals("")){
+				imageHint.setVisibility(View.GONE);
+				new LoadScaledImageFromPath(imageView, imageProgressBar).execute(path);
+				imagePath = path;
+			} else{
+				imageHint.setVisibility(View.VISIBLE);
+				imageView.setImageBitmap(null);
+				imageView.setVisibility(View.GONE);
+				imagePath = "";
+			}
+		}
+		
+		public String getImagePath(){
+			return imagePath;
+		}
+		
 		public Project getProject(){
 			return project;
 		};
@@ -365,6 +459,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 				} else{
 					project.setName(getName());
 					project.setDescription(getDescription());
+					project.setImage(getImagePath());
 					state = editProject(project);
 				}
 				if(state){
@@ -375,8 +470,12 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 																getResources().getDrawable(android.R.drawable.ic_dialog_alert));
 					
 				}
-			}else if(v.equals(cancelButton)){
+			} else if(v.equals(cancelButton)){
 				cancel();
+			} else if(v.equals(imageHint)){
+				selectImage();
+			} else if(v.equals(imageView)){
+				showImagePopupMenu();
 			}
 		}
 	}

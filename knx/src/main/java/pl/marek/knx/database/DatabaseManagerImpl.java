@@ -27,8 +27,13 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	
 	public DatabaseManagerImpl(Context context){
 		this.context = context;
-		
 		open();
+	}
+	
+	@Override
+	public void open() {
+		openHelper = new DatabaseOpenHelper(context);
+		db = openHelper.getWritableDatabase();
 		
 		datapointsDao = new DatapointsDao(db);
 		devicesDao = new DevicesDao(db);
@@ -39,12 +44,6 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		layerDao = new LayerDao(db);
 		subLayerDao = new SubLayerDao(db);
 		elementDao = new ElementDao(db);
-	}
-	
-	@Override
-	public void open() {
-		openHelper = new DatabaseOpenHelper(context);
-		db = openHelper.getWritableDatabase();
 	}
 
 	@Override

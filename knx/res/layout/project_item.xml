@@ -51,7 +51,18 @@
                 android:textSize="15sp"
                 android:textStyle="italic" />
         </RelativeLayout>
-
+		
+        <ProgressBar 
+            android:id="@+id/project_item_image_progressbar"
+            android:layout_width="0dip"
+            android:layout_height="100dp"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_margin="10dp"
+            android:layout_weight="0.25"
+         />
+        
         <ImageView
             android:id="@+id/project_item_image"
             android:layout_width="0dip"

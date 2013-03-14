@@ -26,10 +26,12 @@ import pl.marek.knx.utils.DateConversion;
 public class ProjectDao implements Dao<Project> {
 
 	private static final String INSERT_QUERY = "INSERT INTO "
-			+ ProjectTable.TABLE_NAME + " (" + ProjectColumns.NAME + ", "
+			+ ProjectTable.TABLE_NAME + " (" 
+			+ ProjectColumns.NAME + ", "
 			+ ProjectColumns.DESCRIPTION + ", "
-			+ ProjectColumns.AUTHOR + ") "
-			+ "values(?,?,?);";
+			+ ProjectColumns.AUTHOR  + ", "
+			+ ProjectColumns.IMAGE+ ") "
+			+ "values(?,?,?,?);";
 
 	private SQLiteDatabase db;
 	private SQLiteStatement insertStatement;
@@ -57,6 +59,7 @@ public class ProjectDao implements Dao<Project> {
 		insertStatement.bindString(1, project.getName());
 		insertStatement.bindString(2, project.getDescription());
 		insertStatement.bindString(3, project.getAuthor());
+		insertStatement.bindString(4, project.getImage());
 		return insertStatement.executeInsert();
 	}
 
@@ -69,12 +72,17 @@ public class ProjectDao implements Dao<Project> {
 		values.put(ProjectColumns.DESCRIPTION, project.getDescription());
 		values.put(ProjectColumns.AUTHOR, project.getAuthor());
 		values.put(ProjectColumns.EDIT_DATE, dateFormat.format(Calendar.getInstance().getTime()));
+		values.put(ProjectColumns.IMAGE, project.getImage());
 		db.update(ProjectTable.TABLE_NAME, values, BaseColumns._ID + " = ?", new String[]{String.valueOf(project.getId())});
 	}
 
 	@Override
 	public void delete(Project project) {
 		if(project.getId() > 0){
+			Project p = getByIdWithDependencies(project.getId());
+			for(Layer layer: p.getLayers()){
+				layerDao.delete(layer);
+			}
 			db.delete(ProjectTable.TABLE_NAME,  BaseColumns._ID + " = ?", new String[]{String.valueOf(project.getId())});
 		}
 	}
@@ -111,7 +119,8 @@ public class ProjectDao implements Dao<Project> {
 									ProjectColumns.DESCRIPTION,
 									ProjectColumns.AUTHOR,
 									ProjectColumns.CREATE_DATE,
-									ProjectColumns.EDIT_DATE
+									ProjectColumns.EDIT_DATE,
+									ProjectColumns.IMAGE
 						}, 
 						column + " = ?", new String[]{String.valueOf(value)}, 
 						null, null ,null, "1");
@@ -134,7 +143,8 @@ public class ProjectDao implements Dao<Project> {
 									ProjectColumns.DESCRIPTION,
 									ProjectColumns.AUTHOR,
 									ProjectColumns.CREATE_DATE,
-									ProjectColumns.EDIT_DATE
+									ProjectColumns.EDIT_DATE,
+									ProjectColumns.IMAGE
 						}, 
 						null, null, null, null, ProjectColumns.NAME+" ASC", null);
 		if(c.moveToFirst()){
@@ -161,6 +171,7 @@ public class ProjectDao implements Dao<Project> {
 			project.setAuthor(cursor.getString(3));
 			project.setCreateDate(new DateConversion().getDateFromString(cursor.getString(4)));
 			project.setEditDate(new DateConversion().getDateFromString(cursor.getString(5)));
+			project.setImage(cursor.getString(6));
 		}
 		return project;
 	}

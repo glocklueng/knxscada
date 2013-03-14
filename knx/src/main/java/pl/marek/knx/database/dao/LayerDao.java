@@ -55,6 +55,10 @@ public class LayerDao implements Dao<Layer>{
 
 	@Override
 	public void delete(Layer layer) {
+		Layer l = getByIdWithDependencies(layer.getId());
+		for(SubLayer subLayer: l.getSubLayers()){
+			subLayerDao.delete(subLayer);
+		}
 		db.delete(LayerTable.TABLE_NAME, BaseColumns._ID + " = ? and "+LayerColumns.PROJECT_ID+" = ?", new String[]{String.valueOf(layer.getId()), String.valueOf(layer.getProjectId())});
 	}
 

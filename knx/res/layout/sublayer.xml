@@ -3,13 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <TextView
-        android:id="@+id/test_text"
+        android:id="@+id/sublayer_description_textview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textIsSelectable="false"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sublayer_description_background"
         android:gravity="center"
-    />
+        android:minLines="2"
+        android:textColor="@android:color/white"
+        android:textIsSelectable="false" />
+
+
+        <include layout="@layout/list_view" />
+        
 
 </LinearLayout>

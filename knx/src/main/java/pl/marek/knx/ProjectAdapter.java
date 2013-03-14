@@ -3,6 +3,7 @@ package pl.marek.knx;
 import java.util.List;
 
 import pl.marek.knx.database.Project;
+import pl.marek.knx.utils.LoadScaledImageFromPath;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 		TextView nameView = null;
 		TextView descriptionView = null;
 		ImageView imageView = null;
+		ProgressBar imageProgressBar = (ProgressBar)view.findViewById(R.id.project_item_image_progressbar);
 		
 		ViewHolder holder = (ViewHolder)view.getTag();
 		if(holder != null){
@@ -58,15 +61,13 @@ public class ProjectAdapter extends ArrayAdapter<Project>{
 		nameView.setText(project.getName());
 		descriptionView.setText(project.getDescription());
 		
-		//TODO Wymyślić skąd brać obrazek do pokazania na liście
-		if(position == 1){
-			imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.background));
-		}
-		
-		if(imageView.getDrawable() == null){
+		if(project.getImage() != null && !"".equals(project.getImage())){
+			new LoadScaledImageFromPath(imageView, imageProgressBar).execute(project.getImage());
+		}else {
 			RelativeLayout v = (RelativeLayout)view.findViewById(R.id.project_item_text_views);
 			v.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		}
+		
 		if(project.equals(animatedProject)){
 			showAddAnimation(view);
 			animatedProject = null;

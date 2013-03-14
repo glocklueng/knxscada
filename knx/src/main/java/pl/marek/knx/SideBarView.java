@@ -129,6 +129,24 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     	notifySetDataChanged();
     }
     
+    public void selectItem(int position){
+    	listener.onSideBarItemClick(this, items.get(position));
+    }
+    
+    public void selectFirstItem(){
+    	for(SideBarItem item : items){
+    		if(item.getId() != 0){
+    			selectItem(items.indexOf(item));
+    			return;
+    		}
+    	}
+    }
+    
+    public void selectLastItem(){
+    	int position = items.size()-1;
+    	selectItem(position);
+    }
+    
     private void notifySetDataChanged(){
     	if(sideBarAdapter != null){
     		sideBarAdapter.notifyDataSetChanged();
@@ -181,6 +199,10 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		
+		if(e1 == null || e2 == null){
+			return false;
+		}
 		
 		if(mode.acceptSlideMove(getContext(), (int)e1.getX())){
 			int move = (int)(e2.getX() - e1.getX());

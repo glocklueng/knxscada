@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-		<include layout="@layout/dialog_header"/>
+        <include layout="@layout/dialog_header" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -16,23 +16,49 @@
             android:layout_margin="10dp"
             android:orientation="vertical" >
 
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:enabled="false"
-                android:text="@string/dialog_new_layer_name" />
-
-            <EditText
-                android:id="@+id/dialog_new_layer_name"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/dialog_new_layer_name_hint"
-                android:inputType="text" />
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.85"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/dialog_new_layer_name_label"
+                        style="?android:attr/listSeparatorTextViewStyle"
+                        android:enabled="false"
+                        android:text="@string/dialog_new_layer_name" />
+
+                    <EditText
+                        android:id="@+id/dialog_new_layer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="16dp"
+                        android:hint="@string/dialog_new_layer_name_hint"
+                        android:inputType="textCapSentences" />
+                </LinearLayout>
+				
+                <ImageButton
+                    android:id="@+id/dialog_new_layer_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:layout_weight="0.15"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/application_name"
+                    android:scaleType="center"
+                    android:background="@drawable/icon_selector"
+                />
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/dialog_new_layer_description_label"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:enabled="false"
                 android:text="@string/dialog_new_layer_description" />
@@ -47,7 +73,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif"
                 android:hint="@string/dialog_new_layer_description_hint"
-                android:inputType="textMultiLine"
+                android:inputType="textCapSentences"
                 android:minLines="2" />
         </LinearLayout>
 

@@ -4,11 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-  	<android.support.v4.view.ViewPager
-  		android:id="@+id/viewpager"
-  		android:layout_width="fill_parent"
- 		android:layout_height="fill_parent"
-  	/>
+	<include layout="@layout/custom_tabs"/>
 
     <pl.marek.knx.SideBarView
         android:id="@+id/left_side_navigation_view"

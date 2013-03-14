@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/project_add_sublayer_menu_item"
+        android:icon="@drawable/new_item"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/dialog_new_sublayer_title"/>
+    
+    <item
         android:id="@+id/project_ab_features"
         android:icon="@drawable/ic_action_side_navigation"
         android:showAsAction="ifRoom|withText"

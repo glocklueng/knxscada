@@ -12,7 +12,10 @@
     <string name="yes">Tak</string> 
     <string name="no">Nie</string> 
     <string name="group_address_separator">/</string>
+    <string name="cancel">Anuluj</string>
     
+    <!-- ICON PICKER DIALOG -->
+    <string name="icon_picker_title">Wybierz ikonę</string>
     
     <!-- NEW PROJECT DIALOG -->
     <string name="dialog_new_project_title">Nowy projekt</string>
@@ -21,6 +24,8 @@
     <string name="dialog_new_project_name_hint">Wpisz nazwę projektu</string>
     <string name="dialog_new_project_description">Opis</string>
     <string name="dialog_new_project_description_hint">Opisz nowy projekt</string>
+    <string name="dialog_new_project_image">Obraz</string>
+    <string name="dialog_new_project_image_hint">Wybierz obrazek projektu...</string>
     <string name="dialog_project_add_button">Utwórz projekt</string>
     <string name="dialog_project_edit_button">Zapisz zmiany</string>
     <string name="dialog_project_cancel_button">Anuluj</string>
@@ -28,6 +33,12 @@
     <!-- PROJECT POPUP MENU -->
     <string name="project_popup_menu_item_edit">Edytuj projekt</string>
     <string name="project_popup_menu_item_delete">Usuń projekt</string>
+    
+    <!-- IMAGE POPUP MENU -->
+    <string name="image_popup_menu_title">Obraz</string>
+    <string name="select_image">Wybierz obraz...</string>
+    <string name="image_popup_menu_item_choose">Wybierz obraz</string>
+    <string name="image_popup_menu_item_remove">Usuń obraz</string>
     
     <!-- PROJECT DELETE CONFIRMATION -->
     <string name="project_delete_confirmation_title">Potwierdzenie usunięcia</string>
@@ -51,17 +62,32 @@
     <string name="dialog_layer_edit_button">Zapisz zmiany</string>
     <string name="dialog_layer_cancel_button">Anuluj</string>
     
+    <string name="dialog_new_sublayer_title">Nowe pomieszczenie</string>
+    <string name="dialog_edit_sublayer_title">Edycja pomieszczenia</string>
+    <string name="dialog_new_sublayer_name">Nazwa pomieszczenia</string>
+    <string name="dialog_new_sublayer_name_hint">Wpisz nazwę pomieszczenia</string>
+    <string name="dialog_new_sublayer_description_hint">Opis</string>
+    <string name="dialog_new_sublayer_description">Opisz pomieszczenie</string>
+    <string name="dialog_sublayer_add_button">Utwórz pomieszczenie</string>
+    
     <!-- LAYER INFORMATION DIALOG -->
     <string name="layer_name_empty_title">Brak nazwy</string>
     <string name="layer_name_empty_text">Podaj nazwę piętra!</string>
     
+    <string name="sublayer_name_empty_title">Brak nazwy</string>
+    <string name="sublayer_name_empty_text">Podaj nazwę pomieszczenia!</string>
+        
     <!-- LAYER POPUP MENU -->
     <string name="layer_popup_menu_item_edit">Edytuj piętro</string>
     <string name="layer_popup_menu_item_delete">Usuń piętro</string>
+
+    <string name="sublayer_popup_menu_item_edit">Edytuj pomieszczenie</string>
+    <string name="sublayer_popup_menu_item_delete">Usuń pomieszczenie</string>
     
     <!-- LAYER DELETE CONFIRMATION -->
     <string name="layer_delete_confirmation_title">Potwierdzenie usunięcia</string>
     <string name="layer_delete_confirmation_text">Czy napewno chcesz usunąć piętro \"%s\"?</string>
+    <string name="sublayer_delete_confirmation_text">Czy napewno chcesz usunąć pomieszczenie \"%s\"?</string>
     
     
     <!-- TELEGRAM ACTIVITY/DIALOG -->
