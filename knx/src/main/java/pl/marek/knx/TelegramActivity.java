@@ -29,6 +29,8 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	private DatabaseManager dbManager;
 	private LinkedList<Telegram> telegrams;
 	
+	private ReadWriteDialog rwDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +43,6 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 		
 		telegramAdapter = new TelegramAdapter(this,telegrams);
 		setListAdapter(telegramAdapter);
-//		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
 	}
 	
 	@Override
@@ -56,8 +57,12 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(dbManager != null && dbManager.isOpen())
+		if(dbManager != null && dbManager.isOpen()){
 			dbManager.close();
+		}
+		if(rwDialog != null && rwDialog.isShowing()){
+			rwDialog.dismiss();
+		}
 	}
 	
 	@Override
@@ -86,9 +91,9 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	         break;
 	      case R.id.telegram_menu_read_write_item:
 	    	  
-	    	  ReadWriteDialog dialog = new ReadWriteDialog(this);
-	    	  dialog.setListener(this);
-	    	  dialog.show();
+	    	  rwDialog = new ReadWriteDialog(this);
+	    	  rwDialog.setListener(this);
+	    	  rwDialog.show();
 	    	  	    	  
 	    	  break;
 	      default:            

@@ -12,9 +12,18 @@ public class LoadScaledImageFromPath extends AsyncTask<String, Void, Bitmap>{
 	private ImageView imageView;
 	private ProgressBar progressBar;
 	
+	private int sizeX;
+	private int sizeY;
+	
 	public LoadScaledImageFromPath(ImageView imageView, ProgressBar progressBar){
+		this(imageView, progressBar, 100, 100);
+	}
+	
+	public LoadScaledImageFromPath(ImageView imageView, ProgressBar progressBar, int sizeX, int sizeY){
 		this.imageView = imageView;
 		this.progressBar = progressBar;
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
 	}
 	
 	@Override
@@ -29,7 +38,7 @@ public class LoadScaledImageFromPath extends AsyncTask<String, Void, Bitmap>{
 		String path = params[0];
 		
 		Bitmap bitmap = BitmapFactory.decodeFile(path);
-		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap ,150, 150, true);
+		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap ,sizeX, sizeY, true);
 
 		return scaledBitmap;
 	}

@@ -43,6 +43,14 @@ import android.widget.TextView;
 public class ProjectsActivity extends ListActivity implements OnItemLongClickListener, PopupMenuItemListener{
 	
 	public static final int SELECT_IMAGE = 1;
+	public static final int POPUP_MENU_ITEM_EDIT = 100;
+	public static final int POPUP_MENU_ITEM_DELETE = 101;
+	public static final int POPUP_MENU_ITEM_CHOOSE_IMAGE = 102;
+	public static final int POPUP_MENU_ITEM_REMOVE_IMAGE = 103;
+	
+	
+	public static final String SHOW_PROJECT_POPUPMENU = "show+project_popup_menu";
+	
 	
 	private ProjectAdapter projectAdapter;
 	private DatabaseManager dbManager;
@@ -157,6 +165,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		if(projectPopupMenu != null){
 			if(projectPopupMenu.isShowing()){
 				outState.putParcelable(Project.PROJECT, editedProject);
+				outState.putBoolean(SHOW_PROJECT_POPUPMENU, true);
 				projectPopupMenu.dismiss();
 			}
 		}
@@ -178,8 +187,9 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 				showProjectDialog(name, description, imagePath, dialogProject);
 			}
 			
-			Project popupProject = state.getParcelable(Project.PROJECT);
-			if(popupProject != null){
+			boolean showProjectPopupMenu = state.getBoolean(SHOW_PROJECT_POPUPMENU);
+			if(showProjectPopupMenu){
+				Project popupProject = state.getParcelable(Project.PROJECT);
 				showProjectPopupMenu(popupProject);
 			}
 		}
@@ -199,8 +209,8 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	public void showProjectPopupMenu(Project project){
 		editedProject = project;
 		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
-		PopupMenuItem editItem = new PopupMenuItem(getString(R.string.project_popup_menu_item_edit), getResources().getDrawable(R.drawable.edit_icon));
-		PopupMenuItem deleteItem = new PopupMenuItem(getString(R.string.project_popup_menu_item_delete), getResources().getDrawable(R.drawable.trash_icon));
+		PopupMenuItem editItem = new PopupMenuItem(POPUP_MENU_ITEM_EDIT, getString(R.string.project_popup_menu_item_edit), R.drawable.edit_icon);
+		PopupMenuItem deleteItem = new PopupMenuItem(POPUP_MENU_ITEM_DELETE, getString(R.string.project_popup_menu_item_delete), R.drawable.trash_icon);
 		items.add(editItem);
 		items.add(deleteItem);
 		
@@ -212,8 +222,8 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	
 	public void showImagePopupMenu(){
 		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
-		PopupMenuItem chooseItem = new PopupMenuItem(getString(R.string.image_popup_menu_item_choose), getResources().getDrawable(R.drawable.new_item));
-		PopupMenuItem removeItem = new PopupMenuItem(getString(R.string.image_popup_menu_item_remove), getResources().getDrawable(R.drawable.trash_icon));
+		PopupMenuItem chooseItem = new PopupMenuItem(POPUP_MENU_ITEM_CHOOSE_IMAGE, getString(R.string.image_popup_menu_item_choose), R.drawable.new_item);
+		PopupMenuItem removeItem = new PopupMenuItem(POPUP_MENU_ITEM_REMOVE_IMAGE, getString(R.string.image_popup_menu_item_remove), R.drawable.trash_icon);
 		items.add(chooseItem);
 		items.add(removeItem);
 		
@@ -224,16 +234,21 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 	
 	@Override
 	public void onPopupMenuItemClick(int position, PopupMenuItem item) {
-		if(item.getName().equals(getString(R.string.project_popup_menu_item_edit))){
-			showProjectDialog(null, null,null, editedProject);
-		} else if(item.getName().equals(getString(R.string.project_popup_menu_item_delete))){
-			showDeleteConfirmation(editedProject);
-		} else if(item.getName().equals(getString(R.string.image_popup_menu_item_choose))){
-			selectImage();
-		} else if(item.getName().equals(getString(R.string.image_popup_menu_item_remove))){
-			if(projectDialog != null && projectDialog.isShowing()){
-				projectDialog.setImage(null);
-			}
+		switch(item.getId()){
+			case POPUP_MENU_ITEM_EDIT:
+				showProjectDialog(null, null,null, editedProject);
+				break;
+			case POPUP_MENU_ITEM_DELETE:
+				showDeleteConfirmation(editedProject);
+				break;
+			case POPUP_MENU_ITEM_CHOOSE_IMAGE:
+				selectImage();
+				break;
+			case POPUP_MENU_ITEM_REMOVE_IMAGE:
+				if(projectDialog != null && projectDialog.isShowing()){
+					projectDialog.setImage(null);
+				}
+				break;
 		}
 	}
 	
@@ -432,7 +447,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 		public void setImage(String path){
 			if(path != null && !path.equals("")){
 				imageHint.setVisibility(View.GONE);
-				new LoadScaledImageFromPath(imageView, imageProgressBar).execute(path);
+				new LoadScaledImageFromPath(imageView, imageProgressBar, 200, 200).execute(path);
 				imagePath = path;
 			} else{
 				imageHint.setVisibility(View.VISIBLE);

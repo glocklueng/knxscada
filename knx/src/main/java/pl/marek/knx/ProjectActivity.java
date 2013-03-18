@@ -44,6 +44,10 @@ import android.widget.LinearLayout.LayoutParams;
 public class ProjectActivity extends FragmentActivity implements SideBarListener, PopupMenuItemListener, OnTabLongClickListener{
 	
 	private static final int NEW_LAYER_ITEM_ID = 0;
+	private static final int POPUP_MENU_ITEM_LAYER_EDIT = 100;
+	private static final int POPUP_MENU_ITEM_LAYER_DELETE = 101;
+	private static final int POPUP_MENU_ITEM_SUBLAYER_EDIT = 102;
+	private static final int POPUP_MENU_ITEM_SUBLAYER_DELETE = 103;
 	
 	private Project project;
 	private Layer currentLayer;
@@ -52,8 +56,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	private DatabaseManager dbManager;
 	private SideBarView layersSideBarView;
 	private GestureDetector layersGestureDetector;
-	private SideBarView rightSideBarView;
-	private GestureDetector rightGestureDetector;
+	private SideBarView controllersSideBarView;
 	
 	private LayerDialog<?> layerDialog;
 	private PopupMenuDialog layerPopupMenu;
@@ -81,7 +84,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		tabBar.setOnTabLongClickListener(this);
 		
 		initialiseSubLayersPaging();
-		setSideBar();
+		setControllersSideBar();
 		setLayersSideBar();
 
 	}
@@ -155,20 +158,20 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    return item;
 	}
 	
-	private void setSideBar(){
+	private void setControllersSideBar(){
 
-	    rightSideBarView = (SideBarView) findViewById(R.id.right_side_navigation_view);
-	    rightSideBarView.setSideBarListener(this);
-	    rightSideBarView.setMode(SideBarMode.RIGHT);
+	    controllersSideBarView = (SideBarView) findViewById(R.id.right_side_navigation_view);
+	    controllersSideBarView.setSideBarListener(this);
+	    controllersSideBarView.setMode(SideBarMode.RIGHT);
 	    
-	    for(int i=1;i< 100; i++){
+	    for(int i=1;i< 10; i++){
 	    	SideBarItem item = new SideBarItem();
 		    item.setId(i);
 		    item.setName(String.format("Feature %d", i));
-	    	rightSideBarView.addItem(item);
+		    item.setIcon(R.drawable.room_sofa_icon);
+	    	controllersSideBarView.addItem(item);
 	    }
 	    
-	    rightGestureDetector = new GestureDetector(this, rightSideBarView);
 	}
 	
 	@Override
@@ -180,11 +183,19 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				clearSubLayers();
 				currentLayer = dbManager.getLayerByIdWithDependencies(item.getId());
 				ArrayList<SubLayer> subLayers = currentLayer.getSubLayers();
+				if(subLayers.size() > 0){
+					currentSubLayer = subLayers.get(0);
+				}else{
+					currentSubLayer = null;
+				}
 				for(SubLayer s:subLayers){
 					addSubLayer(s);
 				}
 			}
+		} else if(view.equals(controllersSideBarView)){
+			Log.i("a",currentSubLayer.getName());
 		}
+
 	}
 	
 	@Override
@@ -200,9 +211,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
-		boolean layersSideBarConsumed = layersGestureDetector.onTouchEvent(event);
-		boolean rightSideBarConsumed = rightGestureDetector.onTouchEvent(event);
-		if(layersSideBarConsumed || rightSideBarConsumed)
+		if(layersGestureDetector.onTouchEvent(event))
 			return true;
 		else
 			return super.dispatchTouchEvent(event);
@@ -220,14 +229,14 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	    case android.R.id.home:
-	    	if(rightSideBarView.isShown())
-	    		rightSideBarView.hide();
+	    	if(controllersSideBarView.isShown())
+	    		controllersSideBarView.hide();
 	        layersSideBarView.toggle();
 	        break;
 	    case R.id.project_ab_features:
 	    	if(layersSideBarView.isShown())
 	    		layersSideBarView.hide();
-	    	rightSideBarView.toggle();
+	    	controllersSideBarView.toggle();
 	    	break;
 	    case R.id.project_add_sublayer_menu_item:
 	    	showNewSubLayerDialog();
@@ -348,11 +357,11 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		PopupMenuItem editItem;
 		PopupMenuItem deleteItem; 
 		if(layer instanceof SubLayer){
-			editItem = new PopupMenuItem(getString(R.string.sublayer_popup_menu_item_edit), getResources().getDrawable(R.drawable.edit_icon));
-			deleteItem = new PopupMenuItem(getString(R.string.sublayer_popup_menu_item_delete), getResources().getDrawable(R.drawable.trash_icon));
+			editItem = new PopupMenuItem(POPUP_MENU_ITEM_SUBLAYER_EDIT, getString(R.string.sublayer_popup_menu_item_edit), R.drawable.edit_icon);
+			deleteItem = new PopupMenuItem(POPUP_MENU_ITEM_SUBLAYER_DELETE, getString(R.string.sublayer_popup_menu_item_delete), R.drawable.trash_icon);
 		} else{
-			editItem = new PopupMenuItem(getString(R.string.layer_popup_menu_item_edit), getResources().getDrawable(R.drawable.edit_icon));
-			deleteItem = new PopupMenuItem(getString(R.string.layer_popup_menu_item_delete), getResources().getDrawable(R.drawable.trash_icon));
+			editItem = new PopupMenuItem(POPUP_MENU_ITEM_LAYER_EDIT, getString(R.string.layer_popup_menu_item_edit), R.drawable.edit_icon);
+			deleteItem = new PopupMenuItem(POPUP_MENU_ITEM_LAYER_DELETE, getString(R.string.layer_popup_menu_item_delete), R.drawable.trash_icon);
 		}
 		items.add(editItem);
 		items.add(deleteItem);
@@ -364,14 +373,19 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	
 	@Override
 	public void onPopupMenuItemClick(int position, PopupMenuItem item) {
-		if(item.getName().equals(getString(R.string.layer_popup_menu_item_edit))){
-			showEditLayerDialog(editedLayer);
-		}else if(item.getName().equals(getString(R.string.layer_popup_menu_item_delete))){
-			showDeleteConfirmation(editedLayer);
-		}else if(item.getName().equals(getString(R.string.sublayer_popup_menu_item_edit))){
-			showEditSubLayerDialog(editedSubLayer);
-		}else if(item.getName().equals(getString(R.string.sublayer_popup_menu_item_delete))){
-			showDeleteConfirmation(editedSubLayer);
+		switch(item.getId()){
+			case POPUP_MENU_ITEM_LAYER_EDIT:
+				showEditLayerDialog(editedLayer);
+				break;
+			case POPUP_MENU_ITEM_LAYER_DELETE:
+				showDeleteConfirmation(editedLayer);
+				break;
+			case POPUP_MENU_ITEM_SUBLAYER_EDIT:
+				showEditSubLayerDialog(editedSubLayer);
+				break;
+			case POPUP_MENU_ITEM_SUBLAYER_DELETE:
+				showDeleteConfirmation(editedSubLayer);
+				break;
 		}
 	}
 	

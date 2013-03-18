@@ -6,12 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class GroupAddressView extends LinearLayout{
 	
 	private EditText mainGroupView;
 	private EditText subGroupView;
 	private EditText groupView;
+	
+	private TextView firstSeparatorView;
+	private TextView secondSeparatorView;
+	
+	private GroupAddressLevel level;
 		
 	public GroupAddressView(Context context) {
 		super(context);
@@ -34,15 +40,55 @@ public class GroupAddressView extends LinearLayout{
 		
 		mainGroupView = (EditText)view.findViewById(R.id.group_address_main_group); 
 		subGroupView = (EditText)view.findViewById(R.id.group_address_sub_group); 
-		groupView = (EditText)view.findViewById(R.id.group_address_group); 
+		groupView = (EditText)view.findViewById(R.id.group_address_group);
+		firstSeparatorView = (TextView) view.findViewById(R.id.group_address_separator_1);
+		secondSeparatorView = (TextView) view.findViewById(R.id.group_address_separator_2);
 		
+		level = GroupAddressLevel.THREE;
+		
+	}
+	
+	public void setGroupAddressLevel(GroupAddressLevel level){
+		this.level = level;
+		setViewByLevel();
+	}
+	
+	private void setViewByLevel(){
+		switch(level){
+			case TWO:
+				mainGroupView.setVisibility(View.GONE);
+				firstSeparatorView.setVisibility(View.GONE);
+			break;
+			default:
+				mainGroupView.setVisibility(View.VISIBLE);
+				firstSeparatorView.setVisibility(View.VISIBLE);
+			break;
+		}
+	}
+	
+	public GroupAddressLevel getGroupAddressLevel(){
+		return level;
+	}
+	
+	public void setSeparator(String separator){
+		firstSeparatorView.setText(separator);
+		secondSeparatorView.setText(separator);
 	}
 	
 	public void setGroupAddress(String groupAddress){
 		String[] addr = groupAddress.split("/");
-		mainGroupView.setText(addr[0]);
-		subGroupView.setText(addr[1]);
-		groupView.setText(addr[2]);
+
+		switch(level){
+			case TWO:
+				subGroupView.setText(addr[0]);
+				groupView.setText(addr[1]);
+			break;
+			default:
+				mainGroupView.setText(addr[0]);
+				subGroupView.setText(addr[1]);
+				groupView.setText(addr[2]);
+			break;
+		}
 	}
 	
 	public String getGroupAddress(){
@@ -51,9 +97,21 @@ public class GroupAddressView extends LinearLayout{
 		String sub = subGroupView.getText().toString();
 		String group = groupView.getText().toString();
 		
-		return String.format("%s/%s/%s", main, sub, group);
+		String address = "";
+		
+		switch(level){
+			case TWO:
+				address = String.format("%s/%s", sub, group);
+			break;
+			default:
+				address = String.format("%s/%s/%s", main, sub, group);
+			break;
+		}	
+		return address;
 	}
 	
-	
+	public enum GroupAddressLevel{
+		TWO, THREE
+	}
 
 }

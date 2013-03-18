@@ -3,6 +3,7 @@ package pl.marek.knx;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.marek.knx.GroupAddressView.GroupAddressLevel;
 import pl.marek.knx.utils.CalimeroDatapoints;
 import pl.marek.knx.utils.MessageDialog;
 
@@ -22,13 +23,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
+import android.widget.CompoundButton;
 
 public class ReadWriteDialog extends Dialog implements View.OnClickListener,
-		OnItemSelectedListener {
+		OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
 	private TextView titleTextView;
 	private ImageView titleImageView;
@@ -42,6 +45,9 @@ public class ReadWriteDialog extends Dialog implements View.OnClickListener,
 	private EditText valueText;
 	private TextView valueUnit;
 	private LinearLayout valueTextFields;
+	
+	private RadioButton groupAddressLevel2;
+	private RadioButton groupAddressLevel3;
 	
 	private FunctionsAdapter functionsAdapter;
 	private ArrayAdapter<String> valueAdapter;
@@ -66,6 +72,9 @@ public class ReadWriteDialog extends Dialog implements View.OnClickListener,
 		readButton.setOnClickListener(this);
 		writeButton.setOnClickListener(this);
 		cancelButton.setOnClickListener(this);
+		groupAddressLevel2.setOnCheckedChangeListener(this);
+		groupAddressLevel3.setOnCheckedChangeListener(this);
+		
 	}
 
 	private void loadDialogViews() {
@@ -81,12 +90,16 @@ public class ReadWriteDialog extends Dialog implements View.OnClickListener,
 		valueText = (EditText) findViewById(R.id.dialog_rw_telegram_value_text);
 		valueUnit = (TextView) findViewById(R.id.dialog_rw_telegram_value_unit);
 		valueTextFields = (LinearLayout) findViewById(R.id.dialog_rw_telegram_value_text_fields);
+		
+		groupAddressLevel2 = (RadioButton)findViewById(R.id.group_address_level_2_radio);
+		groupAddressLevel3 = (RadioButton)findViewById(R.id.group_address_level_3_radio);
+		
 	}
 
 	private void setDialogSize() {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = (int) (metrics.widthPixels * 0.8f);
+		int width = (int) (metrics.widthPixels * 0.9f);
 		getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
 	}
 	
@@ -111,6 +124,19 @@ public class ReadWriteDialog extends Dialog implements View.OnClickListener,
 	
 	public void setListener(ReadWriteListener listener){
 		this.listener = listener;
+	}
+	
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if(buttonView.equals(groupAddressLevel2)){
+			if(isChecked){
+				groupAddressView.setGroupAddressLevel(GroupAddressLevel.TWO);
+			}
+		}else if(buttonView.equals(groupAddressLevel3)){
+			if(isChecked){
+				groupAddressView.setGroupAddressLevel(GroupAddressLevel.THREE);
+			}
+		}
 	}
 	
 	@Override

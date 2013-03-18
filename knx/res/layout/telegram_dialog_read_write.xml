@@ -21,6 +21,8 @@
                 android:enabled="false"
                 android:text="@string/dialog_rw_telegram_address" />
 
+			<include layout="@layout/group_address_level_chooser"/>
+
             <pl.marek.knx.GroupAddressView
                 android:id="@+id/dialog_rw_group_address"
                 android:layout_width="match_parent"
@@ -73,15 +75,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"
                         android:inputType="number" />
-                    
+
                     <TextView
                         android:id="@+id/dialog_rw_telegram_value_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:textIsSelectable="false"
                         android:gravity="center"
-                        />
+                        android:textIsSelectable="false" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

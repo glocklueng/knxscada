@@ -1,5 +1,6 @@
 package pl.marek.knx.database;
 
+import pl.marek.knx.controls.ControlType;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -17,10 +18,11 @@ public class Element implements Parcelable{
 	private String description;
 	private String groupAddress;
 	private String deviceAddress;
+	private ControlType type;
 	
 	public Element(){}
 	
-	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, String groupAddress, String deviceAddress){
+	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, String groupAddress, String deviceAddress, ControlType type){
 		this.id = id;
 		this.projectId = projectId;
 		this.layerId = layerId;
@@ -31,6 +33,7 @@ public class Element implements Parcelable{
 		this.description = description;
 		this.groupAddress = groupAddress;
 		this.deviceAddress = deviceAddress;
+		this.type = type;
 	}
 	
 	public Element(Parcel parcel){
@@ -109,6 +112,14 @@ public class Element implements Parcelable{
 		this.deviceAddress = deviceAddress;
 	}
 
+	public ControlType getType() {
+		return type;
+	}
+
+	public void setType(ControlType type) {
+		this.type = type;
+	}
+
 	@Override
 	public int describeContents() {
 		return this.hashCode();
@@ -126,6 +137,7 @@ public class Element implements Parcelable{
 		parcel.writeString(description);
 		parcel.writeString(groupAddress);
 		parcel.writeString(deviceAddress);
+		parcel.writeString(type.name());
 	}
 	
 	public void readFromParcel(Parcel parcel){
@@ -139,5 +151,6 @@ public class Element implements Parcelable{
 		description = parcel.readString();
 		groupAddress = parcel.readString();
 		deviceAddress = parcel.readString();
+		type = ControlType.valueOf(parcel.readString());
 	}
 }

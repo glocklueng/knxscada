@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -12,18 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
 
-public class PopupMenuDialog extends Dialog implements OnItemClickListener{
+public class PopupMenuDialog extends Dialog implements OnItemClickListener, View.OnClickListener{
 	
 	private PopupMenuListAdapter adapter;
 	private PopupMenuItemListener listener;
+	private ImageView iconView;
 	private TextView titleView;
 	private ListView listView;
+	private Button cancelButton;
 	private ArrayList<PopupMenuItem> items;
 	private String title;
 
@@ -43,9 +45,12 @@ public class PopupMenuDialog extends Dialog implements OnItemClickListener{
 		setContentView(R.layout.popup_menu);
 		setDialogSize();
 		
+		iconView = (ImageView)findViewById(R.id.dialog_title_icon);
 		titleView = (TextView)findViewById(R.id.dialog_title_text);
 		setTitle(title);
 		listView = (ListView)findViewById(android.R.id.list);
+		cancelButton = (Button)findViewById(R.id.popup_menu_cancel_button);
+		cancelButton.setOnClickListener(this);
 		
 		adapter = new PopupMenuListAdapter(getContext(), items);
 		listView.setAdapter(adapter);
@@ -63,15 +68,34 @@ public class PopupMenuDialog extends Dialog implements OnItemClickListener{
 		titleView.setText(title);
 	}
 	
+	public void setIcon(int iconRes){
+		iconView.setImageResource(iconRes);
+	}
+	
 	public void setPopupMenuItemListener(PopupMenuItemListener listener){
 		this.listener = listener;
 	}
-
+	
+	@Override
+	public void onClick(View v) {
+		if(v.equals(cancelButton)){
+			cancel();
+		}
+	}
+	
 	@Override
 	public void onItemClick(AdapterView<?> v, View view, int position, long id) {
 		if(listener != null)
 			listener.onPopupMenuItemClick(position, adapter.getItem(position));
 		this.dismiss();
+	}
+	
+	public void showCancelButton(boolean show){
+		if(show){
+			cancelButton.setVisibility(View.VISIBLE);
+		}else{
+			cancelButton.setVisibility(View.GONE);
+		}
 	}
 	
 	public interface PopupMenuItemListener{
@@ -98,9 +122,9 @@ public class PopupMenuDialog extends Dialog implements OnItemClickListener{
 			TextView nameView = (TextView)view.findViewById(R.id.popup_menu_item_name);
 			
 			nameView.setText(item.getName());
-			Drawable icon = item.getIcon();
-			if(icon != null){
-				iconView.setImageDrawable(icon);
+			int icon = item.getIcon();
+			if(icon != -1){
+				iconView.setImageResource(icon);
 			}
 			return view;
 		}
@@ -109,14 +133,24 @@ public class PopupMenuDialog extends Dialog implements OnItemClickListener{
 
 class PopupMenuItem{
 	
+	private int id;
 	private String name;
-	private Drawable icon;
+	private int icon = -1;
 	
 	public PopupMenuItem() {}
 	
-	public PopupMenuItem(String name, Drawable icon) {
+	public PopupMenuItem(int id, String name, int icon) {
+		this.id = id;
 		this.name = name;
 		this.icon = icon;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -127,11 +161,11 @@ class PopupMenuItem{
 		this.name = name;
 	}
 
-	public Drawable getIcon() {
+	public int getIcon() {
 		return icon;
 	}
 
-	public void setIcon(Drawable icon) {
+	public void setIcon(int icon) {
 		this.icon = icon;
 	}
 }

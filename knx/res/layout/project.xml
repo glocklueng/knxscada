@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		 xmlns:app="http://schemas.android.com/apk/res/pl.marek.knx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,11 +10,14 @@
     <pl.marek.knx.SideBarView
         android:id="@+id/left_side_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:item_layout="@layout/sidebar_item"
+        />
 
     <pl.marek.knx.SideBarView
         android:id="@+id/right_side_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:item_layout="@layout/sidebar_item_big" />
 
 </FrameLayout>

@@ -12,6 +12,9 @@
     <string name="yes">Tak</string> 
     <string name="no">Nie</string> 
     <string name="group_address_separator">/</string>
+    <string name="group_address_level_label">Typ adresu</string>
+    <string name="group_address_level_2_label">2 poziomy</string>
+    <string name="group_address_level_3_label">3 poziomy</string>
     <string name="cancel">Anuluj</string>
     
     <!-- ICON PICKER DIALOG -->
@@ -100,7 +103,7 @@
     <string name="dialog_rw_telegram_data_type">Typ danych</string>
     <string name="dialog_rw_telegram_function">Funkcja</string>
     <string name="dialog_rw_telegram_value">Wartość</string>
-
+    
     <string-array name="dialog_rw_data_types">
         <item name="data_type_binary">Binarne (1 bit)</item>
         <item name="data_type_controlled">Kontrolne (3 bity)</item>

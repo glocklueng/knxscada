@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import pl.marek.knx.controls.ControlType;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.tables.ElementTable;
 import pl.marek.knx.database.tables.ElementTable.ElementColumns;
@@ -25,8 +26,9 @@ public class ElementDao implements Dao<Element>{
 			+ ElementColumns.NAME + ", "
 			+ ElementColumns.DESCRIPTION + ", "
 			+ ElementColumns.GROUP_ADDRESS + ", "
-			+ ElementColumns.DEVICE_ADDRESS + ")"
-			+ "values(?,?,?,?,?,?,?,?,?);";
+			+ ElementColumns.DEVICE_ADDRESS + ", "
+			+ ElementColumns.TYPE + ") "
+			+ "values(?,?,?,?,?,?,?,?,?,?);";
 	
 
 	private SQLiteDatabase db;
@@ -50,6 +52,7 @@ public class ElementDao implements Dao<Element>{
 		insertStatement.bindString(7, element.getDescription());
 		insertStatement.bindString(8, element.getGroupAddress());
 		insertStatement.bindString(9, element.getDeviceAddress());
+		insertStatement.bindString(10, element.getType().name());
 		return insertStatement.executeInsert();
 	}
 
@@ -62,6 +65,7 @@ public class ElementDao implements Dao<Element>{
 		values.put(ElementColumns.DESCRIPTION, element.getDescription());
 		values.put(ElementColumns.GROUP_ADDRESS, element.getGroupAddress());
 		values.put(ElementColumns.DEVICE_ADDRESS, element.getDeviceAddress());
+		values.put(ElementColumns.TYPE, element.getType().name());
 		db.update(ElementTable.TABLE_NAME, values, ElementColumns._ID + " = ? and "+ElementColumns.PROJECT_ID+" = ? and "+ElementColumns.LAYER_ID+" = ? and "+ElementColumns.SUBLAYER_ID+" = ?", new String[]{String.valueOf(element.getId()), String.valueOf(element.getProjectId()), String.valueOf(element.getLayerId()), String.valueOf(element.getSubLayerId())});
 	}
 
@@ -97,7 +101,8 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
 									ElementColumns.GROUP_ADDRESS,
-									ElementColumns.DEVICE_ADDRESS
+									ElementColumns.DEVICE_ADDRESS,
+									ElementColumns.TYPE
 						},
 						column + " = ?", new String[]{String.valueOf(value)}, 
 						null, null ,null, "1");
@@ -149,7 +154,8 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
 									ElementColumns.GROUP_ADDRESS,
-									ElementColumns.DEVICE_ADDRESS
+									ElementColumns.DEVICE_ADDRESS,
+									ElementColumns.TYPE
 						}, 
 						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
@@ -180,6 +186,7 @@ public class ElementDao implements Dao<Element>{
 			element.setDescription(cursor.getString(7));
 			element.setGroupAddress(cursor.getString(8));
 			element.setDeviceAddress(cursor.getString(9));
+			element.setType(ControlType.valueOf(cursor.getString(10)));
 		}
 		return element;
 	}

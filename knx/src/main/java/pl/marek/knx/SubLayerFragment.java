@@ -1,12 +1,15 @@
 package pl.marek.knx;
 
+import java.util.ArrayList;
+
+import pl.marek.knx.controls.ControlType;
+import pl.marek.knx.database.Element;
 import pl.marek.knx.database.SubLayer;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,14 +28,30 @@ public class SubLayerFragment extends ListFragment{
         subLayer = getArguments().getParcelable(SubLayer.SUBLAYER);
         subLayerDescriptionTextView = (TextView) rootView.findViewById(R.id.sublayer_description_textview);
         elementsListView = (ListView) rootView.findViewById(android.R.id.list);
+        		
+        ArrayList<Element> elements = new ArrayList<Element>();
+        for(int i=0;i<4;i++){
+        	Element elem = new Element();
+        	elem.setId(i);
+        	elem.setName(String.format("Element %d", i));
+        	elem.setDescription("Test description! Bla bla bla");
+        	
+        	if(i == 0){
+        		elem.setType(ControlType.ON_OFF_SWITCH);
+        	}else if(i == 1){
+        		elem.setType(ControlType.SLIDER);
+        	}else if(i == 2){
+        		elem.setType(ControlType.LIGHT_ON_OFF_SWITCH);
+        	}else if(i == 3){
+        		elem.setType(ControlType.LIGHT_SLIDER);
+        	}
+        	elements.add(elem);
+        	
+        	
+        }
         
-//        //TODO
-//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//        		  "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//        		  "Linux", "OS/2" };
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
-//		elementsListView.setAdapter(adapter);
-		
+        ElementAdapter adapter = new ElementAdapter(getActivity(), elements);
+        elementsListView.setAdapter(adapter);
         
         subLayerDescriptionTextView.setText(subLayer.getDescription());
         return rootView;

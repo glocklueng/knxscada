@@ -2,6 +2,7 @@ package pl.marek.knx;
 
 import java.util.ArrayList;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -25,7 +26,7 @@ import android.widget.TextView;
 public class SideBarView extends LinearLayout implements OnGestureListener{
 	
 	private static final int ACCEPT_SLIDE_MOVE = 150;
-	private static final int ACCEPT_SLIDE_START_MARGIN = 100;
+	private static final int ACCEPT_SLIDE_START_MARGIN = 20;
 	
     private LinearLayout sidebarView;
     private ListView listView;
@@ -35,6 +36,7 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     private ArrayList<SideBarItem> items;
     private SideBarMode mode = SideBarMode.LEFT;
     private BaseAdapter sideBarAdapter;
+    private int sideBarItemLayoutResource;
     
     public SideBarView(Context context) {
         super(context);
@@ -43,6 +45,13 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
 
     public SideBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SideBarView,0, 0);
+        try {
+        	sideBarItemLayoutResource = a.getResourceId(R.styleable.SideBarView_item_layout, 0);
+        } finally {
+           a.recycle();
+        }
         load();
     }
 
@@ -88,11 +97,15 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
 			}
 		});
         items = new ArrayList<SideBarItem>();
-        sideBarAdapter = new SideBarAdapter();
+        sideBarAdapter = new SideBarAdapter(sideBarItemLayoutResource);
         listView.setAdapter(sideBarAdapter);
     }
     
-    public void setSideBarListener(SideBarListener listener) {
+    public void setSideBarItemLayoutResource(int sideBarItemLayoutResource) {
+		this.sideBarItemLayoutResource = sideBarItemLayoutResource;
+	}
+
+	public void setSideBarListener(SideBarListener listener) {
         this.listener = listener;
     }
     
@@ -299,9 +312,12 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     
     
     private class SideBarAdapter extends BaseAdapter {
+    	
         private LayoutInflater inflater;
+        private int sideBarItemLayoutResource;
 
-        public SideBarAdapter() {
+        public SideBarAdapter(int sideBarItemLayoutResource) {
+        	this.sideBarItemLayoutResource = sideBarItemLayoutResource;
             inflater = LayoutInflater.from(getContext());
         }
 
@@ -327,7 +343,7 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
         	
         	ViewHolder holder;
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.sidebar_item, null);
+                convertView = inflater.inflate(sideBarItemLayoutResource, null);
                 holder = new ViewHolder();
                 holder.text = (TextView) convertView.findViewById(R.id.sidebar_item_text);
                 holder.icon = (ImageView) convertView.findViewById(R.id.sidebar_item_icon);

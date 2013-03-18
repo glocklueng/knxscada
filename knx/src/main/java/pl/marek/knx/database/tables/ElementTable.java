@@ -18,6 +18,7 @@ public class ElementTable {
 		public static final String DESCRIPTION = "description";
 		public static final String GROUP_ADDRESS = "group_address";
 		public static final String DEVICE_ADDRESS = "device_address";
+		public static final String TYPE = "type";
 	}
 	
 	public static final String TABLE_NAME = "elements";
@@ -32,6 +33,7 @@ public class ElementTable {
 												   + ElementColumns.DESCRIPTION + " TEXT, "
 												   + ElementColumns.GROUP_ADDRESS + " TEXT, "
 												   + ElementColumns.DEVICE_ADDRESS + " TEXT, " 
+												   + ElementColumns.TYPE + " TEXT, " 
 												   + "FOREIGN KEY("+ElementColumns.PROJECT_ID+") REFERENCES "
 												   + ProjectTable.TABLE_NAME + "("+ProjectColumns._ID+"), "
 												   + "FOREIGN KEY("+ElementColumns.LAYER_ID+") REFERENCES " 

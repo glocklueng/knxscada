@@ -3,8 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <include layout="@layout/dialog_header"/>
-    <include layout="@layout/list_view"/>
-    
+
+    <include layout="@layout/dialog_header" />
+
+    <include layout="@layout/list_view" />
+
+    <Button
+        android:id="@+id/popup_menu_cancel_button"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:visibility="gone" />
+
 </LinearLayout>
