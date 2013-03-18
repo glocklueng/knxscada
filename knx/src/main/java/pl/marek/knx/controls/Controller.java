@@ -1,5 +1,6 @@
 package pl.marek.knx.controls;
 
+import pl.marek.knx.database.Element;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -12,13 +13,16 @@ public class Controller extends LinearLayout{
 	private LinearLayout mView;
 	private int layoutId;
 	
+	protected Element element;
+	
 	private Controller(Context context){
 		super(context);
 	}
 	
-	public Controller(Context context, int layoutId) {
+	public Controller(Context context, Element element, int layoutId) {
 		this(context);
 		this.layoutId = layoutId;
+		this.element = element;
 		initialize();
 	}
 	
@@ -37,7 +41,14 @@ public class Controller extends LinearLayout{
 	public LinearLayout getMainView(){
 		return mView;
 	}
-	
+
+	public Element getElement() {
+		return element;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
+	}
 	
 
 }

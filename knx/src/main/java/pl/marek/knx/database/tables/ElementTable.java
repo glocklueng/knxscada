@@ -16,7 +16,6 @@ public class ElementTable {
 		public static final String Y = "y";
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
-		public static final String GROUP_ADDRESS = "group_address";
 		public static final String DEVICE_ADDRESS = "device_address";
 		public static final String TYPE = "type";
 	}
@@ -31,7 +30,6 @@ public class ElementTable {
 												   + ElementColumns.Y + " INTEGER, "
 												   + ElementColumns.NAME + " TEXT, "
 												   + ElementColumns.DESCRIPTION + " TEXT, "
-												   + ElementColumns.GROUP_ADDRESS + " TEXT, "
 												   + ElementColumns.DEVICE_ADDRESS + " TEXT, " 
 												   + ElementColumns.TYPE + " TEXT, " 
 												   + "FOREIGN KEY("+ElementColumns.PROJECT_ID+") REFERENCES "

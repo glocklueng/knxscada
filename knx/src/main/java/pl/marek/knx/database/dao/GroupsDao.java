@@ -5,7 +5,7 @@ import pl.marek.knx.database.tables.GroupsTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class GroupsDao extends BasicBlockDao<Group> {
+public class GroupsDao extends BaseAddressDao<Group> {
 	
 	public GroupsDao(SQLiteDatabase db){
 		super(db, GroupsTable.TABLE_NAME);

@@ -6,6 +6,7 @@ import pl.marek.knx.database.DPTEntity;
 import pl.marek.knx.database.DatapointEntity;
 import pl.marek.knx.database.Device;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.database.ElementGroupAddress;
 import pl.marek.knx.database.Group;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
@@ -54,8 +55,9 @@ public interface DatabaseManager {
 	
 	//SubLayer Operations
 	public void addSubLayer(SubLayer subLayer);
-	public Layer getSubLayerById(int id);
-	public Layer getSubLayerByName(String name);
+	public SubLayer getSubLayerById(int id);
+	public SubLayer getSubLayerByIdWithDependencies(int id);
+	public SubLayer getSubLayerByName(String name);
 	public List<SubLayer> getAllSubLayers();
 	public void removeSubLayer(SubLayer subLayer);
 	public void updateSubLayer(SubLayer subLayer);
@@ -66,6 +68,12 @@ public interface DatabaseManager {
 	public Element getElementByName(String name);
 	public List<Element> getAllElementss();
 	public void removeElement(Element element);
-	public void updateElement(Element element);		
+	public void updateElement(Element element);
+	
+	//ElementGroupAddress Operations
+	public void addElementGroupAddress(ElementGroupAddress address);
+	public ElementGroupAddress getElementGroupAddressById(int id);
+	public void removeElementGroupAddress(ElementGroupAddress address);
+	public void updateElementGroupAddress(ElementGroupAddress address);	
 	
 }

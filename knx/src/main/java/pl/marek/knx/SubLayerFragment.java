@@ -3,8 +3,10 @@ package pl.marek.knx;
 import java.util.ArrayList;
 
 import pl.marek.knx.controls.ControlType;
+import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ public class SubLayerFragment extends ListFragment{
 	
 	private SubLayer subLayer;
 	
+	private DatabaseManager dbManager;
+	
 	private TextView subLayerDescriptionTextView;
 	private ListView elementsListView;
 	
@@ -24,8 +28,11 @@ public class SubLayerFragment extends ListFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	
         View rootView = inflater.inflate(R.layout.sublayer, container, false);
+        dbManager = new DatabaseManagerImpl(getActivity());
         
         subLayer = getArguments().getParcelable(SubLayer.SUBLAYER);
+        subLayer = dbManager.getSubLayerByIdWithDependencies(subLayer.getId());
+        
         subLayerDescriptionTextView = (TextView) rootView.findViewById(R.id.sublayer_description_textview);
         elementsListView = (ListView) rootView.findViewById(android.R.id.list);
         		
@@ -56,6 +63,8 @@ public class SubLayerFragment extends ListFragment{
         subLayerDescriptionTextView.setText(subLayer.getDescription());
         return rootView;
     }
+    
+   
 
     
 }

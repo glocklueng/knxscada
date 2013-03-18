@@ -5,7 +5,7 @@ import pl.marek.knx.database.tables.DevicesTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class DevicesDao extends BasicBlockDao<Device>{
+public class DevicesDao extends BaseAddressDao<Device>{
 
 	public DevicesDao(SQLiteDatabase db) {
 		super(db, DevicesTable.TABLE_NAME);

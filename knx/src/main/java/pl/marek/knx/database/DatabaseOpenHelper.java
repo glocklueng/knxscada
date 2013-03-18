@@ -29,6 +29,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		LayerTable.onCreate(db);
 		SubLayerTable.onCreate(db);
 		ElementTable.onCreate(db);
+		ElementGroupAddressTable.onCreate(db);
 	}
 
 	@Override
@@ -42,5 +43,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		LayerTable.onUpgrade(db, oldVersion, newVersion);
 		SubLayerTable.onUpgrade(db, oldVersion, newVersion);
 		ElementTable.onUpgrade(db, oldVersion, newVersion);
+		ElementGroupAddressTable.onUpgrade(db, oldVersion, newVersion);
 	}
 }

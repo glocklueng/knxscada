@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DevicesTable {
 	
-	public static class DevicesColumns extends BasicBlockColumns{}
+	public static class DevicesColumns extends BaseAddressColumns{}
 	
 	public static final String TABLE_NAME = "devices";
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE "+DevicesTable.TABLE_NAME+" ("

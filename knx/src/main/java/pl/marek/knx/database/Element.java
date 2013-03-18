@@ -1,5 +1,7 @@
 package pl.marek.knx.database;
 
+import java.util.ArrayList;
+
 import pl.marek.knx.controls.ControlType;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,13 +18,13 @@ public class Element implements Parcelable{
 	private int y;
 	private String name;
 	private String description;
-	private String groupAddress;
+	private ArrayList<ElementGroupAddress> groupAddresses;
 	private String deviceAddress;
 	private ControlType type;
 	
 	public Element(){}
 	
-	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, String groupAddress, String deviceAddress, ControlType type){
+	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, ControlType type){
 		this.id = id;
 		this.projectId = projectId;
 		this.layerId = layerId;
@@ -31,7 +33,7 @@ public class Element implements Parcelable{
 		this.y = y;
 		this.name = name;
 		this.description = description;
-		this.groupAddress = groupAddress;
+		this.groupAddresses = groupAddresses;
 		this.deviceAddress = deviceAddress;
 		this.type = type;
 	}
@@ -99,12 +101,15 @@ public class Element implements Parcelable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getGroupAddress() {
-		return groupAddress;
+
+	public ArrayList<ElementGroupAddress> getGroupAddresses() {
+		return groupAddresses;
 	}
-	public void setGroupAddress(String groupAddress) {
-		this.groupAddress = groupAddress;
+
+	public void setGroupAddresses(ArrayList<ElementGroupAddress> groupAddresses) {
+		this.groupAddresses = groupAddresses;
 	}
+
 	public String getDeviceAddress() {
 		return deviceAddress;
 	}
@@ -135,7 +140,6 @@ public class Element implements Parcelable{
 		parcel.writeInt(y);
 		parcel.writeString(name);
 		parcel.writeString(description);
-		parcel.writeString(groupAddress);
 		parcel.writeString(deviceAddress);
 		parcel.writeString(type.name());
 	}
@@ -149,7 +153,6 @@ public class Element implements Parcelable{
 		y = parcel.readInt();
 		name = parcel.readString();
 		description = parcel.readString();
-		groupAddress = parcel.readString();
 		deviceAddress = parcel.readString();
 		type = ControlType.valueOf(parcel.readString());
 	}

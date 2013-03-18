@@ -1,15 +1,15 @@
 package pl.marek.knx.database;
 
-public class BasicBlock {
+public class BaseAddress {
 	
 	protected String address;
 	protected int projectId;
 	protected String name;
 	protected String description;
 	
-	public BasicBlock(){}
+	public BaseAddress(){}
 	
-	public BasicBlock(String address, int projectId, String name, String description){
+	public BaseAddress(String address, int projectId, String name, String description){
 		this.address = address;
 		this.projectId = projectId;
 		this.name = name;

@@ -1,5 +1,5 @@
 package pl.marek.knx.database;
 
-public class Group extends BasicBlock{
+public class Group extends BaseAddress{
 
 }

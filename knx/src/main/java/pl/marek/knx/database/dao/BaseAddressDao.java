@@ -8,17 +8,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import pl.marek.knx.database.BasicBlock;
-import pl.marek.knx.database.tables.BasicBlockColumns;
+import pl.marek.knx.database.BaseAddress;
+import pl.marek.knx.database.tables.BaseAddressColumns;
 import pl.marek.knx.interfaces.Dao;
 
-public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
+public abstract class BaseAddressDao<T extends BaseAddress> implements Dao<T>{
 		
 	private SQLiteDatabase db;
 	private SQLiteStatement insertStatement;
 	private String tableName;
 
-	public BasicBlockDao(SQLiteDatabase db, String tableName){
+	public BaseAddressDao(SQLiteDatabase db, String tableName){
 		this.db = db;
 		this.tableName = tableName;
 		insertStatement = db.compileStatement(createInsertQuery(tableName));
@@ -26,10 +26,10 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 	
 	private String createInsertQuery(String tableName){
 		return "INSERT INTO " + tableName + " ("
-				   + BasicBlockColumns.ADDRESS + ", "
-				   + BasicBlockColumns.PROJECT_ID + ", "
-				   + BasicBlockColumns.NAME + ", "
-				   + BasicBlockColumns.DESCRIPTION + ") "
+				   + BaseAddressColumns.ADDRESS + ", "
+				   + BaseAddressColumns.PROJECT_ID + ", "
+				   + BaseAddressColumns.NAME + ", "
+				   + BaseAddressColumns.DESCRIPTION + ") "
 				   + "values(?,?,?,?);";
 	}
 	
@@ -47,14 +47,14 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 	@Override
 	public void update(T block) {
 		final ContentValues values = new ContentValues();
-		values.put(BasicBlockColumns.NAME, block.getName());
-		values.put(BasicBlockColumns.DESCRIPTION, block.getDescription());
-		db.update(tableName, values, BasicBlockColumns.ADDRESS + " = ? and "+ BasicBlockColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
+		values.put(BaseAddressColumns.NAME, block.getName());
+		values.put(BaseAddressColumns.DESCRIPTION, block.getDescription());
+		db.update(tableName, values, BaseAddressColumns.ADDRESS + " = ? and "+ BaseAddressColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
 	}
 
 	@Override
 	public void delete(T block) {
-		db.delete(tableName, BasicBlockColumns.ADDRESS + " = ? and "+ BasicBlockColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
+		db.delete(tableName, BaseAddressColumns.ADDRESS + " = ? and "+ BaseAddressColumns.PROJECT_ID + " = ?", new String[]{block.getAddress(), String.valueOf(block.getProjectId())});
 	}
 
 	@Override
@@ -62,12 +62,12 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 		T block = null;
 		Cursor c = 
 				db.query(tableName, 
-						new String[]{BasicBlockColumns.ADDRESS,
-									 BasicBlockColumns.PROJECT_ID,
-									 BasicBlockColumns.NAME,
-									 BasicBlockColumns.DESCRIPTION
+						new String[]{BaseAddressColumns.ADDRESS,
+									 BaseAddressColumns.PROJECT_ID,
+									 BaseAddressColumns.NAME,
+									 BaseAddressColumns.DESCRIPTION
 						}, 
-						BasicBlockColumns.ADDRESS + " = ?", new String[]{String.valueOf(String.valueOf(id))}, 
+						BaseAddressColumns.ADDRESS + " = ?", new String[]{String.valueOf(String.valueOf(id))}, 
 						null, null ,null, "1");
 		if(c.moveToFirst()){
 			block = this.build(c);
@@ -79,7 +79,7 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 	}
 	
 	public List<T> getByProjectId(int id){
-		return getList(BasicBlockColumns.PROJECT_ID, String.valueOf(id), null, null, null, null);
+		return getList(BaseAddressColumns.PROJECT_ID, String.valueOf(id), null, null, null, null);
 	}
 
 	@Override
@@ -99,10 +99,10 @@ public abstract class BasicBlockDao<T extends BasicBlock> implements Dao<T>{
 		List<T> blocks = new ArrayList<T>();
 		Cursor c = 
 				db.query(tableName, 
-						new String[]{BasicBlockColumns.ADDRESS,
-									 BasicBlockColumns.PROJECT_ID,
-									 BasicBlockColumns.NAME,
-									 BasicBlockColumns.DESCRIPTION
+						new String[]{BaseAddressColumns.ADDRESS,
+									 BaseAddressColumns.PROJECT_ID,
+									 BaseAddressColumns.NAME,
+									 BaseAddressColumns.DESCRIPTION
 						}, 
 						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){

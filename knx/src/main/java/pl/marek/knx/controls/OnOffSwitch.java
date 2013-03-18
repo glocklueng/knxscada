@@ -1,12 +1,15 @@
 package pl.marek.knx.controls;
 
 import pl.marek.knx.R;
+import pl.marek.knx.database.Element;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+@SuppressLint("ViewConstructor")
 public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 		
 	private TextView nameView;
@@ -15,13 +18,15 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	
 	private int onBackgroundColor;
 	private int offBackgroundColor;
+	
 
-	public OnOffSwitch(Context context) {
-		super(context, R.layout.control_onoffswitch);
-		init();
+	public OnOffSwitch(Context context, Element element) {
+		super(context, element, R.layout.control_onoffswitch);
+		initViews();
+		initValues();
 	}
 		
-	public void init(){
+	private void initViews(){
 
 		nameView = (TextView)getMainView().findViewById(android.R.id.title);
 		descriptionView = (TextView)getMainView().findViewById(android.R.id.summary);
@@ -31,6 +36,11 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 		onBackgroundColor = getResources().getColor(R.color.control_on_background);
 		offBackgroundColor = getResources().getColor(R.color.control_off_background);
 		setBackgroundColorByState(switchView.isChecked());
+	}
+	
+	public void initValues(){
+		nameView.setText(element.getName());
+		descriptionView.setText(element.getDescription());
 	}
 
 	public void setName(String name){

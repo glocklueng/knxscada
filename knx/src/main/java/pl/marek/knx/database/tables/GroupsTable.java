@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class GroupsTable {
 	
-	public static class GroupsColumns extends BasicBlockColumns{}
+	public static class GroupsColumns extends BaseAddressColumns{}
 
 	public static final String TABLE_NAME = "groups";
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE "

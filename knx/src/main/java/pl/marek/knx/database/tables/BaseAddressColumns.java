@@ -1,6 +1,6 @@
 package pl.marek.knx.database.tables;
 
-public class BasicBlockColumns {
+public class BaseAddressColumns {
 	public static final String ADDRESS = "address";
 	public static final String NAME = "name";
 	public static final String DESCRIPTION = "description";

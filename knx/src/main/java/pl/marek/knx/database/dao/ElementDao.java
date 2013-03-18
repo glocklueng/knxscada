@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import pl.marek.knx.controls.ControlType;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.database.ElementGroupAddress;
 import pl.marek.knx.database.tables.ElementTable;
 import pl.marek.knx.database.tables.ElementTable.ElementColumns;
 import pl.marek.knx.interfaces.Dao;
@@ -25,18 +26,19 @@ public class ElementDao implements Dao<Element>{
 			+ ElementColumns.Y + ", "
 			+ ElementColumns.NAME + ", "
 			+ ElementColumns.DESCRIPTION + ", "
-			+ ElementColumns.GROUP_ADDRESS + ", "
 			+ ElementColumns.DEVICE_ADDRESS + ", "
 			+ ElementColumns.TYPE + ") "
-			+ "values(?,?,?,?,?,?,?,?,?,?);";
+			+ "values(?,?,?,?,?,?,?,?,?);";
 	
 
 	private SQLiteDatabase db;
 	private SQLiteStatement insertStatement;
+	private ElementGroupAddressDao elementGroupAddressDao;
 	
 	public ElementDao(SQLiteDatabase db) {
 		this.db = db;
-		insertStatement = db.compileStatement(ElementDao.INSERT_QUERY);	
+		insertStatement = db.compileStatement(ElementDao.INSERT_QUERY);
+		elementGroupAddressDao = new ElementGroupAddressDao(db);
 	}
 	
 
@@ -50,9 +52,11 @@ public class ElementDao implements Dao<Element>{
 		insertStatement.bindLong(5, element.getY());
 		insertStatement.bindString(6, element.getName());
 		insertStatement.bindString(7, element.getDescription());
-		insertStatement.bindString(8, element.getGroupAddress());
-		insertStatement.bindString(9, element.getDeviceAddress());
-		insertStatement.bindString(10, element.getType().name());
+		insertStatement.bindString(8, element.getDeviceAddress());
+		insertStatement.bindString(9, element.getType().name());
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			elementGroupAddressDao.save(address);
+		}
 		return insertStatement.executeInsert();
 	}
 
@@ -63,14 +67,19 @@ public class ElementDao implements Dao<Element>{
 		values.put(ElementColumns.Y, element.getY());
 		values.put(ElementColumns.NAME, element.getName());
 		values.put(ElementColumns.DESCRIPTION, element.getDescription());
-		values.put(ElementColumns.GROUP_ADDRESS, element.getGroupAddress());
 		values.put(ElementColumns.DEVICE_ADDRESS, element.getDeviceAddress());
 		values.put(ElementColumns.TYPE, element.getType().name());
+		
+		elementGroupAddressDao.deleteByElementId(element.getId());
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			elementGroupAddressDao.save(address);
+		}
 		db.update(ElementTable.TABLE_NAME, values, ElementColumns._ID + " = ? and "+ElementColumns.PROJECT_ID+" = ? and "+ElementColumns.LAYER_ID+" = ? and "+ElementColumns.SUBLAYER_ID+" = ?", new String[]{String.valueOf(element.getId()), String.valueOf(element.getProjectId()), String.valueOf(element.getLayerId()), String.valueOf(element.getSubLayerId())});
 	}
 
 	@Override
 	public void delete(Element element) {
+		elementGroupAddressDao.deleteByElementId(element.getId());
 		db.delete(ElementTable.TABLE_NAME, ElementColumns._ID + " = ? and "+ElementColumns.PROJECT_ID+" = ? and "+ElementColumns.LAYER_ID+" = ? and "+ElementColumns.SUBLAYER_ID+" = ?", new String[]{String.valueOf(element.getId()), String.valueOf(element.getProjectId()), String.valueOf(element.getLayerId()), String.valueOf(element.getSubLayerId())});
 	}
 
@@ -100,7 +109,6 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.Y,
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
-									ElementColumns.GROUP_ADDRESS,
 									ElementColumns.DEVICE_ADDRESS,
 									ElementColumns.TYPE
 						},
@@ -153,7 +161,6 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.Y,
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
-									ElementColumns.GROUP_ADDRESS,
 									ElementColumns.DEVICE_ADDRESS,
 									ElementColumns.TYPE
 						}, 
@@ -184,9 +191,9 @@ public class ElementDao implements Dao<Element>{
 			element.setY(cursor.getInt(5));
 			element.setName(cursor.getString(6));
 			element.setDescription(cursor.getString(7));
-			element.setGroupAddress(cursor.getString(8));
-			element.setDeviceAddress(cursor.getString(9));
-			element.setType(ControlType.valueOf(cursor.getString(10)));
+			element.setDeviceAddress(cursor.getString(8));
+			element.setType(ControlType.valueOf(cursor.getString(9)));
+			element.setGroupAddresses((ArrayList<ElementGroupAddress>)elementGroupAddressDao.getByElementId(element.getId()));
 		}
 		return element;
 	}

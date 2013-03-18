@@ -1,13 +1,16 @@
 package pl.marek.knx.controls;
 
 import pl.marek.knx.R;
+import pl.marek.knx.database.Element;
 import pl.marek.knx.utils.ColorUtils;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+@SuppressLint("ViewConstructor")
 public class Slider extends Controller implements OnSeekBarChangeListener{
 
 	private TextView nameView;
@@ -18,12 +21,13 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	private int stopColor;
 
 
-	public Slider(Context context) {
-		super(context, R.layout.control_slider);
-		init();
+	public Slider(Context context, Element element) {
+		super(context, element, R.layout.control_slider);
+		initViews();
+		initValues();
 	}
 		
-	public void init(){
+	public void initViews(){
 		
 		nameView = (TextView)getMainView().findViewById(android.R.id.title);
 		descriptionView = (TextView)getMainView().findViewById(android.R.id.summary);
@@ -34,6 +38,11 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 		stopColor = getResources().getColor(R.color.control_slider_high_color);
 		
 		setBackgroundColorBySliderPosition(sliderView.getProgress());
+	}
+	
+	public void initValues(){
+		nameView.setText(element.getName());
+		descriptionView.setText(element.getDescription());
 	}
 
 	public void setName(String name){

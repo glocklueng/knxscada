@@ -24,6 +24,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	private LayerDao layerDao;
 	private SubLayerDao subLayerDao;
 	private ElementDao elementDao;
+	private ElementGroupAddressDao elementGroupAddressDao;
 	
 	public DatabaseManagerImpl(Context context){
 		this.context = context;
@@ -34,7 +35,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public void open() {
 		openHelper = new DatabaseOpenHelper(context);
 		db = openHelper.getWritableDatabase();
-		
+				
 		datapointsDao = new DatapointsDao(db);
 		devicesDao = new DevicesDao(db);
 		groupsDao = new GroupsDao(db);
@@ -286,12 +287,17 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	}
 
 	@Override
-	public Layer getSubLayerById(int id) {
+	public SubLayer getSubLayerById(int id) {
 		return subLayerDao.getById(id);
+	}
+	
+	@Override
+	public SubLayer getSubLayerByIdWithDependencies(int id) {
+		return subLayerDao.getByIdWithDependencies(id);
 	}
 
 	@Override
-	public Layer getSubLayerByName(String name) {
+	public SubLayer getSubLayerByName(String name) {
 		return subLayerDao.getByName(name);
 	}
 
@@ -367,6 +373,46 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		db.beginTransaction();
 		try{
 			elementDao.update(element);
+			db.setTransactionSuccessful();
+		}finally{
+			db.endTransaction();
+		}
+	}
+	
+	//ElementGroupAddress Operations
+	@Override
+	public void addElementGroupAddress(ElementGroupAddress address) {
+		db.beginTransaction();
+		try{
+			int id = (int)elementGroupAddressDao.save(address);
+			address.setId(id);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public ElementGroupAddress getElementGroupAddressById(int id) {
+		return getElementGroupAddressById(id);
+	}
+
+	@Override
+	public void removeElementGroupAddress(ElementGroupAddress address) {
+		db.beginTransaction();
+		try{
+			elementGroupAddressDao.delete(address);
+			db.setTransactionSuccessful();
+		}finally{
+			db.endTransaction();
+		}
+	}
+
+	@Override
+	public void updateElementGroupAddress(ElementGroupAddress address) {
+		db.beginTransaction();
+		try{
+			elementGroupAddressDao.update(address);
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
