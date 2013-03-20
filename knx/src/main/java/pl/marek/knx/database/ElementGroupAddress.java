@@ -51,7 +51,7 @@ public class ElementGroupAddress {
 
 
 	public enum ElementGroupAddressType{
-		MAIN
+		MAIN,OTHER
 	}
 
 }

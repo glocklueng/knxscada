@@ -115,7 +115,7 @@ public class IconPickerDialog extends Dialog implements View.OnClickListener, Ad
 
 	        int iconRes = (Integer)getItem(position);
 	        imageView.setImageResource(iconRes);
-	        return imageView;
+	        return convertView;
 	    }
 		
 	}

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 public class GroupAddressView extends LinearLayout{
 	
+	private TextView labelView;
 	private EditText mainGroupView;
 	private EditText subGroupView;
 	private EditText groupView;
@@ -36,16 +37,26 @@ public class GroupAddressView extends LinearLayout{
 	
 	private void init() {
 		LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = layoutInflater.inflate(R.layout.group_address_view,this);
+		View view = layoutInflater.inflate(R.layout.group_address_view, this, true);
 		
-		mainGroupView = (EditText)view.findViewById(R.id.group_address_main_group); 
-		subGroupView = (EditText)view.findViewById(R.id.group_address_sub_group); 
+		labelView = (TextView)findViewById(R.id.group_address_label);
+		mainGroupView = (EditText)view.findViewById(R.id.group_address_main_group);
+		subGroupView = (EditText)view.findViewById(R.id.group_address_sub_group);
 		groupView = (EditText)view.findViewById(R.id.group_address_group);
 		firstSeparatorView = (TextView) view.findViewById(R.id.group_address_separator_1);
 		secondSeparatorView = (TextView) view.findViewById(R.id.group_address_separator_2);
-		
 		level = GroupAddressLevel.THREE;
+
 		
+	}
+	
+	public void setLabel(String label){
+		if(label != null){
+			labelView.setText(label);
+			labelView.setVisibility(View.VISIBLE);
+		} else{
+			labelView.setVisibility(View.GONE);
+		}
 	}
 	
 	public void setGroupAddressLevel(GroupAddressLevel level){
@@ -77,6 +88,12 @@ public class GroupAddressView extends LinearLayout{
 	
 	public void setGroupAddress(String groupAddress){
 		String[] addr = groupAddress.split("/");
+		
+		if(addr.length == 2){
+			level = GroupAddressLevel.TWO;
+		}else{
+			level = GroupAddressLevel.THREE;
+		}
 
 		switch(level){
 			case TWO:
@@ -113,5 +130,4 @@ public class GroupAddressView extends LinearLayout{
 	public enum GroupAddressLevel{
 		TWO, THREE
 	}
-
 }

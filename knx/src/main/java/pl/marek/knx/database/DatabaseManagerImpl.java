@@ -45,6 +45,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		layerDao = new LayerDao(db);
 		subLayerDao = new SubLayerDao(db);
 		elementDao = new ElementDao(db);
+		elementGroupAddressDao = new ElementGroupAddressDao(db);
 	}
 
 	@Override
@@ -394,7 +395,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 
 	@Override
 	public ElementGroupAddress getElementGroupAddressById(int id) {
-		return getElementGroupAddressById(id);
+		return elementGroupAddressDao.getById(id);
 	}
 
 	@Override

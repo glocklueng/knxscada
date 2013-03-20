@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/pl.marek.knx"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include layout="@layout/dialog_header" />
+
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:enabled="false"
+            android:text="@string/dialog_controller_address_label" />
+
+        <pl.marek.knx.GroupAddressLevelChooser
+            android:id="@+id/group_address_level_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:level="three" />
+
+        <LinearLayout
+            android:id="@+id/dialog_controller_group_addresses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/dialog_controller_group_addresses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dialog_controller_add_address_button"
+                style="@android:style/Widget.Holo.Button.Borderless.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/new_item"
+                android:drawablePadding="3dp"
+                android:text="@string/dialog_controller_add_address_button"
+                android:textSize="15sp"
+                android:textStyle="italic|bold" />
+
+            <Button
+                android:id="@+id/dialog_controller_remove_address_button"
+                style="@android:style/Widget.Holo.Button.Borderless.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/trash_icon"
+                android:drawablePadding="3dp"
+                android:text="@string/dialog_controller_remove_address_button"
+                android:textSize="15sp"
+                android:textStyle="italic|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_controller_name_label" />
+
+            <EditText
+                android:id="@+id/dialog_controller_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/dialog_controller_name_hint"
+                android:inputType="textCapSentences" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_controller_description_label" />
+
+            <EditText
+                android:id="@+id/dialog_controller_description_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:hint="@string/dialog_controller_description_hint"
+                android:inputType="textCapSentences"
+                android:minLines="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="64dp" >
+
+            <Button
+                android:id="@+id/dialog_controller_cancel_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.65"
+                android:text="@string/dialog_controller_cancel_button" />
+
+            <Button
+                android:id="@+id/dialog_controller_create_edit_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.65"
+                android:text="@string/dialog_controller_add_button" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

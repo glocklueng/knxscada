@@ -23,7 +23,6 @@ public class NotificationManager {
 				.setContentTitle(context.getString(R.string.connection_service_title))
 				.setContentText(context.getString(R.string.connection_service_message));
 		Intent resultIntent = new Intent(context, SettingsActivity.class);
-		resultIntent.putExtra(Main.CONNECTION_RECEIVER_REGISTERED, true);
 
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		mBuilder.setContentIntent(resultPendingIntent);

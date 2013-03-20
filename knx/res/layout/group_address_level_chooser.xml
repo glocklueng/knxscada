@@ -11,12 +11,13 @@
         android:layout_height="match_parent"
         android:layout_weight="0.5"
         android:text="@string/group_address_level_label"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical|right" />
 
     <RadioGroup
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <RadioButton
@@ -29,7 +30,6 @@
             android:id="@+id/group_address_level_3_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="@string/group_address_level_3_label" />
     </RadioGroup>
 

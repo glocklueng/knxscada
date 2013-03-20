@@ -33,7 +33,7 @@ public class NetworkInformator {
 			Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
 			while(enumIpAddr.hasMoreElements()) {
                 InetAddress inetAddress = enumIpAddr.nextElement();
-                if (inetAddress.getHostAddress() == ip) {
+                if (inetAddress.getHostAddress().equals(ip)) {
                 	return intf;
                 }
             }

@@ -54,10 +54,12 @@ public class ElementDao implements Dao<Element>{
 		insertStatement.bindString(7, element.getDescription());
 		insertStatement.bindString(8, element.getDeviceAddress());
 		insertStatement.bindString(9, element.getType().name());
+		long id = insertStatement.executeInsert();
 		for(ElementGroupAddress address: element.getGroupAddresses()){
+			address.setElementId((int)id);
 			elementGroupAddressDao.save(address);
 		}
-		return insertStatement.executeInsert();
+		return id;
 	}
 
 	@Override
@@ -72,6 +74,7 @@ public class ElementDao implements Dao<Element>{
 		
 		elementGroupAddressDao.deleteByElementId(element.getId());
 		for(ElementGroupAddress address: element.getGroupAddresses()){
+			address.setElementId(element.getId());
 			elementGroupAddressDao.save(address);
 		}
 		db.update(ElementTable.TABLE_NAME, values, ElementColumns._ID + " = ? and "+ElementColumns.PROJECT_ID+" = ? and "+ElementColumns.LAYER_ID+" = ? and "+ElementColumns.SUBLAYER_ID+" = ?", new String[]{String.valueOf(element.getId()), String.valueOf(element.getProjectId()), String.valueOf(element.getLayerId()), String.valueOf(element.getSubLayerId())});

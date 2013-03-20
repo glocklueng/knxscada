@@ -8,21 +8,23 @@ import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-public class Controller extends LinearLayout{
+public abstract class Controller extends LinearLayout{
 	
 	private LinearLayout mView;
 	private int layoutId;
 	
 	protected Element element;
+	protected ControlType type;
 	
 	private Controller(Context context){
 		super(context);
 	}
 	
-	public Controller(Context context, Element element, int layoutId) {
+	public Controller(Context context, Element element, ControlType type, int layoutId) {
 		this(context);
 		this.layoutId = layoutId;
 		this.element = element;
+		this.type = type;
 		initialize();
 	}
 	
@@ -49,6 +51,18 @@ public class Controller extends LinearLayout{
 	public void setElement(Element element) {
 		this.element = element;
 	}
+	
+	public ControlType getType(){
+		return type;
+	}
+	
+	public abstract void setName(String name);
+	public abstract String getName();
+	public abstract void setDescription(String description);
+	public abstract String getDescription();
+	
+	public abstract String getTitle();
+	public abstract int getIcon();
 	
 
 }

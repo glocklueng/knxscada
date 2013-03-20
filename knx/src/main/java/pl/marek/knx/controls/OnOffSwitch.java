@@ -21,7 +21,7 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	
 
 	public OnOffSwitch(Context context, Element element) {
-		super(context, element, R.layout.control_onoffswitch);
+		super(context, element, ControlType.ON_OFF_SWITCH, R.layout.control_onoffswitch);
 		initViews();
 		initValues();
 	}
@@ -39,8 +39,10 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	}
 	
 	public void initValues(){
-		nameView.setText(element.getName());
-		descriptionView.setText(element.getDescription());
+		if(element != null){
+			nameView.setText(element.getName());
+			descriptionView.setText(element.getDescription());
+		}
 	}
 
 	public void setName(String name){
@@ -89,6 +91,18 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		setBackgroundColorByState(isChecked);
+	}
+
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return "Włącznik";
+	}
+
+	@Override
+	public int getIcon() {
+
+		return R.drawable.edit_icon;
 	}
 	
 

@@ -49,13 +49,13 @@ public class FileUtils {
 		OutputStream out = new FileOutputStream(dst);       
 		byte[] buffer = new byte[1024];
         int read;
-        while ((read = src.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
-        if(src != null)
-        	src.close();
-        if(out != null)
+        if(src != null && out != null){
+	        while ((read = src.read(buffer)) != -1) {
+	            out.write(buffer, 0, read);
+	        }
+	        src.close();
         	out.close();
+        }
 	}
 	
 	public static void delete(String path){

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    		xmlns:app="http://schemas.android.com/apk/res/pl.marek.knx"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -21,7 +22,11 @@
                 android:enabled="false"
                 android:text="@string/dialog_rw_telegram_address" />
 
-			<include layout="@layout/group_address_level_chooser"/>
+			<pl.marek.knx.GroupAddressLevelChooser 
+				android:id="@+id/dialog_rw_group_address_level_chooser"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:level="three" />
 
             <pl.marek.knx.GroupAddressView
                 android:id="@+id/dialog_rw_group_address"

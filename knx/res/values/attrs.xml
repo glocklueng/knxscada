@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <declare-styleable name="SideBarView">
+
+    <declare-styleable name="SideBarView">
         <attr name="item_layout" format="reference|integer" />
+    </declare-styleable>
+    <declare-styleable name="GroupAddressLevelChooser">
+        <attr name="level" format="enum">
+            <enum name="two" value="2" />
+            <enum name="three" value="3" />
+        </attr>
     </declare-styleable>
 
 </resources>

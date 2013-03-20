@@ -22,7 +22,7 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 
 
 	public Slider(Context context, Element element) {
-		super(context, element, R.layout.control_slider);
+		super(context, element, ControlType.SLIDER, R.layout.control_slider);
 		initViews();
 		initValues();
 	}
@@ -91,6 +91,18 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		Log.i("SeekBar STOP", String.format("%d", seekBar.getProgress()));
 		
+	}
+
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getIcon() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

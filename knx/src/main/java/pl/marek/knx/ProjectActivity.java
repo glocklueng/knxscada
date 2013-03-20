@@ -2,56 +2,63 @@ package pl.marek.knx;
 
 import java.util.ArrayList;
 
+import pl.marek.knx.ControllerDialog.OnControllerDialogApproveListener;
 import pl.marek.knx.CustomTabBar.OnTabLongClickListener;
-import pl.marek.knx.IconPickerDialog.OnIconPickListener;
+import pl.marek.knx.LayerDialog.OnLayerDialogApproveListener;
 import pl.marek.knx.SideBarItem;
 import pl.marek.knx.PopupMenuDialog.PopupMenuItemListener;
 import pl.marek.knx.SideBarView.SideBarListener;
 import pl.marek.knx.SideBarView.SideBarMode;
+import pl.marek.knx.controls.Controller;
+import pl.marek.knx.controls.OnOffSwitch;
 import pl.marek.knx.database.DatabaseManagerImpl;
+import pl.marek.knx.database.Element;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.DrawableUtils;
-import pl.marek.knx.utils.MessageDialog;
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class ProjectActivity extends FragmentActivity implements SideBarListener, PopupMenuItemListener, OnTabLongClickListener{
+public class ProjectActivity extends FragmentActivity implements SideBarListener, 
+																 PopupMenuItemListener, 
+																 OnTabLongClickListener, 
+																 OnControllerDialogApproveListener, 
+																 OnItemLongClickListener,
+																 OnLayerDialogApproveListener{
 	
 	private static final int NEW_LAYER_ITEM_ID = 0;
 	private static final int POPUP_MENU_ITEM_LAYER_EDIT = 100;
 	private static final int POPUP_MENU_ITEM_LAYER_DELETE = 101;
 	private static final int POPUP_MENU_ITEM_SUBLAYER_EDIT = 102;
 	private static final int POPUP_MENU_ITEM_SUBLAYER_DELETE = 103;
+	private static final int POPUP_MENU_ITEM_ELEMENT_EDIT = 104;
+	private static final int POPUP_MENU_ITEM_ELEMENT_DELETE = 105;
 	
 	private Project project;
 	private Layer currentLayer;
 	private SubLayer currentSubLayer;
+	
+	private Layer editedLayer;
+	private SubLayer editedSubLayer;
+	private Element editedElement;
+	private Controller editedController;
 	
 	private DatabaseManager dbManager;
 	private SideBarView layersSideBarView;
@@ -59,15 +66,23 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	private SideBarView controllersSideBarView;
 	
 	private LayerDialog<?> layerDialog;
+	private ControllerDialog controllerDialog;
 	private PopupMenuDialog layerPopupMenu;
-	private Layer editedLayer;
-	private SubLayer editedSubLayer;
+	private PopupMenuDialog elementPopupMenu;
 	
 	private ActionBar actionBar;
-	
 	private CustomTabBar tabBar;
     private ViewPager subLayerViewPager;
     private SubLayerPagerAdapter subLayerPagerAdapter;
+    
+	private class SubLayerPageChangeListener extends ViewPager.SimpleOnPageChangeListener{
+		
+		@Override
+        public void onPageSelected(int position) {
+            tabBar.setCurrentTab(position);
+            currentSubLayer = currentLayer.getSubLayers().get(position);
+        }
+	}
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +102,12 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		setControllersSideBar();
 		setLayersSideBar();
 
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		layersSideBarView.selectFirstItem();
 	}
 		
 	@Override
@@ -110,8 +131,6 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		subLayerPagerAdapter = new SubLayerPagerAdapter(super.getSupportFragmentManager());
 		subLayerViewPager.setAdapter(subLayerPagerAdapter);
 		tabBar.setViewPager(subLayerViewPager);
-		
-		
 	}
 		
 	private void addSubLayer(SubLayer subLayer){
@@ -132,7 +151,6 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    layersSideBarView.setSideBarListener(this);
 	    layersSideBarView.setMode(SideBarMode.LEFT);
 	    layersSideBarView.setItems(getLayersItems());
-	    layersSideBarView.selectFirstItem();
 	    layersGestureDetector = new GestureDetector(this, layersSideBarView);
 	}
 	
@@ -173,6 +191,13 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    }
 	    
 	}
+		
+	@Override
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+		Controller c = (Controller)view;
+		showControllerPopupMenu(c);
+		return false;
+	}
 	
 	@Override
 	public void onSideBarItemClick(SideBarView view, SideBarItem item) {
@@ -184,7 +209,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				currentLayer = dbManager.getLayerByIdWithDependencies(item.getId());
 				ArrayList<SubLayer> subLayers = currentLayer.getSubLayers();
 				if(subLayers.size() > 0){
-					currentSubLayer = subLayers.get(0);
+					currentSubLayer = subLayers.get(0);	
 				}else{
 					currentSubLayer = null;
 				}
@@ -193,10 +218,12 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				}
 			}
 		} else if(view.equals(controllersSideBarView)){
-			Log.i("a",currentSubLayer.getName());
+			OnOffSwitch s = new OnOffSwitch(this, null);
+			showControllerDialog(s, null);
 		}
 
 	}
+	
 	
 	@Override
 	public void onSideBarItemLongClick(SideBarView view, SideBarItem item) {
@@ -282,6 +309,12 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				layerDialog.dismiss();
 			}
 		}
+		
+		if(controllerDialog != null){
+			if(controllerDialog.isShowing()){
+				controllerDialog.dismiss();
+			}
+		}
 	}
 	
 	@Override
@@ -319,24 +352,28 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	private void showNewLayerDialog(){
 		layerDialog = new LayerDialog<Layer>(this, Layer.class);
 		layerDialog.show();
+		layerDialog.setOnLayerDialogApproveListener(this);
 		layerDialog.setTitle(getString(R.string.dialog_new_layer_title));
 	}
 	
 	private void showEditLayerDialog(Layer layer){
 		layerDialog = new LayerDialog<Layer>(this, Layer.class, layer);
 		layerDialog.show();
+		layerDialog.setOnLayerDialogApproveListener(this);
 		layerDialog.setTitle(getString(R.string.dialog_edit_layer_title));
 	}
 	
 	private void showNewSubLayerDialog(){
 		layerDialog = new LayerDialog<SubLayer>(this, SubLayer.class);
 		layerDialog.show();
+		layerDialog.setOnLayerDialogApproveListener(this);
 		layerDialog.setTitle(getString(R.string.dialog_new_sublayer_title));
 	}
 	
 	private void showEditSubLayerDialog(SubLayer layer){
 		layerDialog = new LayerDialog<SubLayer>(this, SubLayer.class, layer);
 		layerDialog.show();
+		layerDialog.setOnLayerDialogApproveListener(this);
 		layerDialog.setTitle(getString(R.string.dialog_edit_sublayer_title));
 	}
 	
@@ -371,6 +408,24 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		layerPopupMenu.show();
 	}
 	
+	public void showControllerPopupMenu(Controller controller){
+		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
+		PopupMenuItem editItem;
+		PopupMenuItem deleteItem; 
+		editItem = new PopupMenuItem(POPUP_MENU_ITEM_ELEMENT_EDIT, getString(R.string.element_popup_menu_item_edit), R.drawable.edit_icon);
+		deleteItem = new PopupMenuItem(POPUP_MENU_ITEM_ELEMENT_DELETE, getString(R.string.element_popup_menu_item_delete), R.drawable.trash_icon);
+		items.add(editItem);
+		items.add(deleteItem);
+		
+		editedController = controller;
+		editedElement = controller.getElement();
+		elementPopupMenu = new PopupMenuDialog(this, editedElement.getName(), items);
+		elementPopupMenu.setPopupMenuItemListener(this);
+		elementPopupMenu.show();
+		elementPopupMenu.setIcon(controller.getIcon());
+		
+	}
+	
 	@Override
 	public void onPopupMenuItemClick(int position, PopupMenuItem item) {
 		switch(item.getId()){
@@ -386,7 +441,26 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 			case POPUP_MENU_ITEM_SUBLAYER_DELETE:
 				showDeleteConfirmation(editedSubLayer);
 				break;
+			case POPUP_MENU_ITEM_ELEMENT_EDIT:
+				showControllerDialog(editedController, editedElement);
+				break;
+			case POPUP_MENU_ITEM_ELEMENT_DELETE:
+				removeElement(editedElement);
+				break;
 		}
+	}
+	
+	private void showControllerDialog(Controller controller, Element element){
+		if(element != null){
+			controllerDialog = new ControllerDialog(this, true, element);
+		} else{
+			controllerDialog = new ControllerDialog(this, element);
+		}
+		controllerDialog.show();
+		controllerDialog.setTitle(controller.getName());
+		controllerDialog.setTitleIcon(controller.getIcon());
+		controllerDialog.setType(controller.getType());
+		controllerDialog.setOnControllerDialogApproveListener(this);
 	}
 	
 	public void showDeleteConfirmation(final Layer layer){
@@ -419,89 +493,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		});
 		builder.create().show();
 	}
-		
-	public boolean addLayer(String name, String description, String iconName){
-		if(!layerConditionCheck())
-			return false;
-		
-		Layer layer = new Layer(project.getId(), name, description, iconName);
-		dbManager.addLayer(layer);
-		project.getLayers().add(layer);
-		
-		SideBarItem item = new SideBarItem();
-		item.setName(name);
-		item.setId(layer.getId());
-		item.setIcon(getResourceIdByName(iconName));
-		layersSideBarView.addItem(item);
-		
-		return true;
-	}
-	
-	public boolean editLayer(Layer layer){
-		if(!layerConditionCheck())
-			return false;
-		dbManager.updateLayer(layer);
-		int index = findSideBarLayerIndex(layer);
-		layersSideBarView.setItem(createSideBarItem(layer), index);
-		editedLayer = null;
-		return true;
-	}
-	
-	public boolean removeLayer(Layer layer){
-		dbManager.removeLayer(layer);
-		int index = findSideBarLayerIndex(layer);
-		layersSideBarView.removeItem(index);
-		editedLayer = null;
-		return false;
-	}
-	
-	public boolean addSubLayer(String name, String description, String iconName){
-		if(!layerConditionCheck())
-			return false;
-		
-		SubLayer layer = new SubLayer(project.getId(), currentLayer.getId(), name, description, iconName);
-		dbManager.addSubLayer(layer);
-		currentLayer.getSubLayers().add(layer);
-
-		addSubLayer(layer);
-		
-		return true;
-	}
-	
-	public boolean editSubLayer(SubLayer layer){
-		if(!layerConditionCheck())
-			return false;
-		int position = currentLayer.getSubLayers().indexOf(editedSubLayer);
-		
-		dbManager.updateSubLayer(layer);
-		editedSubLayer = null;
-		
-		tabBar.updateTab(position, layer.getName(),getResourceIdByName(layer.getIcon()));
-		Bundle bundle = new Bundle();
-		bundle.putParcelable(SubLayer.SUBLAYER, layer);
-		subLayerPagerAdapter.updatePage(position, Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
-		
-		return true;
-	}
-	
-	public boolean removeSubLayer(SubLayer layer){
-		int position = currentLayer.getSubLayers().indexOf(layer);
-		dbManager.removeSubLayer(layer);
-		editedSubLayer = null;
-		
-		tabBar.removeTab(position);
-		subLayerPagerAdapter.removePage(subLayerPagerAdapter.getItem(position));
-
-		return false;
-	}
-	
-	private boolean layerConditionCheck(){
-		if(layerDialog.getName().isEmpty()){
-			return false;
-		}
-		return true;
-	}
-	
+			
 	private int findSideBarLayerIndex(Layer layer){
 		
 		int id = layer.getId();
@@ -516,207 +508,103 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	private int getResourceIdByName(String name){
 		return DrawableUtils.getResourceIdByName(this, name);
 	}
-		
-	public class SubLayerPageChangeListener extends ViewPager.SimpleOnPageChangeListener{
-		@Override
-        public void onPageSelected(int position) {
-            tabBar.setCurrentTab(position);
-            currentSubLayer = currentLayer.getSubLayers().get(position);
-        }
+			
+	@Override
+	public void onLayerDialogAddAction(Layer layer, Class<?> clazz) {
+		if(clazz.getName().equals(Layer.class.getName())){
+			layer.setProjectId(project.getId());
+			dbManager.addLayer(layer);
+			project.getLayers().add(layer);
+			layersSideBarView.addItem(createSideBarItem(layer));
+		} else if(clazz.getName().equals(SubLayer.class.getName())){
+			SubLayer subLayer = (SubLayer)layer;
+			subLayer.setProjectId(project.getId());
+			subLayer.setLayerId(currentLayer.getId());
+			dbManager.addSubLayer(subLayer);
+			currentLayer.getSubLayers().add(subLayer);
+			addSubLayer(subLayer);
+		}
+	}
+
+	@Override
+	public void onLayerDialogEditAction(Layer layer, Class<?> clazz) {
+		if(clazz.getName().equals(Layer.class.getName())){
+			dbManager.updateLayer(layer);
+			int index = findSideBarLayerIndex(layer);
+			layersSideBarView.setItem(createSideBarItem(layer), index);
+			editedLayer = null;
+		} else if(clazz.getName().equals(SubLayer.class.getName())){
+			SubLayer subLayer = (SubLayer)layer;
+			int position = currentLayer.getSubLayers().indexOf(editedSubLayer);	
+			dbManager.updateSubLayer(subLayer);
+			editedSubLayer = null;
+			tabBar.updateTab(position, subLayer.getName(),getResourceIdByName(subLayer.getIcon()));
+			Bundle bundle = new Bundle();
+			bundle.putParcelable(SubLayer.SUBLAYER, subLayer);
+			subLayerPagerAdapter.updatePage(position, Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
+		}
 	}
 	
-	public class LayerDialog<T extends Layer> extends Dialog implements View.OnClickListener, OnIconPickListener{
+	public boolean removeLayer(Layer layer){
+		dbManager.removeLayer(layer);
+		int index = findSideBarLayerIndex(layer);
+		layersSideBarView.removeItem(index);
+		editedLayer = null;
+		return false;
+	}
 		
-		public static final String NAME = "name";
-		public static final String DESCRIPTION = "description";
-		public static final String ICON = "icon";
-		public static final String CLASS_NAME = "class_name";
+	public boolean removeSubLayer(SubLayer layer){
+		int position = currentLayer.getSubLayers().indexOf(layer);
+		dbManager.removeSubLayer(layer);
+		editedSubLayer = null;
 		
-		
-		private TextView titleView;
-		private TextView nameView;
-		private TextView descView;
-		private TextView nameLabelView;
-		private TextView descLabelView;
-		private ImageButton iconViewButton;
-		private Button applyButton;
-		private Button cancelButton;
-		
-		private int iconRes = -1;
-		
-		private T layer;
-		private Class<T> clazz;
-		
-		public LayerDialog(Context context, Class<T> clazz){
-			super(context, R.style.dialogTheme);
-			this.clazz = clazz;
-		}
+		tabBar.removeTab(position);
+		subLayerPagerAdapter.removePage(subLayerPagerAdapter.getItem(position));
 
-		public LayerDialog(Context context, Class<T> clazz,  T layer) {
-			this(context, clazz);
-			this.layer = layer;
-		}
+		return false;
+	}
+	
+	@Override
+	public void onControllerDialogAddAction(Element element) {		
+		element.setProjectId(project.getId());
+		element.setLayerId(currentLayer.getId());
+		element.setSubLayerId(currentSubLayer.getId());
+		dbManager.addElement(element);
+		addElementToSubLayerFragment(element);
+	}
+	
+	private void addElementToSubLayerFragment(Element element){
+		ElementAdapter adapter = getElementAdapter();
+		adapter.add(element);
+		adapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public void onControllerDialogEditAction(Element element) {
+		dbManager.updateElement(element);
 		
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-			setContentView(R.layout.layer_dialog);
-	        
-			setDialogSize();
-			
-			titleView = (TextView)findViewById(R.id.dialog_title_text);
-			nameView = (TextView)findViewById(R.id.dialog_new_layer_name);
-			descView = (TextView)findViewById(R.id.dialog_new_layer_description);			
-			iconViewButton = (ImageButton) findViewById(R.id.dialog_new_layer_icon);
-			nameLabelView = (TextView)findViewById(R.id.dialog_new_layer_name_label);
-			descLabelView = (TextView)findViewById(R.id.dialog_new_layer_description_label);
-			
-			applyButton = (Button)findViewById(R.id.dialog_layer_add_button);
-			cancelButton = (Button)findViewById(R.id.dialog_new_layer_cancel_button);
-			
-			applyButton.setOnClickListener(this);
-			cancelButton.setOnClickListener(this);
-			iconViewButton.setOnClickListener(this);
-			
-			setInitialValues();
-		}
+		ElementAdapter adapter = getElementAdapter();
+		adapter.notifyDataSetChanged();
 		
-		private void setInitialValues(){
-			if(layer != null){
-				applyButton.setText(getString(R.string.dialog_layer_edit_button));
-				nameView.setText(layer.getName());
-				descView.setText(layer.getDescription());
-				setIcon(layer.getIcon());
-			}else{
-				if(clazz.equals(SubLayer.class)){
-					applyButton.setText(getString(R.string.dialog_sublayer_add_button));
-				}
-			}
-			if(clazz.equals(SubLayer.class)){
-				nameView.setHint(getString(R.string.dialog_new_sublayer_name_hint));
-				descView.setHint(getString(R.string.dialog_new_sublayer_description_hint));
-				nameLabelView.setText(getString(R.string.dialog_new_sublayer_name));
-				descLabelView.setText(getString(R.string.dialog_new_sublayer_description));
-			}	
-		}
+		editedElement = null;
+		editedController = null;
+	}
+	
+	public void removeElement(Element element){
+		dbManager.removeElement(element);
 		
-		private void setDialogSize(){
-			DisplayMetrics metrics = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			int width = (int)(metrics.widthPixels * 0.95f);
-			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
-		}
+		ElementAdapter adapter = getElementAdapter();
+		adapter.remove(element);
+		adapter.notifyDataSetChanged();
 		
-		public String getName(){
-			return nameView.getText().toString();
-		}
-		
-		public void setName(String name){
-			nameView.setText(name);
-		}
-		
-		public String getDescription(){
-			return descView.getText().toString();
-		}
-		
-		public void setDescription(String description){
-			descView.setText(description);
-		}
-		
-		public String getIconName(){
-			String name = "";
-			try{
-				if(iconRes > 0)
-					name = getContext().getResources().getResourceEntryName(iconRes);
-			} catch(NotFoundException ex){
-				Log.d(getString(R.string.application_name), ex.getMessage());
-			}
-			return name;
-		}
-		
-		public void setIcon(String name){
-			iconRes = getResourceIdByName(name);
-			if(iconRes > 0)
-				iconViewButton.setImageResource(iconRes);
-		}
-		
-		public void setTitle(String title){
-			titleView.setText(title);
-		}
-		
-		public void setApplyButtonText(String text){
-			applyButton.setText(text);
-		}
-		
-		public void setLayer(T layer){
-			this.layer = layer;
-		}
-		
-		public T getLayer(){
-			return layer;
-		};
-		
-		public String getClassName(){
-			return clazz.getName();
-		}
-
-		@Override
-		public void onClick(View v) {
-			boolean state = true;
-			
-			if(v.equals(applyButton)){
-				if(layer == null){
-					if(clazz.equals(SubLayer.class)){
-						state = addSubLayer(getName(), getDescription(), getIconName());
-					}else{
-						state = addLayer(getName(), getDescription(), getIconName());
-					}
-				} else{
-					layer.setProjectId(project.getId());
-					layer.setName(getName());
-					layer.setDescription(getDescription());
-					layer.setIcon(getIconName());
-					if(clazz.equals(SubLayer.class)){
-						SubLayer subLayer = (SubLayer)layer;
-						subLayer.setLayerId(currentLayer.getId());
-						state = editSubLayer(subLayer);
-					} else{
-						state = editLayer(layer);	
-					}
-				}
-				if(state){
-					dismiss();
-				} else{
-					MessageDialog msgDialog = new MessageDialog(getContext());
-					if(clazz.equals(SubLayer.class)){
-						msgDialog.showDialog(getString(R.string.sublayer_name_empty_title), 
-											 getString(R.string.sublayer_name_empty_text), 
-											 getResources().getDrawable(android.R.drawable.ic_dialog_alert));
-					} else{
-						msgDialog.showDialog(getString(R.string.layer_name_empty_title), 
-											 getString(R.string.layer_name_empty_text), 
-											 getResources().getDrawable(android.R.drawable.ic_dialog_alert));
-					}
-				}
-			} else if(v.equals(cancelButton)){
-				cancel();
-			} else if(v.equals(iconViewButton)){
-				IconPickerDialog picker = new IconPickerDialog(getContext());
-				if(clazz.equals(SubLayer.class)){
-					picker.setIcons(DrawableUtils.getSubLayersIconsResources());
-				}else{
-					picker.setIcons(DrawableUtils.getLayersIconsResources());
-				}
-				picker.setOnIconPickListener(this);
-				picker.show();
-			}
-		}
-
-		@Override
-		public void onIconPick(int iconRes) {
-			iconViewButton.setImageResource(iconRes);
-			this.iconRes = iconRes;
-		}
+		editedElement = null;
+		editedController = null;
+	}
+	
+	private ElementAdapter getElementAdapter(){
+		int position = currentLayer.getSubLayers().indexOf(currentSubLayer);
+		SubLayerFragment fragment = (SubLayerFragment)subLayerPagerAdapter.getItem(position);
+		ElementAdapter adapter = (ElementAdapter)fragment.getListAdapter();
+		return adapter;
 	}
 }
