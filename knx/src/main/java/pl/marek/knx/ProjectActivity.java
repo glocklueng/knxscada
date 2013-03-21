@@ -98,16 +98,16 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		tabBar = new CustomTabBar(this);
 		tabBar.setOnTabLongClickListener(this);
 		
-		initialiseSubLayersPaging();
 		setControllersSideBar();
 		setLayersSideBar();
+		
 
 	}
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
-		layersSideBarView.selectFirstItem();
+
 	}
 		
 	@Override
@@ -280,6 +280,8 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		if(dbManager != null && !dbManager.isOpen()){
 			dbManager.open();
 		}
+		initialiseSubLayersPaging();
+		layersSideBarView.selectFirstItem();
 	}
 		
 	@Override
@@ -287,6 +289,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		super.onPause();
 		if(dbManager != null && dbManager.isOpen())
 			dbManager.close();
+		clearSubLayers();
 	}
 	
 	@Override

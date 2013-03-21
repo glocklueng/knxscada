@@ -44,8 +44,21 @@ public class SubLayerFragment extends ListFragment{
         ElementAdapter adapter = new ElementAdapter(getActivity(), elements);
         setListAdapter(adapter);
         
-        getListView().setOnItemLongClickListener((ProjectActivity)getActivity());
+        getListView().setOnItemLongClickListener((ProjectActivity)getActivity());     
     }
-
-    
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if(dbManager != null && !dbManager.isOpen()){
+			dbManager.open();
+		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if(dbManager != null && dbManager.isOpen())
+			dbManager.close();
+	}
 }
