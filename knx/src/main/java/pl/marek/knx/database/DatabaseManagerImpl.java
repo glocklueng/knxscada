@@ -385,8 +385,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	public void addElementGroupAddress(ElementGroupAddress address) {
 		db.beginTransaction();
 		try{
-			int id = (int)elementGroupAddressDao.save(address);
-			address.setId(id);
+			elementGroupAddressDao.save(address);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();
@@ -394,8 +393,8 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	}
 
 	@Override
-	public ElementGroupAddress getElementGroupAddressById(int id) {
-		return elementGroupAddressDao.getById(id);
+	public List<ElementGroupAddress> getElementGroupAddressByElementId(int id) {
+		return elementGroupAddressDao.getByElementId(id);
 	}
 
 	@Override

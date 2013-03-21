@@ -72,7 +72,7 @@ public interface DatabaseManager {
 	
 	//ElementGroupAddress Operations
 	public void addElementGroupAddress(ElementGroupAddress address);
-	public ElementGroupAddress getElementGroupAddressById(int id);
+	public List<ElementGroupAddress> getElementGroupAddressByElementId(int id);
 	public void removeElementGroupAddress(ElementGroupAddress address);
 	public void updateElementGroupAddress(ElementGroupAddress address);	
 	

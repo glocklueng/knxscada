@@ -8,7 +8,7 @@ import java.util.Set;
 
 import pl.marek.knx.GroupAddressLevelChooser.OnGroupAddressLevelChange;
 import pl.marek.knx.GroupAddressView.GroupAddressLevel;
-import pl.marek.knx.controls.ControlType;
+import pl.marek.knx.controls.ControllerType;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.ElementGroupAddress;
 import pl.marek.knx.database.ElementGroupAddress.ElementGroupAddressType;
@@ -44,7 +44,7 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 	
 	private boolean editMode;
 	private Element element;
-	private ControlType type;
+	private ControllerType type;
 	
 	private OnControllerDialogApproveListener listener;
 	
@@ -101,11 +101,8 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 			ArrayList<ElementGroupAddress> addresses = element.getGroupAddresses();
 			for(ElementGroupAddress a: addresses){
 				GroupAddressView v = new GroupAddressView(getContext());
-				v.setGroupAddress(a.getAddress());
-				if(a.getType().equals(ElementGroupAddressType.MAIN)){
-					v.setLabel(getNextDefaultLabel());
-				}
-				//TODO Przemyśleć jak rozwiązać sytuacje, w której będą inne typy adresów
+				v.setGroupAddress(a.getAddress());				
+				v.setLabel(getNextLabel(a.getType()));
 				addGroupAddressView(v, a.getType());
 			}
 		}
@@ -126,7 +123,7 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 	
 	public void addMainGroupAddress(){
 		GroupAddressView mainGroupAddress = new GroupAddressView(getContext());
-		mainGroupAddress.setLabel(getNextDefaultLabel());
+		mainGroupAddress.setLabel(getNextLabel(ElementGroupAddressType.MAIN));
 		addGroupAddressView(mainGroupAddress, ElementGroupAddressType.MAIN);
 	}
 	
@@ -158,23 +155,23 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 		groupAddressesView.removeView(view);
 	}
 	
-	public String getNextDefaultLabel(){;
+	public String getNextLabel(ElementGroupAddressType type){;
 		Iterator<ElementGroupAddressType> iterator = groupAddresses.values().iterator();
 		int counter = 1;
 		while(iterator.hasNext()){
 			ElementGroupAddressType v = iterator.next();
-			if(v.equals(ElementGroupAddressType.MAIN)){
+			if(v.equals(type)){
 				counter++;
 			}
 		}
-		String label = getContext().getString(R.string.dialog_controller_group_address_default_label);
+		String label = type.getLabel(getContext());
 		if(counter > 1){
 			label = String.format("%s %d", label, counter);
 		}
 		return label;
 	}
 	
-	public void setType(ControlType type){
+	public void setType(ControllerType type){
 		this.type = type;
 	}
 	

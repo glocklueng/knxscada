@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import pl.marek.knx.controls.ControlType;
+import pl.marek.knx.controls.ControllerType;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.ElementGroupAddress;
 import pl.marek.knx.database.tables.ElementTable;
@@ -195,7 +195,7 @@ public class ElementDao implements Dao<Element>{
 			element.setName(cursor.getString(6));
 			element.setDescription(cursor.getString(7));
 			element.setDeviceAddress(cursor.getString(8));
-			element.setType(ControlType.valueOf(cursor.getString(9)));
+			element.setType(ControllerType.valueOf(cursor.getString(9)));
 			element.setGroupAddresses((ArrayList<ElementGroupAddress>)elementGroupAddressDao.getByElementId(element.getId()));
 		}
 		return element;

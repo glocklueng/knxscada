@@ -10,7 +10,7 @@ import pl.marek.knx.PopupMenuDialog.PopupMenuItemListener;
 import pl.marek.knx.SideBarView.SideBarListener;
 import pl.marek.knx.SideBarView.SideBarMode;
 import pl.marek.knx.controls.Controller;
-import pl.marek.knx.controls.OnOffSwitch;
+import pl.marek.knx.controls.ControllerType;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.Layer;
@@ -100,14 +100,6 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		
 		setControllersSideBar();
 		setLayersSideBar();
-		
-
-	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-
 	}
 		
 	@Override
@@ -138,6 +130,9 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(SubLayer.SUBLAYER, subLayer);
 		subLayerPagerAdapter.addPage(Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
+		if(subLayerPagerAdapter.getCount() == 1){
+			currentSubLayer = subLayer;
+		}
 	}
 	
 	private void clearSubLayers(){
@@ -163,12 +158,12 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		items.add(addItem);
 		
 		for(Layer layer: project.getLayers()){
-			items.add(createSideBarItem(layer));
+			items.add(createLayerSideBarItem(layer));
 		}
 		return items;
 	}
 	
-	private SideBarItem createSideBarItem(Layer layer){
+	private SideBarItem createLayerSideBarItem(Layer layer){
 		SideBarItem item = new SideBarItem();
 	    item.setId(layer.getId());
 	    item.setName(layer.getName());
@@ -182,18 +177,26 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    controllersSideBarView.setSideBarListener(this);
 	    controllersSideBarView.setMode(SideBarMode.RIGHT);
 	    
-	    for(int i=1;i< 10; i++){
-	    	SideBarItem item = new SideBarItem();
-		    item.setId(i);
-		    item.setName(String.format("Feature %d", i));
-		    item.setIcon(R.drawable.room_sofa_icon);
-	    	controllersSideBarView.addItem(item);
+	    ArrayList<SideBarItem> controllers = new ArrayList<SideBarItem>();
+	    	    
+	    for(ControllerType type: ControllerType.values()){
+	    	controllers.add(createControllerSideBarItem(type, type.ordinal()));
 	    }
 	    
+	    controllersSideBarView.setItems(controllers);
+	    
+	}
+	
+	private SideBarItem createControllerSideBarItem(ControllerType controllerType, int id){
+		SideBarItem item = new SideBarItem();
+	    item.setId(id);
+	    item.setName(controllerType.getTitle(this));
+	    item.setIcon(controllerType.getIcon());
+	    return item;
 	}
 		
 	@Override
-	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {		
 		Controller c = (Controller)view;
 		showControllerPopupMenu(c);
 		return false;
@@ -218,10 +221,9 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				}
 			}
 		} else if(view.equals(controllersSideBarView)){
-			OnOffSwitch s = new OnOffSwitch(this, null);
-			showControllerDialog(s, null);
+			ControllerType controllerType = ControllerType.values()[item.getId()];
+			showControllerDialog(controllerType, null);
 		}
-
 	}
 	
 	
@@ -290,6 +292,8 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		if(dbManager != null && dbManager.isOpen())
 			dbManager.close();
 		clearSubLayers();
+		
+		android.util.Log.i("Fragment", "onPause "+project.getName());
 	}
 	
 	@Override
@@ -421,11 +425,13 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		items.add(deleteItem);
 		
 		editedController = controller;
+		ControllerType cType = controller.getType();
+		
 		editedElement = controller.getElement();
 		elementPopupMenu = new PopupMenuDialog(this, editedElement.getName(), items);
 		elementPopupMenu.setPopupMenuItemListener(this);
 		elementPopupMenu.show();
-		elementPopupMenu.setIcon(controller.getIcon());
+		elementPopupMenu.setIcon(cType.getIcon());
 		
 	}
 	
@@ -445,24 +451,25 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 				showDeleteConfirmation(editedSubLayer);
 				break;
 			case POPUP_MENU_ITEM_ELEMENT_EDIT:
-				showControllerDialog(editedController, editedElement);
+				showControllerDialog(editedController.getType(), editedElement);
 				break;
 			case POPUP_MENU_ITEM_ELEMENT_DELETE:
-				removeElement(editedElement);
+				removeController(editedController);
 				break;
 		}
 	}
 	
-	private void showControllerDialog(Controller controller, Element element){
+	private void showControllerDialog(ControllerType controllerType, Element element){
 		if(element != null){
 			controllerDialog = new ControllerDialog(this, true, element);
 		} else{
 			controllerDialog = new ControllerDialog(this, element);
 		}
+				
 		controllerDialog.show();
-		controllerDialog.setTitle(controller.getName());
-		controllerDialog.setTitleIcon(controller.getIcon());
-		controllerDialog.setType(controller.getType());
+		controllerDialog.setTitle(controllerType.getTitle(this));
+		controllerDialog.setTitleIcon(controllerType.getIcon());
+		controllerDialog.setType(controllerType);
 		controllerDialog.setOnControllerDialogApproveListener(this);
 	}
 	
@@ -518,7 +525,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 			layer.setProjectId(project.getId());
 			dbManager.addLayer(layer);
 			project.getLayers().add(layer);
-			layersSideBarView.addItem(createSideBarItem(layer));
+			layersSideBarView.addItem(createLayerSideBarItem(layer));
 		} else if(clazz.getName().equals(SubLayer.class.getName())){
 			SubLayer subLayer = (SubLayer)layer;
 			subLayer.setProjectId(project.getId());
@@ -534,7 +541,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		if(clazz.getName().equals(Layer.class.getName())){
 			dbManager.updateLayer(layer);
 			int index = findSideBarLayerIndex(layer);
-			layersSideBarView.setItem(createSideBarItem(layer), index);
+			layersSideBarView.setItem(createLayerSideBarItem(layer), index);
 			editedLayer = null;
 		} else if(clazz.getName().equals(SubLayer.class.getName())){
 			SubLayer subLayer = (SubLayer)layer;
@@ -577,8 +584,8 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	}
 	
 	private void addElementToSubLayerFragment(Element element){
-		ElementAdapter adapter = getElementAdapter();
-		adapter.add(element);
+		ControllerAdapter adapter = getControllerAdapter();
+		adapter.add(element.getType().createView(this, element));
 		adapter.notifyDataSetChanged();
 	}
 	
@@ -586,28 +593,29 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	public void onControllerDialogEditAction(Element element) {
 		dbManager.updateElement(element);
 		
-		ElementAdapter adapter = getElementAdapter();
+		ControllerAdapter adapter = getControllerAdapter();
+		editedController.setElement(element);
 		adapter.notifyDataSetChanged();
 		
 		editedElement = null;
 		editedController = null;
 	}
 	
-	public void removeElement(Element element){
-		dbManager.removeElement(element);
+	public void removeController(Controller controller){
+		dbManager.removeElement(controller.getElement());
 		
-		ElementAdapter adapter = getElementAdapter();
-		adapter.remove(element);
+		ControllerAdapter adapter = getControllerAdapter();
+		adapter.remove(controller);
 		adapter.notifyDataSetChanged();
 		
 		editedElement = null;
 		editedController = null;
 	}
 	
-	private ElementAdapter getElementAdapter(){
+	private ControllerAdapter getControllerAdapter(){
 		int position = currentLayer.getSubLayers().indexOf(currentSubLayer);
 		SubLayerFragment fragment = (SubLayerFragment)subLayerPagerAdapter.getItem(position);
-		ElementAdapter adapter = (ElementAdapter)fragment.getListAdapter();
+		ControllerAdapter adapter = (ControllerAdapter)fragment.getListAdapter();
 		return adapter;
 	}
 }

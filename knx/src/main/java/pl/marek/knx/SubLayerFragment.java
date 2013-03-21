@@ -2,6 +2,7 @@ package pl.marek.knx;
 
 import java.util.ArrayList;
 
+import pl.marek.knx.controls.Controller;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.database.SubLayer;
@@ -41,7 +42,12 @@ public class SubLayerFragment extends ListFragment{
     	super.onActivityCreated(savedInstanceState);
 
         ArrayList<Element> elements = subLayer.getElements();
-        ElementAdapter adapter = new ElementAdapter(getActivity(), elements);
+        ArrayList<Controller> controllers = new ArrayList<Controller>();
+        for(Element e: elements){
+        	controllers.add(e.getType().createView(getActivity(), e));
+        }
+        
+        ControllerAdapter adapter = new ControllerAdapter(getActivity(), controllers);
         setListAdapter(adapter);
         
         getListView().setOnItemLongClickListener((ProjectActivity)getActivity());     
@@ -53,6 +59,12 @@ public class SubLayerFragment extends ListFragment{
 		if(dbManager != null && !dbManager.isOpen()){
 			dbManager.open();
 		}
+	
+		for(int i=0; i< getListAdapter().getCount();i++){
+			Controller controller = (Controller)getListAdapter().getItem(i);
+			controller.onResume();
+		}
+		
 	}
 	
 	@Override
@@ -60,5 +72,10 @@ public class SubLayerFragment extends ListFragment{
 		super.onPause();
 		if(dbManager != null && dbManager.isOpen())
 			dbManager.close();
+		
+		for(int i=0; i< getListAdapter().getCount();i++){
+			Controller controller = (Controller)getListAdapter().getItem(i);
+			controller.onPause();
+		}
 	}
 }

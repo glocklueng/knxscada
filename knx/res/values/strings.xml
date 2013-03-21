@@ -103,12 +103,16 @@
     <string name="dialog_controller_edit_button">Zapisz zmiany</string>
     <string name="dialog_controller_add_address_button">Dodaj adres</string>
     <string name="dialog_controller_remove_address_button">Usuń adres</string>
-    <string name="dialog_controller_group_address_default_label">Adres grupowy</string>
     
     <string name="dialog_controller_name_empty_title">Brak nazwy</string>
     <string name="dialog_controller_name_empty">Podaj nazwę!</string>
     <string name="dialog_controller_wrong_address_title">Błędny adres</string>
     <string name="dialog_controller_wrong_address">Podany adres grupowy jest błędny!</string>
+    
+    <!-- GROUP ADDRESS LABELS -->
+    <string name="dialog_controller_group_address_default_label">Adres grupowy</string>
+    <string name="dialog_controller_group_address_other_label">Inny</string>
+    
     
     <!-- ELEMENT POPUP MENU -->
     <string name="element_popup_menu_item_edit">Edytuj element</string>

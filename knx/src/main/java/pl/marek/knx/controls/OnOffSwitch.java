@@ -2,6 +2,7 @@ package pl.marek.knx.controls;
 
 import pl.marek.knx.R;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.telegram.Telegram;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.CompoundButton;
@@ -19,9 +20,12 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	private int onBackgroundColor;
 	private int offBackgroundColor;
 	
-
 	public OnOffSwitch(Context context, Element element) {
-		super(context, element, ControlType.ON_OFF_SWITCH, R.layout.control_onoffswitch);
+		this(context, ControllerType.ON_OFF_SWITCH, element);
+	}
+
+	public OnOffSwitch(Context context, ControllerType type, Element element) {
+		super(context, element, type, R.layout.control_onoffswitch);
 		initViews();
 		initValues();
 	}
@@ -94,16 +98,8 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	}
 
 	@Override
-	public String getTitle() {
+	public void telegramReceived(Telegram telegram) {
 		// TODO Auto-generated method stub
-		return "Włącznik";
+		
 	}
-
-	@Override
-	public int getIcon() {
-
-		return R.drawable.edit_icon;
-	}
-	
-
 }

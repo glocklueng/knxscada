@@ -2,7 +2,7 @@ package pl.marek.knx.database;
 
 import java.util.ArrayList;
 
-import pl.marek.knx.controls.ControlType;
+import pl.marek.knx.controls.ControllerType;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,11 +20,11 @@ public class Element implements Parcelable{
 	private String description;
 	private ArrayList<ElementGroupAddress> groupAddresses;
 	private String deviceAddress;
-	private ControlType type;
+	private ControllerType type;
 	
 	public Element(){}
 	
-	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, ControlType type){
+	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, ControllerType type){
 		this.id = id;
 		this.projectId = projectId;
 		this.layerId = layerId;
@@ -117,11 +117,11 @@ public class Element implements Parcelable{
 		this.deviceAddress = deviceAddress;
 	}
 
-	public ControlType getType() {
+	public ControllerType getType() {
 		return type;
 	}
 
-	public void setType(ControlType type) {
+	public void setType(ControllerType type) {
 		this.type = type;
 	}
 
@@ -154,6 +154,6 @@ public class Element implements Parcelable{
 		name = parcel.readString();
 		description = parcel.readString();
 		deviceAddress = parcel.readString();
-		type = ControlType.valueOf(parcel.readString());
+		type = ControllerType.valueOf(parcel.readString());
 	}
 }

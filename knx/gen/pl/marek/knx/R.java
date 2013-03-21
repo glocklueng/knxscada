@@ -306,16 +306,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int application_name=0x7f080053;
         public static final int cancel=0x7f080060;
         public static final int connected=0x7f080056;
-        public static final int connection_service_connected=0x7f0800b0;
+        public static final int connection_service_connected=0x7f0800b1;
         /**  KNX CONNECTION STRINGS 
          */
-        public static final int connection_service_connecting=0x7f0800af;
-        public static final int connection_service_disconnected=0x7f0800b2;
-        public static final int connection_service_disconnecting=0x7f0800b1;
-        public static final int connection_service_failed=0x7f0800b3;
-        public static final int connection_service_message=0x7f0800b6;
-        public static final int connection_service_title=0x7f0800b5;
-        public static final int connection_service_unknown=0x7f0800b4;
+        public static final int connection_service_connecting=0x7f0800b0;
+        public static final int connection_service_disconnected=0x7f0800b3;
+        public static final int connection_service_disconnecting=0x7f0800b2;
+        public static final int connection_service_failed=0x7f0800b4;
+        public static final int connection_service_message=0x7f0800b7;
+        public static final int connection_service_title=0x7f0800b6;
+        public static final int connection_service_unknown=0x7f0800b5;
         /**  PREFERENCES KEYS 
          */
         public static final int connection_state_key=0x7f080005;
@@ -329,14 +329,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dialog_controller_description_hint=0x7f080097;
         public static final int dialog_controller_description_label=0x7f080096;
         public static final int dialog_controller_edit_button=0x7f08009a;
-        public static final int dialog_controller_group_address_default_label=0x7f08009d;
-        public static final int dialog_controller_name_empty=0x7f08009f;
-        public static final int dialog_controller_name_empty_title=0x7f08009e;
+        /**  GROUP ADDRESS LABELS 
+         */
+        public static final int dialog_controller_group_address_default_label=0x7f0800a1;
+        public static final int dialog_controller_group_address_other_label=0x7f0800a2;
+        public static final int dialog_controller_name_empty=0x7f08009e;
+        public static final int dialog_controller_name_empty_title=0x7f08009d;
         public static final int dialog_controller_name_hint=0x7f080095;
         public static final int dialog_controller_name_label=0x7f080094;
         public static final int dialog_controller_remove_address_button=0x7f08009c;
-        public static final int dialog_controller_wrong_address=0x7f0800a1;
-        public static final int dialog_controller_wrong_address_title=0x7f0800a0;
+        public static final int dialog_controller_wrong_address=0x7f0800a0;
+        public static final int dialog_controller_wrong_address_title=0x7f08009f;
         public static final int dialog_edit_layer_title=0x7f080079;
         public static final int dialog_edit_project_title=0x7f080063;
         public static final int dialog_edit_sublayer_title=0x7f080082;
@@ -367,16 +370,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dialog_project_add_button=0x7f08006a;
         public static final int dialog_project_cancel_button=0x7f08006c;
         public static final int dialog_project_edit_button=0x7f08006b;
-        public static final int dialog_rw_telegram_address=0x7f0800a9;
-        public static final int dialog_rw_telegram_cancel_button=0x7f0800a6;
-        public static final int dialog_rw_telegram_data_type=0x7f0800aa;
-        public static final int dialog_rw_telegram_function=0x7f0800ab;
-        public static final int dialog_rw_telegram_read_button=0x7f0800a7;
-        public static final int dialog_rw_telegram_title=0x7f0800a5;
-        public static final int dialog_rw_telegram_value=0x7f0800ac;
-        public static final int dialog_rw_telegram_write_button=0x7f0800a8;
-        public static final int dialog_rw_telegram_wrong_address_msg=0x7f0800ae;
-        public static final int dialog_rw_telegram_wrong_address_title=0x7f0800ad;
+        public static final int dialog_rw_telegram_address=0x7f0800aa;
+        public static final int dialog_rw_telegram_cancel_button=0x7f0800a7;
+        public static final int dialog_rw_telegram_data_type=0x7f0800ab;
+        public static final int dialog_rw_telegram_function=0x7f0800ac;
+        public static final int dialog_rw_telegram_read_button=0x7f0800a8;
+        public static final int dialog_rw_telegram_title=0x7f0800a6;
+        public static final int dialog_rw_telegram_value=0x7f0800ad;
+        public static final int dialog_rw_telegram_write_button=0x7f0800a9;
+        public static final int dialog_rw_telegram_wrong_address_msg=0x7f0800af;
+        public static final int dialog_rw_telegram_wrong_address_title=0x7f0800ae;
         public static final int dialog_sublayer_add_button=0x7f080087;
         public static final int discover_item_summary=0x7f08004c;
         public static final int discover_item_title=0x7f08004b;
@@ -395,10 +398,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int discoverer_dialog_title=0x7f08002f;
         public static final int discoverer_item_summary=0x7f08002e;
         public static final int discoverer_item_title=0x7f08002d;
-        public static final int element_popup_menu_item_delete=0x7f0800a3;
+        public static final int element_popup_menu_item_delete=0x7f0800a4;
         /**  ELEMENT POPUP MENU 
          */
-        public static final int element_popup_menu_item_edit=0x7f0800a2;
+        public static final int element_popup_menu_item_edit=0x7f0800a3;
         public static final int group_address_level_2_label=0x7f08005e;
         public static final int group_address_level_3_label=0x7f08005f;
         public static final int group_address_level_label=0x7f08005d;
@@ -489,31 +492,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sublayer_popup_menu_item_edit=0x7f08008e;
         /**  TELEGRAM ACTIVITY/DIALOG 
          */
-        public static final int telegram_ab_read_write_item=0x7f0800a4;
-        public static final int telegram_detail_ack_label=0x7f0800d2;
-        public static final int telegram_detail_confirmation_label=0x7f0800d3;
-        public static final int telegram_detail_data_label=0x7f0800ce;
-        public static final int telegram_detail_destination_address_label=0x7f0800c9;
-        public static final int telegram_detail_dptid_label=0x7f0800d1;
-        public static final int telegram_detail_framelength_label=0x7f0800d0;
-        public static final int telegram_detail_hopcount_label=0x7f0800ca;
-        public static final int telegram_detail_id_label=0x7f0800c5;
-        public static final int telegram_detail_msgCode_label=0x7f0800cc;
-        public static final int telegram_detail_priority_label=0x7f0800c7;
-        public static final int telegram_detail_rawdata_label=0x7f0800cd;
-        public static final int telegram_detail_rawframe_label=0x7f0800cf;
-        public static final int telegram_detail_repeated_label=0x7f0800d4;
-        public static final int telegram_detail_source_address_label=0x7f0800c8;
-        public static final int telegram_detail_time_label=0x7f0800c6;
-        public static final int telegram_detail_type_label=0x7f0800cb;
-        public static final int telegram_response_timeout=0x7f0800d5;
-        public static final int telegrams_activity_details_title=0x7f0800c1;
+        public static final int telegram_ab_read_write_item=0x7f0800a5;
+        public static final int telegram_detail_ack_label=0x7f0800d3;
+        public static final int telegram_detail_confirmation_label=0x7f0800d4;
+        public static final int telegram_detail_data_label=0x7f0800cf;
+        public static final int telegram_detail_destination_address_label=0x7f0800ca;
+        public static final int telegram_detail_dptid_label=0x7f0800d2;
+        public static final int telegram_detail_framelength_label=0x7f0800d1;
+        public static final int telegram_detail_hopcount_label=0x7f0800cb;
+        public static final int telegram_detail_id_label=0x7f0800c6;
+        public static final int telegram_detail_msgCode_label=0x7f0800cd;
+        public static final int telegram_detail_priority_label=0x7f0800c8;
+        public static final int telegram_detail_rawdata_label=0x7f0800ce;
+        public static final int telegram_detail_rawframe_label=0x7f0800d0;
+        public static final int telegram_detail_repeated_label=0x7f0800d5;
+        public static final int telegram_detail_source_address_label=0x7f0800c9;
+        public static final int telegram_detail_time_label=0x7f0800c7;
+        public static final int telegram_detail_type_label=0x7f0800cc;
+        public static final int telegram_response_timeout=0x7f0800d6;
+        public static final int telegrams_activity_details_title=0x7f0800c2;
         /**  TELEGRAM DETAILS 
          */
-        public static final int telegrams_activity_title=0x7f0800c0;
-        public static final int telegrams_item_from_label=0x7f0800c2;
-        public static final int telegrams_item_image_description=0x7f0800c4;
-        public static final int telegrams_item_to_label=0x7f0800c3;
+        public static final int telegrams_activity_title=0x7f0800c1;
+        public static final int telegrams_item_from_label=0x7f0800c3;
+        public static final int telegrams_item_image_description=0x7f0800c5;
+        public static final int telegrams_item_to_label=0x7f0800c4;
         public static final int timeout_key=0x7f08000e;
         public static final int timeout_summary=0x7f080046;
         public static final int timeout_title=0x7f080045;
@@ -534,17 +537,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         /**  WebServer Settings 
          */
         public static final int webserver_port_title=0x7f08004d;
-        public static final int webserver_service_deploy=0x7f0800bd;
-        public static final int webserver_service_failed=0x7f0800bb;
-        public static final int webserver_service_message=0x7f0800bf;
-        public static final int webserver_service_started=0x7f0800b8;
+        public static final int webserver_service_deploy=0x7f0800be;
+        public static final int webserver_service_failed=0x7f0800bc;
+        public static final int webserver_service_message=0x7f0800c0;
+        public static final int webserver_service_started=0x7f0800b9;
         /**  WEBSERVER STRINGS 
          */
-        public static final int webserver_service_starting=0x7f0800b7;
-        public static final int webserver_service_stopped=0x7f0800ba;
-        public static final int webserver_service_stopping=0x7f0800b9;
-        public static final int webserver_service_title=0x7f0800be;
-        public static final int webserver_service_unknown=0x7f0800bc;
+        public static final int webserver_service_starting=0x7f0800b8;
+        public static final int webserver_service_stopped=0x7f0800bb;
+        public static final int webserver_service_stopping=0x7f0800ba;
+        public static final int webserver_service_title=0x7f0800bf;
+        public static final int webserver_service_unknown=0x7f0800bd;
         public static final int webserver_ssl_port_key=0x7f080015;
         public static final int webserver_ssl_port_summary=0x7f080052;
         public static final int webserver_ssl_port_title=0x7f080051;

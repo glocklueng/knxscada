@@ -1,27 +1,20 @@
 package pl.marek.knx.database;
 
+import pl.marek.knx.R;
+import android.content.Context;
+
 public class ElementGroupAddress {
 	
-	private int id;
 	private int elementId;
 	private String address;
 	private ElementGroupAddressType type;
 	
 	public ElementGroupAddress(){}
 	
-	public ElementGroupAddress(int id, int elementId, String address, ElementGroupAddressType type){
-		this.id = id;
+	public ElementGroupAddress(int elementId, String address, ElementGroupAddressType type){
 		this.elementId = elementId;
 		this.address = address;
 		this.type = type;
-	}
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getElementId() {
@@ -51,7 +44,20 @@ public class ElementGroupAddress {
 
 
 	public enum ElementGroupAddressType{
-		MAIN,OTHER
+		MAIN {
+			@Override
+			public String getLabel(Context context) {
+				return context.getString(R.string.dialog_controller_group_address_default_label);
+			}
+		},
+		OTHER {
+			@Override
+			public String getLabel(Context context) {
+				return context.getString(R.string.dialog_controller_group_address_other_label);
+			}
+		};
+		
+		public abstract String getLabel(Context context);
 	}
 
 }

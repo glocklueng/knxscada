@@ -2,6 +2,7 @@ package pl.marek.knx.controls;
 
 import pl.marek.knx.R;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.telegram.Telegram;
 import pl.marek.knx.utils.ColorUtils;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,10 +20,13 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	
 	private int startColor;
 	private int stopColor;
-
-
+	
 	public Slider(Context context, Element element) {
-		super(context, element, ControlType.SLIDER, R.layout.control_slider);
+		this(context, ControllerType.SLIDER, element);
+	}
+
+	public Slider(Context context, ControllerType type, Element element) {
+		super(context, element, type, R.layout.control_slider);
 		initViews();
 		initValues();
 	}
@@ -94,16 +98,8 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	}
 
 	@Override
-	public String getTitle() {
+	public void telegramReceived(Telegram telegram) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
-
-	@Override
-	public int getIcon() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 }

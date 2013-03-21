@@ -45,12 +45,12 @@ public class ElementGroupAddressDao implements Dao<ElementGroupAddress>{
 		final ContentValues values = new ContentValues();
 		values.put(ElementGroupAddressColumns.ADDRESS, address.getAddress());
 		values.put(ElementGroupAddressColumns.TYPE, address.getType().name());
-		db.update(ElementGroupAddressTable.TABLE_NAME, values, ElementGroupAddressColumns._ID + " = ? and "+ElementGroupAddressColumns.ELEMENT_ID+" = ?", new String[]{String.valueOf(address.getId()), String.valueOf(address.getElementId())});
+		db.update(ElementGroupAddressTable.TABLE_NAME, values, ElementGroupAddressColumns.ELEMENT_ID + " = ? and "+ElementGroupAddressColumns.ADDRESS+" = ?", new String[]{String.valueOf(address.getElementId()), address.getAddress()});
 	}
 
 	@Override
 	public void delete(ElementGroupAddress address) {
-		db.delete(ElementGroupAddressTable.TABLE_NAME, ElementGroupAddressColumns._ID + " = ? and "+ElementGroupAddressColumns.ELEMENT_ID+" = ?", new String[]{String.valueOf(address.getId()), String.valueOf(address.getElementId())});
+		db.delete(ElementGroupAddressTable.TABLE_NAME, ElementGroupAddressColumns.ELEMENT_ID + " = ? and "+ElementGroupAddressColumns.ADDRESS+" = ?", new String[]{String.valueOf(address.getElementId()), address.getAddress()});
 	}
 	
 	public void deleteByElementId(int id) {
@@ -72,7 +72,6 @@ public class ElementGroupAddressDao implements Dao<ElementGroupAddress>{
 		Cursor c = 
 				db.query(ElementGroupAddressTable.TABLE_NAME, 
 						new String[]{
-									ElementGroupAddressColumns._ID,
 									ElementGroupAddressColumns.ELEMENT_ID,
 									ElementGroupAddressColumns.ADDRESS,
 									ElementGroupAddressColumns.TYPE
@@ -110,7 +109,6 @@ public class ElementGroupAddressDao implements Dao<ElementGroupAddress>{
 		Cursor c = 
 				db.query(ElementGroupAddressTable.TABLE_NAME, 
 						new String[]{
-									ElementGroupAddressColumns._ID,
 									ElementGroupAddressColumns.ELEMENT_ID,
 									ElementGroupAddressColumns.ADDRESS,
 									ElementGroupAddressColumns.TYPE
@@ -134,10 +132,9 @@ public class ElementGroupAddressDao implements Dao<ElementGroupAddress>{
 		ElementGroupAddress address = null;
 		if(cursor != null){
 			address = new ElementGroupAddress();
-			address.setId(cursor.getInt(0));
-			address.setElementId(cursor.getInt(1));
-			address.setAddress(cursor.getString(2));
-			address.setType(ElementGroupAddressType.valueOf(cursor.getString(3)));
+			address.setElementId(cursor.getInt(0));
+			address.setAddress(cursor.getString(1));
+			address.setType(ElementGroupAddressType.valueOf(cursor.getString(2)));
 		}
 		return address;
 	}

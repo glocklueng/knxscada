@@ -1,37 +1,55 @@
 package pl.marek.knx.controls;
 
 import pl.marek.knx.database.Element;
+import pl.marek.knx.interfaces.KNXTelegramListener;
+import pl.marek.knx.receivers.TelegramBroadcastReceiver;
 import android.app.Service;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
-public abstract class Controller extends LinearLayout{
+public abstract class Controller extends LinearLayout implements KNXTelegramListener{
 	
 	private LinearLayout mView;
 	private int layoutId;
 	
 	protected Element element;
-	protected ControlType type;
+	protected ControllerType type;
+	
+	protected TelegramBroadcastReceiver telegramReceiver;
+	protected boolean receiverRegistered = false;
 	
 	private Controller(Context context){
 		super(context);
 	}
 	
-	public Controller(Context context, Element element, ControlType type, int layoutId) {
+	public Controller(Context context, Element element, ControllerType type, int layoutId) {
 		this(context);
 		this.layoutId = layoutId;
 		this.element = element;
 		this.type = type;
 		initialize();
+		onResume();
 	}
 	
 	public void initialize(){
 		LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Service.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(layoutId, this, true);
 		mView = (LinearLayout)getChildAt(0);
+		
+		//Stupid workaround for not working onItemLongClick in ListView
+		setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				return false;
+			}
+		});
+		
+		
 	}
 	
 	public void setBackgroundColor(int color){
@@ -50,19 +68,42 @@ public abstract class Controller extends LinearLayout{
 
 	public void setElement(Element element) {
 		this.element = element;
+		if(element != null){
+			setName(element.getName());
+			setDescription(element.getDescription());
+		}
 	}
 	
-	public ControlType getType(){
+	public ControllerType getType(){
 		return type;
+	}
+	
+	public void onResume(){
+		if(!receiverRegistered){
+			registerReceiver();
+		}
+	}
+	
+	public void onPause(){
+		if(receiverRegistered){
+			unregisterReceiver();
+		}
+	}
+	
+	private void registerReceiver(){
+		telegramReceiver = new TelegramBroadcastReceiver(this);
+		getContext().registerReceiver(telegramReceiver, new IntentFilter(KNXTelegramListener.TELEGRAM_RECEIVED));
+		receiverRegistered = true;
+	}
+	
+	private void unregisterReceiver(){
+		getContext().unregisterReceiver(telegramReceiver);
+		receiverRegistered = false;
 	}
 	
 	public abstract void setName(String name);
 	public abstract String getName();
 	public abstract void setDescription(String description);
 	public abstract String getDescription();
-	
-	public abstract String getTitle();
-	public abstract int getIcon();
-	
 
 }

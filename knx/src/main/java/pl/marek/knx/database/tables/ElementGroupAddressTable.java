@@ -15,7 +15,6 @@ public class ElementGroupAddressTable {
 	public static final String TABLE_NAME = "element_group_addresses";
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE "
 													+ ElementGroupAddressTable.TABLE_NAME + " (" 
-													+ ElementGroupAddressColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 													+ ElementGroupAddressColumns.ELEMENT_ID + " INTEGER, "
 													+ ElementGroupAddressColumns.ADDRESS + " TEXT, "
 													+ ElementGroupAddressColumns.TYPE + " TEXT, "  
