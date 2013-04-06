@@ -25,6 +25,9 @@ import android.util.Log;
 
 public class WebServer {
 	
+    private static final String CONTENT_RESOLVER_ATTRIBUTE = "pl.marek.knx.contentResolver";
+    private static final String ANDROID_CONTEXT_ATTRIBUTE = "pl.marek.knx.context"; 
+	
 	public static final String WEBAPP_DIRECTORY = "webapp";
 	public static final String WEBAPP_TMP_DIRECTORY = "webapp_tmp";
 	public static final String WEBAPP_DESCRIPTOR = "/WEB-INF/web.xml";
@@ -79,7 +82,11 @@ public class WebServer {
         webContext.setParentLoaderPriority(true);
         webContext.setDescriptor(new File(getWebAppDirectoryPath(), WEBAPP_DESCRIPTOR).getAbsolutePath());
         webContext.setResourceBase(getWebAppDirectoryPath());
-		return webContext;
+        
+        webContext.setAttribute(CONTENT_RESOLVER_ATTRIBUTE, appContext.getContentResolver());
+        webContext.setAttribute(ANDROID_CONTEXT_ATTRIBUTE, appContext);
+        
+        return webContext;
 	}
 	
 	private ResourceHandler createResourceHandler(){
