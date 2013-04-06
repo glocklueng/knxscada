@@ -22,7 +22,8 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	private int stopColor;
 	
 	public Slider(Context context, Element element) {
-		this(context, ControllerType.SLIDER, element);
+		//this(context, ControllerType.SLIDER, element);
+		this(context, ControllerType.ON_OFF_SWITCH, element);
 	}
 
 	public Slider(Context context, ControllerType type, Element element) {

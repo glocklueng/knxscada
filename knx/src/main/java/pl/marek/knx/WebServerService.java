@@ -17,8 +17,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class WebServerService extends Service implements StateSender, WebServerController, LifeCycle.Listener{
@@ -58,6 +61,9 @@ public class WebServerService extends Service implements StateSender, WebServerC
 	private void startWebServer(){
 		server = new WebServer(settings, this, this);
 		try{
+			//TODO Remove
+			server.undeployWebApp();
+			
 			if(!server.isDeployed()){
 				setState(WebServerState.DEPLOYING);
 				server.deployWebApp();
@@ -116,7 +122,15 @@ public class WebServerService extends Service implements StateSender, WebServerC
 		unregisterReceiver(controlReceiver);
 		stopWebServer();
 		clearWakeLock();
-		stopForeground(true);
+		setStoppedStateInPreferences();
+		stopForeground(true);		
+	}
+	
+	private void setStoppedStateInPreferences(){
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor editor = p.edit();
+		editor.putString(getString(R.string.webserver_state_key), WebServerState.STOPPED.name());
+		editor.commit();
 	}
 	
 	private void setState(WebServerState state){		

@@ -19,6 +19,15 @@ public class SettingsActivity extends PreferenceActivity{
         super.onCreate(savedInstanceState);
     }
 	
+	@Override
+	public void switchToHeader(Header header) {
+		if(header.id == R.id.header_category){
+			super.switchToHeader(headers.get(1));
+		}else{
+			super.switchToHeader(header);
+		}
+	}
+	
 	protected void onResume() {
 		super.onResume();
 		getActionBar().setTitle(getString(R.string.settings));
@@ -38,7 +47,7 @@ public class SettingsActivity extends PreferenceActivity{
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
         headers = target;
-        setSelection(1);
+        
     }
     
 	public void setListAdapter(ListAdapter adapter) {

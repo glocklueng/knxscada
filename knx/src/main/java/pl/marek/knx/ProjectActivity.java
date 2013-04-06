@@ -18,6 +18,7 @@ import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.DrawableUtils;
+import pl.marek.knx.utils.MessageDialog;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -109,12 +110,14 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    return true;
 	}
 	
+	
+	
 	private void setActionBar(){
 		actionBar = getActionBar();
 		if(project != null){
 			actionBar.setTitle(project.getName());
 		}
-		actionBar.setDisplayHomeAsUpEnabled(true);			
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 	
 	private void initialiseSubLayersPaging(){
@@ -263,12 +266,27 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	        layersSideBarView.toggle();
 	        break;
 	    case R.id.project_ab_features:
-	    	if(layersSideBarView.isShown())
-	    		layersSideBarView.hide();
-	    	controllersSideBarView.toggle();
+	    	if(currentLayer != null && currentSubLayer != null){
+		    	if(layersSideBarView.isShown()){
+		    		layersSideBarView.hide();
+		    	}
+		    	controllersSideBarView.toggle();
+	    	}else{
+	    		new MessageDialog(this).showDialog(
+	    				getString(R.string.choose_sublayer_msg_title), 
+	    				getString(R.string.choose_sublayer_msg), 
+	    				getResources().getDrawable(android.R.drawable.ic_dialog_alert));
+	    	}
 	    	break;
 	    case R.id.project_add_sublayer_menu_item:
-	    	showNewSubLayerDialog();
+	    	if(currentLayer != null){
+	    		showNewSubLayerDialog();
+	    	}else{
+	    		new MessageDialog(this).showDialog(
+	    				getString(R.string.choose_layer_msg_title), 
+	    				getString(R.string.choose_layer_msg), 
+	    				getResources().getDrawable(android.R.drawable.ic_dialog_alert));
+	    	}
 	    	break;
 	    default:
 	        return super.onOptionsItemSelected(item);
@@ -292,8 +310,6 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		if(dbManager != null && dbManager.isOpen())
 			dbManager.close();
 		clearSubLayers();
-		
-		android.util.Log.i("Fragment", "onPause "+project.getName());
 	}
 	
 	@Override
@@ -396,7 +412,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	}
 	
 	
-	public void showLayerPopupMenu(Layer layer){
+	private void showLayerPopupMenu(Layer layer){
 		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
 		PopupMenuItem editItem;
 		PopupMenuItem deleteItem; 
@@ -415,7 +431,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		layerPopupMenu.show();
 	}
 	
-	public void showControllerPopupMenu(Controller controller){
+	private void showControllerPopupMenu(Controller controller){
 		ArrayList<PopupMenuItem> items = new ArrayList<PopupMenuItem>();
 		PopupMenuItem editItem;
 		PopupMenuItem deleteItem; 
@@ -461,9 +477,9 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	
 	private void showControllerDialog(ControllerType controllerType, Element element){
 		if(element != null){
-			controllerDialog = new ControllerDialog(this, true, element);
-		} else{
 			controllerDialog = new ControllerDialog(this, element);
+		} else{
+			controllerDialog = new ControllerDialog(this, controllerType.getAddressTypes());
 		}
 				
 		controllerDialog.show();
@@ -473,7 +489,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		controllerDialog.setOnControllerDialogApproveListener(this);
 	}
 	
-	public void showDeleteConfirmation(final Layer layer){
+	private void showDeleteConfirmation(final Layer layer){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialogConfirmTheme);
 		builder.setTitle(getString(R.string.layer_delete_confirmation_title));
 		builder.setIcon(getResources().getDrawable(R.drawable.trash_icon));
@@ -555,17 +571,23 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		}
 	}
 	
-	public boolean removeLayer(Layer layer){
+	private boolean removeLayer(Layer layer){
 		dbManager.removeLayer(layer);
 		int index = findSideBarLayerIndex(layer);
 		layersSideBarView.removeItem(index);
+		if(editedLayer.getId() == currentLayer.getId()){
+			currentLayer = null;
+		}
 		editedLayer = null;
 		return false;
 	}
 		
-	public boolean removeSubLayer(SubLayer layer){
+	private boolean removeSubLayer(SubLayer layer){
 		int position = currentLayer.getSubLayers().indexOf(layer);
 		dbManager.removeSubLayer(layer);
+		if(editedSubLayer.getId() == currentSubLayer.getId()){
+			currentSubLayer = null;
+		}
 		editedSubLayer = null;
 		
 		tabBar.removeTab(position);
@@ -601,10 +623,11 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		editedController = null;
 	}
 	
-	public void removeController(Controller controller){
+	private void removeController(Controller controller){
 		dbManager.removeElement(controller.getElement());
 		
 		ControllerAdapter adapter = getControllerAdapter();
+		controller.onPause();
 		adapter.remove(controller);
 		adapter.notifyDataSetChanged();
 		

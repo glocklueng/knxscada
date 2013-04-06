@@ -14,7 +14,6 @@ import pl.marek.knx.utils.LoadScaledImageFromPath;
 import pl.marek.knx.utils.MessageDialog;
 import pl.marek.knx.utils.ProjectComparator;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,7 +23,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +33,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -365,7 +362,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
         return picturePath;
     }
 		
-	public class ProjectDialog extends Dialog implements View.OnClickListener{
+	public class ProjectDialog extends BaseDialog implements View.OnClickListener{
 		
 		public static final String PROJECT_NAME = "project_name";
 		public static final String PROJECT_DESCRIPTION = "project_description";
@@ -420,14 +417,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 				titleView.setText(getString(R.string.dialog_new_project_title));
 			}
 		}
-		
-		private void setDialogSize(){
-			DisplayMetrics metrics = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			int width = (int)(metrics.widthPixels * 0.95f);
-			getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
-		}
-		
+				
 		public String getName(){
 			return nameView.getText().toString();
 		}

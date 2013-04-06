@@ -1,10 +1,13 @@
 package pl.marek.knx.controls;
 
 import pl.marek.knx.database.Element;
+import pl.marek.knx.interfaces.KNXDataTransceiver;
 import pl.marek.knx.interfaces.KNXTelegramListener;
 import pl.marek.knx.receivers.TelegramBroadcastReceiver;
+import tuwien.auto.calimero.dptxlator.DPT;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -99,6 +102,16 @@ public abstract class Controller extends LinearLayout implements KNXTelegramList
 	private void unregisterReceiver(){
 		getContext().unregisterReceiver(telegramReceiver);
 		receiverRegistered = false;
+	}
+	
+	protected void transferTelegram(String type,String address, DPT dpt, String value){
+  		Intent dataIntent = new Intent(type);
+  		dataIntent.putExtra(KNXDataTransceiver.GROUP_ADDRESS, address);
+  		dataIntent.putExtra(KNXDataTransceiver.DPT_ID, dpt.getID());
+  		if(value != null){
+  			dataIntent.putExtra(KNXDataTransceiver.VALUE, value);
+  		}
+  		getContext().sendBroadcast(dataIntent);
 	}
 	
 	public abstract void setName(String name);

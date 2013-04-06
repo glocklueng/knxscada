@@ -1,5 +1,6 @@
 package pl.marek.knx.preferences;
 
+import pl.marek.knx.R;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity.Header;
@@ -73,7 +74,7 @@ public class HeaderBuilder {
 	}
 	
 	public static HeaderView getHeaderType(Header header) {
-		if ((header.fragment == null) && (header.intent == null)) {
+		if (header.id == R.id.header_category) {
 			return HeaderView.CATEGORY;
 		} else if (header.id == android.R.id.toggle) {
 			return HeaderView.SWITCH;

@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/project_add_sublayer_menu_item"
-        android:icon="@drawable/new_item"
+        android:icon="@drawable/new_room"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/dialog_new_sublayer_title"/>
+        android:title="@string/project_action_bar_menu_new_room"/>
     
     <item
         android:id="@+id/project_ab_features"
-        android:icon="@drawable/ic_action_side_navigation"
+        android:icon="@drawable/new_element"
         android:showAsAction="ifRoom|withText"
-        android:title="Elementy"/>
+        android:title="@string/project_action_bar_menu_new_element"/>
 
 </menu>

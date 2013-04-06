@@ -25,11 +25,15 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class KNXConnectionService extends Service implements KNXTelegramListener, KNXDataTransceiver, StateSender{
@@ -45,6 +49,7 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 	private IntentFilter dataReceiverFilter;
 	private KNXLinkListener linkListener;
 	private static Handler messageHandler;
+	private PowerManager.WakeLock wakeLock;
 	
 
 	@Override
@@ -57,6 +62,16 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 		dbManager = new DatabaseManagerImpl(this);
 		new ConnectTask().execute();
 		return super.onStartCommand(intent, flags, startId);
+	}
+	
+	private void setWakeLock(){
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getString(R.string.application_name));
+        wakeLock.acquire();
+	}
+	
+	private void clearWakeLock(){
+		wakeLock.release();
 	}
 	
 	@Override
@@ -72,6 +87,7 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 		registerReceiver(stateRequestReceiver, new IntentFilter(GET_CONNECTION_STATE));
 		
 		messageHandler = new MessageHandler(this);
+		setWakeLock();
 	}
 
 	@Override
@@ -83,6 +99,15 @@ public class KNXConnectionService extends Service implements KNXTelegramListener
 		}
 		unregisterReceiver(stateRequestReceiver);
 		setState(ConnectionState.DISCONNECTING);
+		clearWakeLock();
+		setDisconnectedStateInPreferences();
+	}
+	
+	private void setDisconnectedStateInPreferences(){
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor editor = p.edit();
+		editor.putString(getString(R.string.connection_state_key), ConnectionState.DISCONNECTED.name());
+		editor.commit();
 	}
 	
 	private void setState(ConnectionState state){		

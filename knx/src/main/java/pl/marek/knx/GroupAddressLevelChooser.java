@@ -50,6 +50,10 @@ public class GroupAddressLevelChooser extends LinearLayout implements CompoundBu
 		button3 = (RadioButton)view.findViewById(R.id.group_address_level_3_radio);
 		button2.setOnCheckedChangeListener(this);
 		button3.setOnCheckedChangeListener(this);
+		selectButtonByLevel();
+	}
+	
+	private void selectButtonByLevel(){
 		if(currentLevel == GroupAddressLevel.TWO){
 			button2.setChecked(true);
 		}else{
@@ -64,6 +68,11 @@ public class GroupAddressLevelChooser extends LinearLayout implements CompoundBu
 	
 	public void setLabel(String label){
 		labelView.setText(label);
+	}
+	
+	public void setLevel(GroupAddressLevel level){
+		this.currentLevel = level;
+		selectButtonByLevel();
 	}
 
 	@Override

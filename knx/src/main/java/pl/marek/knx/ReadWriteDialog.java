@@ -11,10 +11,8 @@ import pl.marek.knx.utils.MessageDialog;
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.dptxlator.DPT;
 import tuwien.auto.calimero.exception.KNXFormatException;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -26,10 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
 
-public class ReadWriteDialog extends Dialog implements View.OnClickListener,
+public class ReadWriteDialog extends BaseDialog implements View.OnClickListener,
 		OnItemSelectedListener, OnGroupAddressLevelChange {
 
 	private TextView titleTextView;
@@ -90,13 +87,6 @@ public class ReadWriteDialog extends Dialog implements View.OnClickListener,
 		
 		groupAddressLevelChooser = (GroupAddressLevelChooser)findViewById(R.id.dialog_rw_group_address_level_chooser);
 		
-	}
-
-	private void setDialogSize() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = (int) (metrics.widthPixels * 0.9f);
-		getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
 	}
 	
 	private void loadAdapters(){

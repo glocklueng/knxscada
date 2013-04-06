@@ -2,9 +2,13 @@ package pl.marek.knx.controls;
 
 import pl.marek.knx.R;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.database.ElementGroupAddress;
+import pl.marek.knx.interfaces.KNXDataTransceiver;
 import pl.marek.knx.telegram.Telegram;
+import tuwien.auto.calimero.dptxlator.DPTXlatorBoolean;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -20,12 +24,15 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	private int onBackgroundColor;
 	private int offBackgroundColor;
 	
+	private boolean changeBackgroundColorByState;
+	
 	public OnOffSwitch(Context context, Element element) {
 		this(context, ControllerType.ON_OFF_SWITCH, element);
 	}
 
 	public OnOffSwitch(Context context, ControllerType type, Element element) {
 		super(context, element, type, R.layout.control_onoffswitch);
+		changeBackgroundColorByState = false;
 		initViews();
 		initValues();
 	}
@@ -45,6 +52,9 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	public void initValues(){
 		if(element != null){
 			nameView.setText(element.getName());
+			if(element.getDescription().isEmpty()){
+				descriptionView.setVisibility(View.GONE);
+			}
 			descriptionView.setText(element.getDescription());
 		}
 	}
@@ -58,6 +68,11 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	}
 	
 	public void setDescription(String description){
+		if(element.getDescription().isEmpty()){
+			descriptionView.setVisibility(View.GONE);
+		} else{
+			descriptionView.setVisibility(View.VISIBLE);
+		}
 		descriptionView.setText(description);
 	}
 	
@@ -73,13 +88,19 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 		switchView.setChecked(false);
 	}
 	
+	public void setChangeBackgroundColorByState(boolean changeBackgroundColorByState) {
+		this.changeBackgroundColorByState = changeBackgroundColorByState;
+	}
+
 	private void setBackgroundColorByState(boolean state){
-		if(state){
-			setBackgroundColor(onBackgroundColor);
-		}else{
-			setBackgroundColor(offBackgroundColor);
+		if(changeBackgroundColorByState){
+			if(state){
+				setBackgroundColor(onBackgroundColor);
+			}else{
+				setBackgroundColor(offBackgroundColor);
+			}
+			getMainView().setPadding(10,10,10,10);
 		}
-		getMainView().setPadding(10,10,10,10);
 	}
 		
 	public void setOnBackgroundColor(int color){
@@ -95,6 +116,13 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		setBackgroundColorByState(isChecked);
+		String value = "";
+		if(isChecked){
+			value = "on";
+		} else{
+			value = "off";
+		}
+		writeTelegram(value);
 	}
 
 	@Override
@@ -102,4 +130,15 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void writeTelegram(String value) {
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, value);
+		}
+	}
+	
+//	public void readTelegram(boolean value) {
+//		transferData(KNXDataTransceiver.WRITE_DATA, address, dpt, value);
+//	}
+	
 }

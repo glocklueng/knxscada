@@ -2,10 +2,8 @@ package pl.marek.knx;
 
 import java.util.ArrayList;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout.LayoutParams;
 
-public class PopupMenuDialog extends Dialog implements OnItemClickListener, View.OnClickListener{
+
+public class PopupMenuDialog extends BaseDialog implements OnItemClickListener, View.OnClickListener{
 	
 	private PopupMenuListAdapter adapter;
 	private PopupMenuItemListener listener;
@@ -56,14 +54,7 @@ public class PopupMenuDialog extends Dialog implements OnItemClickListener, View
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
 	}
-	
-	private void setDialogSize(){
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = (int)(metrics.widthPixels * 0.95f);
-		getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
-	}
-	
+		
 	public void setTitle(String title){
 		titleView.setText(title);
 	}

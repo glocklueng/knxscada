@@ -15,19 +15,16 @@ import pl.marek.knx.database.ElementGroupAddress.ElementGroupAddressType;
 import pl.marek.knx.utils.MessageDialog;
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
 
-public class ControllerDialog extends Dialog implements View.OnClickListener, OnGroupAddressLevelChange{
+public class ControllerDialog extends BaseDialog implements View.OnClickListener, OnGroupAddressLevelChange{
 
 	
 	private TextView titleView;
@@ -45,16 +42,22 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 	private boolean editMode;
 	private Element element;
 	private ControllerType type;
+	private ArrayList<ElementGroupAddressType> addressTypes;
+	private GroupAddressLevel currentGroupAddressLevel = GroupAddressLevel.THREE;
 	
 	private OnControllerDialogApproveListener listener;
 	
-	public ControllerDialog(Context context, Element element) {
-		this(context, false, element);
+	public ControllerDialog(Context context, ArrayList<ElementGroupAddressType> addressTypes) {
+		super(context, R.style.dialogTheme);
+		this.editMode = false;
+		this.addressTypes = addressTypes;
 	}
 	
-	public ControllerDialog(Context context, boolean editMode, Element element) {
+	public ControllerDialog(Context context, Element element) {
 		super(context, R.style.dialogTheme);
-		this.editMode = editMode;
+		if(element != null){
+			this.editMode = true;
+		}
 		this.element = element;
 	}
 
@@ -91,10 +94,6 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 	private void initValues(){
 		if(editMode){
 			approveButton.setText(getContext().getString(R.string.dialog_controller_edit_button));
-		} else{
-			addMainGroupAddress();
-		}
-		if(element != null){
 			nameView.setText(element.getName());
 			descriptionView.setText(element.getDescription());
 			type = element.getType();
@@ -104,26 +103,30 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 				v.setGroupAddress(a.getAddress());				
 				v.setLabel(getNextLabel(a.getType()));
 				addGroupAddressView(v, a.getType());
+				currentGroupAddressLevel = v.getGroupAddressLevel();
+			}
+			groupAddressLevelChooser.setLevel(currentGroupAddressLevel);
+		} else{
+			if(addressTypes == null || addressTypes.isEmpty()){
+				addMainGroupAddress();
+			}else{
+				for(ElementGroupAddressType type : addressTypes){
+					GroupAddressView v = new GroupAddressView(getContext());
+					v.setLabel(getNextLabel(type));
+					addGroupAddressView(v, type);
+				}
 			}
 		}
-		
-		
 	}
 	
 	public void setOnControllerDialogApproveListener(OnControllerDialogApproveListener listener){
 		this.listener = listener;
 	}
 	
-	private void setDialogSize(){
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = (int)(metrics.widthPixels * 0.95f);
-		getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
-	}
-	
 	public void addMainGroupAddress(){
 		GroupAddressView mainGroupAddress = new GroupAddressView(getContext());
 		mainGroupAddress.setLabel(getNextLabel(ElementGroupAddressType.MAIN));
+		mainGroupAddress.setGroupAddressLevel(currentGroupAddressLevel);
 		addGroupAddressView(mainGroupAddress, ElementGroupAddressType.MAIN);
 	}
 	
@@ -311,6 +314,7 @@ public class ControllerDialog extends Dialog implements View.OnClickListener, On
 			GroupAddressView g = iterator.next();
 			g.setGroupAddressLevel(level);
 		}
+		currentGroupAddressLevel = level;
 	}
 	
 	public interface OnControllerDialogApproveListener{

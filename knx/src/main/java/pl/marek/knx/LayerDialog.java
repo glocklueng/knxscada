@@ -5,20 +5,17 @@ import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.utils.DrawableUtils;
 import pl.marek.knx.utils.MessageDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
 
-public class LayerDialog<T extends Layer> extends Dialog implements
+public class LayerDialog<T extends Layer> extends BaseDialog implements
 		View.OnClickListener, OnIconPickListener {
 
 	public static final String NAME = "name";
@@ -99,13 +96,6 @@ public class LayerDialog<T extends Layer> extends Dialog implements
 			descLabelView.setText(getContext().getString(
 					R.string.dialog_new_sublayer_description));
 		}
-	}
-
-	private void setDialogSize() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int width = (int) (metrics.widthPixels * 0.95f);
-		getWindow().setLayout(width, LayoutParams.WRAP_CONTENT);
 	}
 
 	public void setOnLayerDialogApproveListener(
