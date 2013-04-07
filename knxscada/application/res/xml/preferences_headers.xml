@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+	
+    <header
+        android:id="@+id/header_category"
+        android:title="@string/knx_connection_title"
+    />
+    
+    <header
+        android:id="@+android:id/toggle"
+        android:title="@string/knx_connection_toggle_title"
+        android:fragment="pl.marek.knx.preferences.KNXConnectionSettingsFragment"
+    >
+        <extra android:name="type" android:value="@string/knx_connection_toggle" />
+        <extra android:name="title" android:value="@string/knx_connection_toggle_title" />
+        <extra android:name="switchTextOn" android:value="@string/settings_swith_text_on" />
+        <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
+        <extra android:name="summaryOn" android:value="@string/knx_connection_toggle_summary_on"/>
+        <extra android:name="summaryOff" android:value="@string/knx_connection_toggle_summary_off"/>
+        <extra android:name="summaryOnOff" android:value="@string/knx_connection_toggle_summary_on_off"/>
+        <extra android:name="summaryOffOn" android:value="@string/knx_connection_toggle_summary_off_on"/>
+    </header>
+    
+    <header
+        android:title="@string/discoverer_item_title"
+        android:summary="@string/discoverer_item_summary"
+        android:fragment="pl.marek.knx.preferences.DiscovererFragment"
+    >
+        <extra android:name="title" android:value="@string/discoverer_item_title" />
+    </header>
+    
+    <header
+        android:id="@+id/header_category"
+        android:title="@string/webserver_title"
+    />
+    
+    <header
+        android:id="@+android:id/toggle"
+        android:title="@string/webserver_toggle_title"
+        android:fragment="pl.marek.knx.preferences.WebServerSettingsFragment"
+     >
+        <extra android:name="type" android:value="@string/webserver_toggle" />
+        <extra android:name="title" android:value="@string/webserver_toggle_title" />
+        <extra android:name="switchTextOn" android:value="@string/settings_swith_text_on" />
+        <extra android:name="switchTextOff" android:value="@string/settings_swith_text_off" />
+        <extra android:name="summaryOn" android:value="@string/webserver_toggle_summary_on"/>
+        <extra android:name="summaryOff" android:value="@string/webserver_toggle_summary_off"/>
+        <extra android:name="summaryOnOff" android:value="@string/webserver_toggle_summary_on_off"/>
+        <extra android:name="summaryOffOn" android:value="@string/webserver_toggle_summary_off_on"/>
+    </header>
+       
+</preference-headers>

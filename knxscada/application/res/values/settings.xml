@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="settings">Ustawienia</string>
+    <string name="settings_swith_text_on">Wł</string>
+    <string name="settings_swith_text_off">Wył</string>
+    <string name="settings_swith_summary_on">Usługa uruchomiona</string>
+    <string name="settings_swith_summary_off">Usługa zatrzymana</string>
+    <string name="knx_connection_title">Ustawienia połączenia</string>
+    <string name="knx_connection_toggle_title">Połączenie KNX</string>
+    <string name="knx_connection_toggle_summary_on">Połączono</string>
+    <string name="knx_connection_toggle_summary_off">Brak połączenia</string>
+    <string name="knx_connection_toggle_summary_on_off">Rozłączanie...</string>
+    <string name="knx_connection_toggle_summary_off_on">Łączenie...</string>
+    <string name="webserver_title">Interfejs webowy</string>
+    <string name="webserver_toggle_title">Serwer WWW</string>
+    <string name="webserver_toggle_summary_on">Uruchomiony</string>
+    <string name="webserver_toggle_summary_off">Zatrzymany</string>
+    <string name="webserver_toggle_summary_on_off">Zatrzymywanie...</string>
+    <string name="webserver_toggle_summary_off_on">Uruchamianie...</string>
+    
+    <string name="discoverer_item_title">Interfejsy KNX</string>
+    <string name="discoverer_item_summary">Wybierz interfejs KNX, z którym chcesz się połączyć.</string>
+    <string name="discoverer_dialog_title">Interfejsy KNX/IP</string>
+    <string name="discoverer_dialog_text_searching">Wyszukiwanie interfejsów</string>
+    <string name="discoverer_dialog_text_finished">Zakończono wyszukiwanie</string>
+    <string name="discoverer_dialog_text_not_found">Nie znaleziono żadnych interfejsów KNX/IP</string>
+    
+    <!-- KNX Connection Settings -->
+    
+    <string name="service_mode_title">Tryb połączenia</string>
+    <string name="service_mode_summary">Wybierz sposób połączenia z magistralą KNX</string>
+    
+    <string-array name="service_modes">
+        <item name="service_mode_tunneling">Tunelling</item>
+        <item name="service_mode_routing">Routing</item>
+    </string-array>
+    
+    <string-array name="service_mode_values">
+        <item name="service_mode_tunneling">1</item>
+        <item name="service_mode_routing">2</item>
+    </string-array>
+    
+    <string name="local_ip_title">Lokalny adres IP</string>
+    <string name="local_ip_summary"></string>
+    <string name="local_port_title">Lokalny port</string>
+    <string name="local_port_summary"></string>
+    
+    <string name="remote_ip_title">Adres IP</string>
+    <string name="remote_ip_summary">Kliknij, aby wybrać...</string>
+    <string name="remote_port_title">Port</string>
+    <string name="remote_port_summary"></string>
+    
+    <string name="use_nat_title">NAT</string>
+    <string name="use_nat_summary_on">Translacja adresów sieciowych</string>
+    <string name="use_nat_summary_off">Brak translacji adresów sieciowych</string>
+    <string name="individual_address_title">Indywidualny adres</string>
+    <string name="individual_address_summary">Adres magistrali KNX przypisany do aplikacji</string>
+    <string name="use_tp1_title">TP1</string>
+    <string name="use_tp1_summary_on">Magistrala w standardzie TP1</string>
+    <string name="use_tp1_summary_off">Magistrala w standardzie TP0</string>
+    <string name="timeout_title">Czas oczekiwania</string>
+    <string name="timeout_summary">Maksymalny czas oczekiwania na odpowiedź magistrali</string>
+    
+    <!-- Discoverer Settings -->
+    <string name="discover_while_connecting_title">Wyszukiwanie automatyczne</string>
+    <string name="discover_while_connecting_summary">Wykrywa parametry interfejsu KNX podczas łączenia</string> 
+    <string name="discover_timeout_title">Czas wyszukiwania</string>
+    <string name="discover_timeout_summary">Określa czas wyszukiwania urządzeń KNX</string>
+    <string name="discover_item_title">Wyszukaj</string>
+    <string name="discover_item_summary">Wyszukaj podłączone do sieci interfejsy KNXnet/IP</string>
+    
+    <!-- WebServer Settings -->
+    
+    <string name="webserver_port_title">Port</string>
+    <string name="webserver_port_summary">Port połączenia z interfejsem webowym</string>
+    <string name="use_ssl_title">SSL</string>
+    <string name="use_ssl_summary">Umożliwia bezpieczne połączenie przez interfejs webowy</string>
+    <string name="webserver_ssl_port_title">Port SSL</string>
+    <string name="webserver_ssl_port_summary">Port służący do szyfrowanego połączenia przez interfejs webowy</string>
+</resources>

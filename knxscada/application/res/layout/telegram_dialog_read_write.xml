@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    		xmlns:app="http://schemas.android.com/apk/res/pl.marek.knx"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include layout="@layout/dialog_header" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_rw_telegram_address" />
+
+			<pl.marek.knx.GroupAddressLevelChooser 
+				android:id="@+id/dialog_rw_group_address_level_chooser"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:level="three" />
+
+            <pl.marek.knx.GroupAddressView
+                android:id="@+id/dialog_rw_group_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_rw_telegram_data_type" />
+
+            <Spinner
+                android:id="@+id/dialog_rw_telegram_data_type_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_rw_telegram_function" />
+
+            <Spinner
+                android:id="@+id/dialog_rw_telegram_function_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:enabled="false"
+                android:text="@string/dialog_rw_telegram_value" />
+
+            <FrameLayout
+                android:id="@+id/dialog_rw_telegram_value_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Spinner
+                    android:id="@+id/dialog_rw_telegram_value_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/dialog_rw_telegram_value_text_fields"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/dialog_rw_telegram_value_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:inputType="number" />
+
+                    <TextView
+                        android:id="@+id/dialog_rw_telegram_value_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:textIsSelectable="false" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="64dp" >
+
+            <Button
+                android:id="@+id/dialog_rw_telegram_cancel_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.4"
+                android:text="@string/dialog_rw_telegram_cancel_button" />
+
+            <Button
+                android:id="@+id/dialog_rw_telegram_read_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:text="@string/dialog_rw_telegram_read_button" />
+
+            <Button
+                android:id="@+id/dialog_rw_telegram_write_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:text="@string/dialog_rw_telegram_write_button" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

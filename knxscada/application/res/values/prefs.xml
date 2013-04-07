@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="knx_connection_toggle">knxconnection</string>
+	<string name="webserver_toggle">webserver</string>
+    
+	<!-- PREFERENCES KEYS -->
+	
+    <string name="connection_state_key">connection_state</string>
+    <string name="service_mode_key">service_mode</string>
+    <string name="local_ip_key">local_ip</string>
+    <string name="local_port_key">local_port</string>
+    <string name="remote_ip_key">remote_ip</string>
+    <string name="remote_port_key">remote_port</string>
+    <string name="use_nat_key">use_nat</string>
+    <string name="individual_address_key">individual_address</string>
+    <string name="use_tp1_key">use_tp1</string>
+    <string name="timeout_key">timeout</string>
+    <string name="discover_while_connecting_key">discover_while_connecting</string>
+    <string name="discover_timeout_key">discover_timeout</string>
+    <string name="discover_search_key">discover_search</string>
+
+    <string name="webserver_state_key">webserver_state</string>
+    <string name="webserver_port_key">webserver_port</string>
+    <string name="use_ssl_key">use_ssl</string>
+    <string name="webserver_ssl_port_key">webserver_ssl_port</string>
+	
+    <!-- CONNECTION PREFERENCES -->
+    <integer name="service_mode">1</integer>
+    <string name="local_ip"></string>
+    <integer name="local_port">3681</integer>
+    <string name="remote_ip"></string>
+    <integer name="remote_port">3671</integer>
+    <bool name="use_nat">false</bool>
+    <string name="individual_address"></string>
+    <bool name="use_tp1">true</bool>
+    <integer name="timeout">30</integer>
+    <bool name="discover_while_connecting">false</bool>
+    <integer name="discover_timeout">10</integer>
+    
+    <!-- WEBSERVER PREFERENCES -->
+    <integer name="webserver_port">8080</integer>
+    <bool name="use_ssl">false</bool>
+    <integer name="webserver_ssl_port">8443</integer>
+
+    <!-- CONNECTION DEFAULT VALUES -->
+    <integer name="service_mode_default_value">1</integer>
+    <string name="local_ip_default_value">0.0.0.0</string>
+    <integer name="local_port_default_value">3681</integer>
+    <string name="remote_ip_default_value">0.0.0.0</string>
+    <integer name="remote_port_default_value">3671</integer>
+    <bool name="use_nat_default_value">false</bool>
+    <string name="individual_address_default_value">0.0.0</string>
+    <bool name="use_tp1_default_value">true</bool>
+    <integer name="timeout_default_value">30</integer>
+    <bool name="discover_while_connecting_default_value">false</bool>
+    <integer name="discover_timeout_default_value">10</integer>
+
+    <!-- WEBSERVER DEFAULT VALUES -->
+    <integer name="webserver_port_default_value">8080</integer>
+    <bool name="use_ssl_default_value">false</bool>
+    <integer name="webserver_ssl_port_default_value">8443</integer>
+
+</resources>

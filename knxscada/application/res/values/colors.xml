@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="control_on_background">#8048CAF9</color>
+    <color name="control_off_background">#80B2E3F4</color>
+    
+    <color name="control_light_on_background">#80FFF700</color>
+    <color name="control_light_off_background">#80000000</color>
+    
+    <color name="control_slider_background">#80000000</color>
+    <color name="control_slider_low_color">#80000000</color>
+    <color name="control_slider_high_color">#8048CAF9</color>
+    
+    <color name="control_light_slider_background">#80000000</color>
+    <color name="control_light_slider_low_color">#80000000</color>
+    <color name="control_light_slider_high_color">#80FFF700</color>
+    
+    
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+		
+    	<ProgressBar 
+    	    android:id="@+id/discoverer_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_margin="5dp"
+            android:contentDescription="@string/application_name"
+            android:indeterminate="true"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/knx_logo"
+        />
+        <TextView
+            android:id="@+id/discoverer_text"
+            android:layout_toRightOf="@id/discoverer_progress"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:gravity="center" 
+        />
+
+        <ListView
+            android:id="@+id/discoverer_list"
+            android:layout_below="@id/discoverer_progress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+        />
+
+</RelativeLayout>

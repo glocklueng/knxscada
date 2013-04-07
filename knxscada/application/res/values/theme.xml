@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="iHouseTheme" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@drawable/background</item>
+        <!-- <item name="android:windowBackground">@android:color/black</item> -->
+        <item name="android:actionBarStyle">@style/actionBarStyleNoTitle</item>
+    </style>
+
+    <style name="iHousePreferencesTheme" parent="@style/iHouseTheme">
+        <item name="android:actionBarStyle">@style/actionBarPreferencesStyle</item>
+    </style>
+
+    <style name="iHouseTelegramsTheme" parent="@style/iHouseTheme">
+        <item name="android:actionBarStyle">@style/actionBarTelegramsStyle</item>
+    </style>
+    
+    <style name="iHouseProjectTheme" parent="@style/iHouseTheme">
+        <item name="android:actionBarStyle">@style/actionBarStyleTitle</item>
+    </style>
+
+    <style name="iHouseTitleTheme" parent="@style/iHouseTheme">
+        <item name="android:actionBarStyle">@style/actionBarStyleTitle</item>
+    </style>
+
+    <style name="actionBarStyleNoTitle" parent="@style/actionBarStyle">
+        <item name="android:displayOptions">showHome|useLogo</item>
+    </style>
+
+    <style name="actionBarStyleTitle" parent="@style/actionBarStyle">
+        <item name="android:displayOptions">showHome|useLogo|showTitle</item>
+    </style>
+
+    <style name="actionBarPreferencesStyle" parent="@style/actionBarStyleTitle">
+        <item name="android:icon">@drawable/ic_menu_preferences</item>
+    </style>
+
+    <style name="actionBarTelegramsStyle" parent="@style/actionBarStyleTitle">
+        <item name="android:icon">@drawable/telegram_icon</item>
+    </style>
+
+    <style name="actionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:displayOptions">showHome|useLogo|showTitle</item>
+        <item name="android:icon">@drawable/logo</item>
+        <item name="android:background">@android:color/black</item>
+    </style>
+
+    <style name="dialogTheme" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="dialogConfirmTheme" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        
+    </style>
+
+</resources>

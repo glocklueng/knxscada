@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:shrinkColumns="true"
+    android:stretchColumns="true" >
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_selector" >
+
+        <RelativeLayout
+            android:id="@+id/project_item_text_views"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75" >
+
+            <TextView
+                android:id="@+id/project_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:scaleType="center"
+                android:textColor="@android:color/white"
+                android:textIsSelectable="false"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/project_item_separator"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_below="@id/project_item_name"
+                android:background="#FF00FF00" />
+
+            <TextView
+                android:id="@+id/project_item_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/project_item_separator"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:scaleType="center"
+                android:textColor="@android:color/darker_gray"
+                android:textIsSelectable="false"
+                android:textSize="15sp"
+                android:textStyle="italic" />
+        </RelativeLayout>
+		
+        <ProgressBar 
+            android:id="@+id/project_item_image_progressbar"
+            android:layout_width="0dip"
+            android:layout_height="100dp"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_margin="10dp"
+            android:layout_weight="0.25"
+         />
+        
+        <ImageView
+            android:id="@+id/project_item_image"
+            android:layout_width="0dip"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.25"
+            android:contentDescription="@string/application_name" />
+    </TableRow>
+
+</TableLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:id="@+id/ab_new_project_item"
+          android:icon="@drawable/new_item"
+          android:title="@string/ab_new_project_item"
+          android:showAsAction="ifRoom|withText" />
+    
+    <item android:id="@+id/ab_telegram_item"
+          android:icon="@drawable/telegram_icon"
+          android:title="@string/ab_telegram_item"
+          android:showAsAction="ifRoom|withText" />
+    
+    <item android:id="@+id/ab_preferences_item" 
+          android:icon="@drawable/ic_menu_preferences"
+          android:title="@string/menu_preferences"
+          android:showAsAction="ifRoom|withText" />
+        
+</menu>

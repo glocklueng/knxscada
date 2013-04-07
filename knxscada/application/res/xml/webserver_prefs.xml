@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        
+        <pl.marek.knx.preferences.IntegerEditTextPreference
+		    android:key="@string/webserver_port_key"
+            android:title="@string/webserver_port_title"
+            android:summary="@string/webserver_port_summary"
+            android:defaultValue="@integer/webserver_port_default_value"
+            android:numeric="integer"
+		/>
+    	
+    	<CheckBoxPreference
+    	    android:key="@string/use_ssl_key"
+        	android:title="@string/use_ssl_title"
+        	android:summary="@string/use_ssl_summary"
+        	android:defaultValue="@bool/use_ssl_default_value"
+        />
+    	
+        <pl.marek.knx.preferences.IntegerEditTextPreference
+		    android:key="@string/webserver_ssl_port_key"
+            android:title="@string/webserver_ssl_port_title"
+            android:summary="@string/webserver_ssl_port_summary"
+            android:defaultValue="@integer/webserver_ssl_port_default_value"
+            android:dependency="use_ssl"
+            android:numeric="integer"
+		/>
+
+</PreferenceScreen>
