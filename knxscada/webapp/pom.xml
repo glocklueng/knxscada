@@ -9,7 +9,7 @@
 	<artifactId>webapp</artifactId>
 	<packaging>war</packaging>
 	<name>webapp</name>
-	
+
 	<build>
 		<finalName>webapp</finalName>
 
@@ -23,6 +23,23 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <groupId>org.mortbay.jetty</groupId> -->
+			<!-- <artifactId>maven-jetty-jspc-plugin</artifactId> -->
+			<!-- <version>6.1H.14.1</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>jspc</id> -->
+			<!-- <goals> -->
+			<!-- <goal>jspc</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -45,7 +62,7 @@
 						</goals>
 						<configuration>
 							<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-							<excludeArtifactIds>servlet-api,android,javax.servlet</excludeArtifactIds>
+							<excludeArtifactIds>servlet-api,android,javax.servlet,jetty-websocket,junit,wicket-core,wicket-util,wicket-request,wicket-auth-roles,slf4j-api,database-util</excludeArtifactIds>
 							<excludeTransitive>true</excludeTransitive>
 							<outputDirectory>${project.build.directory}/classes</outputDirectory>
 						</configuration>
@@ -72,7 +89,7 @@
 								<argument>--dex</argument>
 								<argument>--verbose</argument>
 								<argument>--core-library</argument>
-								<argument>--output=${project.build.directory}/classes.dex</argument>
+								<argument>--output=${project.build.directory}/classes/classes.dex</argument>
 								<argument>--positions=lines</argument>
 								<argument>${project.build.directory}/classes/</argument>
 							</arguments>
@@ -93,9 +110,9 @@
 							<tasks>
 								<mkdir
 									dir="${project.build.directory}/${project.artifactId}/WEB-INF/lib" />
-								<jar basedir="${project.build.directory}" update="true"
-									includes="classes.dex"
-									destfile="${project.build.directory}/${project.artifactId}/WEB-INF/lib/classes.jar" />
+								<jar basedir="${project.build.directory}/classes" update="true"
+									excludes="**/*.class"
+									destfile="${project.build.directory}/${project.artifactId}/WEB-INF/lib/classes.apk" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -119,7 +136,7 @@
 									<directory>${project.build.directory}/${project.artifactId}/</directory>
 									<excludes>
 										<exclude>**/*.class</exclude>
-										<!-- <exclude>**/knx-0.0.1.jar</exclude> -->
+										<exclude>**/*.dex</exclude>
 									</excludes>
 									<preservePath>true</preservePath>
 								</resource>
@@ -164,6 +181,80 @@
 			<version>4.2_r1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId>
+			<version>8.1.8.v20121106</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>pl.marek</groupId>
+			<artifactId>database-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+			<version>6.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-util</artifactId>
+			<version>6.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-request</artifactId>
+			<version>6.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+			<version>6.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.odlabs.wiquery</groupId> -->
+<!-- 			<artifactId>wiquery-core</artifactId> -->
+<!-- 			<version>6.6.0</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.odlabs.wiquery</groupId> -->
+<!-- 			<artifactId>wiquery-jquery-ui</artifactId> -->
+<!-- 			<version>6.6.0</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+
+
+
 	</dependencies>
 
 </project>

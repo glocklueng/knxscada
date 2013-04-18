@@ -15,7 +15,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<webapp.target>application/assets/webapp</webapp.target>
+		<webapp.target>../application/assets/webapp</webapp.target>
 		<android.sdk.path>/usr/local/android</android.sdk.path>
 		<application.finalName>KNX iHouse</application.finalName>
 	</properties>

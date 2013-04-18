@@ -1,0 +1,50 @@
+#clock {
+	position: absolute;
+	right:0;
+	width: 180px;
+	height: 200px;
+/*	margin: 20px auto 0 auto;*/
+	background: url(../images/clock/clockface.png);
+	list-style: none;
+        background-repeat: no-repeat;
+    z-index: 100;
+	}
+
+#sec, #min, #hour {
+	position: absolute;
+	width: 9px;
+	height: 180px;
+	top: 0px;
+        left: 85px;
+	}
+        
+#clockdate{
+        position: absolute;
+        top: 180px;
+        text-align: center;
+        width: 100%;
+        color: #191632;
+        font-family: Georgia, Serif;
+        font-weight: bold;
+        font-style: italic;
+}
+
+#sec {
+	background: url(../images/clock/sechand.png);
+	z-index: 3;
+	}
+    
+#min {
+	background: url(../images/clock/minhand.png);
+	z-index: 2;
+	}
+    
+#hour {
+	background: url(../images/clock/hourhand.png);
+	z-index: 1;
+	}
+	
+p {
+    text-align: center; 
+    padding: 10px 0 0 0;
+}

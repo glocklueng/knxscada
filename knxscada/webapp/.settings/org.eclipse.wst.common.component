@@ -3,7 +3,10 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <property name="context-root" value="knxscada-webapp"/>
+        <dependent-module archiveName="knxscada-database-util.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/knxscada-database-util/knxscada-database-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/knxscada-webapp/target/classes"/>
+        <property name="context-root" value="knxscada-webapp"/>
     </wb-module>
 </project-modules>

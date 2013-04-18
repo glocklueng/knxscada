@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<title>KNX WebApplication - Logowanie</title>
+	<link rel="stylesheet" type="text/css" href="css/signin.css" />
+	<link rel="stylesheet" type="text/css" href="css/clock.css" />
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/clock.js"></script>
+</head>
+<body>
+	<div id="clock">
+		<div id="sec"></div>
+		<div id="hour"></div>
+		<div id="min"></div>
+		<div id="clockdate"></div>
+	</div>
+
+	<div id="signin">
+		<div id="signin-v">
+			<div id="signin-h">
+
+				<form wicket:id="signInForm">
+					<table class="signInTable">
+						<tr>
+							<td><input wicket:id="password" class="signInPasswordField"
+								type="password" value="password" size="30" /></td>
+							<td><input wicket:id="signInButton" type="submit" class="signInButton"
+								value="Zaloguj" /></td>
+						</tr>
+
+					</table>
+				</form>
+				<div wicket:id="feedback" class="signInFeedback" />
+			</div>
+		</div>
+	</div>
+</body>
+</html>

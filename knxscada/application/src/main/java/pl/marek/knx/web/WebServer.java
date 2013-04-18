@@ -31,7 +31,7 @@ public class WebServer {
 	public static final String WEBAPP_DIRECTORY = "webapp";
 	public static final String WEBAPP_TMP_DIRECTORY = "webapp_tmp";
 	public static final String WEBAPP_DESCRIPTOR = "/WEB-INF/web.xml";
-	public static final String DEX_JAR_PATH = "/WEB-INF/lib/classes.jar";
+	public static final String DEX_JAR_PATH = "/WEB-INF/lib/classes.apk";
 	public static final String WEBAPP_LIB_DIRECTORY = "/WEB-INF/lib/";
 	public static final String WEBAPP_CONTEXT_PATH = "/";
 	public static final String KEYSTORE_FILE="/WEB-INF/etc/keystore";

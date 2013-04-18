@@ -1,0 +1,41 @@
+.projectItemBody{
+	position: relative;
+	width: 350px;
+	height: 100px;
+	background: rgba(172, 227, 7, 1);
+	margin:5px;
+	padding-left:10px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.projectItemLabel{
+	width: 240px;
+	height: 15px;
+	font-style: italic;
+	font-size: small;
+	color: rgba(70,70,70,1);
+	border-bottom: solid 1px silver;
+}
+
+.projectItemName{
+
+	width: 230px;
+	height: 25px;
+	padding-left: 10px;
+}
+
+.projectItemDescription{
+	width: 230px;
+	height: 45px;
+	padding-left: 10px;
+}
+
+.projectItemImage{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100px;
+	height: 100px;
+}

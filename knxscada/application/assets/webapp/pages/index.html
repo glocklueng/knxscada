@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<wicket:head>
+		<title>KNX WebApplication</title>
+		
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/websocket.js"></script>
+		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
+		<script type="text/javascript" src="js/resize.js"></script>
+		
+		<link rel="stylesheet" href="css/jquery-ui.css" />
+		<link rel="stylesheet" href="css/jquery.ui.theme.css" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		
+		<script type="text/javascript">
+				$(document).ready(
+					function() {
+		
+						WebSocketServer.connect("/knxscada-webapp");
+						WebSocketServer.setOnMessageFn(onMessage);
+						
+						//TODO Remove
+						$("#main").click(function(e){
+							$("#sidebar").toggle("slide", {}, 500);
+							
+						});
+					}
+				);
+
+				function onMessage(event){
+					if (event.data) {						
+						var json = $.secureEvalJSON(event.data);
+						console.log(json.msg);
+					};
+				};
+				
+				function showModal(){
+					$("#modalSemiTransparentBackground").show("scale", {}, 200);
+				}
+				
+				function hideModal(){
+					$("#modalSemiTransparentBackground").hide("scale", {}, 200);
+				}
+				
+				
+		</script>
+
+	</wicket:head>
+	<body>
+	
+		<div id="header" wicket:id="header"></div>
+	
+		<div id="sidebar" wicket:id="sidebar"></div>
+	
+		<div id="main" wicket:id="main"></div>
+	
+		<div id="footer" wicket:id="footer"></div>
+		
+		<div id="modalSemiTransparentBackground"></div>
+	</body>
+</html>

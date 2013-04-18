@@ -1,0 +1,104 @@
+body {
+	min-height: 400px;
+	min-width: 800px;
+	padding: 0;
+	margin: 0;
+	
+
+}
+
+#signin {
+	width: 100%;
+	height: 100%;
+	display: table;
+
+}
+
+#signin-v {
+	position: absolute;
+	vertical-align: middle;
+	display: table-cell;
+	width: 100%;
+	height: 100%;
+	
+	background: #88c9e8; /* Old browsers */
+	background: url("../images/logo_bg.png"), -moz-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);/* FF3.6+ */
+	background: url("../images/logo_bg.png"), -webkit-gradient(linear, left bottom, right top, color-stop(25%, #88c9e8), color-stop(100%, #066dab)); /* Chrome,Safari4+ */
+	background: url("../images/logo_bg.png"), -webkit-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);/* Chrome10+,Safari5.1+ */
+	background: url("../images/logo_bg.png"), -o-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);/* Opera 11.10+ */
+	background: url("../images/logo_bg.png"), -ms-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);/* IE10+ */
+	background: url("../images/logo_bg.png"), linear-gradient(45deg, #88c9e8 25%, #066dab 100%);/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#88c9e8',endColorstr='#066dab', GradientType=1);/* IE6-9 fallback on horizontal gradient */
+	
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center; 
+		
+}
+
+#signin-h {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 320px;
+	height: 250px;
+
+
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	
+}
+
+.signInTable{
+	margin-top: 150px;
+}
+
+.signInPasswordField{
+	width: 235px;
+	height: 30px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 16pt;
+	text-align: center;
+
+}
+
+.signInButton{
+	width: 80px;
+	height: 35px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	background-color:#79bbff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #469df5;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+
+	text-decoration:none;
+	text-shadow:1px 1px 0px #287ace;
+}
+.signInButton:hover {
+	background-color:#4197ee;
+}
+.signInButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+.signInFeedback{
+	width: 98%;
+	color: red;
+	text-align: center;
+}
