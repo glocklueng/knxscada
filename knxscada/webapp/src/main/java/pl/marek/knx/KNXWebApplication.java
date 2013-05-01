@@ -10,17 +10,15 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
-import org.apache.wicket.request.resource.SharedResourceReference;
 
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.pages.*;
-import pl.marek.knx.utils.ExternalImageResource;
 
 public class KNXWebApplication extends WebApplication {
 
 	@Override
 	public Class<? extends Page> getHomePage() {
-		return BasePage.class;
+		return Index.class;
 	}
 
 	@Override
@@ -30,6 +28,7 @@ public class KNXWebApplication extends WebApplication {
 		setAuthorizationStrategy();
 		mountPages();
 		mountResources();
+		
 	}
 
 	private void setWebPagesFinder() {
@@ -43,13 +42,13 @@ public class KNXWebApplication extends WebApplication {
 	}
 
 	public void setAuthorizationStrategy() {
-		getSecuritySettings().setAuthorizationStrategy(
-				new AuthorizationStrategy());
+		getSecuritySettings().setAuthorizationStrategy(new AuthorizationStrategy());
 	}
 
 	private void mountPages() {
 		mountPage("signin", SignIn.class);
 		mountPage("signout", SignOut.class);
+
 	}
 	
 	private void mountResources(){
@@ -75,7 +74,4 @@ public class KNXWebApplication extends WebApplication {
 			return true;
 		}
 	}
-	
-
-
 }

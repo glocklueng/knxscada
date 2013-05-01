@@ -1,0 +1,40 @@
+#projectChooserFrame{
+	position: absolute;
+	width: 100%;
+	height:100%;
+	margin:auto;
+}
+
+#projectChooserTitle{
+	position: absolute;
+	top: 30px;
+	width: 100%;
+	height: 40px;
+	margin: auto;
+	
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	font-size: x-large;
+	color: white;	
+
+}
+
+#projects{
+	margin-top: 85px;
+	margin-left:auto;
+	margin-right:auto;
+	overflow: auto;
+	width: 400px;
+
+}
+
+#projectChooserButtons{
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+/* 	padding: 10px; */
+	height: 50px;
+	margin: auto;
+	text-align: center;
+}

@@ -25,6 +25,7 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	private int offBackgroundColor;
 	
 	private boolean changeBackgroundColorByState;
+	private boolean reactOnSwitchStateChange;
 	
 	public OnOffSwitch(Context context, Element element) {
 		this(context, ControllerType.ON_OFF_SWITCH, element);
@@ -33,6 +34,7 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 	public OnOffSwitch(Context context, ControllerType type, Element element) {
 		super(context, element, type, R.layout.control_onoffswitch);
 		changeBackgroundColorByState = false;
+		reactOnSwitchStateChange = true;
 		initViews();
 		initValues();
 	}
@@ -115,17 +117,35 @@ public class OnOffSwitch extends Controller implements OnCheckedChangeListener{
 
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		setBackgroundColorByState(isChecked);
-		String value = "";
-		if(isChecked){
-			value = "on";
-		} else{
-			value = "off";
+		if(reactOnSwitchStateChange){
+			String value = "";
+			if(isChecked){
+				value = "on";
+			} else{
+				value = "off";
+			}
+			writeTelegram(value);
 		}
-		writeTelegram(value);
 	}
 
 	public void telegramReceived(Telegram telegram) {
-		// TODO Auto-generated method stub
+
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			if(address.getAddress().equals(telegram.getDestinationAddress())){
+				String value = telegram.getData();
+				String lastChar = value.substring(value.length()-1).trim();
+				
+				if(value.equals("on") || lastChar.equals("1")){
+					reactOnSwitchStateChange = false;
+					setSwitchOn();
+					reactOnSwitchStateChange = true;
+				}else if(value.equals("off") || lastChar.equals("0")){
+					reactOnSwitchStateChange = false;
+					setSwitchOff();
+					reactOnSwitchStateChange = true;
+				}
+			}
+		}
 		
 	}
 	

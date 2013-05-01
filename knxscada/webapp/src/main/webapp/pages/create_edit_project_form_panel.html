@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<wicket:head>
+
+	</wicket:head>
+    <body>
+        <wicket:panel>
+        <script>
+        	$(function(e){
+        		$('#project-image-file').on("change", function(){ 
+        			showLoading();
+        			$("#project-image-submit-button").click();
+        		});
+        		$("#project-image-choose-button").click(function(e){
+        			$("#project-image-file").click();
+        		});
+        		
+        		hideLoading();
+        	});
+        	
+        	function showLoading(){
+        		$("#project-image-loading").show("fade",{},500);
+        	}
+        	
+        	function hideLoading(){
+        		$("#project-image-loading").hide("fade",{},500);
+        	}
+        </script>
+			
+			<div id="project-feedback-div">
+				<span wicket:id="project-feedback" class="feedback"></span>
+			</div>
+			
+			<div id="project-form-div">
+				<form wicket:id="project-form">
+
+				<table>
+					<tr>
+						<td><label wicket:id="project-name-label" class="labels"></label>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="text" wicket:id="name" class="project-form-inputs"/></td>
+					</tr>
+					<tr>
+						<td><label wicket:id="project-description-label"
+							class="labels"></label></td>
+					</tr>
+					<tr>
+						<td><textarea wicket:id="description" rows="2" class="project-form-inputs"></textarea>
+						</td>
+					</tr>
+				</table>
+				<input type="submit" wicket:id="project-form-submit-button" id="project-form-submit-button" style="display:none;"/>
+			    <br/>
+				   
+			    </form>
+		    </div>
+		    
+		    <div id="project-image-form-div">
+			    <form wicket:id="project-image-form">
+				    <input wicket:id="project-image-file" id="project-image-file" type="file" accept="image/*" style="display:none;"/> <br/>
+		    		<input type="submit" wicket:id="project-image-submit-button" id="project-image-submit-button" style="display:none;"/>
+			    	<input type="button" wicket:message="value:project-image-form.choose.button" id="project-image-choose-button"/>
+			    	
+		   	 	</form>
+	   	 	</div>
+	   	 	
+	   	 	<img wicket:id="project-image" id="project-image"/>
+	   	 	<img id="project-image-loading" src="images/loading.gif" style="display:none;"/>
+
+		</wicket:panel>
+    </body>
+</html>

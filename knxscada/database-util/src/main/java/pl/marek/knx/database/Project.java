@@ -1,5 +1,6 @@
 package pl.marek.knx.database;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
@@ -9,8 +10,10 @@ import android.os.Parcelable;
 
 import pl.marek.knx.telegram.Telegram;
 
-public class Project implements Parcelable{
-	
+public class Project implements Parcelable, Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	public static final String PROJECT = "PROJECT";
 	
 	private int id;

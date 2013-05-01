@@ -81,14 +81,16 @@ public class KNXLinkListener implements NetworkLinkListener{
         byte hopcount = ((CEMILData)e.getFrame()).getHopCount();
         String msgCode = getMessageCode(e);
         byte [] rawdata = ((CEMILData)e.getFrame()).getPayload();
-        
-        String type = getTelegramType(e);
+
+        String type = getTelegramType(e);     
         DPT dpt = getDPT(destinationAddr);
+             
         String dptId = "";
-        if (dpt != null)
+        if (dpt != null){
         	dptId = dpt.getID();
+        }
         String data = getData(rawdata, dpt);
-            
+        
         boolean ack = ((CEMILData)e.getFrame()).isAckRequested();
         boolean confirmation = ((CEMILData)e.getFrame()).isPositiveConfirmation();
         boolean repeated = ((CEMILData)e.getFrame()).isRepetition();
@@ -141,8 +143,13 @@ public class KNXLinkListener implements NetworkLinkListener{
     private String getData(byte [] rawdata, DPT dpt){
     	DPTXlator translator = null;
 		try {
-			translator = TranslatorTypes.createTranslator(dpt);
-			translator.setData(rawdata, rawdata.length-1);
+			if(dpt != null){
+				translator = TranslatorTypes.createTranslator(dpt);
+				translator.setData(rawdata, rawdata.length-1);
+			} else{
+				throw new KNXException("DPT IS NULL");
+			}
+			
 		} catch (KNXException e) {
 			Log.d(LogTags.APPLICATION, e.getMessage());
 			return DataRepresentation.byteArrayToHexString(rawdata);

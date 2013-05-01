@@ -1,40 +1,72 @@
 package pl.marek.knx.pages;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
-
+import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
-import pl.marek.knx.components.ProjectItem;
-import pl.marek.knx.database.Project;
+import pl.marek.knx.database.Layer;
 
 @HtmlFile("main.html")
-public class MainPanel extends Panel {
+public class MainPanel extends BasePanel {
 	 
 	private static final long serialVersionUID = 1L;
 	
-	public MainPanel(String componentName) {
-        super(componentName);
-        
-        Project project = new Project();
-        project.setName("Project");
-        project.setDescription("Description");
-        project.setImage("/home/marek/Magisterka/Grafika/WWW/logo.png");
-        
-        List<ProjectItem> components = new ArrayList<ProjectItem>();
-		components.add( new ProjectItem("component",project) );
-		components.add( new ProjectItem("component", project) );
-		add( new ListView( "components", components )
-		{			
-			protected void populateItem(ListItem item)
-			{
-				item.add( (ProjectItem)item.getModelObject() );
-			}
-		});
-	}
-	 
+	private DBManager dbManager;
 	
+	private SubLayersPanel subLayersPanel;
+	private ContentPanel contentPanel;
+	
+	private Layer layer;
+	
+	public MainPanel(String componentName, DBManager dbManager) {
+        super(componentName);
+        this.dbManager = dbManager;
+        setOutputMarkupId(true);
+	}
+		
+	@Override
+	protected void onRender() {
+		super.onRender();
+        
+	}
+		
+    protected void onBeforeRender() {
+    	
+        if(get("sublayers") == null){
+            this.setSubLayersWrapper("sublayers");
+        }
+        if(get("content")==null){
+            this.setContentWrapper("content");
+        }
+
+        
+        super.onBeforeRender();
+    }
+ 
+    protected void setSubLayersWrapper(String componentName){
+    	subLayersPanel = new SubLayersPanel(componentName, dbManager);
+        add(subLayersPanel);
+    }
+    
+    protected void setContentWrapper(String componentName){
+    	contentPanel = new ContentPanel(componentName, dbManager);
+        add(contentPanel);
+    }
+
+	public SubLayersPanel getSubLayersPanel() {
+		return subLayersPanel;
+	}
+
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+	
+	public void setLayer(Layer layer){
+		this.layer = layer;
+		subLayersPanel.setLayer(layer);
+		contentPanel.setSubLayer(layer.getSubLayers().get(0));
+	}
+
+	public Layer getLayer() {
+		return layer;
+	}
+
 }

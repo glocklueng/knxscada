@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<wicket:head>		
+	</wicket:head>
+	<body>
+		<wicket:panel>			
+			<div class="modalBody">
+				<div id="projectChooserFrame">
+					<div id="projectChooserTitle">
+						<wicket:message key="choose_project"></wicket:message>
+					</div>
+					
+					<div id="projects">
+						<div wicket:id="project"></div>
+					</div>
+					
+					<div id="projectChooserButtons">
+						<input type="button" wicket:id="newProjectButton" wicket:message="value:create_new_project"/>
+						<input type="button" wicket:id="projectChooserCloseButton" wicket:message="value:close"/>
+					
+					</div>
+				</div>
+			</div>
+			<div class="modalBackground"></div>
+		</wicket:panel>
+	</body>
+</html>

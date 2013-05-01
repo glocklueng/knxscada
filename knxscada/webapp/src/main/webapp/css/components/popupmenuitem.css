@@ -1,0 +1,30 @@
+.popup-menu-item{
+	background: rgba(172, 227, 7, 1);
+	margin: 2px;
+	color: white;
+	font-style: italic;
+	font-weight: bold;
+	z-index: 100;
+}
+
+.popup-menu-item-body{
+	width: 150px;
+	height: 30px;
+}
+
+.popup-menu-item-icon{
+	position: absolute;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	border-right: 1px solid silver;
+}
+
+.popup-menu-item-name{
+	position: absolute;
+	padding: 5px;
+	left: 30px;
+	width: 110px;
+	height: 30px;
+	text-align: center;
+}

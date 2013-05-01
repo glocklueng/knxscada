@@ -3,15 +3,15 @@
 	<wicket:head>
 		<title>KNX WebApplication</title>
 		
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/websocket.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
-		<script type="text/javascript" src="js/resize.js"></script>
 		
 		<link rel="stylesheet" href="css/jquery-ui.css" />
 		<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
 		
 		<script type="text/javascript">
 				$(document).ready(
@@ -25,6 +25,36 @@
 							$("#sidebar").toggle("slide", {}, 500);
 							
 						});
+						
+// 						$("#modal").click(function(e){
+// 							hideModal();
+// 						});
+						
+						$(window).resize(
+								function() {
+						
+									var windowWidth = $(window).width();
+									var windowHeight = $(window).height();
+										
+									var mainMargin = 20;
+									var mainPadding = 10;
+									var headerHeight = 30;
+									var headerPadding = 10;
+									var footerHeight = 60;
+									
+									var newWidth = windowWidth - (mainMargin * 2) - (mainPadding * 2);
+									var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 2) - (mainPadding * 2) - (headerPadding * 2);
+						
+									$("#main").css({
+										width : newWidth,
+										height : newHeight
+									});
+									
+									$("#sidebar").css({
+										height : newHeight
+									});
+								});
+						$(window).resize();
 					}
 				);
 
@@ -35,12 +65,13 @@
 					};
 				};
 				
+				
 				function showModal(){
-					$("#modalSemiTransparentBackground").show("scale", {}, 200);
+					$("#modal").show("scale", {}, 200);
 				}
 				
 				function hideModal(){
-					$("#modalSemiTransparentBackground").hide("scale", {}, 200);
+					$("#modal").hide("scale", {}, 200);
 				}
 				
 				
@@ -57,6 +88,7 @@
 	
 		<div id="footer" wicket:id="footer"></div>
 		
-		<div id="modalSemiTransparentBackground"></div>
+		
+		<div id="modal"></div>
 	</body>
 </html>

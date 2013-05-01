@@ -1,0 +1,27 @@
+input[type="button"],input[type="submit"] {
+	height: 30px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-color: #79bbff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: inline-block;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+}
+
+input[type="button"]:hover,input[type="submit"]:hover {
+	background-color: #4197ee;
+}
+
+input[type="button"]:active,input[type="submit"]:active {
+	position: relative;
+	top: 1px;
+}

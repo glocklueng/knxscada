@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -135,7 +136,7 @@ public class ProjectsActivity extends ListActivity implements OnItemLongClickLis
 
 		Project project = projectAdapter.getItem(position);
 		Intent intent = new Intent(this, ProjectActivity.class);
-		intent.putExtra(Project.PROJECT, project);
+		intent.putExtra(Project.PROJECT, (Parcelable)project);
 		startActivity(intent);
 		
 	}

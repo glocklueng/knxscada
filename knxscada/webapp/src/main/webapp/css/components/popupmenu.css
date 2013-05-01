@@ -1,0 +1,18 @@
+.popup-menu-body {
+	background: rgba(0, 0, 0, 0.3);
+	width: 155px;
+	padding: 1px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.popup-menu-title {
+	font-size: medium;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+}

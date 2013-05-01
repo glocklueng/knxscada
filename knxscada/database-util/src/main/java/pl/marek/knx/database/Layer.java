@@ -1,12 +1,15 @@
 package pl.marek.knx.database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Layer implements Parcelable{
+public class Layer implements Parcelable, Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	public static final String LAYER = "LAYER";
 	
 	protected int id;

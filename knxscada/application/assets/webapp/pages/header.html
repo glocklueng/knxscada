@@ -4,9 +4,28 @@
 	</wicked:head>
     <body>
         <wicket:panel>
-        	<form wicket:id="logoutForm">
-				<input type="submit" value="Wyloguj"/>
-			</form>
+        	<script>
+        		$(document).ready(
+        		function(){
+	        		$("#chooseProjectButton").click(function(e){
+	        			$("#modal").load("projectchooser",{}, function(e){
+	        				showModal();
+	        			});
+
+	        		});
+        		});
+        	</script>
+        
+        	<div id="headerContent">
+        		
+        		<input type="button" id="chooseProjectButton" wicket:message="value:project"/>
+        	</div>
+        	
+        	<div id="logout">
+	        	<form wicket:id="logoutForm">
+					<input type="submit" wicket:message="value:logout"/>
+				</form>
+			</div>
         </wicket:panel>
     </body>
 </html>

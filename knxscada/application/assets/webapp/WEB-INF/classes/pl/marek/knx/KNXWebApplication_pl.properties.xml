@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- BASE STRINGS -->
+    <entry key="login">Zaloguj</entry>
+    <entry key="logout">Wyloguj</entry>
+    <entry key="close">Zamknij</entry>
+    <entry key="project">Projekt</entry>
+    
+    <!-- SIGN IN -->
+    <entry key="password.Required">Podaj hasło!</entry>
+    <entry key="password.Incorrect">Podane hasło jest niepoprawne!</entry>
+    
+    
+    <!-- PROJECT CHOOSER -->
+    <entry key="choose_project">Wybierz projekt</entry>
+    
+</properties>

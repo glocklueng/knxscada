@@ -101,4 +101,10 @@ body {
 	width: 98%;
 	color: red;
 	text-align: center;
+	font-size: large;
+	font-weight: bold;
 }
+
+.signInFeedback ul li {
+	list-style: none;
+} 

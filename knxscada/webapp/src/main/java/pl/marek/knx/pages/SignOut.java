@@ -11,7 +11,7 @@ public class SignOut extends WebPage{
 
 	public SignOut(){
 		getSession().invalidateNow();
-		redirectToInterceptPage(new BasePage());
+		redirectToInterceptPage(new SignIn());
 	}
 
 }

@@ -3,30 +3,176 @@
 	<wicket:head>
 		<title>KNX WebApplication</title>
 		
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/websocket.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
-		<script type="text/javascript" src="js/resize.js"></script>
 		
 		<link rel="stylesheet" href="css/jquery-ui.css" />
 		<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 		<link type="text/css" rel="stylesheet" href="css/style.css" />
+		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
+		<link type="text/css" rel="stylesheet" href="css/projectchooser.css" />
 		
-		<script type="text/javascript">
+		<script type="text/javascript">				
 				$(document).ready(
 					function() {
-		
+						
 						WebSocketServer.connect("/knxscada-webapp");
 						WebSocketServer.setOnMessageFn(onMessage);
 						
-						//TODO Remove
-						$("#main").click(function(e){
-							$("#sidebar").toggle("slide", {}, 500);
-							
+						load();
+						$(window).resize();
+						
+						$(document).bind("contextmenu",function(e){
+							return false;
 						});
+						
+						
+						 
+						
 					}
 				);
+				
+				function showPopupMenu(id, x, y){
+					hidePopupMenu();
+					$("#"+id).css("top", y).css("left", x);
+					$("#"+id).show("blind",{},100);
+				}
+				
+				function hidePopupMenu(){	
+					$(".popup-menu").hide("fade",{},100);
+				}
+				
+				function load(){
+					
+					$(window).resize(
+						function() {
+							resize();
+					});
+					
+					$(document).click(function(e){
+						hidePopupMenu();
+						e.stopPropagation();
+						window.event.cancelBubble = true;
+					});
+					
+					$("#content").click(function(e){
+						$("#sidebar").toggle("slide", {}, 200, function(e){
+							resize();
+						});
+						resize();
+					});
+					
+					$(".popup-menu-trigger").off('mousedown');
+					
+					$(".popup-menu-trigger").mousedown(function(e){ 
+					    if( e.button == 2 ) { 
+					      
+					      var id = $(this).attr("popupMenuId");
+					      var x = e.pageX;
+					      var y = e.pageY;
+					     
+					      showPopupMenu(id, x, y);
+					      
+					      return false; 
+					    } 
+					    return true; 
+					  });
+					
+					
+					
+				}
+				
+				function initFormDialog(addBtn){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[addBtn] = function(){ 
+						$("#project-form-submit-button").click();
+						$(this).dialog('close');
+					}
+					
+					dialog_buttons['Cancel'] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#formsDialog").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 400,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: true,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function showFormDialog(){
+					var title = $(".forms").attr("title");
+					$("#formsDialog").dialog( "option", "title", title );
+      				$("#formsDialog").dialog("open");      				
+				}
+			
+				function resize(){
+					var windowWidth = $(window).width();
+					var windowHeight = $(window).height();
+					
+					var sidebarWidth = 0;
+					var sideBarPadding = 0;
+					
+					var sideBarDisplay = $("#sidebar").css("display");
+					if(sideBarDisplay == "table") {
+						sidebarWidth = 165;
+						sideBarPadding = 10;
+						$("#main").css("left","170px");
+					}else{
+						$("#main").css("left","0px");
+					}
+					
+					var mainMargin = 10;
+					var headerHeight = 40;
+					var headerPadding = 10;
+					var footerHeight = 50;
+					var sublayersHeight = 60;
+					
+					var newWidth = windowWidth - (mainMargin * 2)  - sidebarWidth - (sideBarPadding*2);
+					var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 4) - (headerPadding * 2);
+ 					var newContentHeight = newHeight - sublayersHeight;
+					
+					$("#main").css({
+						width : newWidth,
+						height : newHeight
+					});
+					
+					$("#sidebar").css({
+						height : newHeight - (sideBarPadding*2)
+					});
+					
+					$("#content").css({
+						height : newContentHeight
+					});
+					
+					//PROJECT CHOOSER RESIZE
+					var titleHeight = 80;
+					var footerHeight = 100;
+					
+					var newWidth = windowWidth - (mainMargin * 2) ;
+					var newHeight = windowHeight - titleHeight - footerHeight;
+		
+					$("#projects").css({
+						height : newHeight
+					});
+				}
 
 				function onMessage(event){
 					if (event.data) {						
@@ -35,15 +181,15 @@
 					};
 				};
 				
-				function showModal(){
-					$("#modalSemiTransparentBackground").show("scale", {}, 200);
+				
+				function showProjectChooser(){
+					$("#projectchooser").show("scale", {}, 200);
 				}
 				
-				function hideModal(){
-					$("#modalSemiTransparentBackground").hide("scale", {}, 200);
+				function hideProjectChooser(){
+					$("#projectchooser").hide("scale", {}, 200);
 				}
-				
-				
+					
 		</script>
 
 	</wicket:head>
@@ -57,6 +203,12 @@
 	
 		<div id="footer" wicket:id="footer"></div>
 		
-		<div id="modalSemiTransparentBackground"></div>
+		<div id="projectchooser" class="modal" wicket:id="projectchooser"></div>
+		
+		<div id="formsDialog">
+			<div id="forms" class="forms" wicket:id="forms"></div>
+		</div>
+		
+		<div id="tooltip" class="tooltip"></div>
 	</body>
 </html>

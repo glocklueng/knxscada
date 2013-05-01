@@ -38,7 +38,6 @@ public class SignIn extends WebPage {
 			super(id);
 			
 			PasswordTextField passwordField = new PasswordTextField(PASSWORD, new PropertyModel<String>(properties, PASSWORD));
-			passwordField.setRequired(false);
 			add(passwordField);
 			setOutputMarkupId(true);
 			
@@ -54,9 +53,9 @@ public class SignIn extends WebPage {
 
 	    			if (session.signIn(getPassword(), getPassword())) {
 	    				continueToOriginalDestination();
-	    				setResponsePage(BasePage.class);
+	    				setResponsePage(Index.class);
 	    			} else {
-	    				String errmsg = getString("loginError", null, "Unable to sign you in");
+	    				String errmsg = getString("password.Incorrect");
 	    				error(errmsg);
 	    			}
 	                target.add(feedback);
