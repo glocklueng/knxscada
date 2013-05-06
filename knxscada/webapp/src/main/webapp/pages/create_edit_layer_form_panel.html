@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<wicket:head>
+
+	</wicket:head>
+    <body>
+        <wicket:panel>
+        	<script>
+	        	
+        		$(document).click(function(e){
+					hideLayerIconChooser();
+				});
+	        	
+        		$(".layer-icon-container").click(function(e){
+					showLayerIconChooser();
+					return false;
+				});
+        	
+	        	function showLayerIconChooser(){
+					$(".layer-icon-chooser").show("fade", {}, 200);
+				}
+				
+				function hideLayerIconChooser(){
+					$(".layer-icon-chooser").hide("fade", {}, 500);
+				}
+        	</script>
+			
+			<div id="layer-feedback-div">
+				<span wicket:id="layer-feedback" class="feedback"></span>
+			</div>
+			
+			<div id="layer-form-div">
+				<form wicket:id="layer-form">
+
+				<table>
+					<tr>
+						<td><label wicket:id="layer-name-label" class="labels"></label>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="text" wicket:id="name" class="layer-form-inputs"/></td>
+					</tr>
+					<tr>
+						<td><label wicket:id="layer-description-label" class="labels"></label></td>
+					</tr>
+					<tr>
+						<td><textarea wicket:id="description" rows="2" class="layer-form-inputs"></textarea>
+						</td>
+					</tr>
+				</table>
+				<input type="submit" wicket:id="layer-form-submit-button" id="layer-form-submit-button" style="display:none;"/>
+			    <br/>
+				   
+			    </form>
+		    </div>
+		    
+			<div class="layer-icon-chooser">
+				<img wicket:id="layer-icon-chooser-item" class="layer-icon-chooser-item" 
+					onmouseover="setFocused(this);" 
+					onmouseout="unsetFocused(this);"/>
+			</div>		    
+			<div class="layer-icon-container"
+					onmouseover="setFocused(this);" 
+					onmouseout="unsetFocused(this);">
+				<img wicket:id="layer-icon" class="layer-icon"/>
+			</div>		    
+		</wicket:panel>
+    </body>
+</html>

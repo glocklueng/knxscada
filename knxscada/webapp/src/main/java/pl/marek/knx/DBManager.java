@@ -36,7 +36,7 @@ public class DBManager implements DatabaseManager{
 				layer.setProjectId(i);
 				layer.setName(String.format("Layer %d.%d", i,j));
 				layer.setDescription(String.format("Layer Description %d", j));
-				layer.setIcon("images/logo.png");
+				layer.setIcon("logo");
 				
 				for(int k=1;k<5;k++){
 					SubLayer subLayer = new SubLayer();
@@ -47,7 +47,7 @@ public class DBManager implements DatabaseManager{
 					
 					subLayer.setName(String.format("SubLayer %d.%d.%d", i,j,k));
 					subLayer.setDescription(String.format("SubLayer Description %d.%d.%d", i,j,k));
-					subLayer.setIcon("images/logo.png");
+					subLayer.setIcon("logo");
 					
 					subLayers.add(subLayer);
 					projectSubLayers.add(subLayer);
@@ -171,7 +171,7 @@ public class DBManager implements DatabaseManager{
 	@Override
 	public void addProject(Project project) {
 		System.out.println("Adding project:" + project.toString());
-		project.setId(projects.size());
+		project.setId(projects.size()+1);
 		projects.add(project);
 	}
 
@@ -227,7 +227,9 @@ public class DBManager implements DatabaseManager{
 	@Override
 	public void addLayer(Layer layer) {
 		System.out.println("ADDING LAYER: "+layer.toString());
-		
+		layers.add(layer);
+		Project p = getProjectById(layer.getProjectId());
+		p.getLayers().add(layer);
 	}
 
 	@Override
@@ -267,19 +269,41 @@ public class DBManager implements DatabaseManager{
 	@Override
 	public void removeLayer(Layer layer) {
 		System.out.println("REMOVING LAYER: "+layer.toString());
-		
+		layers.remove(layer);
+		Project p = getProjectById(layer.getProjectId());
+		p.getLayers().remove(layer);
 	}
 
 	@Override
 	public void updateLayer(Layer layer) {
 		System.out.println("UPDATING LAYER: "+layer.toString());
-		
+		for(int i=0; i<layers.size();i++){
+			Layer l = layers.get(i);
+			if(l.getId() == layer.getId()){
+				layers.set(i, layer);
+			}
+		}
+		Project p = getProjectById(layer.getProjectId());
+		for(int i=0; i<p.getLayers().size();i++){
+			Layer l = p.getLayers().get(i);
+			if(l.getId() == layer.getId()){
+				p.getLayers().set(i, layer);
+			}
+		}
 	}
 
 	@Override
 	public void addSubLayer(SubLayer subLayer) {
 		System.out.println("ADDING SUBLAYER: "+subLayer.toString());
-		
+		subLayers.add(subLayer);
+		Project p = getProjectById(subLayer.getProjectId());
+		//Layer l = getLayerById(subLayer.getLayerId());
+		for(int i=0;i<p.getLayers().size();i++){
+			Layer ll = p.getLayers().get(i);
+			if(subLayer.getLayerId() == ll.getId()){
+				ll.getSubLayers().add(subLayer);
+			}
+		}
 	}
 
 	@Override
@@ -317,13 +341,32 @@ public class DBManager implements DatabaseManager{
 	@Override
 	public void removeSubLayer(SubLayer subLayer) {
 		System.out.println("REMOVING SUBLAYER: "+subLayer.toString());
-		
+		subLayers.remove(subLayer);
+		Project p = getProjectById(subLayer.getProjectId());
+		for(int i=0;i<p.getLayers().size();i++){
+			Layer ll = p.getLayers().get(i);
+			if(subLayer.getLayerId() == ll.getId()){
+				ll.getSubLayers().remove(subLayer);
+			}
+		}
 	}
 
 	@Override
 	public void updateSubLayer(SubLayer subLayer) {
 		System.out.println("UPDATING SUBLAYER: "+subLayer.toString());
-		
+		for(int i=0; i<subLayers.size();i++){
+			SubLayer l = subLayers.get(i);
+			if(l.getId() == subLayer.getId()){
+				subLayers.set(i, subLayer);
+			}
+		}
+		Layer l = getLayerById(subLayer.getLayerId());
+		for(int i=0; i<l.getSubLayers().size();i++){
+			SubLayer s = l.getSubLayers().get(i);
+			if(s.getId() == subLayer.getId()){
+				l.getSubLayers().set(i, subLayer);
+			}
+		}
 	}
 
 	@Override

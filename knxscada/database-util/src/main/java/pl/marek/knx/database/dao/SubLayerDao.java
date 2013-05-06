@@ -24,8 +24,9 @@ public class SubLayerDao implements Dao<SubLayer>{
 			+ SubLayerColumns.LAYER_ID + ", "
 			+ SubLayerColumns.NAME + ", "
 			+ SubLayerColumns.DESCRIPTION + ", "
-			+ SubLayerColumns.ICON + ") "
-			+ "values(?,?,?,?,?);";
+			+ SubLayerColumns.ICON + ", "
+			+ SubLayerColumns.BACKGROUND_IMAGE +") "
+			+ "values(?,?,?,?,?,?);";
 
 	private SQLiteDatabase db;
 	private SQLiteStatement insertStatement;
@@ -45,6 +46,7 @@ public class SubLayerDao implements Dao<SubLayer>{
 		insertStatement.bindString(3, subLayer.getName());
 		insertStatement.bindString(4, subLayer.getDescription());
 		insertStatement.bindString(5, subLayer.getIcon());
+		insertStatement.bindString(6, subLayer.getBackgroundImage());
 		return insertStatement.executeInsert();
 	}
 
@@ -54,6 +56,7 @@ public class SubLayerDao implements Dao<SubLayer>{
 		values.put(SubLayerColumns.NAME, subLayer.getName());
 		values.put(SubLayerColumns.DESCRIPTION, subLayer.getDescription());
 		values.put(SubLayerColumns.ICON, subLayer.getIcon());
+		values.put(SubLayerColumns.BACKGROUND_IMAGE, subLayer.getBackgroundImage());
 		db.update(SubLayerTable.TABLE_NAME, values, BaseColumns._ID + " = ? and "+SubLayerColumns.PROJECT_ID+" = ? and "+SubLayerColumns.LAYER_ID+" = ?", new String[]{String.valueOf(subLayer.getId()), String.valueOf(subLayer.getProjectId()), String.valueOf(subLayer.getLayerId())});
 	}
 
@@ -94,7 +97,8 @@ public class SubLayerDao implements Dao<SubLayer>{
 									SubLayerColumns.LAYER_ID,
 									SubLayerColumns.NAME,
 									SubLayerColumns.DESCRIPTION,
-									SubLayerColumns.ICON
+									SubLayerColumns.ICON,
+									SubLayerColumns.BACKGROUND_IMAGE
 						},
 						column + " = ?", new String[]{String.valueOf(value)}, 
 						null, null ,null, "1");
@@ -145,7 +149,8 @@ public class SubLayerDao implements Dao<SubLayer>{
 									 SubLayerColumns.LAYER_ID,
 									 SubLayerColumns.NAME,
 									 SubLayerColumns.DESCRIPTION,
-									 SubLayerColumns.ICON
+									 SubLayerColumns.ICON,
+									 SubLayerColumns.BACKGROUND_IMAGE
 						}, 
 						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
@@ -172,6 +177,7 @@ public class SubLayerDao implements Dao<SubLayer>{
 			subLayer.setName(cursor.getString(3));
 			subLayer.setDescription(cursor.getString(4));
 			subLayer.setIcon(cursor.getString(5));
+			subLayer.setBackgroundImage(cursor.getString(6));
 		}
 		return subLayer;
 	}

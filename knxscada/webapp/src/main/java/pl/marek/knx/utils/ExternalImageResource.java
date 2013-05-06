@@ -27,7 +27,12 @@ public class ExternalImageResource implements IResource{
     }
     
     public boolean exists(){
-    	File file = new File(imagePath);
-    	return file.exists();
+    	if(imagePath != null){
+    		File file = new File(imagePath);
+    		return file.exists();
+    	}else{
+    		return false;
+    	}
+    	
     }
 }

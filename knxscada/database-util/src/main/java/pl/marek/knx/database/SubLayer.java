@@ -7,20 +7,24 @@ import android.os.Parcelable;
 
 public class SubLayer extends Layer implements Parcelable{
 	
+	private static final long serialVersionUID = 1L;
+
 	public static final String SUBLAYER = "SUBLAYER";
 	
 	protected int layerId;
+	protected String backgroundImage;
 	private ArrayList<Element> elements;
 	
 	public SubLayer(){}
 	
-	public SubLayer(int projectId, int layerId, String name, String description, String icon){
+	public SubLayer(int projectId, int layerId, String name, String description, String icon, String backgroundImage){
 		super(projectId, name, description, icon);
 		this.layerId = layerId;
+		this.backgroundImage = backgroundImage;
 	}
 	
-	public SubLayer(int id, int projectId, int layerId, String name, String description, String icon){
-		this(projectId, layerId, name, description, icon);
+	public SubLayer(int id, int projectId, int layerId, String name, String description, String icon, String backgroundImage){
+		this(projectId, layerId, name, description, icon, backgroundImage);
 		this.id = id;
 	}
 	
@@ -46,6 +50,14 @@ public class SubLayer extends Layer implements Parcelable{
 		this.layerId = layerId;
 	}
 
+	public String getBackgroundImage() {
+		return backgroundImage;
+	}
+
+	public void setBackgroundImage(String backgroundImage) {
+		this.backgroundImage = backgroundImage;
+	}
+
 	public ArrayList<Element> getElements() {
 		return elements;
 	}
@@ -67,6 +79,7 @@ public class SubLayer extends Layer implements Parcelable{
 		parcel.writeString(name);
 		parcel.writeString(description);
 		parcel.writeString(icon);
+		parcel.writeString(backgroundImage);
 	}
 	
 	public void readFromParcel(Parcel parcel){
@@ -76,5 +89,6 @@ public class SubLayer extends Layer implements Parcelable{
 		name = parcel.readString();
 		description = parcel.readString();
 		icon = parcel.readString();
+		backgroundImage = parcel.readString();
 	}
 }

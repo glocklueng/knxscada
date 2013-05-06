@@ -1,67 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<wicket:head>
-		<title>KNX WebApplication</title>
-		
-		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-
-		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
-		<link type="text/css" rel="stylesheet" href="css/style.css" />
-		<link type="text/css" rel="stylesheet" href="css/projectchooser.css" />
-		
-		<script type="text/javascript">
-				$(document).ready(
-					function() {
-						
-						$("#closeButton").click(function(e){
-							hideModal();
-						});
-						
-						$(window).resize(
-								function() {
-						
-									var windowWidth = $(window).width();
-									var windowHeight = $(window).height();
-									
-									var titleHeight = 60;
-									var mainMargin = 10;
-									var mainPadding = 5;
-									var footerHeight = 100;
-									
-									var newWidth = windowWidth - (mainMargin * 2) - (mainPadding * 2);
-									var newHeight = windowHeight - titleHeight - footerHeight - (mainMargin * 2) - (mainPadding * 2);
-						
-									$("#projects").css({
-										height : newHeight
-									});
-									
-								});
-						$(window).resize();
-					}
-				);
-				
-				
-		</script>
-		
+	<wicket:head>		
 	</wicket:head>
 	<body>
-		
-		<div class="modalBody">
-			<div id="frame">
-				<div id="title">
-					<wicket:message key="choose_project"></wicket:message>
-				</div>
-				<div id="projects">
-					<wicket:container wicket:id="projects">
-						<wicket:container class="project" wicket:id="project"/>
-					</wicket:container> 
-				</div>
-				<div id="buttons">
-					<input type="button" id="closeButton" wicket:message="value:close"/>
+		<wicket:panel>			
+			<div class="modalBody">
+				<div id="projectChooserFrame">
+					<div id="projectChooserTitle">
+						<wicket:message key="choose_project"></wicket:message>
+					</div>
+					
+					<div id="projects">
+						<div wicket:id="project"></div>
+					</div>
+					
+					<div id="projectChooserButtons">
+						<input type="button" wicket:id="newProjectButton" wicket:message="value:create_new_project"/>
+						<input type="button" wicket:id="projectChooserCloseButton" wicket:message="value:close"/>
+					
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="modalBackground"></div>
+			<div class="modalBackground"></div>
+		</wicket:panel>
 	</body>
 </html>

@@ -17,27 +17,25 @@ import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.components.PopupMenuItem;
 import pl.marek.knx.components.ProjectItem;
 import pl.marek.knx.database.Project;
-import pl.marek.knx.pages.FormsPanel.FormType;
+import pl.marek.knx.pages.DialogsPanel.DialogType;
 
 @HtmlFile("projectchooser.html")
 public class ProjectChooserPanel extends BasePanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private DBManager dbManager;
-
 	private Button newProjectButton;
 	private Button closeButton;
 
 	private List<Project> projects;
+	private RepeatingView projectsView;
 
 	private static boolean execute;
 
 	public ProjectChooserPanel(String componentName, DBManager dbManager) {
-		super(componentName);
+		super(componentName, dbManager);
 		setOutputMarkupId(true);
 		execute = true;
-		this.dbManager = dbManager;
 		projects = new ArrayList<Project>(dbManager.getAllProjects());
 		loadComponents();
 	}
@@ -45,16 +43,14 @@ public class ProjectChooserPanel extends BasePanel {
 	private void loadComponents() {
 		removeAll();
 
-		RepeatingView projectsView = new RepeatingView("project");
+		projectsView = new RepeatingView("project");
 		for (Project project : projects) {
 			ProjectItem item = new ProjectItem(projectsView.newChildId(),
 					new Model<Project>(project));
 
 			PopupMenu menu = item.getPopupMenu();
-			PopupMenuItem editMenu = menu.createPopupMenuItem("Edytuj",
-					"images/logo.png", true);
-			PopupMenuItem deleteMenu = menu.createPopupMenuItem("Usuń",
-					"images/logo.png", true);
+			PopupMenuItem editMenu = menu.createPopupMenuItem(getString("project.edit.menuitem"), "images/edit_icon.png", true);
+			PopupMenuItem deleteMenu = menu.createPopupMenuItem(getString("project.remove.menuitem"), "images/trash_icon.png", true);
 
 			editMenu.add(new ProjectItemEditClickBehavior(project));
 			deleteMenu.add(new ProjectItemDeleteClickBehavior(project));
@@ -64,6 +60,7 @@ public class ProjectChooserPanel extends BasePanel {
 			projectsView.add(item);
 		}
 		add(projectsView);
+		
 
 		closeButton = new Button("projectChooserCloseButton") {
 
@@ -72,8 +69,8 @@ public class ProjectChooserPanel extends BasePanel {
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				super.onComponentTag(tag);
-				String pId = getParameter("project");
-				if (pId == null) {
+				Project project = getCurrentProject();
+				if(project == null){
 					tag.put("style", "display: none;");
 				}
 			}
@@ -97,12 +94,11 @@ public class ProjectChooserPanel extends BasePanel {
 
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				Index index = (Index) getPage();
-				FormsPanel forms = index.getFormsPanel();
-				forms.setType(FormType.NEW_PROJECT);
-				forms.setFormPanel(new CreateEditProjectFormPanel("form", dbManager));
-				target.add(forms);
-				target.appendJavaScript("initFormDialog('"+ getString("new-project") + "'); showFormDialog();");
+				DialogsPanel dialogs = getDialogsPanel();
+				dialogs.setType(DialogType.NEW_PROJECT);
+				dialogs.setDialogPanel(new CreateEditProjectFormPanel("dialog", getDBManager()));
+				target.add(dialogs);
+				target.appendJavaScript("initProjectDialog('"+ getString("new-project") + "','"+getString("cancel")+"'); showDialog();");
 			}
 		});
 		add(newProjectButton);
@@ -112,10 +108,11 @@ public class ProjectChooserPanel extends BasePanel {
 	@Override
 	protected void onComponentTag(ComponentTag tag) {
 		super.onComponentTag(tag);
-		String pId = getParameter("project");
-		if (pId == null) {
+		Project project = getCurrentProject();
+		if (project == null || isContainsParameter("project-form-submit-button")) {
 			tag.put("style", "display: block;");
 		}
+		tag.put("onload", "resize();");
 	}
 
 	public void setProjects(List<Project> projects) {
@@ -161,13 +158,12 @@ public class ProjectChooserPanel extends BasePanel {
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
 			execute = false;
-			
-			Index index = (Index) getPage();
-			FormsPanel forms = index.getFormsPanel();
-			forms.setType(FormType.EDIT_PROJECT);
-			forms.setFormPanel(new CreateEditProjectFormPanel("form", dbManager, project));
-			target.add(forms);
-			target.appendJavaScript("initFormDialog('"+ getString("edit-project") + "'); showFormDialog();");
+
+			DialogsPanel dialogs = getDialogsPanel();
+			dialogs.setType(DialogType.EDIT_PROJECT);
+			dialogs.setDialogPanel(new CreateEditProjectFormPanel("dialog", getDBManager(), project));
+			target.add(dialogs);
+			target.appendJavaScript("initProjectDialog('"+ getString("edit-project") + "', '"+getString("cancel")+"'); showDialog();");
 			
 		}
 	}
@@ -185,9 +181,27 @@ public class ProjectChooserPanel extends BasePanel {
 
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
-			System.out.println("delete");
 			execute = false;
+
+			DialogsPanel dialogs = getDialogsPanel();
+			dialogs.setType(DialogType.DELETE_PROJECT);
+			dialogs.setDialogPanel(new DeleteFormPanel("dialog", getDBManager(), project));
+			target.add(dialogs);
+			target.appendJavaScript("initRemoveDialog('"+ getString("yes") + "', '"+getString("no")+"'); showDialog();");
+			
 		}
+	}
+	
+	public String getProjectItemIdByProject(Project project){
+		String projectId = "";
+		for(int i=0;i<projectsView.size();i++){
+			ProjectItem item = (ProjectItem)projectsView.get(i);
+			if(item.getProject().getId() == project.getId()){
+				projectId = item.getMarkupId();
+				break;
+			}
+		}
+		return projectId;
 	}
 
 }

@@ -39,8 +39,13 @@
         		<img id="appLogo" wicket:id="appLogo"/>
         		<div id="projectName" wicket:id="projectName"> </div>
         		
-        		<div id="headerTools">
-<!--         			<input type="button" id="chooseProjectButton" wicket:message="value:project"/> -->
+        		<div id="headerTools">        			
+        			<div class="open-telegrams-dialog-button"
+        				onmouseover="setFocused(this);" 
+						onmouseout="unsetFocused(this);">
+						<img wicket:id="open-telegrams-dialog-button-icon" class="open-telegrams-dialog-button-icon"/>
+        			</div>
+        			
         		</div>
         	</div>
         	

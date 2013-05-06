@@ -7,18 +7,41 @@
         	<script>
         		$(document).ready(
         		function(){
-	        		$("#chooseProjectButton").click(function(e){
-	        			$("#modal").load("projectchooser",{}, function(e){
-	        				showModal();
-	        			});
-
+	        		$("#projectName").click(function(e){
+						showProjectChooser();
 	        		});
+	        		
+	        		$("#projectName").mouseover(function(e){
+						$("#projectName").css("color", "#00E600");
+	        			showProjectTooltip(e.pageX, e.pageY);
+	        		});
+	        		
+	        		$("#projectName").mouseout(function(e){
+	        			$("#projectName").css("color", "#D8E2F2");
+	        			hideProjectTooltip();
+		        	});
         		});
+        		
+        		function showProjectTooltip(posX, posY){
+					$("#projectTooltip").css("top", posY);
+					$("#projectTooltip").css("left", posX);
+					$("#projectTooltip").show("fade", {}, 200);
+				}
+				
+				function hideProjectTooltip(){
+					$("#projectTooltip").hide("fade", {}, 200);
+				}
+        	
         	</script>
         
         	<div id="headerContent">
         		
-        		<input type="button" id="chooseProjectButton" wicket:message="value:project"/>
+        		<img id="appLogo" wicket:id="appLogo"/>
+        		<div id="projectName" wicket:id="projectName"> </div>
+        		
+        		<div id="headerTools">
+<!--         			<input type="button" id="chooseProjectButton" wicket:message="value:project"/> -->
+        		</div>
         	</div>
         	
         	<div id="logout">
@@ -26,6 +49,11 @@
 					<input type="submit" wicket:message="value:logout"/>
 				</form>
 			</div>
+			
+			<div id="projectTooltip" class="tooltip">
+				<wicket:message key='projectTooltip'></wicket:message>
+			</div>
+			
         </wicket:panel>
     </body>
 </html>

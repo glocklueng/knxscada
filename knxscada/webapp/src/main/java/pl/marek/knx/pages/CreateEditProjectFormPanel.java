@@ -27,8 +27,6 @@ public class CreateEditProjectFormPanel extends BasePanel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private DBManager dbManager;
-	
 	private Project project;
 	private ProjectForm form;
 	private FeedbackPanel feedbackPanel;
@@ -36,14 +34,11 @@ public class CreateEditProjectFormPanel extends BasePanel{
 	private Image image;
 		
 	public CreateEditProjectFormPanel(String componentName, DBManager dbManager) {
-		super(componentName);
-		this.dbManager = dbManager;
-		loadComponents();
+		this(componentName, dbManager, null);
 	}
 	
 	public CreateEditProjectFormPanel(String componentName, DBManager dbManager, Project project) {
-		super(componentName);
-		this.dbManager = dbManager;
+		super(componentName, dbManager);
 		this.project = project;
 		loadComponents();
 	}
@@ -125,18 +120,30 @@ public class CreateEditProjectFormPanel extends BasePanel{
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 					
 					Project p = (Project)form.getModel().getObject();
-					//TODO Zrobić dodawanie projektu
-					System.out.println("DODAJE PROJEKT:");
-					System.out.println(p.getName()+" "+p.getDescription());
-					System.out.println(p.getImage());
 					
-					dbManager.addProject(p);
+					if(p.getId() == 0){
+					//TODO Zrobić dodawanie projektu
+						System.out.println("DODAJE PROJEKT:");
+						System.out.println(p.getName()+" "+p.getDescription());
+						System.out.println(p.getImage());
+						
+						getDBManager().addProject(p);
+					}else{
+						System.out.println("EDYTUJE PROJEKT:");
+						System.out.println(p.getName()+" "+p.getDescription());
+						System.out.println(p.getImage());
+						
+						getDBManager().updateProject(p);
+					}
+					
+					
 					Index index = (Index)getPage();
 					ProjectChooserPanel panel = index.getProjectChooserPanel();
-					panel.setProjects(dbManager.getAllProjects());
+					panel.setProjects(getDBManager().getAllProjects());
 					
 					target.add(panel);
 					target.add(feedbackPanel);
+					target.appendJavaScript("load(); hideDialog();");
 					
 				}
 				

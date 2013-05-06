@@ -2,61 +2,278 @@
 <html xmlns:wicket="http://wicket.apache.org">
 	<wicket:head>
 		<title>KNX WebApplication</title>
+		<link rel="SHORTCUT ICON" HREF="images/logo.png">
 		
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
 		<script type="text/javascript" src="js/websocket.js"></script>
+		<script type="text/javascript" src="js/trash.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
 		
 		<link rel="stylesheet" href="css/jquery-ui.css" />
 		<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 		<link type="text/css" rel="stylesheet" href="css/style.css" />
 		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
+		<link type="text/css" rel="stylesheet" href="css/projectchooser.css" />
 		
-		<script type="text/javascript">
+		<script type="text/javascript">	
+		
 				$(document).ready(
 					function() {
-		
+						
 						WebSocketServer.connect("/knxscada-webapp");
 						WebSocketServer.setOnMessageFn(onMessage);
 						
-						//TODO Remove
-						$("#main").click(function(e){
-							$("#sidebar").toggle("slide", {}, 500);
-							
+						load();
+						$(window).resize();
+						
+						$(document).bind("contextmenu",function(e){
+							return false;
 						});
 						
-// 						$("#modal").click(function(e){
-// 							hideModal();
-// 						});
-						
-						$(window).resize(
-								function() {
-						
-									var windowWidth = $(window).width();
-									var windowHeight = $(window).height();
-										
-									var mainMargin = 20;
-									var mainPadding = 10;
-									var headerHeight = 30;
-									var headerPadding = 10;
-									var footerHeight = 60;
-									
-									var newWidth = windowWidth - (mainMargin * 2) - (mainPadding * 2);
-									var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 2) - (mainPadding * 2) - (headerPadding * 2);
-						
-									$("#main").css({
-										width : newWidth,
-										height : newHeight
-									});
-									
-									$("#sidebar").css({
-										height : newHeight
-									});
-								});
-						$(window).resize();
 					}
 				);
+				
+				function showPopupMenu(id, x, y){
+					hidePopupMenu();
+					$("#"+id).css("top", y).css("left", x);
+					$("#"+id).show("blind",{},100);
+				}
+				
+				function hidePopupMenu(){	
+					$(".popup-menu").hide("fade",{},100);
+				}
+				
+				function load(){
+					
+					$(window).resize(
+						function() {
+							resize();
+					});
+					
+					$(document).click(function(e){
+						hidePopupMenu();
+					});
+					
+					
+					
+// 					$("#content").click(function(e){
+// 						$("#sidebar").toggle("slide", {}, 200, function(e){
+// 							resize();
+// 						});
+// 						resize();
+// 					});
+					
+					$(".popup-menu-trigger").off('mousedown');
+					$(".popup-menu-trigger").off('taphold');
+					
+					$(".popup-menu-trigger").mousedown(function(e){ 
+					    if( e.button == 2 ) { 
+					      var id = $(this).attr("popupMenuId");
+					      var x = e.pageX;
+					      var y = e.pageY;
+					      showPopupMenu(id, x, y);
+					      return false; 
+					    } 
+					    return true; 
+					  });
+					
+					$(".popup-menu-trigger").on('taphold', function(e){ 
+					      var id = $(this).attr("popupMenuId");
+					      var x = e.pageX;
+					      var y = e.pageY;
+					      showPopupMenu(id, x, y);
+					      return false; 
+					 });
+					
+					initTrash();
+				}
+				
+				function initProjectDialog(addButtonLabel, cancelButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[addButtonLabel] = function(){ 
+						$("#project-form-submit-button").click();
+// 						$(this).dialog('close');
+					}
+					
+					dialog_buttons[cancelButtonLabel] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 350,
+	      			      draggable: false,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function initLayerDialog(addButtonLabel, cancelButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[addButtonLabel] = function(){ 
+						$("#layer-form-submit-button").click();
+// 						$(this).dialog('close');
+					}
+					
+					dialog_buttons[cancelButtonLabel] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 350,
+	      			      draggable: false,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function initRemoveDialog(yesButtonLabel, noButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[yesButtonLabel] = function(e){ 
+						var callback = $("#delete-message").attr("callback");
+						var dialog = this;
+						
+						$.ajax({
+							url : callback,
+							type : 'get',
+							cache : false,
+							success: function(data, textStatus, jqXHR){
+								$("#"+data).hide("fade",{}, 300, function(){ 
+									$(this).remove();
+								});
+								$(dialog).dialog('close');
+					        }
+						});
+					}
+					
+					dialog_buttons[noButtonLabel] = function(e){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      draggable: true,
+	      			      width: 400,
+	      			      height: 160,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 300
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 300
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			    });
+				}
+				
+				function showDialog(){
+					var title = $(".dialogs").attr("title");
+					$("#dialog-window").dialog( "option", "title", title );
+      				$("#dialog-window").dialog("open");      				
+				}
+				
+				function hideDialog(){
+					$("#dialog-window").dialog("close");
+				}
+			
+				function resize(){
+					var windowWidth = $(window).width();
+					var windowHeight = $(window).height();
+					
+					var sidebarWidth = 0;
+					var sideBarPadding = 0;
+					
+					var sideBarDisplay = $("#sidebar").css("display");
+					if(sideBarDisplay == "table") {
+						sidebarWidth = 165;
+						sideBarPadding = 10;
+						$("#main").css("left","170px");
+					}else{
+						$("#main").css("left","0px");
+					}
+					
+					var mainMargin = 10;
+					var headerHeight = 40;
+					var headerPadding = 10;
+					var footerHeight = -10;
+					var sublayersHeight = 60;
+					
+					var newWidth = windowWidth - (mainMargin * 2)  - sidebarWidth - (sideBarPadding*2);
+					var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 4) - (headerPadding * 2);
+ 					var newContentHeight = newHeight - sublayersHeight;
+					
+					$("#main").css({
+						width : newWidth,
+						height : newHeight
+					});
+					
+					$("#sidebar").css({
+						height : newHeight - (sideBarPadding*2)
+					});
+					
+					$("#content").css({
+						width : newWidth,
+						height : newContentHeight
+					});
+					
+					$("#elements-area").css({
+						height : newContentHeight - 50
+					});
+					$(".accordion-div").css({
+						height : newContentHeight - 115
+					});
+					
+					var loadingTop = (windowHeight/2) - 100;
+					$("#loading-img").css("top", loadingTop+"px");
+					
+					//PROJECT CHOOSER RESIZE
+					var titleHeight = 80;
+					var footerHeight = 100;
+					
+					var newWidth = windowWidth - (mainMargin * 2) ;
+					var newHeight = windowHeight - titleHeight - footerHeight;
+		
+					$("#projects").css({
+						height : newHeight
+					});
+				}
 
 				function onMessage(event){
 					if (event.data) {						
@@ -66,15 +283,30 @@
 				};
 				
 				
-				function showModal(){
-					$("#modal").show("scale", {}, 200);
+				function showProjectChooser(){
+					$("#projectchooser").show("scale", {}, 200);
 				}
 				
-				function hideModal(){
-					$("#modal").hide("scale", {}, 200);
+				function hideProjectChooser(){
+					$("#projectchooser").hide("scale", {}, 200);
 				}
 				
+				function setFocused(elem){
+					$(elem).addClass("focused");
+				}
 				
+				function unsetFocused(elem){
+					$(elem).removeClass("focused");
+				}
+				
+				function showLoadingPanel(){
+					$("#loading").show("fade", {}, 200);
+				}
+				
+				function hideLoadingPanel(){
+					$("#loading").hide("fade", {}, 200);
+				}
+	
 		</script>
 
 	</wicket:head>
@@ -88,7 +320,20 @@
 	
 		<div id="footer" wicket:id="footer"></div>
 		
+		<div id="projectchooser" class="modal" wicket:id="projectchooser"></div>
 		
-		<div id="modal"></div>
+		<div id="dialog-window">
+			<div id="dialogs" class="dialogs" wicket:id="dialogs"></div>
+		</div>
+		
+		<div id="tooltip" class="tooltip"></div>
+		
+		<div id="trash">
+			<img id="trash-icon" src="images/trash_icon.png"/>
+		</div>
+		
+		<div id="loading"  onclick="hideLoadingPanel();">
+            <img id="loading-img" src="images/loading.gif"/>
+        </div>
 	</body>
 </html>

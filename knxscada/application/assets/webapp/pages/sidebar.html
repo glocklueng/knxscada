@@ -4,7 +4,70 @@
 	</wicked:head>
     <body>
         <wicket:panel>
+        	<script>
+        		
+        	$(document).ready(
+         		function(){
+	 	        	$(".layerItemName").mouseover(function(e){
+	 	        		var target = $(this).attr("descriptionBlockId");
+	 	        		//showLayerTooltip(target, e.pageX, e.pageY)
+	 	        	});
+	 	        	$(".layerItemName").mouseout(function(e){
+	 	        		var target = $(this).attr("descriptionBlockId");
+	 	        		//hideLayerTooltip(target);
+	 	        	});
+	 	        	
+	 	        	$(".layerItem").first().addClass("selected");
+	 	        	$(".layerItem").first().css("background","#88c9e8");
+	 	        	
+	 	        	$(".layerItem").click(function(e){
+						$(".layerItem").each(function(e){
+							$(this).removeClass("selected");
+							$(this).css("background", "rgba(172, 227, 7, 1)");
+						});
+						$(this).addClass("selected");
+						$(this).css("background", "rgba(245,187,61,1)");
+					});
+					
+					$(".layerItem").mouseover(function(e){
+						if($(this).hasClass("selected")){
+							$(this).css("background", "rgba(245,187,61,1)");
+						}else{
+							$(this).css("background", "rgba(245,187,61,1)");
+						}
+					});
+					
+					$(".layerItem").mouseout(function(e){
+						if($(this).hasClass("selected")){
+							$(this).css("background", "#88c9e8");
+						}else{
+							$(this).css("background", "rgba(172, 227, 7, 1)");
+						}
+					});
+            });
+        	
+        	function showLayerTooltip(target, posX, posY){
+				$("#tooltip").css("top", posY);
+				$("#tooltip").css("left", posX);
+ 				var html = $("#"+target).html();
+				$("#tooltip").html(html);
+				$("#tooltip").show("fade", {}, 200);
+			}
+			
+			function hideLayerTooltip(target){
+				$("#tooltip").hide("fade", {}, 200);
+			}
+			
+        	
+        	</script>
+        	
+        	<div class="new-layer-item">
+        		<div wicket:id="new-layer-item"></div>
+        	</div>
+        	<br/>
             
+			<div class="layer" wicket:id="layer"/>
+			
         </wicket:panel>
     </body>
 </html>

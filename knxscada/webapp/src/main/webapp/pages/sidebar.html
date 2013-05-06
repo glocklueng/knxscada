@@ -21,7 +21,8 @@
 	 	        	$(".layerItem").first().css("background","#88c9e8");
 	 	        	
 	 	        	$(".layerItem").click(function(e){
-						$(".layerItem").each(function(e){
+	 	        		showLoadingPanel();
+	 	        		$(".layerItem").each(function(e){
 							$(this).removeClass("selected");
 							$(this).css("background", "rgba(172, 227, 7, 1)");
 						});
@@ -57,9 +58,14 @@
 			function hideLayerTooltip(target){
 				$("#tooltip").hide("fade", {}, 200);
 			}
+			
         	
         	</script>
-        
+        	
+        	<div class="new-layer-item">
+        		<div wicket:id="new-layer-item"></div>
+        	</div>
+        	<br/>
             
 			<div class="layer" wicket:id="layer"/>
 			

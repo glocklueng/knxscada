@@ -9,6 +9,7 @@ public class SubLayerTable {
 	
 	public static class SubLayerColumns extends LayerColumns{
 		public static final String LAYER_ID = "layer_id";
+		public static final String BACKGROUND_IMAGE = "background_image";
 	}
 	
 	public static final String TABLE_NAME = "sublayers";
@@ -19,6 +20,7 @@ public class SubLayerTable {
 												   + SubLayerColumns.NAME + " TEXT, "
 												   + SubLayerColumns.DESCRIPTION + " TEXT, "
 												   + SubLayerColumns.ICON + " TEXT, " 
+												   + SubLayerColumns.BACKGROUND_IMAGE + " TEXT, " 
 												   + "FOREIGN KEY("+SubLayerColumns.PROJECT_ID+") REFERENCES "
 												   + ProjectTable.TABLE_NAME + "("+ProjectColumns._ID+"), " 
 												   + "FOREIGN KEY("+SubLayerColumns.LAYER_ID+") REFERENCES " 

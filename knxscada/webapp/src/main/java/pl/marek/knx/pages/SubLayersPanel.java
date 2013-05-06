@@ -13,46 +13,52 @@ import pl.marek.knx.components.SubLayerItem;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.pages.DialogsPanel.DialogType;
+import pl.marek.knx.utils.StaticImage;
 
 @HtmlFile("sublayers.html")
 public class SubLayersPanel extends BasePanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	//private DBManager dbManager;
-	
+	private RepeatingView subLayers;
 	private Layer layer;
+	private SubLayer currentSubLayer;
 
 	private static boolean execute;
 	
 	public SubLayersPanel(String componentName, DBManager dbManager) {
-        super(componentName);
-       // this.dbManager = dbManager;
+        super(componentName, dbManager);
+        setOutputMarkupId(true);
         execute = true;
-        String pId = getParameter("project");
-        if(pId != null){
-	        int projectId = Integer.parseInt(pId);
-	        Project project = dbManager.getProjectById(projectId);
-	        layer = project.getLayers().get(0);
+        currentSubLayer = null;
+        
+        Project project = getCurrentProject();
+        if(project != null){
+        	layer = project.getLayers().get(0);
         }
+        
         loadComponents();
-
 	}
 	
 	private void loadComponents(){
 		
 		removeAll();
-		
-        RepeatingView subLayers = new RepeatingView("sublayer");
+        
+        subLayers = new RepeatingView("sublayer");
+        
+        StaticImage newItemIcon = new StaticImage("new-sublayer-item", new Model<String>("images/new_room.png"));
+        newItemIcon.add(new NewSubLayerItemClickBehavior());
+        
         if(layer != null){
 	        for(SubLayer l: layer.getSubLayers()){
 	        	SubLayerItem item = new SubLayerItem(subLayers.newChildId(), new Model<SubLayer>(l));
 	        	
 	        	
 	        	PopupMenu menu = item.getPopupMenu();
-	        	PopupMenuItem editMenu = menu.createPopupMenuItem("Edytuj", "images/logo.png", true);
-	        	PopupMenuItem deleteMenu = menu.createPopupMenuItem("Usuń", "images/logo.png", true);
-	        	
+				PopupMenuItem editMenu = menu.createPopupMenuItem(getString("sublayer.edit.menuitem"), "images/edit_icon.png", true);
+				PopupMenuItem deleteMenu = menu.createPopupMenuItem(getString("sublayer.remove.menuitem"), "images/trash_icon.png", true);
+
 	        	editMenu.add(new SubLayerItemEditClickBehavior(l));
 	        	deleteMenu.add(new SubLayerItemDeleteClickBehavior(l));
 	        	
@@ -60,13 +66,42 @@ public class SubLayersPanel extends BasePanel{
 	        	item.add(new SubLayerItemClickBehavior(l));
 	        	
 	        }
+        }else{
+        	newItemIcon.setVisible(false);
         }
+        add(newItemIcon);
         add(subLayers);
 	}
 	
 	public void setLayer(Layer layer){
 		this.layer = layer;
 		loadComponents();
+	}
+	
+	public void refresh(){
+        layer = getCurrentLayer();
+		loadComponents();
+	}
+	
+	private class NewSubLayerItemClickBehavior extends AjaxEventBehavior{
+
+		private static final long serialVersionUID = 1L;
+
+		public NewSubLayerItemClickBehavior() {
+			super("click");
+		}
+		
+		@Override
+		protected void onEvent(AjaxRequestTarget target) {
+
+			DialogsPanel dialogs = getDialogsPanel();
+			dialogs.setType(DialogType.NEW_SUBLAYER);
+			dialogs.setDialogPanel(new CreateEditLayerFormPanel("dialog", getDBManager(), SubLayer.SUBLAYER));
+			target.add(dialogs);
+			target.appendJavaScript("initLayerDialog('"+ getString("new-sublayer") + "','"+getString("cancel")+"'); showDialog();");
+		
+		}
+		
 	}
 	
 	private class SubLayerItemClickBehavior extends AjaxEventBehavior{
@@ -83,13 +118,10 @@ public class SubLayersPanel extends BasePanel{
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
 			if(execute){
-				Index index = (Index)getPage();
-				MainPanel main = index.getMainPanel();
-				ContentPanel content = main.getContentPanel();
-				System.out.println("tutaj");
+				currentSubLayer = subLayer;
+				ContentPanel content = getContentPanel();
 				content.setSubLayer(subLayer);
-			
-				target.appendJavaScript("load(); resize();");
+				target.appendJavaScript("load(); resize(); loadElementsPanel(); loadSettingsPanel();");
 				target.add(content);
 			}
 			execute = true;
@@ -109,12 +141,13 @@ public class SubLayersPanel extends BasePanel{
 				
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
-			System.out.println("edit");
 			execute = false;
+			DialogsPanel dialogs = getDialogsPanel();
+			dialogs.setType(DialogType.EDIT_SUBLAYER);
+			dialogs.setDialogPanel(new CreateEditLayerFormPanel("dialog", getDBManager(), SubLayer.SUBLAYER, subLayer));
+			target.add(dialogs);
+			target.appendJavaScript("initLayerDialog('"+ getString("edit-sublayer") + "','"+getString("cancel")+"'); showDialog();");
 		}
-		
-		
-		
 	}
 	
 	private class SubLayerItemDeleteClickBehavior extends AjaxEventBehavior{
@@ -130,9 +163,54 @@ public class SubLayersPanel extends BasePanel{
 
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
-			System.out.println("delete");
 			execute = false;
+			DialogsPanel dialogs = getDialogsPanel();
+			dialogs.setType(DialogType.DELETE_SUBLAYER);
+			dialogs.setDialogPanel(new DeleteFormPanel("dialog", getDBManager(), subLayer));
+			target.add(dialogs);
+			target.appendJavaScript("initRemoveDialog('"+ getString("yes") + "', '"+getString("no")+"'); showDialog();");
 		}
 	}
 	
+	public String getSubLayerItemIdBySubLayer(SubLayer subLayer){
+		String subLayerId = "";
+		for(int i=0;i<subLayers.size();i++){
+			SubLayerItem item = (SubLayerItem)subLayers.get(i);
+			if(item.getSubLayer().getId() == subLayer.getId()){
+				subLayerId = item.getMarkupId();
+				break;
+			}
+		}
+		return subLayerId;
+	}
+	
+	public String getOtherSubLayerItemIdByRemovedSubLayer(SubLayer subLayer){
+		String subLayerId = "";
+		if(getCurrentSubLayer().getId() == subLayer.getId()){
+			boolean checked = false;
+			for(int i=0;i<subLayers.size();i++){
+				SubLayerItem item = (SubLayerItem)subLayers.get(i);
+				if(item.getSubLayer().getId() != subLayer.getId()){
+					subLayerId = item.getMarkupId();
+				}else{
+					checked = true;
+				}
+				if(!subLayerId.isEmpty() && checked){
+					break;
+				}
+			}
+		}
+		return subLayerId;
+	}
+	
+	@Override
+	public SubLayer getCurrentSubLayer(){
+		if(currentSubLayer == null){
+			if(subLayers.size() > 0){
+				SubLayerItem item = (SubLayerItem)subLayers.get(0);
+				currentSubLayer = item.getSubLayer();
+			}
+		}
+		return currentSubLayer;
+	}
 }

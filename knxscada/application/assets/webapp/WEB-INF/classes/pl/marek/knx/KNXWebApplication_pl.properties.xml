@@ -6,13 +6,79 @@
     <entry key="logout">Wyloguj</entry>
     <entry key="close">Zamknij</entry>
     <entry key="project">Projekt</entry>
+    <entry key="cancel">Anuluj</entry>
+    <entry key="yes">Tak</entry>
+    <entry key="no">Nie</entry>
+    <entry key="settings">Ustawienia</entry>
+    
+    
     
     <!-- SIGN IN -->
     <entry key="password.Required">Podaj hasło!</entry>
     <entry key="password.Incorrect">Podane hasło jest niepoprawne!</entry>
     
+    <!-- PROJECT -->
+    <entry key="projectTooltip">Kliknij, aby wybrać inny projekt...</entry>
     
     <!-- PROJECT CHOOSER -->
     <entry key="choose_project">Wybierz projekt</entry>
+    <entry key="create_new_project">Utwórz nowy projekt</entry>
+    <entry key="project.name.label">Nazwa</entry>
+    <entry key="project.description.label">Opis</entry>
+    
+    <!-- FORMS STRINGS -->
+    <entry key="new-project">Nowy projekt</entry>
+    <entry key="edit-project">Edycja projektu</entry>
+    <entry key="delete-project-confirmation-title">Usuwanie projektu</entry>
+    <entry key="delete-project-confirmation-message">Czy napewno chcesz usunąć projekt o nazwie '%s'?</entry>
+<!--     <entry key="project.name.Required">Podaj nazwę projektu</entry> -->
+    <entry key="project-form.name.RequiredValidator">Podaj nazwę projektu</entry>
+<!--     <entry key="RequiredValidator">Podaj nazwę projektu</entry> -->
+<!--     <entry key="Required">Podaj nazwę projektu</entry> -->
+	<entry key="project-form.name.label">Nazwa projektu</entry>
+    <entry key="project-form.description.label">Opis</entry>
+    <entry key="project-image-form.choose.button">Wybierz obraz</entry>
+    <entry key="project-image-form.noimage.message">Nie wybrano obrazu dla projektu</entry>
+    <entry key="project-image-form.image.uploaded">Dodano obraz dla projektu</entry>
+    
+    <entry key="new-layer">Nowe piętro</entry>
+    <entry key="add-layer">Dodaj piętro</entry>
+    <entry key="edit-layer">Edycja piętra</entry>
+    <entry key="delete-layer-confirmation-title">Usuwanie piętra</entry>
+    <entry key="delete-layer-confirmation-message">Czy napewno chcesz usunąć piętro '%s'?</entry>
+    <entry key="layer-form.name.RequiredValidator">Podaj nazwę piętra</entry>
+	<entry key="layer-form.name.label">Nazwa piętra</entry>
+    <entry key="layer-form.description.label">Opis</entry>
+    
+    <entry key="new-sublayer">Nowe pomieszczenie</entry>
+    <entry key="edit-sublayer">Edycja pomieszczenia</entry>
+    <entry key="delete-sublayer-confirmation-title">Usuwanie pomieszczenia</entry>
+    <entry key="delete-sublayer-confirmation-message">Czy napewno chcesz usunąć pomieszczenie '%s'?</entry>
+    <entry key="sublayer-form.name.RequiredValidator">Podaj nazwę pomieszczenia</entry>
+	<entry key="sublayer-form.name.label">Nazwa pomieszczenia</entry>
+    <entry key="sublayer-form.description.label">Opis</entry>
+    
+    <!-- ELEMENTS STRING -->
+    <entry key="elements-trigger-label">Elementy</entry>
+    <entry key="element-position-update-failed">Wystąpił problem podczas uaktualniania pozycji elementu!</entry>
+    
+    <!-- ELEMENTS AND SETTINGS PANEL -->
+    <entry key="background-image.choose.button">Wybierz obraz</entry>
+    <entry key="background-image.remove.button">Usuń obraz</entry>
+    <entry key="background-image-panel-title">Obraz tła</entry>
+    
+    
+    
+    <!-- POPUP MENU STRINGS -->
+    <entry key="project.edit.menuitem">Edytuj projekt</entry>
+    <entry key="project.remove.menuitem">Usuń projekt</entry>
+    <entry key="layer.edit.menuitem">Edytuj piętro</entry>
+    <entry key="layer.remove.menuitem">Usuń piętro</entry>
+    <entry key="sublayer.edit.menuitem">Edytuj</entry>
+    <entry key="sublayer.remove.menuitem">Usuń</entry>
+    
+    <!-- OTHERS -->
+    <entry key="read-message-failed">Problem z odczytem danych</entry>
+    
     
 </properties>

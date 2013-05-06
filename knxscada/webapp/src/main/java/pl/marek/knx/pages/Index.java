@@ -1,11 +1,14 @@
 package pl.marek.knx.pages;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
+import pl.marek.knx.database.Project;
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 
 @HtmlFile("index.html")
@@ -20,7 +23,9 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 	private MainPanel mainPanel;
 	private FooterPanel footerPanel;
 	private ProjectChooserPanel projectChooserPanel;
-	private FormsPanel formsPanel;
+	private DialogsPanel dialogsPanel;
+	
+	private Label pageTitle;
 	
 	public Index(){
 		super();
@@ -35,12 +40,8 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 	private void init(){
 		dbManager = new DBManager();
 		
-//		PageParameters parameters = getPageParameters();
-		
-//		if(parameters.get("project").isNull()){
-//			//redirectToInterceptPage(new ProjectChooserPanel());	
-//		}
-		
+		pageTitle = new Label("page-title", new ResourceModel("page-title"));
+		add(pageTitle);
 	}
 	
 	public Index(IModel<?> model) {
@@ -64,8 +65,8 @@ public class Index extends WebPage implements AuthenticatedWebPage{
         if(get("projectchooser")==null){
             this.setProjectChooserWrapper("projectchooser");
         }
-        if(get("forms")==null){
-            this.setFormsWrapper("forms");
+        if(get("dialogs")==null){
+            this.setDialogsWrapper("dialogs");
         }
         
         super.onBeforeRender();
@@ -73,6 +74,11 @@ public class Index extends WebPage implements AuthenticatedWebPage{
  
     protected void setHeaderWrapper(String componentName){
     	headerPanel = new HeaderPanel(componentName, dbManager);
+    	
+    	Project project = headerPanel.getCurrentProject();
+    	if(project != null){
+    		setTitle(project.getName());
+    	}
         add(headerPanel);
     }
     
@@ -96,9 +102,9 @@ public class Index extends WebPage implements AuthenticatedWebPage{
         add(projectChooserPanel);
     }
     
-    protected void setFormsWrapper(String componentName){
-    	formsPanel = new FormsPanel(componentName, dbManager);
-        add(formsPanel);
+    protected void setDialogsWrapper(String componentName){
+    	dialogsPanel = new DialogsPanel(componentName, dbManager);
+        add(dialogsPanel);
     }
 
 	public HeaderPanel getHeaderPanel() {
@@ -121,8 +127,12 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 		return projectChooserPanel;
 	}
 
-	public FormsPanel getFormsPanel() {
-		return formsPanel;
+	public DialogsPanel getDialogsPanel() {
+		return dialogsPanel;
+	}
+	
+	public void setTitle(String title){
+		pageTitle.setDefaultModelObject(title);
 	}
 	
 }

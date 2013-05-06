@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 	<wicket:head>
-		<title>KNX WebApplication</title>
+		<title wicket:id="page-title">KNX WebApplication</title>
+		<link rel="SHORTCUT ICON" HREF="images/logo.png">
 		
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
 		<script type="text/javascript" src="js/websocket.js"></script>
+		<script type="text/javascript" src="js/trash.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
 		
 		<link rel="stylesheet" href="css/jquery-ui.css" />
@@ -14,7 +17,8 @@
 		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
 		<link type="text/css" rel="stylesheet" href="css/projectchooser.css" />
 		
-		<script type="text/javascript">				
+		<script type="text/javascript">	
+		
 				$(document).ready(
 					function() {
 						
@@ -27,9 +31,6 @@
 						$(document).bind("contextmenu",function(e){
 							return false;
 						});
-						
-						
-						 
 						
 					}
 				);
@@ -53,56 +54,63 @@
 					
 					$(document).click(function(e){
 						hidePopupMenu();
-						e.stopPropagation();
-						window.event.cancelBubble = true;
 					});
 					
-					$("#content").click(function(e){
-						$("#sidebar").toggle("slide", {}, 200, function(e){
-							resize();
-						});
-						resize();
-					});
+					
+					
+// 					$("#content").click(function(e){
+// 						$("#sidebar").toggle("slide", {}, 200, function(e){
+// 							resize();
+// 						});
+// 						resize();
+// 					});
 					
 					$(".popup-menu-trigger").off('mousedown');
+					$(".popup-menu-trigger").off('taphold');
 					
 					$(".popup-menu-trigger").mousedown(function(e){ 
 					    if( e.button == 2 ) { 
-					      
 					      var id = $(this).attr("popupMenuId");
 					      var x = e.pageX;
 					      var y = e.pageY;
-					     
 					      showPopupMenu(id, x, y);
-					      
 					      return false; 
 					    } 
 					    return true; 
 					  });
 					
+					$(".popup-menu-trigger").on('taphold', function(e){ 
+					      var id = $(this).attr("popupMenuId");
+					      var x = e.pageX;
+					      var y = e.pageY;
+					      showPopupMenu(id, x, y);
+					      return false; 
+					 });
 					
-					
+					initTrash();
+					hideLoadingPanel();
 				}
 				
-				function initFormDialog(addBtn){
+				function initProjectDialog(addButtonLabel, cancelButtonLabel){
 					
 					var dialog_buttons = {}; 
 					
-					dialog_buttons[addBtn] = function(){ 
+					dialog_buttons[addButtonLabel] = function(){ 
 						$("#project-form-submit-button").click();
-						$(this).dialog('close');
+// 						$(this).dialog('close');
 					}
 					
-					dialog_buttons['Cancel'] = function(){ 
+					dialog_buttons[cancelButtonLabel] = function(){ 
 						$(this).dialog('close'); 
 					}   
 					
 
-					$("#formsDialog").dialog({
+					$("#dialog-window").dialog({
 	      				  autoOpen: false,
 	      			      resizable: true,
 	      			      width: 500,
-	      			      height: 400,
+	      			      height: 350,
+	      			      draggable: true,
 	      			      show: {
 	      			        effect: "fade",
 	      			        duration: 500
@@ -111,16 +119,181 @@
 	      			        effect: "fade",
 	      			        duration: 500
 	      			      },
-	      			      modal: true,
+	      			      modal: false,
 	      			      buttons: dialog_buttons
 	      			      
 	      			    });
 				}
 				
-				function showFormDialog(){
-					var title = $(".forms").attr("title");
-					$("#formsDialog").dialog( "option", "title", title );
-      				$("#formsDialog").dialog("open");      				
+				function initLayerDialog(addButtonLabel, cancelButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[addButtonLabel] = function(){ 
+						$("#layer-form-submit-button").click();
+// 						$(this).dialog('close');
+					}
+					
+					dialog_buttons[cancelButtonLabel] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 350,
+	      			      draggable: true,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function initElementDialog(addButtonLabel, cancelButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[addButtonLabel] = function(){ 
+						
+					}
+					
+					dialog_buttons[cancelButtonLabel] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 350,
+	      			      draggable: true,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function initTelegramsDialog(cancelButtonLabel){
+					
+					var dialog_buttons = {}; 
+		
+					dialog_buttons[cancelButtonLabel] = function(){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      width: 500,
+	      			      height: 350,
+	      			      draggable: true,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 500
+	      			      },
+	      			      modal: false,
+	      			      buttons: dialog_buttons
+	      			      
+	      			    });
+				}
+				
+				function initRemoveDialog(yesButtonLabel, noButtonLabel){
+					
+					var dialog_buttons = {}; 
+					
+					dialog_buttons[yesButtonLabel] = function(e){ 
+						var callback = $("#delete-message").attr("callback");
+						var dialog = this;
+						
+						$.ajax({
+							url : callback,
+							type : 'get',
+							cache : false,
+							success: function(data, textStatus, jqXHR){
+								
+								var msg = $.secureEvalJSON(data);
+								var type = msg.type;
+								var select = msg.select;
+								var remove = msg.remove;
+								
+								if(remove != 'undefined'){
+									$("#"+remove).hide("fade",{}, 300, function(){ 
+										$(this).remove();		
+									});
+								}
+								
+								if(type == "project"){
+									if(select == "other"){
+										location.href = "?";
+									}
+								} else{
+									if(select != 'undefined'){
+										$("#"+select).children().children().click();
+										$("#"+select).children().children().css("background", "#88c9e8");
+									}
+								}
+								
+								$(dialog).dialog('close');
+					        }
+						});
+					}
+					
+					dialog_buttons[noButtonLabel] = function(e){ 
+						$(this).dialog('close'); 
+					}   
+					
+
+					$("#dialog-window").dialog({
+	      				  autoOpen: false,
+	      			      resizable: true,
+	      			      draggable: true,
+	      			      width: 400,
+	      			      height: 160,
+	      			      show: {
+	      			        effect: "fade",
+	      			        duration: 300
+	      			      },
+	      			      hide: {
+	      			        effect: "fade",
+	      			        duration: 300
+	      			      },
+	      			      modal: true,
+	      			      buttons: dialog_buttons
+	      			    });
+				}
+				
+				function showDialog(){
+					var title = $(".dialogs").attr("title");
+					$("#dialog-window").dialog( "option", "title", title );
+      				$("#dialog-window").dialog("open");      				
+				}
+				
+				function hideDialog(){
+					$("#dialog-window").dialog("close");
 				}
 			
 				function resize(){
@@ -142,7 +315,7 @@
 					var mainMargin = 10;
 					var headerHeight = 40;
 					var headerPadding = 10;
-					var footerHeight = 50;
+					var footerHeight = -10;
 					var sublayersHeight = 60;
 					
 					var newWidth = windowWidth - (mainMargin * 2)  - sidebarWidth - (sideBarPadding*2);
@@ -159,8 +332,19 @@
 					});
 					
 					$("#content").css({
+						width : newWidth,
 						height : newContentHeight
 					});
+					
+					$("#elements-area").css({
+						height : newContentHeight - 50
+					});
+					$(".accordion-div").css({
+						height : newContentHeight - 115
+					});
+					
+					var loadingTop = (windowHeight/2) - 100;
+					$("#loading-img").css("top", loadingTop+"px");
 					
 					//PROJECT CHOOSER RESIZE
 					var titleHeight = 80;
@@ -189,7 +373,23 @@
 				function hideProjectChooser(){
 					$("#projectchooser").hide("scale", {}, 200);
 				}
-					
+				
+				function setFocused(elem){
+					$(elem).addClass("focused");
+				}
+				
+				function unsetFocused(elem){
+					$(elem).removeClass("focused");
+				}
+				
+				function showLoadingPanel(){
+					$("#loading").show("fade", {}, 200);
+				}
+				
+				function hideLoadingPanel(){
+					$("#loading").hide("fade", {}, 200);
+				}
+	
 		</script>
 
 	</wicket:head>
@@ -205,10 +405,18 @@
 		
 		<div id="projectchooser" class="modal" wicket:id="projectchooser"></div>
 		
-		<div id="formsDialog">
-			<div id="forms" class="forms" wicket:id="forms"></div>
+		<div id="dialog-window">
+			<div id="dialogs" class="dialogs" wicket:id="dialogs"></div>
 		</div>
 		
 		<div id="tooltip" class="tooltip"></div>
+		
+		<div id="trash">
+			<img id="trash-icon" src="images/trash_icon.png"/>
+		</div>
+		
+		<div id="loading"  onclick="hideLoadingPanel();">
+            <img id="loading-img" src="images/loading.gif"/>
+        </div>
 	</body>
 </html>

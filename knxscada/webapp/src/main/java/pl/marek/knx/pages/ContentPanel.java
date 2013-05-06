@@ -1,12 +1,14 @@
 package pl.marek.knx.pages;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
 
 import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.utils.ExternalImageResource;
 
 @HtmlFile("content.html")
 public class ContentPanel extends BasePanel{
@@ -15,22 +17,71 @@ public class ContentPanel extends BasePanel{
 
 	private SubLayer subLayer;
 	
+	private ElementsPanel elementsPanel;
+	private SubLayerSettingsPanel settingsPanel;
+	
+	private Image backgroundImage;
+	
 	public ContentPanel(String componentName, DBManager dbManager) {
-        super(componentName);
+        super(componentName, dbManager);
         setOutputMarkupId(true);
         
-        String pId = getParameter("project");
-        if(pId != null){
-	        int projectId = Integer.parseInt(pId);
-	        Project project = dbManager.getProjectById(projectId);
-	        Layer layer = project.getLayers().get(0);
-	        subLayer = layer.getSubLayers().get(0);
+        Project project = getCurrentProject();
+        if(project != null){
+        	if(project.getLayers().size()>0){
+        		Layer layer = project.getLayers().get(0);
+        		if(layer.getSubLayers().size()>0){
+        			subLayer = layer.getSubLayers().get(0);
+        		}
+        	}
         }
+        
         loadComponents();
     }
+	
+	protected void onBeforeRender() {
+    	
+        if(get("elements-panel") == null){
+            this.setElementsWrapper("elements-panel");
+        }
+        if(get("settings-panel") == null){
+            this.setSettingsWrapper("settings-panel");
+        }
+        super.onBeforeRender();
+    }
+ 
+    protected void setElementsWrapper(String componentName){
+    	elementsPanel = new ElementsPanel(componentName, getDBManager(), subLayer);
+        add(elementsPanel);
+    }
+    
+    protected void setSettingsWrapper(String componentName){
+    	settingsPanel = new SubLayerSettingsPanel(componentName, getDBManager(), subLayer);
+    	settingsPanel.setBackgroundImage(backgroundImage);
+        add(settingsPanel);
+    }
+    
 
 	private void loadComponents(){
 		removeAll();
+		
+		ExternalImageResource imageResource = new ExternalImageResource("");
+		if(subLayer != null){
+			imageResource = new ExternalImageResource(subLayer.getBackgroundImage());
+		}
+		backgroundImage = new Image("background-image", imageResource);
+		
+		backgroundImage.setOutputMarkupId(true);
+		if(imageResource.exists()){
+			backgroundImage.setImageResource(imageResource);
+			backgroundImage.setVisible(true);
+		}else{
+			backgroundImage.setVisible(false);
+			backgroundImage.setOutputMarkupPlaceholderTag(true);
+		}
+		
+		add(backgroundImage);
+		
 		
 		Label l = new Label("msg","");
 		if(subLayer != null){
@@ -42,9 +93,30 @@ public class ContentPanel extends BasePanel{
 
 	public void setSubLayer(SubLayer subLayer) {
 		this.subLayer = subLayer;
+		elementsPanel.setSubLayer(subLayer);
+		settingsPanel.setSubLayer(subLayer);
 		loadComponents();
 	}
-		
+	
+	public void refresh(){
+        subLayer = getCurrentSubLayer();
+        elementsPanel.setSubLayer(subLayer);
+        settingsPanel.setSubLayer(subLayer);
+        loadComponents();
+	}
+	
+	public ElementsPanel getElementsPanel(){
+		return elementsPanel;
+	}
+	
+	public SubLayerSettingsPanel getSubLayerSettingsPanel(){
+		return settingsPanel;
+	}
+	
+	public Image getCurrentBackgroundImage(){
+		return backgroundImage;
+	}
+	
 }
 
 

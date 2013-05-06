@@ -4,11 +4,13 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Layer;
 
+import pl.marek.knx.utils.IconUtil;
 import pl.marek.knx.utils.StaticImage;
 
 @HtmlFile("components/layeritem.html")
@@ -50,7 +52,8 @@ public class LayerItem extends Panel{
 			}
 		};
 		nameLabel.setOutputMarkupId(true);
-		icon = new StaticImage("layerItemIcon", new PropertyModel<String>(layerModel, "icon")){
+		String iconName = new PropertyModel<String>(layerModel, "icon").getObject();
+		icon = new StaticImage("layerItemIcon", new Model<String>(IconUtil.getLayerIconPath(iconName))){
 
 			private static final long serialVersionUID = 1L;
 
@@ -67,8 +70,13 @@ public class LayerItem extends Panel{
 		add(descriptionLabel);
 		add(menu);
 	}
-	
+		
 	public PopupMenu getPopupMenu(){
 		return menu;
 	}
+	
+	public Layer getLayer(){
+		return layerModel.getObject();
+	}
+	
 }

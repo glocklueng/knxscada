@@ -2,14 +2,14 @@ package pl.marek.knx.components;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
 import pl.marek.knx.annotations.HtmlFile;
-import pl.marek.knx.pages.BasePanel;
 
 @HtmlFile("components/popupmenu.html")
-public class PopupMenu extends BasePanel{
+public class PopupMenu extends Panel{
 
 	private static final long serialVersionUID = 1L;
 	

@@ -24,12 +24,21 @@
 	width: 230px;
 	height: 25px;
 	padding-left: 10px;
+	
+	font-size: large;
+	font-style: italic;
+	font-weight: bold;
+	color: white;
 }
 
 .projectItemDescription{
 	width: 230px;
 	height: 45px;
 	padding-left: 10px;
+	
+	font-size: medium;
+	font-style: italic;
+	color: white;
 }
 
 .projectItemImage{

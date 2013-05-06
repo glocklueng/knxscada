@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:head>
+
+</wicket:head>
+<body>
+	<wicket:panel>
+
+		<div id="sublayer-settings-content">
+			<div id="sublayer-settings-accordion">
+				<h3>
+					<wicket:message key="background-image-panel-title"></wicket:message>
+				</h3>
+				<div class="sublayer-accordion-div">
+					<div id="background-image-form-div">
+						<form wicket:id="background-image-form" style="display: none;">
+							<input wicket:id="background-image-file" id="background-image-file" type="file" accept="image/*" style="display: none;" /> 
+							<br /> 
+							<input type="submit" wicket:id="background-image-submit-button" id="background-image-submit-button" style="display: none;" />
+						</form>
+						<input type="button" wicket:message="value:background-image.choose.button" id="background-image-choose-button" class="background-image-buttons" /> 
+						<input type="button" wicket:message="value:background-image.remove.button" wicket:id="background-image-remove-button" class="background-image-buttons" />
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</wicket:panel>
+
+</body>
+</html>

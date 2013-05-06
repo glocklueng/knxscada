@@ -25,7 +25,8 @@
  	        	$(".subLayerItem").first().css("background","#88c9e8");
  	        	
  	        	$(".subLayerItem").click(function(e){
-					$(".subLayerItem").each(function(e){
+ 	        		showLoadingPanel();
+ 	        		$(".subLayerItem").each(function(e){
 						$(this).removeClass("selected");
 						$(this).css("background", "rgba(172, 227, 7, 1)");
 					});
@@ -64,8 +65,18 @@
 			}
         	
         	</script>
-        
-				<div class="sublayer" wicket:id="sublayer"/>
+        	
+        		<div class="new-sublayer-item"
+	        		onmouseover="setFocused(this);" 
+					onmouseout="unsetFocused(this);">
+        			<img wicket:id="new-sublayer-item" id="new-sublayer-item-icon"/>
+        		</div>
+        		
+        		<div class="sublayer-container">
+        			<nobr>
+						<div class="sublayer" wicket:id="sublayer"/>
+					</nobr>
+				</div>
         </wicket:panel>
     </body>
 </html>

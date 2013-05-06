@@ -30,6 +30,7 @@ public class ProjectItem extends Panel{
 	public ProjectItem(String id, IModel<Project> projectModel) {
 		super(id);
 		this.projectModel = projectModel;
+		setOutputMarkupId(true);
 		loadComponents();
 	}
 	
@@ -64,6 +65,10 @@ public class ProjectItem extends Panel{
 	
 	public PopupMenu getPopupMenu(){
 		return menu;
+	}
+	
+	public Project getProject(){
+		return projectModel.getObject();
 	}
 
 }
