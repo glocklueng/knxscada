@@ -34,7 +34,13 @@ public class SubLayerFragment extends ListFragment{
         subLayer = dbManager.getSubLayerByIdWithDependencies(subLayer.getId());
         
         subLayerDescriptionTextView = (TextView) rootView.findViewById(R.id.sublayer_description_textview);
-        subLayerDescriptionTextView.setText(subLayer.getDescription());
+        String description = subLayer.getDescription();
+        subLayerDescriptionTextView.setText(description);
+        if(description.isEmpty()){
+        	subLayerDescriptionTextView.setVisibility(View.GONE);
+        }else{
+        	subLayerDescriptionTextView.setVisibility(View.VISIBLE);
+        }
         return rootView;
     }
  

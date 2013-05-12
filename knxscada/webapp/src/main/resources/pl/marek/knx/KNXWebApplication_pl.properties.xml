@@ -3,6 +3,7 @@
 <properties>
     
     <entry key="page-title">KNX WebApplication</entry>
+    <entry key="upload-directory">knxscada</entry>
     
     <!-- BASE STRINGS -->
     <entry key="login">Zaloguj</entry>
@@ -19,6 +20,8 @@
     <!-- SIGN IN -->
     <entry key="password.Required">Podaj hasło!</entry>
     <entry key="password.Incorrect">Podane hasło jest niepoprawne!</entry>
+    <entry key="password.NotSet">Hasło dostępu nie jest ustawione. Ustaw hasło, aby móc się zalogować.</entry>
+    
     
     <!-- PROJECT -->
     <entry key="projectTooltip">Kliknij, aby wybrać inny projekt...</entry>
@@ -41,8 +44,10 @@
 	<entry key="project-form.name.label">Nazwa projektu</entry>
     <entry key="project-form.description.label">Opis</entry>
     <entry key="project-image-form.choose.button">Wybierz obraz</entry>
+    <entry key="project-image-form.remove.button">Usuń obraz</entry>
     <entry key="project-image-form.noimage.message">Nie wybrano obrazu dla projektu</entry>
     <entry key="project-image-form.image.uploaded">Dodano obraz dla projektu</entry>
+    <entry key="project-image-form.image.removed">Obraz został usunięty z projektu</entry>
     
     <entry key="new-layer">Nowe piętro</entry>
     <entry key="add-layer">Dodaj piętro</entry>
@@ -65,12 +70,35 @@
     <entry key="elements-trigger-label">Elementy</entry>
     <entry key="element-position-update-failed">Wystąpił problem podczas uaktualniania pozycji elementu!</entry>
     
+    <entry key="element-form.name.label">Nazwa elementu</entry>
+    <entry key="element-form.description.label">Opis</entry>
+    
+    <entry key="group-address-add-button-label">Dodaj adres</entry>
+    <entry key="group-address-delete-button-label">Usuń adres</entry>
+    <entry key="group-address-not-removable-addresses">Nie można usunąć więcej adresów grupowych!</entry>
+    
+    
+    <entry key="group-address">Adres grupowy</entry>
+    
+    <entry key="group-address-default-label">Adres grupowy</entry>
+    <entry key="group-address-state-label">Status</entry>
+    <entry key="group-address-other-label">Inny</entry>
+    
+    <entry key="group-address-level-chooser-title">Typ adresu</entry>
+    <entry key="group-address-level-chooser-two-levels">2 poziomy</entry>
+    <entry key="group-address-level-chooser-three-levels">3 poziomy</entry>
+    
+    <entry key="wrong-group-address">Pole '%s' zawiera niepoprawny adres grupowy!</entry>
+    
+    
     <!-- ELEMENTS AND SETTINGS PANEL -->
     <entry key="add-element">Dodaj element</entry>
     <entry key="new-element">Nowy element</entry>
     <entry key="edit-element">Edycja elementu</entry>
     <entry key="delete-element-confirmation-title">Usuwanie elementu</entry>
     <entry key="delete-element-confirmation-message">Czy napewno chcesz usunąć element '%s'?</entry>
+    
+
     
     <entry key="background-image.choose.button">Wybierz obraz</entry>
     <entry key="background-image.remove.button">Usuń obraz</entry>
@@ -87,7 +115,8 @@
     <entry key="layer.remove.menuitem">Usuń piętro</entry>
     <entry key="sublayer.edit.menuitem">Edytuj</entry>
     <entry key="sublayer.remove.menuitem">Usuń</entry>
-    
+    <entry key="element.edit.menuitem">Edytuj</entry>
+    <entry key="element.remove.menuitem">Usuń</entry>
     <!-- OTHERS -->
     <entry key="read-message-failed">Problem z odczytem danych</entry>
     

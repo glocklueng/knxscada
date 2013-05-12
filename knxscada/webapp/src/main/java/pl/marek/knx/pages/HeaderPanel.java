@@ -7,9 +7,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Project;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.pages.DialogsPanel.DialogType;
 import pl.marek.knx.utils.IconUtil;
 import pl.marek.knx.utils.StaticImage;
@@ -23,13 +23,14 @@ public class HeaderPanel extends BasePanel {
 	
 	private StaticImage telegramsIcon;
 	
-	public HeaderPanel(String componentName, DBManager dbManager) {
+	public HeaderPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
+        setOutputMarkupId(true);
         loadComponents();
     }
 	
 	private void loadComponents(){
-		
+		removeAll();
 		Project project = getCurrentProject();
 		
 		if(project != null){
@@ -45,6 +46,10 @@ public class HeaderPanel extends BasePanel {
         add(projectName);
         add(telegramsIcon);
         add(createLogoutForm());
+	}
+	
+	public void refresh(){
+		loadComponents();
 	}
 		
 	private Form<Void> createLogoutForm(){

@@ -2,10 +2,10 @@ package pl.marek.knx.pages;
 
 import java.util.ArrayList;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 
 @HtmlFile("main.html")
 public class MainPanel extends BasePanel {
@@ -17,7 +17,7 @@ public class MainPanel extends BasePanel {
 	
 	private Layer layer;
 	
-	public MainPanel(String componentName, DBManager dbManager) {
+	public MainPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
         setOutputMarkupId(true);
 	}

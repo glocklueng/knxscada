@@ -3,37 +3,7 @@
 	<wicked:head>
 	</wicked:head>
     <body>
-        <wicket:panel>
-        	<script>
-        		$(document).ready(
-        		function(){
-	        		$("#projectName").click(function(e){
-						showProjectChooser();
-	        		});
-	        		
-	        		$("#projectName").mouseover(function(e){
-						$("#projectName").css("color", "#00E600");
-	        			showProjectTooltip(e.pageX, e.pageY);
-	        		});
-	        		
-	        		$("#projectName").mouseout(function(e){
-	        			$("#projectName").css("color", "#D8E2F2");
-	        			hideProjectTooltip();
-		        	});
-        		});
-        		
-        		function showProjectTooltip(posX, posY){
-					$("#projectTooltip").css("top", posY);
-					$("#projectTooltip").css("left", posX);
-					$("#projectTooltip").show("fade", {}, 200);
-				}
-				
-				function hideProjectTooltip(){
-					$("#projectTooltip").hide("fade", {}, 200);
-				}
-        	
-        	</script>
-        
+        <wicket:panel>        
         	<div id="headerContent">
         		
         		<img id="appLogo" wicket:id="appLogo"/>

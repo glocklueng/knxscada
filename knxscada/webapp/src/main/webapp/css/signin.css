@@ -96,13 +96,22 @@ body {
 	top:1px;
 }
 
-
 .signInFeedback{
 	width: 98%;
 	color: red;
 	text-align: center;
 	font-size: large;
 	font-weight: bold;
+}
+
+.feedbackPanelERROR{
+	color: red;
+}
+.feedbackPanelINFO{
+	color: green;
+}
+.feedbackPanelWARNING{
+	color: yellow;
 }
 
 .signInFeedback ul li {

@@ -179,7 +179,7 @@
     <string name="webserver_service_deploy">Przygotowywanie aplikacji webowej</string>
     <string name="webserver_service_title">Serwer WWW</string>
     <string name="webserver_service_message">Uruchomiono</string>
-    
+   
 	
 	<!-- TELEGRAM DETAILS -->
 	<string name="telegrams_activity_title">Telegramy</string>

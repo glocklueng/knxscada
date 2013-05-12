@@ -26,7 +26,9 @@ import android.util.Log;
 public class WebServer {
 	
     private static final String CONTENT_RESOLVER_ATTRIBUTE = "pl.marek.knx.contentResolver";
-    private static final String ANDROID_CONTEXT_ATTRIBUTE = "pl.marek.knx.context"; 
+    private static final String ANDROID_CONTEXT_ATTRIBUTE = "pl.marek.knx.context";
+    private static final String DEF_PREFERENCE_FILE_ATTRIBUTE = "pl.marek.knx.defPreferenceFile";
+    
 	
 	public static final String WEBAPP_DIRECTORY = "webapp";
 	public static final String WEBAPP_TMP_DIRECTORY = "webapp_tmp";
@@ -61,10 +63,15 @@ public class WebServer {
 	}
 	
 	public void stop() throws Exception{
+		
+		webServer.setStopAtShutdown(true);
 		webServer.setGracefulShutdown(SERVER_SHUTDOWN_TIMEOUT);
+
 		for(Connector connector: webServer.getConnectors()){
 			connector.close();
+			connector.stop();
 		}
+		webServer.stop();
 	}
 	
 	private Handler createHandlers(){
@@ -85,7 +92,7 @@ public class WebServer {
         
         webContext.setAttribute(CONTENT_RESOLVER_ATTRIBUTE, appContext.getContentResolver());
         webContext.setAttribute(ANDROID_CONTEXT_ATTRIBUTE, appContext);
-        
+        webContext.setAttribute(DEF_PREFERENCE_FILE_ATTRIBUTE, appContext.getString(R.string.default_preference_file));
         return webContext;
 	}
 	

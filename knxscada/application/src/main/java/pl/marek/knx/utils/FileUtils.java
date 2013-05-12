@@ -59,7 +59,7 @@ public class FileUtils {
 	}
 	
 	public static void delete(String path){
-		Log.i("DELETE", path);
+		Log.d("DELETE FILE", path);
 		File file = new File(path);
 		if(file.isDirectory()){
 			String[] childs = file.list();

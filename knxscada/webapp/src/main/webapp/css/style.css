@@ -1,23 +1,14 @@
 body {
-
 	margin: 0;
 	padding: 0;
 	background: #88c9e8; /* Old browsers */
 	background: -moz-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left bottom, right top, color-stop(25%, #88c9e8
-		), color-stop(100%, #066dab)); /* Chrome,Safari4+ */
+	background: -webkit-gradient(linear, left bottom, right top, color-stop(25%, #88c9e8), color-stop(100%, #066dab)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);
-	/* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);
-	/* Opera 11.10+ */
 	background: -ms-linear-gradient(45deg, #88c9e8 25%, #066dab 100%);
-	/* IE10+ */
 	background: linear-gradient(45deg, #88c9e8 25%, #066dab 100%);
-	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(   startColorstr='#88c9e8',
-		endColorstr='#066dab', GradientType=1);
-	/* IE6-9 fallback on horizontal gradient */
+	filter: progid:DXImageTransform.Microsoft.gradient(   startColorstr='#88c9e8',endColorstr='#066dab', GradientType=1);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
@@ -25,7 +16,7 @@ body {
 	-moz-user-select: none; 
     -khtml-user-select: none; 
     -webkit-user-select: none; 
-    -o-user-select: none; 
+    -o-user-select: none;
 }
 
 #header {
@@ -43,7 +34,7 @@ body {
 }
 
 #headerContent{
-/* 	position: absolute; */
+
 }
 
 #appLogo{
@@ -128,7 +119,7 @@ body {
 }
 
 #sublayers{
-/* 	position: absolute; */
+/* 	position: relative; */
 	width: 100%;
 	height: 50px;
 	display: inline-block;
@@ -145,7 +136,7 @@ body {
 
 #content{
 	position: absolute;
-	top: 140px;
+/* 	top: 140px; */
 /* 	width: 100%; */
 	height: 40px;
 	overflow: hidden;
@@ -171,6 +162,7 @@ body {
 
 #projectchooser{
 	display: none;
+	z-index: 200;
 }
 
 .modal{
@@ -217,9 +209,12 @@ body {
 	font-size: medium;
 	z-index: 2;
 }
-
+#dialog-window{
+	z-index: 1000;
+}
 .dialogs{
 /* 	display: none; */
+	
 }
 
 .feedback{
@@ -301,12 +296,6 @@ body {
 	width: 100px;
 	height: 100px;
 	z-index: 1;
-}
-
-.popup-menu{
-	position: absolute;
-	display:none;
-	z-index: 100;
 }
 
 .delete-message{
@@ -444,8 +433,10 @@ body {
 	background: rgba(0,0,0,0.4);
 	width: 100%;
 	height: 100%;
+	overflow:auto;
 	display: none;
 }
+
 .settings-panel{
 	position: absolute;
 	background: rgba(0,0,0,0.4);
@@ -463,18 +454,10 @@ body {
 }
 
 .draggable-element{
-	width: 100px;
-	height: 100px;
-	background-color: blue;
 	z-index: 102;
-	border: 1px solid black;
 }
 .dragged-element{
-	width: 100px;
-	height: 100px;
-	background-color: blue;
 	z-index: 102;
-	border: 1px solid black;
 }
 
 #trash{
@@ -527,7 +510,7 @@ body {
 	height: 90%;
 	text-align:center;
 	z-index: 1000;
-	display: none;
+/* 	display: none; */
 }
 #loading-img{
 	position: absolute;
@@ -551,7 +534,121 @@ body {
 .elements{
 	position: absolute;
 	top: 60px;
+	width: 99%;
+	height: 85%;
+	overflow: auto;
+}
+
+.controller{
+/* 	position: relative; */
+	display:inline-block;
+
 }
 
 
 
+/* ELEMENTS DIALOG */
+.element-feedback-div{
+	height: 50px;
+	overflow: auto;
+}
+.element-chooser{
+	position: absolute;
+	width: 520px;
+	min-height: 250px;
+	top: 10px;
+	padding: 30px;
+	margin: 0;
+	background: rgba(0, 0, 0, 0.8);
+	border: 2px solid rgba(0, 0, 0, 0.9);
+	z-index: 1;
+/* 	display: none; */
+	
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	
+	text-align: center;
+}
+
+.element-chooser-preview{
+	position: absolute;
+	top: 60px;
+	width: 580px;
+	height: 80px;
+	text-align: center;
+	
+}
+
+.element-chooser-preview-item{
+	display: inline-block;
+	
+}
+
+#element-form-div{
+	position: absolute;
+	top: 140px;
+	width: 600px;
+}
+.element-form-inputs{
+	width: 250px;
+	margin-left: 15px;
+}
+
+#element-form-fields-table{
+	position: absolute;
+	width: 280px;
+}
+
+#element-form-addresses-table{
+	position: absolute;
+	width: 310px;
+	top: 70px;
+	right: 0px;
+
+}
+
+#group-address-level-chooser{
+	position: absolute;
+	height: 70px;
+	width: 310px;
+	right: 0px;
+}
+
+#group-address-level-chooser-title{
+	font-style: italic;
+	font-weight: bold;
+	font-size: medium;
+}
+
+.group-address-level-chooser-options{
+	margin-left: 20px;
+}
+
+.group-address-buttons{
+	position: absolute;
+	display:block;
+	width: 98%;
+	height: 35px;
+	font-size: small;
+	background: rgba(0,0,0,0.1);
+}
+
+#group-address-add-button{
+	position: absolute;
+}
+#group-address-delete-button{
+	position: absolute;
+	right: 0px;
+}
+
+.popup-menu{
+	position: absolute;
+	display:none;
+	z-index: 100;
+}
+
+.project-image-buttons{
+	width: 120px;
+	margin: 2px;
+}

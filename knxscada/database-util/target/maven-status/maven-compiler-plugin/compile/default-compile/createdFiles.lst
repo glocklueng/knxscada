@@ -1,6 +1,7 @@
 pl/marek/knx/telegram/Telegram.class
 pl/marek/knx/database/tables/DatapointsTable$DatapointsColumns.class
 pl/marek/knx/database/tables/ElementGroupAddressTable.class
+pl/marek/knx/utils/PasswordUtil.class
 pl/marek/knx/telegram/Telegram$1.class
 pl/marek/knx/database/Device.class
 pl/marek/knx/database/tables/LayerTable.class

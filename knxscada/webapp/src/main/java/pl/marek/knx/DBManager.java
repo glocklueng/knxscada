@@ -3,6 +3,8 @@ package pl.marek.knx;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.marek.knx.components.controllers.ControllerType;
+import pl.marek.knx.components.controllers.ElementGroupAddressType;
 import pl.marek.knx.database.DPTEntity;
 import pl.marek.knx.database.DatapointEntity;
 import pl.marek.knx.database.Device;
@@ -20,6 +22,7 @@ public class DBManager implements DatabaseManager{
 	private ArrayList<Project> projects = new ArrayList<Project>();
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
 	private ArrayList<SubLayer> subLayers = new ArrayList<SubLayer>();
+	private ArrayList<Element> elements = new ArrayList<Element>();
 	
 	public DBManager(){
 		
@@ -48,6 +51,38 @@ public class DBManager implements DatabaseManager{
 					subLayer.setName(String.format("SubLayer %d.%d.%d", i,j,k));
 					subLayer.setDescription(String.format("SubLayer Description %d.%d.%d", i,j,k));
 					subLayer.setIcon("logo");
+					
+					
+					ArrayList<Element> elems = new ArrayList<Element>();
+					for(int l=1;l<4;l++){
+						Element element = new Element();
+						element.setId(l);
+						element.setProjectId(i);
+						element.setLayerId(j);
+						element.setSubLayerId(k);
+						element.setName("Nazwa");
+						element.setDescription("Opis");
+						element.setType(ControllerType.ON_OFF_SWITCH.name());
+						
+						ElementGroupAddress addr = new ElementGroupAddress();
+						addr.setElementId(l);
+						addr.setAddress("0/0/1");
+						addr.setType(ElementGroupAddressType.MAIN.name());
+						
+						ElementGroupAddress addr1 = new ElementGroupAddress();
+						addr1.setElementId(l);
+						addr1.setAddress("0/0/2");
+						addr1.setType(ElementGroupAddressType.OTHER.name());
+						
+						ArrayList<ElementGroupAddress> addrs = new ArrayList<ElementGroupAddress>();
+						addrs.add(addr);
+						addrs.add(addr1);
+						element.setGroupAddresses(addrs);
+						
+						elems.add(element);
+						elements.add(element);
+					}
+					subLayer.setElements(elems);
 					
 					subLayers.add(subLayer);
 					projectSubLayers.add(subLayer);
@@ -371,7 +406,15 @@ public class DBManager implements DatabaseManager{
 
 	@Override
 	public void addElement(Element element) {
-		// TODO Auto-generated method stub
+		System.out.println("ADDING ELEMENT:"+ element.getName());
+		System.out.println("id: "+element.getId());
+		System.out.println("Layer id: "+element.getLayerId());
+		System.out.println("SubLayer id: "+element.getSubLayerId());
+		System.out.println("Project id: "+element.getProjectId());
+		System.out.println("Desc: "+element.getDescription());
+		for(ElementGroupAddress addr: element.getGroupAddresses()){
+			System.out.println("Address: " + addr.getAddress() + " TYPE: "+addr.getType());
+		}
 		
 	}
 
@@ -395,14 +438,12 @@ public class DBManager implements DatabaseManager{
 
 	@Override
 	public void removeElement(Element element) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("REMOVE ELEMENT:"+ element.getName());
 	}
 
 	@Override
 	public void updateElement(Element element) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("UPDATE ELEMENT:"+ element.getName());
 	}
 
 	@Override

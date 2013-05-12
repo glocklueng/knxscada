@@ -22,6 +22,7 @@ public class LayerItem extends Panel{
 	private Label descriptionLabel;
 	private StaticImage icon;
 	private PopupMenu menu;
+	private boolean isMainLayer;
 	
 	private IModel<Layer> layerModel;
 	
@@ -40,35 +41,35 @@ public class LayerItem extends Panel{
 		descriptionLabel = new Label("layerItemDescription", new PropertyModel<String>(layerModel, "description"));
 		descriptionLabel.setOutputMarkupId(true);
 		
-		nameLabel = new Label("layerItemName", new PropertyModel<String>(layerModel, "name")){
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				super.onComponentTag(tag);
-				tag.put("descriptionBlockId", descriptionLabel.getMarkupId());
-				tag.put("popupMenuId", menu.getMarkupId());
-			}
-		};
+		nameLabel = new Label("layerItemName", new PropertyModel<String>(layerModel, "name"));
 		nameLabel.setOutputMarkupId(true);
 		String iconName = new PropertyModel<String>(layerModel, "icon").getObject();
-		icon = new StaticImage("layerItemIcon", new Model<String>(IconUtil.getLayerIconPath(iconName))){
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				super.onComponentTag(tag);
-				tag.put("popupMenuId", menu.getMarkupId());
-			}
-		};
-		
+		icon = new StaticImage("layerItemIcon", new Model<String>(IconUtil.getLayerIconPath(iconName)));
+		if(iconName.isEmpty()){
+			icon.setVisible(false);
+			icon.setOutputMarkupPlaceholderTag(true);
+		}else{
+			icon.setVisible(true);
+		}
 		
 		add(icon);
 		add(nameLabel);
 		add(descriptionLabel);
 		add(menu);
+	}
+	
+	@Override
+	protected void onComponentTag(ComponentTag tag) {
+		Layer layer = layerModel.getObject();
+		tag.put("layerid", String.valueOf(layer.getId()));
+		if(isMainLayer){
+			tag.put("class", "layer");
+		}else{
+			tag.put("class", "layer popup-menu-trigger");	
+		}
+		tag.put("popupMenuId", menu.getMarkupId());
+		tag.put("descriptionBlockId", descriptionLabel.getMarkupId());
+		super.onComponentTag(tag);
 	}
 		
 	public PopupMenu getPopupMenu(){
@@ -77,6 +78,10 @@ public class LayerItem extends Panel{
 	
 	public Layer getLayer(){
 		return layerModel.getObject();
+	}
+
+	public void setMainLayer(boolean isMainLayer) {
+		this.isMainLayer = isMainLayer;
 	}
 	
 }

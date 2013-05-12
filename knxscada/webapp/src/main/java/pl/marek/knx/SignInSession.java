@@ -4,37 +4,32 @@ import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 
+import pl.marek.knx.utils.PasswordUtil;
+
 public final class SignInSession extends AuthenticatedWebSession {
 
 	private static final long serialVersionUID = 1L;
 
-	private String user;
+	private boolean logged;
 
 	protected SignInSession(Request request) {
 		super(request);
+		logged = false;
 	}
 
 	@Override
-	public final boolean authenticate(final String username,
-			final String password) {
-		final String WICKET = "knx";
-
-		if (user == null) {
-
-			if (WICKET.equalsIgnoreCase(password)) {
-				user = username;
+	public final boolean authenticate(String password, String storedPassword) {
+		
+		if (!logged) {
+			String pass = PasswordUtil.encryptPassword(password);
+			if (pass.equals(storedPassword)) {
+				logged = true;
 			}
 		}
-
-		return user != null;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(final String user) {
-		this.user = user;
+		//TODO Remove!!!
+		logged = true;
+		
+		return logged;
 	}
 
 	@Override

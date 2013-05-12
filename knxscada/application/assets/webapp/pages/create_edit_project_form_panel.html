@@ -4,29 +4,7 @@
 
 	</wicket:head>
     <body>
-        <wicket:panel>
-        <script>
-        	$(function(e){
-        		$('#project-image-file').on("change", function(){ 
-        			showLoading();
-        			$("#project-image-submit-button").click();
-        		});
-        		$("#project-image-choose-button").click(function(e){
-        			$("#project-image-file").click();
-        		});
-        		
-        		hideLoading();
-        	});
-        	
-        	function showLoading(){
-        		$("#project-image-loading").show("fade",{},500);
-        	}
-        	
-        	function hideLoading(){
-        		$("#project-image-loading").hide("fade",{},500);
-        	}
-        </script>
-			
+        <wicket:panel>			
 			<div id="project-feedback-div">
 				<span wicket:id="project-feedback" class="feedback"></span>
 			</div>
@@ -61,7 +39,8 @@
 			    <form wicket:id="project-image-form">
 				    <input wicket:id="project-image-file" id="project-image-file" type="file" accept="image/*" style="display:none;"/> <br/>
 		    		<input type="submit" wicket:id="project-image-submit-button" id="project-image-submit-button" style="display:none;"/>
-			    	<input type="button" wicket:message="value:project-image-form.choose.button" id="project-image-choose-button"/>
+			    	<input type="button" wicket:message="value:project-image-form.choose.button" id="project-image-choose-button" class="project-image-buttons"/><br/>
+			    	<input type="button" wicket:message="value:project-image-form.remove.button" wicket:id="project-image-remove-button" class="project-image-buttons"/>
 			    	
 		   	 	</form>
 	   	 	</div>

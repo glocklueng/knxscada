@@ -43,8 +43,17 @@ public class ProjectItem extends Panel{
 		nameLabel = new Label("projectItemName", new PropertyModel<String>(projectModel, "name"));
 		descriptionHint = new Label("projectItemDescriptionLabel",new ResourceModel("project.description.label"));
 		descriptionLabel = new Label("projectItemDescription", new PropertyModel<String>(projectModel, "description"));
-		image = new Image("projectItemImage", new ExternalImageResource(new PropertyModel<String>(projectModel, "image")));
-
+		
+		ExternalImageResource imageRes = new ExternalImageResource(new PropertyModel<String>(projectModel, "image"));
+		image = new Image("projectItemImage", imageRes);
+		
+		if(!imageRes.exists()){
+			image.setVisible(false);
+			image.setOutputMarkupPlaceholderTag(true);
+		}else{
+			image.setVisible(true);
+		}
+		
 		add(nameHint);
 		add(nameLabel);
 		add(descriptionHint);

@@ -2,33 +2,70 @@ $(document).ready(
 	function() {
 		$(window).resize(
 			function() {
-	
-				var windowWidth = $(window).width();
-				var windowHeight = $(window).height();
-	
-//				var mainMargin = $('#main').css('margin').replace(/[^-\d\.]/g, '');
-//				var mainPadding = $('#main').css('padding').replace(/[^-\d\.]/g, '');
-//				var headerHeight = $('#header').css('height').replace(/[^-\d\.]/g, '');
-//				var headerPadding = $('#header').css('padding').replace(/[^-\d\.]/g, '');
-//				var footerHeight = $('#footer').css('height').replace(/[^-\d\.]/g, '');
-				
-				var mainMargin = 20;
-				var mainPadding = 10;
-				var headerHeight = 30;
-				var headerPadding = 10;
-				var footerHeight = 60;
-				
-				var newWidth = windowWidth - (mainMargin * 2) - (mainPadding * 2);
-				var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 2) - (mainPadding * 2) - (headerPadding * 2);
-	
-				$("#main").css({
-					width : newWidth,
-					height : newHeight
-				});
-				
-				$("#sidebar").css({
-					height : newHeight
-				});
-			});
+				resize();
+			}
+		);		
 		$(window).resize();
+});
+
+function resize(){
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
+	
+	var sidebarWidth = 0;
+	var sideBarPadding = 0;
+	
+	var sideBarDisplay = $("#sidebar").css("display");
+	if(sideBarDisplay == "table") {
+		sidebarWidth = 165;
+		sideBarPadding = 10;
+		$("#main").css("left","170px");
+	}else{
+		$("#main").css("left","0px");
+	}
+	
+	var mainMargin = 10;
+	var headerHeight = 40;
+	var headerPadding = 10;
+	var footerHeight = -10;
+	var sublayersHeight = 60;
+	
+	var newWidth = windowWidth - (mainMargin * 2)  - sidebarWidth - (sideBarPadding*2);
+	var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 4) - (headerPadding * 2);
+		var newContentHeight = newHeight - sublayersHeight;
+	
+	$("#main").css({
+		width : newWidth,
+		height : newHeight
 	});
+	
+	$("#sidebar").css({
+		height : newHeight - (sideBarPadding*2)
+	});
+	
+	$("#content").css({
+		width : newWidth,
+		height : newContentHeight
+	});
+	
+	$("#elements-area").css({
+		height : newContentHeight - 50
+	});
+	$(".accordion-div").css({
+		height : newContentHeight - 115
+	});
+	
+	var loadingTop = (windowHeight/2) - 100;
+	$("#loading-img").css("top", loadingTop+"px");
+	
+	//PROJECT CHOOSER RESIZE
+	var titleHeight = 80;
+	var footerHeight = 100;
+	
+	var newWidth = windowWidth - (mainMargin * 2) ;
+	var newHeight = windowHeight - titleHeight - footerHeight;
+
+	$("#projects").css({
+		height : newHeight
+	});
+}

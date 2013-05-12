@@ -44,7 +44,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 																 OnItemLongClickListener,
 																 OnLayerDialogApproveListener{
 	
-	private static final int NEW_LAYER_ITEM_ID = 0;
+	private static final int NEW_LAYER_ITEM_ID = -1;
 	private static final int POPUP_MENU_ITEM_LAYER_EDIT = 100;
 	private static final int POPUP_MENU_ITEM_LAYER_DELETE = 101;
 	private static final int POPUP_MENU_ITEM_SUBLAYER_EDIT = 102;
@@ -129,7 +129,19 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	}
 		
 	private void addSubLayer(SubLayer subLayer){
-		tabBar.addTab(subLayer.getName(), getResourceIdByName(subLayer.getIcon()));
+		if(subLayer.isMainSubLayer()){
+			String tabName = "";
+			if(currentLayer != null){
+				if(currentLayer.isMainLayer()){
+					tabName = project.getName();
+				}else{
+					tabName = currentLayer.getName();
+				}
+			}
+			tabBar.addTab(tabName, R.drawable.logo);
+		}else{
+			tabBar.addTab(subLayer.getName(), getResourceIdByName(subLayer.getIcon()));
+		}
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(SubLayer.SUBLAYER, subLayer);
 		subLayerPagerAdapter.addPage(Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
@@ -169,8 +181,13 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	private SideBarItem createLayerSideBarItem(Layer layer){
 		SideBarItem item = new SideBarItem();
 	    item.setId(layer.getId());
-	    item.setName(layer.getName());
-	    item.setIcon(getResourceIdByName(layer.getIcon()));
+	    if(layer.isMainLayer()){
+	    	item.setName(project.getName());
+	    	item.setIcon(R.drawable.logo);
+	    }else{
+	    	item.setName(layer.getName());
+	    	item.setIcon(getResourceIdByName(layer.getIcon()));
+	    }
 	    return item;
 	}
 	
@@ -231,8 +248,10 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		if(view.equals(layersSideBarView)){
 			if(item.getId() != NEW_LAYER_ITEM_ID){
 				Layer layer = dbManager.getLayerById(item.getId());
-				editedLayer = layer;
-				showLayerPopupMenu(layer);
+				if(!layer.isMainLayer()){
+					editedLayer = layer;
+					showLayerPopupMenu(layer);
+				}
 			}
 		}
 	}
@@ -245,10 +264,13 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 			return super.dispatchTouchEvent(event);
 	}
 	
-	public void onTabLongClick(int tabId) {
+	public void onTabLongClick(int position) {
 		if(currentLayer != null){
-			editedSubLayer = currentLayer.getSubLayers().get(tabId); 
-			showLayerPopupMenu(editedSubLayer);
+			SubLayer sublayer = currentLayer.getSubLayers().get(position);
+			if(!sublayer.isMainSubLayer()){
+				editedSubLayer = sublayer;
+				showLayerPopupMenu(editedSubLayer);
+			}
 		}
 	}
 	
@@ -535,6 +557,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 			layersSideBarView.addItem(createLayerSideBarItem(layer));
 		} else if(clazz.getName().equals(SubLayer.class.getName())){
 			SubLayer subLayer = (SubLayer)layer;
+			subLayer.setBackgroundImage("");
 			subLayer.setProjectId(project.getId());
 			subLayer.setLayerId(currentLayer.getId());
 			dbManager.addSubLayer(subLayer);
@@ -580,6 +603,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		}
 		editedSubLayer = null;
 		
+		currentLayer.getSubLayers().remove(position);
 		tabBar.removeTab(position);
 		subLayerPagerAdapter.removePage(subLayerPagerAdapter.getItem(position));
 

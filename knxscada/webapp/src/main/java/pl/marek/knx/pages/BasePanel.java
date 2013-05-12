@@ -13,18 +13,21 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
 
-import pl.marek.knx.DBManager;
+import android.content.Context;
+
+import pl.marek.knx.KNXWebApplication;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 
-public class BasePanel extends Panel{
+public abstract class BasePanel extends Panel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private DBManager dbManager;
+	private DatabaseManager dbManager;
 	
-	public BasePanel(String id, DBManager dbManager) {
+	public BasePanel(String id, DatabaseManager dbManager) {
 		super(id);
 		this.dbManager = dbManager;
 	}
@@ -49,12 +52,17 @@ public class BasePanel extends Panel{
 		return false;
 	}
 	
-	protected DBManager getDBManager(){
+	protected DatabaseManager getDBManager(){
 		return dbManager;
 	}
 	
 	protected ServletContext getServletContext(){
 		return WebApplication.get().getServletContext();
+	}
+	
+	protected Context getAndroidContext(){
+		KNXWebApplication app = (KNXWebApplication)getApplication();
+		return app.getAndroidContext();
 	}
 	
 	protected Index getIndexPage(){
@@ -107,7 +115,7 @@ public class BasePanel extends Panel{
         if(pId != null){
         	try{
 	            int projectId = Integer.parseInt(pId);
-	            project = getDBManager().getProjectById(projectId);
+	            project = getDBManager().getProjectByIdWithDependencies(projectId);
         	}catch(NumberFormatException ex){}
         }
         return project;

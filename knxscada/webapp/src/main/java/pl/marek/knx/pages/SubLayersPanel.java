@@ -1,11 +1,12 @@
 package pl.marek.knx.pages;
 
+import java.util.ArrayList;
+
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.components.PopupMenuItem;
@@ -13,6 +14,7 @@ import pl.marek.knx.components.SubLayerItem;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.pages.DialogsPanel.DialogType;
 import pl.marek.knx.utils.StaticImage;
 
@@ -27,7 +29,7 @@ public class SubLayersPanel extends BasePanel{
 
 	private static boolean execute;
 	
-	public SubLayersPanel(String componentName, DBManager dbManager) {
+	public SubLayersPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
         setOutputMarkupId(true);
         execute = true;
@@ -35,7 +37,10 @@ public class SubLayersPanel extends BasePanel{
         
         Project project = getCurrentProject();
         if(project != null){
-        	layer = project.getLayers().get(0);
+        	ArrayList<Layer> projectLayers = project.getLayers();
+        	if(projectLayers != null){
+        		layer = projectLayers.get(0);
+        	}
         }
         
         loadComponents();
@@ -52,8 +57,19 @@ public class SubLayersPanel extends BasePanel{
         
         if(layer != null){
 	        for(SubLayer l: layer.getSubLayers()){
-	        	SubLayerItem item = new SubLayerItem(subLayers.newChildId(), new Model<SubLayer>(l));
+	        	boolean isMainSubLayer = false;
+	        	if(l.isMainSubLayer()){
+	        		if(layer.isMainLayer()){
+	        			l.setName(getCurrentProject().getName());
+	        		}else{
+	        			l.setName(layer.getName());
+	        		}
+	        		l.setIcon("logo");
+	        		isMainSubLayer = true;
+	        	}
 	        	
+	        	SubLayerItem item = new SubLayerItem(subLayers.newChildId(), new Model<SubLayer>(l));
+	        	item.setMainSubLayer(isMainSubLayer);
 	        	
 	        	PopupMenu menu = item.getPopupMenu();
 				PopupMenuItem editMenu = menu.createPopupMenuItem(getString("sublayer.edit.menuitem"), "images/edit_icon.png", true);
@@ -79,7 +95,9 @@ public class SubLayersPanel extends BasePanel{
 	}
 	
 	public void refresh(){
-        layer = getCurrentLayer();
+		if(getCurrentLayer() != null){
+			layer = getDBManager().getLayerByIdWithDependencies(getCurrentLayer().getId());
+		}
 		loadComponents();
 	}
 	
@@ -118,10 +136,10 @@ public class SubLayersPanel extends BasePanel{
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
 			if(execute){
-				currentSubLayer = subLayer;
+				currentSubLayer = getDBManager().getSubLayerByIdWithDependencies(subLayer.getId());
 				ContentPanel content = getContentPanel();
-				content.setSubLayer(subLayer);
-				target.appendJavaScript("load(); resize(); loadElementsPanel(); loadSettingsPanel();");
+				content.setSubLayer(currentSubLayer);
+				target.appendJavaScript("loadSubLayer();");
 				target.add(content);
 			}
 			execute = true;

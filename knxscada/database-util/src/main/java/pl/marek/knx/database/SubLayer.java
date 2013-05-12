@@ -10,12 +10,21 @@ public class SubLayer extends Layer implements Parcelable{
 	private static final long serialVersionUID = 1L;
 
 	public static final String SUBLAYER = "SUBLAYER";
+	public static final String MAIN_SUBLAYER = "MAIN_SUBLAYER";
 	
 	protected int layerId;
 	protected String backgroundImage;
 	private ArrayList<Element> elements;
 	
-	public SubLayer(){}
+	public SubLayer(){
+		id = 0;
+		projectId = 0;
+		layerId = 0;
+		name = "";
+		description = "";
+		icon = "";
+		backgroundImage = "";
+	}
 	
 	public SubLayer(int projectId, int layerId, String name, String description, String icon, String backgroundImage){
 		super(projectId, name, description, icon);
@@ -51,6 +60,9 @@ public class SubLayer extends Layer implements Parcelable{
 	}
 
 	public String getBackgroundImage() {
+		if(backgroundImage == null){
+			backgroundImage = "";
+		}
 		return backgroundImage;
 	}
 
@@ -64,6 +76,13 @@ public class SubLayer extends Layer implements Parcelable{
 
 	public void setElements(ArrayList<Element> elements) {
 		this.elements = elements;
+	}
+	
+	public boolean isMainSubLayer(){
+		if(name.equals(MAIN_SUBLAYER)){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

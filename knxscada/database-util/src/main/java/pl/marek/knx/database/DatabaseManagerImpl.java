@@ -168,6 +168,7 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		try{
 			int id = (int)projectDao.save(project);
 			project.setId(id);
+			addProjectMainLayer(project);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();
@@ -225,10 +226,18 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		try{
 			int id = (int)layerDao.save(layer);
 			layer.setId(id);
+			addLayerMainSubLayer(layer);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();
 		}
+	}
+	
+	private void addProjectMainLayer(Project project){
+		Layer layer = new Layer();
+		layer.setName(Layer.MAIN_LAYER);
+		layer.setProjectId(project.getId());
+		addLayer(layer);
 	}
 
 	@Override
@@ -285,6 +294,14 @@ public class DatabaseManagerImpl implements DatabaseManager{
 		} finally{
 			db.endTransaction();
 		}
+	}
+	
+	private void addLayerMainSubLayer(Layer layer){
+		SubLayer sublayer = new SubLayer();
+		sublayer.setProjectId(layer.getProjectId());
+		sublayer.setLayerId(layer.getId());
+		sublayer.setName(SubLayer.MAIN_SUBLAYER);
+		addSubLayer(sublayer);
 	}
 
 	@Override

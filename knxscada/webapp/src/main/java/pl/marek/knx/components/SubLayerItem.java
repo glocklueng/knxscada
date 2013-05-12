@@ -21,6 +21,7 @@ public class SubLayerItem extends Panel{
 	private Label nameLabel;
 	private Label descriptionLabel;
 	private StaticImage icon;
+	private boolean isMainSubLayer;
 	
 	private PopupMenu menu;
 	
@@ -41,28 +42,16 @@ public class SubLayerItem extends Panel{
 		descriptionLabel = new Label("subLayerItemDescription", new PropertyModel<String>(layerModel, "description"));
 		descriptionLabel.setOutputMarkupId(true);
 		
-		nameLabel = new Label("subLayerItemName", new PropertyModel<String>(layerModel, "name")){
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				super.onComponentTag(tag);
-				tag.put("descriptionBlockId", descriptionLabel.getMarkupId());
-				
-			}
-		};
+		nameLabel = new Label("subLayerItemName", new PropertyModel<String>(layerModel, "name"));
 		nameLabel.setOutputMarkupId(true);
 		String iconName = new PropertyModel<String>(layerModel, "icon").getObject();
-		icon = new StaticImage("subLayerItemIcon", new Model<String>(IconUtil.getSubLayerIconPath(iconName))){
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				super.onComponentTag(tag);
-				
-			}
-		};
+		icon = new StaticImage("subLayerItemIcon", new Model<String>(IconUtil.getSubLayerIconPath(iconName)));
+		if(iconName.isEmpty()){
+			icon.setVisible(false);
+			icon.setOutputMarkupPlaceholderTag(true);
+		}else{
+			icon.setVisible(true);
+		}
 
 		add(icon);
 		add(nameLabel);
@@ -73,8 +62,16 @@ public class SubLayerItem extends Panel{
 	@Override
 	protected void onComponentTag(ComponentTag tag) {
 		super.onComponentTag(tag);
-		tag.put("class", "sublayer popup-menu-trigger");
+		SubLayer subLayer = layerModel.getObject();
+		tag.put("sublayerid", String.valueOf(subLayer.getId()));
+		
+		if(isMainSubLayer){
+			tag.put("class", "sublayer");
+		}else{
+			tag.put("class", "sublayer popup-menu-trigger");	
+		}
 		tag.put("popupMenuId", menu.getMarkupId());
+		tag.put("descriptionBlockId", descriptionLabel.getMarkupId());
 	}
 		
 	public PopupMenu getPopupMenu(){
@@ -84,4 +81,10 @@ public class SubLayerItem extends Panel{
 	public SubLayer getSubLayer(){
 		return layerModel.getObject();
 	}
+
+	public void setMainSubLayer(boolean isMainSubLayer) {
+		this.isMainSubLayer = isMainSubLayer;
+	}
+	
+	
 }

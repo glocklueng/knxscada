@@ -5,8 +5,8 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
+import pl.marek.knx.interfaces.DatabaseManager;
 
 @HtmlFile("dialogs.html")
 public class DialogsPanel extends BasePanel{
@@ -16,7 +16,7 @@ public class DialogsPanel extends BasePanel{
 	private Component dialogPanel;
 	private DialogType type;
 		
-	public DialogsPanel(String componentName, DBManager dbManager) {
+	public DialogsPanel(String componentName, DatabaseManager dbManager) {
 		super(componentName, dbManager);
 		setOutputMarkupId(true);
 		type = DialogType.DUMMY;

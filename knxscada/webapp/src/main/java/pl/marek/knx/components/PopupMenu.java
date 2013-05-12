@@ -31,6 +31,7 @@ public class PopupMenu extends Panel{
 	}
 	
 	private void loadComponents(){
+		removeAll();
 		setOutputMarkupId(true);
 		titleLabel = new Label("popup-menu-title", titleModel){
 
@@ -50,6 +51,11 @@ public class PopupMenu extends Panel{
 		add(titleLabel);
 		add(items);
 		
+	}
+	
+	public void setTitle(String title){
+		titleModel = new Model<String>(title);
+		loadComponents();
 	}
 	
 	public String getNewChildId(){

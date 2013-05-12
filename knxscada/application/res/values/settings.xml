@@ -25,6 +25,12 @@
     <string name="discoverer_dialog_text_finished">Zakończono wyszukiwanie</string>
     <string name="discoverer_dialog_text_not_found">Nie znaleziono żadnych interfejsów KNX/IP</string>
     
+    <string name="webapp_settings_title">Hasło</string>
+    <string name="webapp_settings_summary">Ustaw hasło logowania</string>
+    <string name="webapp_password">Hasło</string>
+    <string name="webapp_password_summary">Hasło logowania do aplikacji</string>
+    
+    
     <!-- KNX Connection Settings -->
     
     <string name="service_mode_title">Tryb połączenia</string>

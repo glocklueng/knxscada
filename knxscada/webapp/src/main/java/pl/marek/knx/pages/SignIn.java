@@ -9,8 +9,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
+import android.content.Context;
+
+import pl.marek.knx.KNXWebApplication;
 import pl.marek.knx.SignInSession;
 import pl.marek.knx.annotations.HtmlFile;
+import pl.marek.knx.utils.PasswordUtil;
 
 @HtmlFile("signin.html")
 public class SignIn extends WebPage {
@@ -24,6 +28,26 @@ public class SignIn extends WebPage {
 		feedback.setOutputMarkupId(true);
 		add(feedback);
 		add(new SignInForm("signInForm"));
+		
+
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		if(getStoredPassword().isEmpty()){
+			warn(getString("password.NotSet"));
+		}
+		super.onBeforeRender();
+	}
+	
+	private String getStoredPassword(){
+		KNXWebApplication app = (KNXWebApplication)getApplication();
+		Context con = app.getAndroidContext();
+		if(con == null){
+			return "";
+		}
+		String pref = app.getDefaultPreferenceFile();
+		return PasswordUtil.getStoredPassword(con, pref);
 	}
 	
 
@@ -40,8 +64,6 @@ public class SignIn extends WebPage {
 			PasswordTextField passwordField = new PasswordTextField(PASSWORD, new PropertyModel<String>(properties, PASSWORD));
 			add(passwordField);
 			setOutputMarkupId(true);
-			
-			//AjaxFormValidatingBehavior.addToAllFormComponents(this, "onkeyup", Duration.ONE_SECOND);
 
 			add(new AjaxButton("signInButton", this)
 	        {
@@ -50,8 +72,8 @@ public class SignIn extends WebPage {
 				@Override
 	            protected void onSubmit(AjaxRequestTarget target, Form<?> form){	            	
 	    			SignInSession session = getMySession();
-
-	    			if (session.signIn(getPassword(), getPassword())) {
+	    			
+	    			if (session.signIn(getPassword(), getStoredPassword())) {
 	    				continueToOriginalDestination();
 	    				setResponsePage(Index.class);
 	    			} else {

@@ -1,10 +1,10 @@
 package pl.marek.knx.pages;
 
-import java.io.File;
-
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.SimpleFormComponentLabel;
@@ -17,10 +17,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.time.Duration;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Project;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.ExternalImageResource;
+import pl.marek.knx.utils.FileUploadUtil;
 
 @HtmlFile("create_edit_project_form_panel.html")
 public class CreateEditProjectFormPanel extends BasePanel{
@@ -33,11 +34,11 @@ public class CreateEditProjectFormPanel extends BasePanel{
 	
 	private Image image;
 		
-	public CreateEditProjectFormPanel(String componentName, DBManager dbManager) {
+	public CreateEditProjectFormPanel(String componentName, DatabaseManager dbManager) {
 		this(componentName, dbManager, null);
 	}
 	
-	public CreateEditProjectFormPanel(String componentName, DBManager dbManager, Project project) {
+	public CreateEditProjectFormPanel(String componentName, DatabaseManager dbManager, Project project) {
 		super(componentName, dbManager);
 		this.project = project;
 		loadComponents();
@@ -122,28 +123,25 @@ public class CreateEditProjectFormPanel extends BasePanel{
 					Project p = (Project)form.getModel().getObject();
 					
 					if(p.getId() == 0){
-					//TODO Zrobić dodawanie projektu
-						System.out.println("DODAJE PROJEKT:");
-						System.out.println(p.getName()+" "+p.getDescription());
-						System.out.println(p.getImage());
-						
 						getDBManager().addProject(p);
 					}else{
-						System.out.println("EDYTUJE PROJEKT:");
-						System.out.println(p.getName()+" "+p.getDescription());
-						System.out.println(p.getImage());
-						
 						getDBManager().updateProject(p);
+						
+						Project currProject = getCurrentProject();
+						if(currProject != null){
+							if(currProject.getId() == p.getId()){
+								getHeaderPanel().refresh();
+								target.add(getHeaderPanel());
+							}
+						}
 					}
 					
-					
-					Index index = (Index)getPage();
-					ProjectChooserPanel panel = index.getProjectChooserPanel();
+					ProjectChooserPanel panel = getProjectChooserPanel();
 					panel.setProjects(getDBManager().getAllProjects());
 					
 					target.add(panel);
 					target.add(feedbackPanel);
-					target.appendJavaScript("load(); hideDialog();");
+					target.appendJavaScript("loadAfterUpdateProject();");
 					
 				}
 				
@@ -176,7 +174,9 @@ public class CreateEditProjectFormPanel extends BasePanel{
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 					
 		            FileUpload upload = file.getFileUpload();
-		            if(uploadFile(upload)){
+		            FileUploadUtil uploadUtil = new FileUploadUtil(upload);
+		            if(uploadUtil.uploadFile()){
+		            	project.setImage(uploadUtil.getUploadedFilePath());
 		            	ExternalImageResource res = new ExternalImageResource(project.getImage());
 		            	if(res.exists()){
 			            	image.setImageResource(res);
@@ -188,7 +188,7 @@ public class CreateEditProjectFormPanel extends BasePanel{
 		            	warn(getString("project-image-form.noimage.message"));
 		            }
 		            
-		            target.appendJavaScript("hideLoading();");
+		            target.appendJavaScript("hideProjectImageLoading();");
 					target.add(feedbackPanel);
 				}
 				
@@ -199,32 +199,24 @@ public class CreateEditProjectFormPanel extends BasePanel{
 				
 			};
 			
-			add(submitButton);	
-		}
-		
-		private boolean uploadFile(FileUpload upload){
+			add(submitButton);
 			
-			if (upload == null){
-                return false;
-            }
-            else{
-            	String fileName = upload.getClientFileName();
+			Button removeButton = new Button("project-image-remove-button");
+			removeButton.add(new AjaxEventBehavior("click") {
+				
+				private static final long serialVersionUID = 1L;
 
-                try {
-                	File parent = new File("/home/marek/tmp/");
-                	if(!parent.exists()){
-                		parent.mkdirs();
-                	}
-                	File file = new File(parent, fileName);
-                	
-                	project.setImage(file.getAbsolutePath());
-                	
-					upload.writeTo(file);
-				} catch (Exception e) {
-					return false;
+				@Override
+				protected void onEvent(AjaxRequestTarget target) {
+					project.setImage("");
+					image.setVisible(false);
+					image.setOutputMarkupPlaceholderTag(true);
+					target.add(image);
+					info(getString("project-image-form.image.removed"));
+					target.add(feedbackPanel);
 				}
-            }
-			return true;
+			});
+			add(removeButton);
 		}
 	}
 }

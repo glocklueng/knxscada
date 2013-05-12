@@ -17,10 +17,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.time.Duration;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.IconUtil;
 import pl.marek.knx.utils.StaticImage;
 
@@ -36,14 +36,14 @@ public class CreateEditLayerFormPanel extends BasePanel{
 	private StaticImage iconView;
 	private RepeatingView chooserIcons;
 	
-	public CreateEditLayerFormPanel(String componentName, DBManager dbManager, String itemType) {
+	public CreateEditLayerFormPanel(String componentName, DatabaseManager dbManager, String itemType) {
 		super(componentName, dbManager);
 		this.itemType = itemType;
 		loadComponents();	
 	}
 
 	
-	public CreateEditLayerFormPanel(String componentName, DBManager dbManager, String itemType, Layer layer) {
+	public CreateEditLayerFormPanel(String componentName, DatabaseManager dbManager, String itemType, Layer layer) {
 		super(componentName, dbManager);
 		this.layer = layer;
 		this.itemType = itemType;
@@ -86,10 +86,12 @@ public class CreateEditLayerFormPanel extends BasePanel{
 	
 	private String getIconPath(){
 		String icon = "";
-		if(Layer.LAYER.equals(itemType)){
-			icon = IconUtil.getLayerIconPath(layer.getIcon());
-		}else if(SubLayer.SUBLAYER.equals(itemType)){
-			icon = IconUtil.getSubLayerIconPath(layer.getIcon());
+		if(!layer.getIcon().isEmpty()){
+			if(Layer.LAYER.equals(itemType)){
+				icon = IconUtil.getLayerIconPath(layer.getIcon());	
+			}else if(SubLayer.SUBLAYER.equals(itemType)){
+				icon = IconUtil.getSubLayerIconPath(layer.getIcon());
+			}
 		}
 		return icon;
 	}
@@ -178,7 +180,7 @@ public class CreateEditLayerFormPanel extends BasePanel{
 			TextArea<String> descriptionField = new TextArea<String>("description");
 			
 			if(Layer.LAYER.equals(itemType)){
-				nameField.setLabel(new ResourceModel("sublayer-form.name.label"));
+				nameField.setLabel(new ResourceModel("layer-form.name.label"));
 				descriptionField.setLabel(new ResourceModel("layer-form.description.label"));
 			}else if(SubLayer.SUBLAYER.equals(itemType)){
 				nameField.setLabel(new ResourceModel("sublayer-form.name.label"));
@@ -206,55 +208,33 @@ public class CreateEditLayerFormPanel extends BasePanel{
 						
 						String projectId = getParameter("project");
 						l.setProjectId(Integer.valueOf(projectId));
-						
-						//TODO
+
 						if(l.getId() == 0){
-							System.out.println("ADDING LAYER");
-							System.out.println(l.getName()+" "+l.getDescription());
-							System.out.println(l.getIcon());
-							
-							
 							getDBManager().addLayer(l);
 						}else{
-							System.out.println("EDITING LAYER");
-							System.out.println(l.getName()+" "+l.getDescription());
-							System.out.println(l.getIcon());
-							
 							getDBManager().updateLayer(l);
 						}
-						
-						Index index = (Index)getPage();
-						SideBarPanel panel = index.getSideBarPanel();
+
+						SideBarPanel panel = getSideBarPanel();
 						panel.refresh();
-						
 						target.add(panel);
+						
 					}else if(SubLayer.SUBLAYER.equals(itemType)){
 						
 						SubLayer l = (SubLayer)form.getModel().getObject();
-						Index index = (Index)getPage();
-						SideBarPanel panel = index.getSideBarPanel();
+						SideBarPanel panel = getSideBarPanel();
 						
 						String projectId = getParameter("project");
 						l.setProjectId(Integer.valueOf(projectId));
 						l.setLayerId(panel.getCurrentLayer().getId());
-						
-						//TODO
+
 						if(l.getId() == 0){
-							System.out.println("ADDING SUBLAYER");
-							System.out.println(l.getName()+" "+l.getDescription());
-							System.out.println(l.getIcon());
-							
-							
 							getDBManager().addSubLayer(l);
-						}else{
-							System.out.println("EDITING SUBLAYER");
-							System.out.println(l.getName()+" "+l.getDescription());
-							System.out.println(l.getIcon());
-							
+						}else{							
 							getDBManager().updateSubLayer(l);
 						}
 						
-						SubLayersPanel spanel = index.getMainPanel().getSubLayersPanel();
+						SubLayersPanel spanel = getSubLayersPanel();
 						spanel.refresh();
 						
 						target.add(spanel);
@@ -262,7 +242,7 @@ public class CreateEditLayerFormPanel extends BasePanel{
 					
 					
 					target.add(feedbackPanel);
-					target.appendJavaScript("load(); resize(); hideDialog();");
+					target.appendJavaScript("loadAfterUpdateLayer();");
 				}
 				
 				@Override

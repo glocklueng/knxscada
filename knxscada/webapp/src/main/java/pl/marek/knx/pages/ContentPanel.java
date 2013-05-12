@@ -1,13 +1,14 @@
 package pl.marek.knx.pages;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.ExternalImageResource;
 
 @HtmlFile("content.html")
@@ -22,7 +23,7 @@ public class ContentPanel extends BasePanel{
 	
 	private Image backgroundImage;
 	
-	public ContentPanel(String componentName, DBManager dbManager) {
+	public ContentPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
         setOutputMarkupId(true);
         
@@ -59,6 +60,15 @@ public class ContentPanel extends BasePanel{
     	settingsPanel = new SubLayerSettingsPanel(componentName, getDBManager(), subLayer);
     	settingsPanel.setBackgroundImage(backgroundImage);
         add(settingsPanel);
+    }
+    
+    @Override
+    protected void onComponentTag(ComponentTag tag) {
+    	Project project = getCurrentProject();
+    	if(project == null){
+    		tag.put("style", "display:none;");
+    	}
+    	super.onComponentTag(tag);
     }
     
 
@@ -99,7 +109,7 @@ public class ContentPanel extends BasePanel{
 	}
 	
 	public void refresh(){
-        subLayer = getCurrentSubLayer();
+        subLayer = getDBManager().getSubLayerByIdWithDependencies(getCurrentSubLayer().getId());
         elementsPanel.setSubLayer(subLayer);
         settingsPanel.setSubLayer(subLayer);
         loadComponents();

@@ -19,6 +19,9 @@
     <string name="discover_while_connecting_key">discover_while_connecting</string>
     <string name="discover_timeout_key">discover_timeout</string>
     <string name="discover_search_key">discover_search</string>
+    <string name="webapp_password_key">webapp_password</string>
+    
+    
 
     <string name="webserver_state_key">webserver_state</string>
     <string name="webserver_port_key">webserver_port</string>
@@ -60,5 +63,9 @@
     <integer name="webserver_port_default_value">8080</integer>
     <bool name="use_ssl_default_value">false</bool>
     <integer name="webserver_ssl_port_default_value">8443</integer>
+    
+    <!-- WEBAPP DEFAULT VALUES -->
+    <string name="webapp_password_default_value"></string>
+    
 
 </resources>

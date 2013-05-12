@@ -11,6 +11,7 @@ public class Layer implements Parcelable, Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public static final String LAYER = "LAYER";
+	public static final String MAIN_LAYER = "MAIN_LAYER";
 	
 	protected int id;
 	protected int projectId;
@@ -19,7 +20,13 @@ public class Layer implements Parcelable, Serializable{
 	protected String icon;
 	private ArrayList<SubLayer> subLayers;
 	
-	public Layer(){}
+	public Layer(){
+		id = 0;
+		projectId = 0;
+		name = "";
+		description = "";
+		icon = "";
+	}
 	
 	public Layer(int projectId, String name, String description, String icon){
 		this.projectId = projectId;
@@ -64,6 +71,9 @@ public class Layer implements Parcelable, Serializable{
 	}
 
 	public String getName() {
+		if(name == null){
+			name = "";
+		}
 		return name;
 	}
 
@@ -72,6 +82,9 @@ public class Layer implements Parcelable, Serializable{
 	}
 
 	public String getDescription() {
+		if(description == null){
+			description = "";
+		}
 		return description;
 	}
 
@@ -80,6 +93,9 @@ public class Layer implements Parcelable, Serializable{
 	}
 
 	public String getIcon() {
+		if(icon == null){
+			icon = "";
+		}
 		return icon;
 	}
 
@@ -93,6 +109,13 @@ public class Layer implements Parcelable, Serializable{
 
 	public void setSubLayers(ArrayList<SubLayer> subLayers) {
 		this.subLayers = subLayers;
+	}
+	
+	public boolean isMainLayer(){
+		if(name.equals(MAIN_LAYER)){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

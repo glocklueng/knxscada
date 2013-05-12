@@ -145,7 +145,7 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
     
     public void selectFirstItem(){
     	for(SideBarItem item : items){
-    		if(item.getId() != 0){
+    		if(item.getId() >= 0){
     			selectItem(items.indexOf(item));
     			return;
     		}
@@ -344,6 +344,12 @@ public class SideBarView extends LinearLayout implements OnGestureListener{
             }
             
             holder.text.setText(item.getName());
+            if(item.getName().isEmpty()){
+            	holder.text.setVisibility(View.GONE);
+            }else{
+            	holder.text.setVisibility(View.VISIBLE);
+            }
+            
             if (item.getIcon() != SideBarItem.DEFAULT_ICON_VALUE) {
                 holder.icon.setVisibility(View.VISIBLE);
                 holder.icon.setImageResource(item.getIcon());

@@ -48,5 +48,13 @@
         <extra android:name="summaryOnOff" android:value="@string/webserver_toggle_summary_on_off"/>
         <extra android:name="summaryOffOn" android:value="@string/webserver_toggle_summary_off_on"/>
     </header>
+    
+    <header
+        android:title="@string/webapp_settings_title"
+        android:summary="@string/webapp_settings_summary"
+        android:fragment="pl.marek.knx.preferences.WebApplicationSettingsFragment"
+    >
+        <extra android:name="title" android:value="@string/webapp_settings_title" />
+    </header>
        
 </preference-headers>

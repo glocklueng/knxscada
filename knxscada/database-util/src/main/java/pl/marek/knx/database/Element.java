@@ -21,7 +21,12 @@ public class Element implements Parcelable{
 	private String deviceAddress;
 	private String type;
 	
-	public Element(){}
+	public Element(){
+		name = "";
+		description = "";
+		deviceAddress = "";
+		type = "";
+	}
 	
 	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, String type){
 		this.id = id;
@@ -89,12 +94,18 @@ public class Element implements Parcelable{
 		this.y = y;
 	}
 	public String getName() {
+		if(name == null){
+			name = "";
+		}
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public String getDescription() {
+		if(description == null){
+			description = "";
+		}
 		return description;
 	}
 	public void setDescription(String description) {
@@ -110,6 +121,9 @@ public class Element implements Parcelable{
 	}
 
 	public String getDeviceAddress() {
+		if(deviceAddress == null){
+			deviceAddress = "";
+		}
 		return deviceAddress;
 	}
 	public void setDeviceAddress(String deviceAddress) {
@@ -117,6 +131,9 @@ public class Element implements Parcelable{
 	}
 
 	public String getType() {
+		if(type == null){
+			type = "";
+		}
 		return type;
 	}
 

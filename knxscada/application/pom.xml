@@ -33,8 +33,7 @@
 			<groupId>pl.marek</groupId>
 			<artifactId>database-util</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
+		</dependency>		
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -44,12 +43,19 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
 			<version>8.1.8.v20121106</version>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.eclipse.jetty</groupId>
+			        <artifactId>jetty-servlet</artifactId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
+			<artifactId>jetty-security</artifactId>
 			<version>8.1.8.v20121106</version>
 		</dependency>
+		            
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-continuation</artifactId>
@@ -126,7 +132,7 @@
 				</executions>
 				<extensions>true</extensions>
 			</plugin>
-
+			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>

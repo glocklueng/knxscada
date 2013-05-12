@@ -1,0 +1,23 @@
+<html>
+	<wicket:head>
+		<link rel="stylesheet" href="css/components/controllers/onoffswitch.css" />
+	</wicket:head>
+	<body>	
+		<wicket:panel>
+			
+			<div class="controller onoffswitch" 
+			onmouseover="setFocused(this);" 
+			onmouseout="unsetFocused(this);" >
+				
+				<div wicket:id="controller-name" class="controller-name">
+				</div>
+				
+				<div wicket:id="controller-description" class="controller-description">
+				</div>
+				
+			</div>
+			
+			<div wicket:id="popup-menu" class="popup-menu"></div> 
+		</wicket:panel>
+	</body>
+</html>

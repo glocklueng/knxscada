@@ -9,8 +9,9 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
 import org.json.simple.JSONObject;
 
-import pl.marek.knx.DBManager;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.annotations.HtmlFile;
+import pl.marek.knx.database.Element;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
@@ -25,7 +26,7 @@ public class DeleteFormPanel extends BasePanel{
 	private Label message;
 	private DeleteBehavior deleteBehavior;
 	
-	public DeleteFormPanel(String id,DBManager dbManager, Object object) {
+	public DeleteFormPanel(String id, DatabaseManager dbManager, Object object) {
 		super(id, dbManager);
 		this.object = object;
 		setOutputMarkupId(true);
@@ -66,6 +67,10 @@ public class DeleteFormPanel extends BasePanel{
 			Layer layer = (Layer)object;
 			String msg = getString("delete-layer-confirmation-message");
 			message = String.format(msg, layer.getName());
+		} else if(object instanceof Element){
+			Element element = (Element)object;
+			String msg = getString("delete-element-confirmation-message");
+			message = String.format(msg, element.getName());
 		}
 		
 		return message;
@@ -78,31 +83,33 @@ public class DeleteFormPanel extends BasePanel{
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void respond(AjaxRequestTarget target) {
-			//TODO
+
 			RequestCycle requestCycle = RequestCycle.get();
 			JSONObject obj = new JSONObject();
 			
 			if(object instanceof Project){
 				Project project = (Project)object;
-				System.out.println("DELETE PROJECT "+project.getName());
-				
-	
+			
 				ProjectChooserPanel panel = getProjectChooserPanel();
 				String projectId = panel.getProjectItemIdByProject(project);
 				
 				obj.put("type", "project");
 				obj.put("remove", projectId);
 				
-				if(getCurrentProject().getId() == project.getId()){
-					obj.put("select", "other");
+				Project currProject = getCurrentProject();
+				if(currProject != null){
+					if(currProject.getId() == project.getId()){
+						obj.put("select", "other");
+					}else{
+						obj.put("select", "");
+					}
 				}else{
 					obj.put("select", "");
-				}
+				}	
 				getDBManager().removeProject(project);
 			
 			}else if(object instanceof SubLayer){
 				SubLayer subLayer = (SubLayer)object;
-				System.out.println("DELETE SUBLAYER "+subLayer.getName());
 								
 				getDBManager().removeSubLayer(subLayer);
 				
@@ -116,7 +123,6 @@ public class DeleteFormPanel extends BasePanel{
 				
 			}else if(object instanceof Layer){
 				Layer layer = (Layer)object;
-				System.out.println("DELETE Layer "+layer.getName());
 				getDBManager().removeLayer(layer);
 				
 				SideBarPanel panel = getSideBarPanel();
@@ -127,7 +133,17 @@ public class DeleteFormPanel extends BasePanel{
 				obj.put("remove", layerId);
 				obj.put("select", other);
 
+			} else if(object instanceof Element){
+				Element element = (Element)object;
+				getDBManager().removeElement(element);
+				
+				ElementsPanel panel = getElementsPanel();
+				String layerId = panel.getElementItemIdByElement(element);
+				
+				obj.put("type", "element");
+				obj.put("remove", layerId);
 			}
+			
 			requestCycle.scheduleRequestHandlerAfterCurrent(new TextRequestHandler(obj.toJSONString()));
 		}	
 	}

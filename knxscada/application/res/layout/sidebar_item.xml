@@ -15,6 +15,7 @@
         android:layout_height="24dp"
         android:padding="2dp"
         android:scaleType="fitCenter"
+        android:layout_gravity="center"
     	android:contentDescription="@string/application_name"
     />
 

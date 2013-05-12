@@ -4,27 +4,7 @@
 
 	</wicket:head>
     <body>
-        <wicket:panel>
-        	<script>
-	        	
-        		$(document).click(function(e){
-					hideLayerIconChooser();
-				});
-	        	
-        		$(".layer-icon-container").click(function(e){
-					showLayerIconChooser();
-					return false;
-				});
-        	
-	        	function showLayerIconChooser(){
-					$(".layer-icon-chooser").show("fade", {}, 200);
-				}
-				
-				function hideLayerIconChooser(){
-					$(".layer-icon-chooser").hide("fade", {}, 500);
-				}
-        	</script>
-			
+        <wicket:panel>			
 			<div id="layer-feedback-div">
 				<span wicket:id="layer-feedback" class="feedback"></span>
 			</div>

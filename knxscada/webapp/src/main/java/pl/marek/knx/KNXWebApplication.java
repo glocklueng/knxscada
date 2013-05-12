@@ -11,11 +11,18 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
 
+import android.content.ContentResolver;
+import android.content.Context;
+
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.pages.*;
 
 public class KNXWebApplication extends WebApplication {
-
+	
+    private static final String CONTENT_RESOLVER_ATTRIBUTE = "pl.marek.knx.contentResolver";
+    private static final String ANDROID_CONTEXT_ATTRIBUTE = "pl.marek.knx.context";
+    private static final String DEF_PREFERENCE_FILE_ATTRIBUTE = "pl.marek.knx.defPreferenceFile";
+	
 	@Override
 	public Class<? extends Page> getHomePage() {
 		return Index.class;
@@ -29,6 +36,21 @@ public class KNXWebApplication extends WebApplication {
 		mountPages();
 		mountResources();
 		
+	}
+	
+	public ContentResolver getAndroidContentResolver(){
+		ContentResolver resolver = (ContentResolver)getServletContext().getAttribute(CONTENT_RESOLVER_ATTRIBUTE);
+		return resolver;
+	}
+	
+	public Context getAndroidContext(){
+	    Context context  = (Context)getServletContext().getAttribute(ANDROID_CONTEXT_ATTRIBUTE);
+	    return context;
+	}
+	
+	public String getDefaultPreferenceFile(){
+		String prefFile = (String)getServletContext().getAttribute(DEF_PREFERENCE_FILE_ATTRIBUTE);
+		return prefFile;
 	}
 
 	private void setWebPagesFinder() {

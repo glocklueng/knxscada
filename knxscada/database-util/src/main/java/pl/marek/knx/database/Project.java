@@ -29,7 +29,13 @@ public class Project implements Parcelable, Serializable{
 	private ArrayList<DatapointEntity> datapoints;
 	private ArrayList<Layer> layers;
 	
-	public Project(){}
+	public Project(){
+		id = 0;
+		name = "";
+		description = "";
+		author = "";
+		image = "";
+	}
 	
 	public Project(int id, String name, String description){
 		this(id, name, description, "");
@@ -72,6 +78,9 @@ public class Project implements Parcelable, Serializable{
 	}
 	
 	public String getName() {
+		if(name == null){
+			name = "";
+		}
 		return name;
 	}
 	
@@ -80,6 +89,9 @@ public class Project implements Parcelable, Serializable{
 	}
 	
 	public String getDescription() {
+		if(description == null){
+			description = "";
+		}
 		return description;
 	}
 	
@@ -88,6 +100,9 @@ public class Project implements Parcelable, Serializable{
 	}
 	
 	public String getAuthor() {
+		if(author == null){
+			author = "";
+		}
 		return author;
 	}
 	
@@ -112,6 +127,9 @@ public class Project implements Parcelable, Serializable{
 	}
 	
 	public String getImage() {
+		if(image == null){
+			image = "";
+		}
 		return image;
 	}
 

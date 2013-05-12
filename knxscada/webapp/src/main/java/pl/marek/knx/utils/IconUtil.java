@@ -12,6 +12,10 @@ public class IconUtil {
 		return getIconPath(name, "floors/");
 	}
 	
+	public static String getElementIconPath(String name){
+		return getIconPath(name, "elements/");
+	}
+	
 	public static String getIconPath(String name, String parent){
 		String path = "";
 		String relativePath = "images/" + parent; 

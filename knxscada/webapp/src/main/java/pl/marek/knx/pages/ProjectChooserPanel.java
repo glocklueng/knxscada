@@ -11,12 +11,12 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.components.PopupMenuItem;
 import pl.marek.knx.components.ProjectItem;
 import pl.marek.knx.database.Project;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.pages.DialogsPanel.DialogType;
 
 @HtmlFile("projectchooser.html")
@@ -32,7 +32,7 @@ public class ProjectChooserPanel extends BasePanel {
 
 	private static boolean execute;
 
-	public ProjectChooserPanel(String componentName, DBManager dbManager) {
+	public ProjectChooserPanel(String componentName, DatabaseManager dbManager) {
 		super(componentName, dbManager);
 		setOutputMarkupId(true);
 		execute = true;

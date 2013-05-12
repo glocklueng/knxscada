@@ -81,7 +81,7 @@ public class WebServerService extends Service implements StateSender, WebServerC
 			server.stop();
 			setState(WebServerState.STOPPED);
 		} catch (Exception e) {
-			//Log.w(LogTags.WEB_SERVER, e.getMessage());
+			Log.w(LogTags.WEB_SERVER, e.getMessage());
 		}
 	}
 	

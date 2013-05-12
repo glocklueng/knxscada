@@ -1,18 +1,20 @@
 package pl.marek.knx.pages;
 
+import java.util.ArrayList;
+
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
-import pl.marek.knx.DBManager;
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.components.LayerItem;
 import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.components.PopupMenuItem;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
+import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.pages.DialogsPanel.DialogType;
 
 @HtmlFile("sidebar.html")
@@ -26,7 +28,7 @@ public class SideBarPanel extends BasePanel {
 	
 	private static boolean execute;
 	
-	public SideBarPanel(String componentName, DBManager dbManager) {
+	public SideBarPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
         execute = true;
         currentLayer = null;
@@ -45,20 +47,32 @@ public class SideBarPanel extends BasePanel {
 		layers = new RepeatingView("layer");
 		  
 	    Project project = getCurrentProject();
+	    
 	    if(project != null){
-	        for(Layer layer: project.getLayers()){
-	        	LayerItem item = new LayerItem(layers.newChildId(), new Model<Layer>(layer));
-	        	item.add(new LayerItemClickBehavior(layer));
-	        	
-	        	PopupMenu menu = item.getPopupMenu();
-				PopupMenuItem editMenu = menu.createPopupMenuItem(getString("layer.edit.menuitem"), "images/edit_icon.png", true);
-				PopupMenuItem deleteMenu = menu.createPopupMenuItem(getString("layer.remove.menuitem"), "images/trash_icon.png", true);
-
-	        	editMenu.add(new LayerItemEditClickBehavior(layer));
-	        	deleteMenu.add(new LayerItemDeleteClickBehavior(layer));
-	        	
-	        	layers.add(item);
-	        }
+	    	ArrayList<Layer> projectLayers = project.getLayers();
+	    	if(projectLayers != null){
+		        for(Layer layer: projectLayers){
+		        	boolean isMainLayer = false;
+		        	if(layer.isMainLayer()){
+		        		layer.setName(project.getName());
+		        		layer.setIcon("logo");
+		        		isMainLayer = true;
+		        	}
+		        	
+		        	LayerItem item = new LayerItem(layers.newChildId(), new Model<Layer>(layer));
+		        	item.setMainLayer(isMainLayer);
+		        	item.add(new LayerItemClickBehavior(layer));
+		        	
+		        	PopupMenu menu = item.getPopupMenu();
+					PopupMenuItem editMenu = menu.createPopupMenuItem(getString("layer.edit.menuitem"), "images/edit_icon.png", true);
+					PopupMenuItem deleteMenu = menu.createPopupMenuItem(getString("layer.remove.menuitem"), "images/trash_icon.png", true);
+	
+		        	editMenu.add(new LayerItemEditClickBehavior(layer));
+		        	deleteMenu.add(new LayerItemDeleteClickBehavior(layer));
+		        	
+		        	layers.add(item);
+		        }
+	    	}
 		}
 		add(layers);
 	}
@@ -99,11 +113,11 @@ public class SideBarPanel extends BasePanel {
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
 			if(execute){
-				currentLayer = layer;
+				currentLayer = getDBManager().getLayerByIdWithDependencies(layer.getId());
 				MainPanel main = getMainPanel();
-				main.setLayer(layer);
+				main.setLayer(currentLayer);
 				
-				target.appendJavaScript("resize(); load(); initSubLayers(); loadElementsPanel(); loadSettingsPanel();");
+				target.appendJavaScript("loadLayer();");
 				target.add(main);
 			}
 			execute = true;
