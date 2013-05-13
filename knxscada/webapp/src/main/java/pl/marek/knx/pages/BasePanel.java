@@ -1,17 +1,11 @@
 package pl.marek.knx.pages;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Set;
-
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.TextRequestHandler;
-import org.apache.wicket.request.http.WebRequest;
 
 import android.content.Context;
 
@@ -127,27 +121,5 @@ public abstract class BasePanel extends Panel{
 	
 	protected SubLayer getCurrentSubLayer(){
 		return getSubLayersPanel().getCurrentSubLayer();
-	}
-	
-	protected String getRequestMessage(){
-		String message = null;
-		
-		RequestCycle requestCycle = RequestCycle.get();
-		WebRequest wr=(WebRequest)requestCycle.getRequest();
-
-		HttpServletRequest hsr = (HttpServletRequest) wr.getContainerRequest();
-		try {
-			BufferedReader br = hsr.getReader();
-			String  msg = br.readLine();
-			if((msg != null) && !msg.isEmpty()){
-				message = msg;
-			}
-			br.close();
-		} catch (IOException ex) {
-			requestCycle.scheduleRequestHandlerAfterCurrent(
-					new TextRequestHandler(getString("read-message-failed")));
-		}
-		
-		return message;
 	}
 }

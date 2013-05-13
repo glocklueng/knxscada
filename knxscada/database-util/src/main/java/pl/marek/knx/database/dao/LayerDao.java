@@ -77,7 +77,7 @@ public class LayerDao implements Dao<Layer>{
 	
 	public Layer getByIdWithDependencies(int id){
 		Layer layer = getById(id);
-		layer.setSubLayers((ArrayList<SubLayer>)subLayerDao.getByLayerId(id));
+		layer.setSubLayers((ArrayList<SubLayer>)subLayerDao.getByLayerIdWithDependencies(id));
 		return layer;
 	}
 	

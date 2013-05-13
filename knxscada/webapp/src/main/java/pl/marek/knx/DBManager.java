@@ -64,6 +64,10 @@ public class DBManager implements DatabaseManager{
 						element.setDescription("Opis");
 						element.setType(ControllerType.ON_OFF_SWITCH.name());
 						
+						if(l == 2){
+							element.setX(100);
+							element.setY(100);
+						}
 						ElementGroupAddress addr = new ElementGroupAddress();
 						addr.setElementId(l);
 						addr.setAddress("0/0/1");

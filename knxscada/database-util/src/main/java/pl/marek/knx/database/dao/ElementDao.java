@@ -76,6 +76,7 @@ public class ElementDao implements Dao<Element>{
 			address.setElementId(element.getId());
 			elementGroupAddressDao.save(address);
 		}
+		System.out.println(element.getX()+" "+element.getY());
 		db.update(ElementTable.TABLE_NAME, values, ElementColumns._ID + " = ? and "+ElementColumns.PROJECT_ID+" = ? and "+ElementColumns.LAYER_ID+" = ? and "+ElementColumns.SUBLAYER_ID+" = ?", new String[]{String.valueOf(element.getId()), String.valueOf(element.getProjectId()), String.valueOf(element.getLayerId()), String.valueOf(element.getSubLayerId())});
 	}
 

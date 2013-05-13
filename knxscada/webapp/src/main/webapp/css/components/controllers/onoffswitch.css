@@ -5,12 +5,12 @@
 	margin-right: 5px;
 
 	width: 190px;
-	height: 70px;
+	height: 90px;
 	background-color: yellow;
 	text-align: left;
 }
 
-.controller-name{
+.onoffswitch .controller-name{
 	position: absolute;
 	top: 0;
 	width: 150px;
@@ -18,10 +18,42 @@
 	background-color: olive;
 }
 
-.controller-description{
+.onoffswitch .controller-description{
 	position: absolute;
 	top: 30px;
 	width: 150px;
 	height: 40px;
 	background-color: green;
+}
+
+.onoffswitch .controller-visualisation{
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: silver;
+	right: 0;
+}
+
+.onoffswitch-v{
+	position: relative;
+
+	width: 50px;
+	height: 50px;
+	background-color: yellow;
+}
+
+.onoffswitch-v .controller-name{
+	display: none;
+}
+
+.onoffswitch-v .controller-description{
+	display: none;
+}
+
+.onoffswitch-v .controller-visualisation{
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: silver;
+	right: 0;
 }

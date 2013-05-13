@@ -138,10 +138,10 @@ public class DeleteFormPanel extends BasePanel{
 				getDBManager().removeElement(element);
 				
 				ElementsPanel panel = getElementsPanel();
-				String layerId = panel.getElementItemIdByElement(element);
+				String elemId = panel.getElementItemIdByElement(element);
 				
 				obj.put("type", "element");
-				obj.put("remove", layerId);
+				obj.put("remove", elemId);
 			}
 			
 			requestCycle.scheduleRequestHandlerAfterCurrent(new TextRequestHandler(obj.toJSONString()));

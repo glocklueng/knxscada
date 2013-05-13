@@ -3,15 +3,16 @@ function initTrash() {
 		hoverClass : "over-trash",
 		accept : ".removable",
 		greedy : true,
+		tolerance: 'pointer',
 		drop : function(event, ui) {
 						
-			var callback = $(ui.draggable).attr("removecallback");
+			var callback = $(ui.draggable).attr("callback");
 			var elementid = $(ui.draggable).attr("elementid");
 			
 			if (typeof callback !== 'undefined' && callback !== false) {
-				removeElement(callback, elementid);
+				removeVisualisationElement(callback, elementid);
 			}
-
+			$(ui.draggable).addClass("removed");
 			$(ui.draggable).remove();
 			hideTrash();
 		}

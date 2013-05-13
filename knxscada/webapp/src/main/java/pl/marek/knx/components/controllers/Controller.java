@@ -4,8 +4,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.panel.Panel;
 import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.database.Element;
-import pl.marek.knx.pages.ElementsPanel.ElementDragAndDropBehavior;
-import pl.marek.knx.pages.ElementsPanel.ElementRemoveBehavior;
+import pl.marek.knx.pages.ElementAjaxOperations;
 
 public abstract class Controller extends Panel {
 
@@ -13,8 +12,7 @@ public abstract class Controller extends Panel {
 	
 	private PopupMenu menu;
 	
-	private ElementDragAndDropBehavior dragAndDropBehavior;
-	private ElementRemoveBehavior removeBehavior;
+	private ElementAjaxOperations elementAjaxOperations;
 	
 	private Element element;
 	protected ControllerType type;
@@ -41,16 +39,19 @@ public abstract class Controller extends Panel {
 		if(htmlClass.contains("popup-menu-trigger")){
 			tag.put("popupMenuId", menu.getMarkupId());
 		}
-		if(dragAndDropBehavior != null){
-			tag.put("callback", dragAndDropBehavior.getCallbackUrl());
-		}
-		if(removeBehavior != null){
-			tag.put("removecallback", removeBehavior.getCallbackUrl());
+		if(elementAjaxOperations != null){
+			tag.put("callback", elementAjaxOperations.getCallbackUrl());
 		}
 		if(element != null){
 			tag.put("elementid", element.getId());
 		}
 		
+		if(isVisualisationElement()){
+			tag.put("draggable", false);
+			if(htmlClass.contains("visualisation-element")){
+				tag.put("style", String.format("position: absolute; top: %dpx; left: %dpx;",element.getY(),element.getX()));
+			}
+		}
 		super.onComponentTag(tag);
 	}
 
@@ -74,13 +75,16 @@ public abstract class Controller extends Panel {
 		this.type = type;
 	}
 
-	public void setDragAndDropBehavior(
-			ElementDragAndDropBehavior dragAndDropBehavior) {
-		this.dragAndDropBehavior = dragAndDropBehavior;
+	public void setElementAjaxOperations(ElementAjaxOperations elementAjaxOperations) {
+		this.elementAjaxOperations = elementAjaxOperations;
 	}
 
-	public void setRemoveBehavior(ElementRemoveBehavior removeBehavior) {
-		this.removeBehavior = removeBehavior;
+	
+	public boolean isVisualisationElement(){
+		if(element == null){
+			return false;
+		}
+		return element.isVisualisationElement();
 	}
 	
 	public abstract void setName(String name);

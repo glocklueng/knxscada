@@ -286,11 +286,13 @@ public class CreateEditElementFormPanel  extends BasePanel{
 		public GroupAddressLevel getCurrentElementGroupAddressLevel(){
 			GroupAddressLevel level = GroupAddressLevel.THREE;
 			ArrayList<ElementGroupAddress> addrs = element.getGroupAddresses();
-			for(ElementGroupAddress a: addrs){
-				String[] addr = a.getAddress().split("/");
-				if(addr.length >= 2){
-					if(addr.length == 2){
-						level = GroupAddressLevel.TWO;
+			if(addrs != null){
+				for(ElementGroupAddress a: addrs){
+					String[] addr = a.getAddress().split("/");
+					if(addr.length >= 2){
+						if(addr.length == 2){
+							level = GroupAddressLevel.TWO;
+						}
 					}
 				}
 			}

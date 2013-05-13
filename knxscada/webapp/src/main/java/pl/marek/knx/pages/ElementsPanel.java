@@ -1,11 +1,9 @@
 package pl.marek.knx.pages;
 
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
-import org.json.simple.JSONObject;
 
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.components.PopupMenu;
@@ -16,8 +14,6 @@ import pl.marek.knx.database.Element;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.pages.DialogsPanel.DialogType;
-import pl.marek.knx.utils.JSONUtil;
-
 @HtmlFile("elements.html")
 public class ElementsPanel extends BasePanel{
 
@@ -26,8 +22,7 @@ public class ElementsPanel extends BasePanel{
 	private SubLayer subLayer;
 	private RepeatingView elementsView;
 	
-	private ElementDragAndDropBehavior dragAndDropBehavior;
-	private ElementRemoveBehavior removeBehavior;
+	private ElementAjaxOperations elementAjaxOperations;
 
 	public ElementsPanel(String id, DatabaseManager dbManager, SubLayer sublayer) {
 		super(id, dbManager);
@@ -45,19 +40,15 @@ public class ElementsPanel extends BasePanel{
 		newElementItem.add(new NewElementItemClickBehavior());
 		add(newElementItem);
 		
-		dragAndDropBehavior = new ElementDragAndDropBehavior();
-		add(dragAndDropBehavior);
-		
-		removeBehavior = new ElementRemoveBehavior();
-		add(removeBehavior);
-		
+		elementAjaxOperations = new ElementAjaxOperations(this);
+		add(elementAjaxOperations);
+				
 		if(subLayer != null){
 			if(subLayer.getElements() != null){
 				for(Element element: subLayer.getElements()){
 					ControllerType type = ControllerType.valueOf(element.getType());
 					Controller controller = type.getController(elementsView.newChildId(), element);
-					controller.setDragAndDropBehavior(dragAndDropBehavior);
-					controller.setRemoveBehavior(removeBehavior);
+					controller.setElementAjaxOperations(elementAjaxOperations);
 					
 					PopupMenu menu = controller.getPopupMenu();
 					PopupMenuItem editMenu = menu.createPopupMenuItem(getString("element.edit.menuitem"), "images/edit_icon.png", true);
@@ -90,36 +81,6 @@ public class ElementsPanel extends BasePanel{
 			dialogs.setDialogPanel(new CreateEditElementFormPanel("dialog", getDBManager()));
 			target.add(dialogs);
 			target.appendJavaScript("initElementDialog('"+ getString("new-element") + "','"+getString("cancel")+"'); showDialog();");
-		}
-	}
-	
-	public class ElementDragAndDropBehavior extends AbstractDefaultAjaxBehavior{
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void respond(AjaxRequestTarget target) {
-			
-			String s = getRequestMessage();
-			
-			System.out.println("JSON: " + s);
-			JSONObject obj = JSONUtil.convertStringToObject(s);
-			System.out.println("CONVERT: "+obj.toJSONString());
-		}
-	}
-	
-	public class ElementRemoveBehavior extends AbstractDefaultAjaxBehavior{
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void respond(AjaxRequestTarget target) {
-			
-			String s = getRequestMessage();
-			
-			System.out.println("JSON: " + s);
-			JSONObject obj = JSONUtil.convertStringToObject(s);
-			System.out.println("CONVERT: "+obj.toJSONString());
 		}
 	}
 	

@@ -1,10 +1,15 @@
 package pl.marek.knx.pages;
 
+import java.util.ArrayList;
+
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.repeater.RepeatingView;
 
 import pl.marek.knx.annotations.HtmlFile;
+import pl.marek.knx.components.controllers.Controller;
+import pl.marek.knx.components.controllers.ControllerType;
+import pl.marek.knx.database.Element;
 import pl.marek.knx.database.Layer;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
@@ -21,7 +26,10 @@ public class ContentPanel extends BasePanel{
 	private ElementsPanel elementsPanel;
 	private SubLayerSettingsPanel settingsPanel;
 	
+	private ElementAjaxOperations elementAjaxOperations;
+	
 	private Image backgroundImage;
+	private RepeatingView visualisationElements;
 	
 	public ContentPanel(String componentName, DatabaseManager dbManager) {
         super(componentName, dbManager);
@@ -92,13 +100,26 @@ public class ContentPanel extends BasePanel{
 		
 		add(backgroundImage);
 		
-		
-		Label l = new Label("msg","");
+		elementAjaxOperations = new ElementAjaxOperations(this);
+		add(elementAjaxOperations);
+	
+		visualisationElements = new RepeatingView("visualisation-element");
 		if(subLayer != null){
-			l.setDefaultModelObject(subLayer.getDescription());
+			ArrayList<Element> elements = subLayer.getElements();
+			if(elements != null){
+				for(Element element: elements){
+					ControllerType type = ControllerType.valueOf(element.getType());
+					Controller controller = type.getController(visualisationElements.newChildId(), element);
+					
+					controller.setElementAjaxOperations(elementAjaxOperations);
+					if(controller.isVisualisationElement()){
+						visualisationElements.add(controller);
+					}
+				}
+			}
 		}
-		add(l);
-				
+		
+		add(visualisationElements);		
 	}
 
 	public void setSubLayer(SubLayer subLayer) {
@@ -125,8 +146,7 @@ public class ContentPanel extends BasePanel{
 	
 	public Image getCurrentBackgroundImage(){
 		return backgroundImage;
-	}
-	
+	}	
 }
 
 

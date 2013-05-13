@@ -19,7 +19,7 @@ function resize(){
 	if(sideBarDisplay == "table") {
 		sidebarWidth = 165;
 		sideBarPadding = 10;
-		$("#main").css("left","170px");
+		$("#main").css("left","195px");
 	}else{
 		$("#main").css("left","0px");
 	}
@@ -32,7 +32,7 @@ function resize(){
 	
 	var newWidth = windowWidth - (mainMargin * 2)  - sidebarWidth - (sideBarPadding*2);
 	var newHeight = windowHeight - headerHeight - footerHeight - (mainMargin * 4) - (headerPadding * 2);
-		var newContentHeight = newHeight - sublayersHeight;
+	var newContentHeight = newHeight - sublayersHeight;
 	
 	$("#main").css({
 		width : newWidth,
@@ -44,7 +44,6 @@ function resize(){
 	});
 	
 	$("#content").css({
-		width : newWidth,
 		height : newContentHeight
 	});
 	
@@ -54,7 +53,7 @@ function resize(){
 	$(".accordion-div").css({
 		height : newContentHeight - 115
 	});
-	
+		
 	var loadingTop = (windowHeight/2) - 100;
 	$("#loading-img").css("top", loadingTop+"px");
 	

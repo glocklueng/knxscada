@@ -8,6 +8,7 @@ import android.os.Parcelable;
 public class Element implements Parcelable{
 	
 	public static final String ELEMENT = "ELEMENT";
+	public static final int NOT_VISUALISATION_VALUE = -999;
 	
 	private int id;
 	private int projectId;
@@ -26,6 +27,8 @@ public class Element implements Parcelable{
 		description = "";
 		deviceAddress = "";
 		type = "";
+		x = NOT_VISUALISATION_VALUE;
+		y = NOT_VISUALISATION_VALUE;
 	}
 	
 	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, String type){
@@ -139,6 +142,19 @@ public class Element implements Parcelable{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public boolean isVisualisationElement(){
+		if(x != NOT_VISUALISATION_VALUE && y !=NOT_VISUALISATION_VALUE){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void setNotVisualisationElement(){
+		x = NOT_VISUALISATION_VALUE;
+		y = NOT_VISUALISATION_VALUE;
 	}
 
 	@Override

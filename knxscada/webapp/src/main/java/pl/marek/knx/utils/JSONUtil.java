@@ -33,6 +33,15 @@ public class JSONUtil {
 		}
 		return object;
 	}
+	
+	public static int convertJSONValueToInt(JSONObject object, String key){
+		String value = object.get(key).toString();
+		try{
+			return Integer.parseInt(value);
+		}catch(NumberFormatException ex){
+			return Integer.MAX_VALUE;
+		}
+	}
 
 	private static ContainerFactory getContainerFactory() {
 		ContainerFactory containerFactory = new ContainerFactory() {

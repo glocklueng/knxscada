@@ -157,27 +157,38 @@ function initDragAndDrop(){
 	$(".draggable-element").each(function(){
 			var element = $(this);
 			makeElementDraggable(element);
+			
+			var isDraggable = element.attr("draggable");
+			
+			if(isDraggable !== undefined && isDraggable=="false"){
+				disableElementDraggable(this);
+			}
 	});
 		
-	$(".dragged-element").each(function(){
+	$(".visualisation-element").each(function(){
 		makeElementRemovable(this);
+		transformElement($(this).children().children());
 	});
 	
-	$("#content").droppable({
-		  accept: ".draggable-element",
+	$("#elements-container").droppable({
+		  accept: ".draggable-element, .visualisation-element",
 	      drop: function( event, ui ) {
-	      		var x = ui.offset.left - 195;
-				var y = ui.offset.top - 140;
+	    	    var offset = $("#content").offset();
+	    	    var x = ui.offset.left - offset.left;
+				var y = ui.offset.top - offset.top;
 				var isDraggableElement = $(ui.draggable).hasClass("draggable-element");
 				
 				var elem = $(ui.draggable);
 				
 				if(isDraggableElement){
 					var element = elem.clone();
+					
+					transformElement($(element).children().children());
+					
 					$(element).css("position", "absolute");
 					$(element).css("top", y);
 					$(element).css("left", x);
-					$(element).addClass("dragged-element");
+					$(element).addClass("visualisation-element");
 					$(element).removeClass("draggable-element");
 					$(element).removeClass("popup-menu-trigger");
 					
@@ -189,8 +200,10 @@ function initDragAndDrop(){
 				
 				var callback = $(elem).attr("callback");
 				var elementid = $(elem).attr("elementid");
-				changeElementPosition(callback, elementid, x, y);
-				
+				var isRemoved = $(elem).hasClass("removed");
+				if(!isRemoved){
+					changeElementPosition(callback, elementid, x, y);
+	      		}
 	      }
 	});
 	$("#elements-area").droppable({
@@ -198,11 +211,23 @@ function initDragAndDrop(){
 	});
 }
 
+function transformElement(element){
+	$(element).removeClass("focused");
+	
+	var clazz = $(element).attr("class");
+	var newClass = clazz + "-v";
+	$(element).removeClass(clazz);
+	$(element).addClass(newClass);
+}
+
 function makeElementDraggable(element){
 	$( element ).draggable({ 
 		scroll: true,
 		helper: "clone",
 		start: function( event, ui ) {
+			
+			transformElement($(ui.helper).children().children());
+			
 			$(".elements-panel").css("overflow","visible");
 			$(".elements").css("overflow","visible");
 		},
@@ -228,6 +253,7 @@ function changeElementPosition(callback, elementid, x, y){
 	
 	var data = {
 			id : elementid,
+			type: "update",
 			x  : x,
 			y  : y
 	};
@@ -235,7 +261,7 @@ function changeElementPosition(callback, elementid, x, y){
 	sendJSONData(callback, data);
 }
 
-function removeElement(callback, elementid){
+function removeVisualisationElement(callback, elementid){
 	
 	$(".draggable-element").each(function(){
 		var elemid = $(this).attr("elementid");
@@ -245,10 +271,20 @@ function removeElement(callback, elementid){
 	});
 	
 	var data = {
-			id : elementid
+			id : elementid,
+			type: "remove"
 	};
 	
 	sendJSONData(callback, data);
+}
+
+function removeElement(elementid){
+	$(".visualisation-element").each(function(){
+		var elemid = $(this).attr("elementid");
+		if(elemid == elementid){
+			$(this).remove();
+		}
+	});
 }
 
 function sendJSONData(callback, data){
@@ -274,8 +310,8 @@ function setElementPanelHide(){
 
 function setElementPanelVisible(){
 	$("#elements-area").css("width",currentSize+"px");
-		$("#elements-area").resizable( "option", "disabled", false );
-		$("#triggers").css("left", "-24px");
+	$("#elements-area").resizable( "option", "disabled", false );
+	$("#triggers").css("left", "-24px");
 }
 
 function showElementPanel(){
@@ -472,9 +508,16 @@ function initPopupMenu(){
 	      var x = e.pageX;
 	      var y = e.pageY;
 	     
+	      var isSubLayer = $(this).hasClass("sublayer");
+	  	  if(isSubLayer){
+	  		var offset = $(".sublayers").offset();
+	  		x = x - offset.left;
+	      	y = y - offset.top;
+	  	  }
+      	
 	      var isController = $(this).hasClass("controller");
 	      if(isController){
-	      	var offset = $(this).parent().offset();
+	      	var offset = $(".elements").offset();
 	      	x = x - offset.left;
 	      	y = y - offset.top;
 	      }

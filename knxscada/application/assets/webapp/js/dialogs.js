@@ -148,6 +148,11 @@ function initRemoveDialog(yesButtonLabel, noButtonLabel){
 				var select = msg.select;
 				var remove = msg.remove;
 				
+				if(type == "element"){
+					var elemid = $("#"+remove).attr("elementid");
+					removeElement(elemid);
+				}
+				
 				if(remove != 'undefined'){
 					$("#"+remove).hide("fade",{}, 300, function(){ 
 						$(this).remove();		
