@@ -16,11 +16,4 @@ public class WebApplicationSettingsFragment extends SettingsFragment{
 		super.onResume();
 		addActionBar();
 	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-
-	}
-
 }

@@ -7,12 +7,17 @@ import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.https.HttpsConfig;
+import org.apache.wicket.protocol.https.HttpsMapper;
+import org.apache.wicket.protocol.https.Scheme;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.request.component.IRequestablePage;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.pages.*;
@@ -36,7 +41,21 @@ public class KNXWebApplication extends WebApplication {
 		mountPages();
 		mountResources();
 		
+		if(getAndroidContext() != null){
+			setRootRequestMapper(new HttpsMapper(getRootRequestMapper(), new HttpsConfig(getPort(), getSSLPort())){
+				@Override
+				protected Scheme getDesiredSchemeFor(Class<? extends IRequestablePage> pageClass) {
+					if(isUseSsl()){
+						return super.getDesiredSchemeFor(pageClass);
+					}else{
+						return Scheme.HTTP;
+					}
+				}
+				
+			});
+		}
 	}
+	
 	
 	public ContentResolver getAndroidContentResolver(){
 		ContentResolver resolver = (ContentResolver)getServletContext().getAttribute(CONTENT_RESOLVER_ATTRIBUTE);
@@ -51,6 +70,21 @@ public class KNXWebApplication extends WebApplication {
 	public String getDefaultPreferenceFile(){
 		String prefFile = (String)getServletContext().getAttribute(DEF_PREFERENCE_FILE_ATTRIBUTE);
 		return prefFile;
+	}
+	
+	private int getPort(){
+		SharedPreferences preferences = getAndroidContext().getSharedPreferences(getDefaultPreferenceFile(), Context.MODE_MULTI_PROCESS);
+	    return preferences.getInt("webserver_port", 8080);
+	}
+	
+	private int getSSLPort(){
+		SharedPreferences preferences = getAndroidContext().getSharedPreferences(getDefaultPreferenceFile(), Context.MODE_MULTI_PROCESS);
+	    return preferences.getInt("webserver_ssl_port", 8443);
+	}
+	
+	private boolean isUseSsl(){
+		SharedPreferences preferences = getAndroidContext().getSharedPreferences(getDefaultPreferenceFile(), Context.MODE_MULTI_PROCESS);
+	    return preferences.getBoolean("use_ssl", false);
 	}
 
 	private void setWebPagesFinder() {

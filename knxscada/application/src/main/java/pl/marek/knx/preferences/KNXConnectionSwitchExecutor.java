@@ -68,7 +68,7 @@ public class KNXConnectionSwitchExecutor extends SwitchExecutor implements KNXCo
 	}
 	
 	public void connectionStateChanged(ConnectionState state) {
-		setState(context.getString(R.string.connection_state_key), state.name());
+		//setState(context.getString(R.string.connection_state_key), state.name());
 		listener.setSwitchState(getSwitchState(state));
 	}
 }

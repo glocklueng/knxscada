@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import android.content.Context;
@@ -17,6 +18,7 @@ import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.interfaces.DatabaseManager;
 
 @HtmlFile("index.html")
+@RequireHttps
 public class Index extends WebPage implements AuthenticatedWebPage{
 
 	private static final long serialVersionUID = 1L;

@@ -19,7 +19,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -42,6 +45,13 @@ public class WebServerService extends Service implements StateSender, WebServerC
         System.setProperty("org.eclipse.jetty.util.log.class","pl.marek.knx.log.JettyLogger");
         org.eclipse.jetty.util.log.Log.setLog(new JettyLogger());
     }
+    
+    private Handler webServerStateHandler = new Handler(){
+    	public void handleMessage(android.os.Message msg) {
+    		String s = msg.getData().getString("state");
+    		setState(WebServerState.valueOf(s));
+    	};
+    };
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -60,29 +70,11 @@ public class WebServerService extends Service implements StateSender, WebServerC
 	
 	private void startWebServer(){
 		server = new WebServer(settings, this, this);
-		try{
-			//TODO Remove
-			server.undeployWebApp();
-			
-			if(!server.isDeployed()){
-				setState(WebServerState.DEPLOYING);
-				server.deployWebApp();
-			}
-			server.start();
-		} catch(Exception ex){
-			Log.w(LogTags.WEB_SERVER, ex.getMessage());
-			stopSelf();
-		}	
+		new WebServerStartThread().start();
 	}
 	
 	private void stopWebServer(){
-		setState(WebServerState.STOPPING);
-		try {
-			server.stop();
-			setState(WebServerState.STOPPED);
-		} catch (Exception e) {
-			Log.w(LogTags.WEB_SERVER, e.getMessage());
-		}
+		new WebServerStopThread().start();
 	}
 	
 	private void setWakeLock(){
@@ -149,28 +141,28 @@ public class WebServerService extends Service implements StateSender, WebServerC
 	// Jetty Server state listener methods
 	public void lifeCycleStarting(LifeCycle event) {
 		Log.d(LogTags.WEB_SERVER, getString(R.string.webserver_service_starting));
-		setState(WebServerState.STARTING);
+		sendStateMessage(WebServerState.STARTING);
 	}
 
 	public void lifeCycleStarted(LifeCycle event) {
 		Log.d(LogTags.WEB_SERVER, getString(R.string.webserver_service_started));
-		setState(WebServerState.STARTED);
+		sendStateMessage(WebServerState.STARTED);
 	}
 
 	public void lifeCycleFailure(LifeCycle event, Throwable cause) {
 		Log.e(LogTags.WEB_SERVER, getString(R.string.webserver_service_failed));
 		Log.e(LogTags.WEB_SERVER, cause.getMessage());
-		setState(WebServerState.FAILED);
+		sendStateMessage(WebServerState.FAILED);
 	}
 
 	public void lifeCycleStopping(LifeCycle event) {
 		Log.d(LogTags.WEB_SERVER, getString(R.string.webserver_service_stopping));
-		setState(WebServerState.STOPPING);
+		sendStateMessage(WebServerState.STOPPING);
 	}
 
 	public void lifeCycleStopped(LifeCycle event) {
 		Log.d(LogTags.WEB_SERVER, getString(R.string.webserver_service_stopped));
-		setState(WebServerState.STOPPED);
+		sendStateMessage(WebServerState.STOPPED);
 	}
 	
 	
@@ -200,6 +192,49 @@ public class WebServerService extends Service implements StateSender, WebServerC
 	public void undeployWebApp() {
 		if(state != WebServerState.STARTED){
 			server.undeployWebApp();
+		}
+	}
+	
+	protected void sendStateMessage(WebServerState s){
+        Message msg = webServerStateHandler.obtainMessage();
+        Bundle b = new Bundle();
+        b.putString("state", s.name());
+        msg.setData(b);
+        webServerStateHandler.sendMessage(msg);
+    }
+	
+	private class WebServerStartThread extends Thread{
+		
+		@Override
+		public void run() {
+			try{
+				//TODO Remove
+				server.undeployWebApp();
+				
+				if(!server.isDeployed()){
+					sendStateMessage(WebServerState.DEPLOYING);
+					server.deployWebApp();
+				}
+				server.start();
+			} catch(Exception ex){
+				Log.w(LogTags.WEB_SERVER, ex.getMessage());
+				sendStateMessage(WebServerState.FAILED);
+				stopSelf();
+			}
+		}
+	}
+	
+	private class WebServerStopThread extends Thread{
+		
+		@Override
+		public void run() {
+			sendStateMessage(WebServerState.STOPPING);
+			try {
+				server.stop();
+				sendStateMessage(WebServerState.STOPPED);
+			} catch (Exception e) {
+				sendStateMessage(WebServerState.FAILED);
+			}
 		}
 	}
 }

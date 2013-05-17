@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="@string/reset_settings_key"
+        android:summary="@string/reset_settings_summary"
+        android:title="@string/reset_settings_title" />
+
+    <Preference
+        android:key="@string/reset_application_key"
+        android:summary="@string/reset_application_summary"
+        android:title="@string/reset_application_summary" />
+    
+</PreferenceScreen>

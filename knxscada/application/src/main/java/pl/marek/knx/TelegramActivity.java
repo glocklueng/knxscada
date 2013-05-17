@@ -22,7 +22,7 @@ import android.widget.ListView;
 
 public class TelegramActivity extends ListActivity implements KNXTelegramListener, ReadWriteListener{
 	
-	public static int NUMBER_OF_SHOW_TELEGRAMS = 1000;
+	public static int NUMBER_OF_SHOW_TELEGRAMS = 100;
 	
 	private TelegramBroadcastReceiver telegramReceiver;
 	private TelegramAdapter telegramAdapter;

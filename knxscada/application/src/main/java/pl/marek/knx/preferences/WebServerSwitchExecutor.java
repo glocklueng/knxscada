@@ -70,7 +70,7 @@ public class WebServerSwitchExecutor extends SwitchExecutor implements WebServer
 	}
 	
 	public void webServerStateChanged(WebServerState state) {
-		setState(context.getString(R.string.webserver_state_key), state.name());
+		//setState(context.getString(R.string.webserver_state_key), state.name());
 		listener.setSwitchState(getSwitchState(state));
 	}
 }

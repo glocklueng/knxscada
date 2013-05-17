@@ -37,6 +37,8 @@
     <!-- PROJECT ACTION BAR MENU -->
     <string name="project_action_bar_menu_new_room">Nowe pomieszczenie</string>
     <string name="project_action_bar_menu_new_element">Nowy element</string>
+    <string name="project_action_bar_menu_open_webapp">Aplikacja webowa</string>
+    
     
     <!-- PROJECT POPUP MENU -->
     <string name="project_popup_menu_item_edit">Edytuj projekt</string>
@@ -58,6 +60,11 @@
     
     <!-- PROJECT -->
     <string name="project_add_layer_item">Dodaj piętro</string>
+    
+    <!-- PROJECT WEBAPP START DIALOG -->
+    <string name="webapp_server_not_started_title">Serwer aplikacji</string>
+    <string name="webapp_server_not_started_message">Serwer aplikacji webowej nie jest uruchomiony. Czy chcesz uruchomić go teraz?</string>
+    
     
     <!-- LAYER DIALOG -->
     <string name="dialog_new_layer_title">Nowe piętro</string>

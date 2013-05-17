@@ -141,9 +141,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int www_logo=0x7f02004c;
     }
     public static final class id {
-        public static final int ab_new_project_item=0x7f060074;
-        public static final int ab_preferences_item=0x7f060076;
-        public static final int ab_telegram_item=0x7f060075;
+        public static final int ab_new_project_item=0x7f060075;
+        public static final int ab_preferences_item=0x7f060077;
+        public static final int ab_telegram_item=0x7f060076;
         public static final int dialog_controller_add_address_button=0x7f060005;
         public static final int dialog_controller_cancel_button=0x7f060009;
         public static final int dialog_controller_create_edit_button=0x7f06000a;
@@ -192,7 +192,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int group_address_separator_1=0x7f060019;
         public static final int group_address_separator_2=0x7f06001b;
         public static final int group_address_sub_group=0x7f06001a;
-        public static final int header_category=0x7f060073;
+        public static final int header_category=0x7f060074;
         public static final int icon_gridview=0x7f06001d;
         public static final int icon_picker_cancel_button=0x7f06001e;
         public static final int knx_interface_item_address=0x7f060020;
@@ -201,14 +201,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int popup_menu_cancel_button=0x7f060028;
         public static final int popup_menu_item_icon=0x7f060029;
         public static final int popup_menu_item_name=0x7f06002a;
-        public static final int project_ab_features=0x7f060078;
-        public static final int project_add_sublayer_menu_item=0x7f060077;
+        public static final int project_ab_features=0x7f06007a;
+        public static final int project_add_sublayer_menu_item=0x7f060079;
         public static final int project_item_description=0x7f060037;
         public static final int project_item_image=0x7f060039;
         public static final int project_item_image_progressbar=0x7f060038;
         public static final int project_item_name=0x7f060035;
         public static final int project_item_separator=0x7f060036;
         public static final int project_item_text_views=0x7f060034;
+        public static final int project_open_webapp_menu_item=0x7f060078;
         public static final int right_side_navigation_view=0x7f06002c;
         public static final int seekbar=0x7f060002;
         public static final int shadow=0x7f06003c;
@@ -256,13 +257,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int telegram_item_to=0x7f060071;
         public static final int telegram_item_to_label=0x7f06006e;
         public static final int telegram_item_value=0x7f060072;
-        public static final int telegram_menu_read_write_item=0x7f060079;
+        public static final int telegram_menu_read_write_item=0x7f06007b;
         public static final int three=0x7f060001;
         public static final int toast_image=0x7f06000d;
         public static final int toast_layout_root=0x7f06000c;
         public static final int toast_message=0x7f06000e;
         public static final int two=0x7f060000;
         public static final int viewpager=0x7f06000b;
+        public static final int webview=0x7f060073;
     }
     public static final class integer {
         public static final int discover_timeout=0x7f090004;
@@ -321,6 +323,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int telegram_dialog_read_write=0x7f03001d;
         public static final int telegram_item=0x7f03001e;
         public static final int telegram_list=0x7f03001f;
+        public static final int webapp=0x7f030020;
     }
     public static final class menu {
         public static final int menu=0x7f0d0000;
@@ -328,309 +331,329 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int telegram_menu=0x7f0d0002;
     }
     public static final class string {
-        public static final int ab_new_project_item=0x7f08005f;
-        public static final int ab_telegram_item=0x7f08005e;
+        public static final int ab_new_project_item=0x7f08006c;
+        public static final int ab_telegram_item=0x7f08006b;
         /**  BASIC STRINGS 
          */
-        public static final int application_name=0x7f080059;
-        public static final int cancel=0x7f080066;
-        public static final int choose_layer_msg=0x7f08009c;
+        public static final int application_name=0x7f080066;
+        public static final int cancel=0x7f080073;
+        public static final int choose_layer_msg=0x7f0800ac;
         /**  INFORMATIONS 
          */
-        public static final int choose_layer_msg_title=0x7f08009b;
-        public static final int choose_sublayer_msg=0x7f08009e;
-        public static final int choose_sublayer_msg_title=0x7f08009d;
-        public static final int connected=0x7f08005c;
-        public static final int connection_service_connected=0x7f0800bd;
+        public static final int choose_layer_msg_title=0x7f0800ab;
+        public static final int choose_sublayer_msg=0x7f0800ae;
+        public static final int choose_sublayer_msg_title=0x7f0800ad;
+        public static final int connected=0x7f080069;
+        public static final int connection_service_connected=0x7f0800cd;
         /**  KNX CONNECTION STRINGS 
          */
-        public static final int connection_service_connecting=0x7f0800bc;
-        public static final int connection_service_disconnected=0x7f0800bf;
-        public static final int connection_service_disconnecting=0x7f0800be;
-        public static final int connection_service_failed=0x7f0800c0;
-        public static final int connection_service_message=0x7f0800c3;
-        public static final int connection_service_title=0x7f0800c2;
-        public static final int connection_service_unknown=0x7f0800c1;
+        public static final int connection_service_connecting=0x7f0800cc;
+        public static final int connection_service_disconnected=0x7f0800cf;
+        public static final int connection_service_disconnecting=0x7f0800ce;
+        public static final int connection_service_failed=0x7f0800d0;
+        public static final int connection_service_message=0x7f0800d3;
+        public static final int connection_service_title=0x7f0800d2;
+        public static final int connection_service_unknown=0x7f0800d1;
         /**  PREFERENCES KEYS 
          */
         public static final int connection_state_key=0x7f080005;
-        public static final int default_preference_file=0x7f08005a;
-        public static final int dialog_controller_add_address_button=0x7f0800a7;
-        public static final int dialog_controller_add_button=0x7f0800a5;
+        public static final int default_preference_file=0x7f080067;
+        public static final int dialog_controller_add_address_button=0x7f0800b7;
+        public static final int dialog_controller_add_button=0x7f0800b5;
         /**  CONTROLLER DIALOG 
          */
-        public static final int dialog_controller_address_label=0x7f08009f;
-        public static final int dialog_controller_cancel_button=0x7f0800a4;
-        public static final int dialog_controller_description_hint=0x7f0800a3;
-        public static final int dialog_controller_description_label=0x7f0800a2;
-        public static final int dialog_controller_edit_button=0x7f0800a6;
+        public static final int dialog_controller_address_label=0x7f0800af;
+        public static final int dialog_controller_cancel_button=0x7f0800b4;
+        public static final int dialog_controller_description_hint=0x7f0800b3;
+        public static final int dialog_controller_description_label=0x7f0800b2;
+        public static final int dialog_controller_edit_button=0x7f0800b6;
         /**  GROUP ADDRESS LABELS 
          */
-        public static final int dialog_controller_group_address_default_label=0x7f0800ad;
-        public static final int dialog_controller_group_address_other_label=0x7f0800ae;
-        public static final int dialog_controller_name_empty=0x7f0800aa;
-        public static final int dialog_controller_name_empty_title=0x7f0800a9;
-        public static final int dialog_controller_name_hint=0x7f0800a1;
-        public static final int dialog_controller_name_label=0x7f0800a0;
-        public static final int dialog_controller_remove_address_button=0x7f0800a8;
-        public static final int dialog_controller_wrong_address=0x7f0800ac;
-        public static final int dialog_controller_wrong_address_title=0x7f0800ab;
-        public static final int dialog_edit_layer_title=0x7f080081;
-        public static final int dialog_edit_project_title=0x7f080069;
-        public static final int dialog_edit_sublayer_title=0x7f08008a;
-        public static final int dialog_layer_add_button=0x7f080086;
-        public static final int dialog_layer_cancel_button=0x7f080088;
-        public static final int dialog_layer_edit_button=0x7f080087;
-        public static final int dialog_new_layer_description=0x7f080085;
-        public static final int dialog_new_layer_description_hint=0x7f080084;
-        public static final int dialog_new_layer_name=0x7f080082;
-        public static final int dialog_new_layer_name_hint=0x7f080083;
+        public static final int dialog_controller_group_address_default_label=0x7f0800bd;
+        public static final int dialog_controller_group_address_other_label=0x7f0800be;
+        public static final int dialog_controller_name_empty=0x7f0800ba;
+        public static final int dialog_controller_name_empty_title=0x7f0800b9;
+        public static final int dialog_controller_name_hint=0x7f0800b1;
+        public static final int dialog_controller_name_label=0x7f0800b0;
+        public static final int dialog_controller_remove_address_button=0x7f0800b8;
+        public static final int dialog_controller_wrong_address=0x7f0800bc;
+        public static final int dialog_controller_wrong_address_title=0x7f0800bb;
+        public static final int dialog_edit_layer_title=0x7f080091;
+        public static final int dialog_edit_project_title=0x7f080076;
+        public static final int dialog_edit_sublayer_title=0x7f08009a;
+        public static final int dialog_layer_add_button=0x7f080096;
+        public static final int dialog_layer_cancel_button=0x7f080098;
+        public static final int dialog_layer_edit_button=0x7f080097;
+        public static final int dialog_new_layer_description=0x7f080095;
+        public static final int dialog_new_layer_description_hint=0x7f080094;
+        public static final int dialog_new_layer_name=0x7f080092;
+        public static final int dialog_new_layer_name_hint=0x7f080093;
         /**  LAYER DIALOG 
          */
-        public static final int dialog_new_layer_title=0x7f080080;
-        public static final int dialog_new_project_description=0x7f08006c;
-        public static final int dialog_new_project_description_hint=0x7f08006d;
-        public static final int dialog_new_project_image=0x7f08006e;
-        public static final int dialog_new_project_image_hint=0x7f08006f;
-        public static final int dialog_new_project_name=0x7f08006a;
-        public static final int dialog_new_project_name_hint=0x7f08006b;
+        public static final int dialog_new_layer_title=0x7f080090;
+        public static final int dialog_new_project_description=0x7f080079;
+        public static final int dialog_new_project_description_hint=0x7f08007a;
+        public static final int dialog_new_project_image=0x7f08007b;
+        public static final int dialog_new_project_image_hint=0x7f08007c;
+        public static final int dialog_new_project_name=0x7f080077;
+        public static final int dialog_new_project_name_hint=0x7f080078;
         /**  NEW PROJECT DIALOG 
          */
-        public static final int dialog_new_project_title=0x7f080068;
-        public static final int dialog_new_sublayer_description=0x7f08008e;
-        public static final int dialog_new_sublayer_description_hint=0x7f08008d;
-        public static final int dialog_new_sublayer_name=0x7f08008b;
-        public static final int dialog_new_sublayer_name_hint=0x7f08008c;
-        public static final int dialog_new_sublayer_title=0x7f080089;
-        public static final int dialog_project_add_button=0x7f080070;
-        public static final int dialog_project_cancel_button=0x7f080072;
-        public static final int dialog_project_edit_button=0x7f080071;
-        public static final int dialog_rw_telegram_address=0x7f0800b6;
-        public static final int dialog_rw_telegram_cancel_button=0x7f0800b3;
-        public static final int dialog_rw_telegram_data_type=0x7f0800b7;
-        public static final int dialog_rw_telegram_function=0x7f0800b8;
-        public static final int dialog_rw_telegram_read_button=0x7f0800b4;
-        public static final int dialog_rw_telegram_title=0x7f0800b2;
-        public static final int dialog_rw_telegram_value=0x7f0800b9;
-        public static final int dialog_rw_telegram_write_button=0x7f0800b5;
-        public static final int dialog_rw_telegram_wrong_address_msg=0x7f0800bb;
-        public static final int dialog_rw_telegram_wrong_address_title=0x7f0800ba;
-        public static final int dialog_sublayer_add_button=0x7f08008f;
-        public static final int discover_item_summary=0x7f080052;
-        public static final int discover_item_title=0x7f080051;
+        public static final int dialog_new_project_title=0x7f080075;
+        public static final int dialog_new_sublayer_description=0x7f08009e;
+        public static final int dialog_new_sublayer_description_hint=0x7f08009d;
+        public static final int dialog_new_sublayer_name=0x7f08009b;
+        public static final int dialog_new_sublayer_name_hint=0x7f08009c;
+        public static final int dialog_new_sublayer_title=0x7f080099;
+        public static final int dialog_project_add_button=0x7f08007d;
+        public static final int dialog_project_cancel_button=0x7f08007f;
+        public static final int dialog_project_edit_button=0x7f08007e;
+        public static final int dialog_rw_telegram_address=0x7f0800c6;
+        public static final int dialog_rw_telegram_cancel_button=0x7f0800c3;
+        public static final int dialog_rw_telegram_data_type=0x7f0800c7;
+        public static final int dialog_rw_telegram_function=0x7f0800c8;
+        public static final int dialog_rw_telegram_read_button=0x7f0800c4;
+        public static final int dialog_rw_telegram_title=0x7f0800c2;
+        public static final int dialog_rw_telegram_value=0x7f0800c9;
+        public static final int dialog_rw_telegram_write_button=0x7f0800c5;
+        public static final int dialog_rw_telegram_wrong_address_msg=0x7f0800cb;
+        public static final int dialog_rw_telegram_wrong_address_title=0x7f0800ca;
+        public static final int dialog_sublayer_add_button=0x7f08009f;
+        public static final int discover_item_summary=0x7f08005f;
+        public static final int discover_item_title=0x7f08005e;
         public static final int discover_search_key=0x7f080011;
         public static final int discover_timeout_key=0x7f080010;
-        public static final int discover_timeout_summary=0x7f080050;
-        public static final int discover_timeout_title=0x7f08004f;
+        public static final int discover_timeout_summary=0x7f08005d;
+        public static final int discover_timeout_title=0x7f08005c;
         public static final int discover_while_connecting_key=0x7f08000f;
-        public static final int discover_while_connecting_summary=0x7f08004e;
+        public static final int discover_while_connecting_summary=0x7f08005b;
         /**  Discoverer Settings 
          */
-        public static final int discover_while_connecting_title=0x7f08004d;
-        public static final int discoverer_dialog_text_finished=0x7f080033;
-        public static final int discoverer_dialog_text_not_found=0x7f080034;
-        public static final int discoverer_dialog_text_searching=0x7f080032;
-        public static final int discoverer_dialog_title=0x7f080031;
-        public static final int discoverer_item_summary=0x7f080030;
-        public static final int discoverer_item_title=0x7f08002f;
-        public static final int element_popup_menu_item_delete=0x7f0800b0;
+        public static final int discover_while_connecting_title=0x7f08005a;
+        public static final int discoverer_dialog_text_finished=0x7f080035;
+        public static final int discoverer_dialog_text_not_found=0x7f080036;
+        public static final int discoverer_dialog_text_searching=0x7f080034;
+        public static final int discoverer_dialog_title=0x7f080033;
+        public static final int discoverer_item_summary=0x7f080032;
+        public static final int discoverer_item_title=0x7f080031;
+        public static final int element_popup_menu_item_delete=0x7f0800c0;
         /**  ELEMENT POPUP MENU 
          */
-        public static final int element_popup_menu_item_edit=0x7f0800af;
+        public static final int element_popup_menu_item_edit=0x7f0800bf;
         /**  ELEMENTS 
          */
-        public static final int element_switch=0x7f0800e2;
-        public static final int group_address_level_2_label=0x7f080064;
-        public static final int group_address_level_3_label=0x7f080065;
-        public static final int group_address_level_label=0x7f080063;
-        public static final int group_address_separator=0x7f080062;
+        public static final int element_switch=0x7f0800f2;
+        public static final int group_address_level_2_label=0x7f080071;
+        public static final int group_address_level_3_label=0x7f080072;
+        public static final int group_address_level_label=0x7f080070;
+        public static final int group_address_separator=0x7f08006f;
         /**  ICON PICKER DIALOG 
          */
-        public static final int icon_picker_title=0x7f080067;
-        public static final int image_popup_menu_item_choose=0x7f080079;
-        public static final int image_popup_menu_item_remove=0x7f08007a;
+        public static final int icon_picker_title=0x7f080074;
+        public static final int image_popup_menu_item_choose=0x7f080087;
+        public static final int image_popup_menu_item_remove=0x7f080088;
         /**  IMAGE POPUP MENU 
          */
-        public static final int image_popup_menu_title=0x7f080077;
-        public static final int individual_address=0x7f080019;
-        public static final int individual_address_default_value=0x7f08001c;
+        public static final int image_popup_menu_title=0x7f080085;
+        public static final int individual_address=0x7f08001b;
+        public static final int individual_address_default_value=0x7f08001e;
         public static final int individual_address_key=0x7f08000c;
-        public static final int individual_address_summary=0x7f080047;
-        public static final int individual_address_title=0x7f080046;
+        public static final int individual_address_summary=0x7f080054;
+        public static final int individual_address_title=0x7f080053;
         public static final int jetty_keymanager_password=0x7f080001;
         public static final int jetty_keystore_password=0x7f080000;
         public static final int jetty_truststore_password=0x7f080002;
-        public static final int knx_connection_title=0x7f080023;
+        public static final int knx_connection_title=0x7f080025;
         public static final int knx_connection_toggle=0x7f080003;
-        public static final int knx_connection_toggle_summary_off=0x7f080026;
-        public static final int knx_connection_toggle_summary_off_on=0x7f080028;
-        public static final int knx_connection_toggle_summary_on=0x7f080025;
-        public static final int knx_connection_toggle_summary_on_off=0x7f080027;
-        public static final int knx_connection_toggle_title=0x7f080024;
-        public static final int layer_delete_confirmation_text=0x7f080099;
+        public static final int knx_connection_toggle_summary_off=0x7f080028;
+        public static final int knx_connection_toggle_summary_off_on=0x7f08002a;
+        public static final int knx_connection_toggle_summary_on=0x7f080027;
+        public static final int knx_connection_toggle_summary_on_off=0x7f080029;
+        public static final int knx_connection_toggle_title=0x7f080026;
+        public static final int layer_delete_confirmation_text=0x7f0800a9;
         /**  LAYER DELETE CONFIRMATION 
          */
-        public static final int layer_delete_confirmation_title=0x7f080098;
-        public static final int layer_name_empty_text=0x7f080091;
+        public static final int layer_delete_confirmation_title=0x7f0800a8;
+        public static final int layer_name_empty_text=0x7f0800a1;
         /**  LAYER INFORMATION DIALOG 
          */
-        public static final int layer_name_empty_title=0x7f080090;
-        public static final int layer_popup_menu_item_delete=0x7f080095;
+        public static final int layer_name_empty_title=0x7f0800a0;
+        public static final int layer_popup_menu_item_delete=0x7f0800a5;
         /**  LAYER POPUP MENU 
          */
-        public static final int layer_popup_menu_item_edit=0x7f080094;
-        public static final int local_ip=0x7f080017;
-        public static final int local_ip_default_value=0x7f08001a;
+        public static final int layer_popup_menu_item_edit=0x7f0800a4;
+        public static final int local_ip=0x7f080019;
+        public static final int local_ip_default_value=0x7f08001c;
         public static final int local_ip_key=0x7f080007;
-        public static final int local_ip_summary=0x7f08003c;
-        public static final int local_ip_title=0x7f08003b;
+        public static final int local_ip_summary=0x7f080049;
+        public static final int local_ip_title=0x7f080048;
         public static final int local_port_key=0x7f080008;
-        public static final int local_port_summary=0x7f08003e;
-        public static final int local_port_title=0x7f08003d;
-        public static final int menu_preferences=0x7f08005d;
-        public static final int no=0x7f080061;
-        public static final int project_action_bar_menu_new_element=0x7f080074;
+        public static final int local_port_summary=0x7f08004b;
+        public static final int local_port_title=0x7f08004a;
+        public static final int menu_preferences=0x7f08006a;
+        public static final int no=0x7f08006e;
+        public static final int other_settings_title=0x7f08003b;
+        public static final int project_action_bar_menu_new_element=0x7f080081;
         /**  PROJECT ACTION BAR MENU 
          */
-        public static final int project_action_bar_menu_new_room=0x7f080073;
+        public static final int project_action_bar_menu_new_room=0x7f080080;
+        public static final int project_action_bar_menu_open_webapp=0x7f080082;
         /**  PROJECT 
          */
-        public static final int project_add_layer_item=0x7f08007f;
-        public static final int project_delete_confirmation_text=0x7f08007c;
+        public static final int project_add_layer_item=0x7f08008d;
+        public static final int project_delete_confirmation_text=0x7f08008a;
         /**  PROJECT DELETE CONFIRMATION 
          */
-        public static final int project_delete_confirmation_title=0x7f08007b;
-        public static final int project_name_empty_text=0x7f08007e;
+        public static final int project_delete_confirmation_title=0x7f080089;
+        public static final int project_name_empty_text=0x7f08008c;
         /**  PROJECT INFORMATION DIALOG 
          */
-        public static final int project_name_empty_title=0x7f08007d;
-        public static final int project_popup_menu_item_delete=0x7f080076;
+        public static final int project_name_empty_title=0x7f08008b;
+        public static final int project_popup_menu_item_delete=0x7f080084;
         /**  PROJECT POPUP MENU 
          */
-        public static final int project_popup_menu_item_edit=0x7f080075;
-        public static final int remote_ip=0x7f080018;
-        public static final int remote_ip_default_value=0x7f08001b;
+        public static final int project_popup_menu_item_edit=0x7f080083;
+        public static final int remote_ip=0x7f08001a;
+        public static final int remote_ip_default_value=0x7f08001d;
         public static final int remote_ip_key=0x7f080009;
-        public static final int remote_ip_summary=0x7f080040;
-        public static final int remote_ip_title=0x7f08003f;
+        public static final int remote_ip_summary=0x7f08004d;
+        public static final int remote_ip_title=0x7f08004c;
         public static final int remote_port_key=0x7f08000a;
-        public static final int remote_port_summary=0x7f080042;
-        public static final int remote_port_title=0x7f080041;
-        public static final int select_image=0x7f080078;
+        public static final int remote_port_summary=0x7f08004f;
+        public static final int remote_port_title=0x7f08004e;
+        public static final int reset_application_confirmation_msg=0x7f080045;
+        public static final int reset_application_confirmation_title=0x7f080044;
+        public static final int reset_application_key=0x7f080014;
+        public static final int reset_application_summary=0x7f080043;
+        public static final int reset_application_title=0x7f080042;
+        public static final int reset_settings_confirmation_msg=0x7f080041;
+        public static final int reset_settings_confirmation_title=0x7f080040;
+        public static final int reset_settings_key=0x7f080013;
+        public static final int reset_settings_summary=0x7f08003f;
+        public static final int reset_settings_title=0x7f08003e;
+        public static final int reset_summary=0x7f08003d;
+        public static final int reset_title=0x7f08003c;
+        public static final int select_image=0x7f080086;
         public static final int service_mode_key=0x7f080006;
-        public static final int service_mode_summary=0x7f08003a;
+        public static final int service_mode_summary=0x7f080047;
         /**  KNX Connection Settings 
          */
-        public static final int service_mode_title=0x7f080039;
-        public static final int settings=0x7f08001e;
-        public static final int settings_swith_summary_off=0x7f080022;
-        public static final int settings_swith_summary_on=0x7f080021;
-        public static final int settings_swith_text_off=0x7f080020;
-        public static final int settings_swith_text_on=0x7f08001f;
-        public static final int sublayer_delete_confirmation_text=0x7f08009a;
-        public static final int sublayer_name_empty_text=0x7f080093;
-        public static final int sublayer_name_empty_title=0x7f080092;
-        public static final int sublayer_popup_menu_item_delete=0x7f080097;
-        public static final int sublayer_popup_menu_item_edit=0x7f080096;
+        public static final int service_mode_title=0x7f080046;
+        public static final int settings=0x7f080020;
+        public static final int settings_swith_summary_off=0x7f080024;
+        public static final int settings_swith_summary_on=0x7f080023;
+        public static final int settings_swith_text_off=0x7f080022;
+        public static final int settings_swith_text_on=0x7f080021;
+        public static final int sublayer_delete_confirmation_text=0x7f0800aa;
+        public static final int sublayer_name_empty_text=0x7f0800a3;
+        public static final int sublayer_name_empty_title=0x7f0800a2;
+        public static final int sublayer_popup_menu_item_delete=0x7f0800a7;
+        public static final int sublayer_popup_menu_item_edit=0x7f0800a6;
         /**  TELEGRAM ACTIVITY/DIALOG 
          */
-        public static final int telegram_ab_read_write_item=0x7f0800b1;
-        public static final int telegram_detail_ack_label=0x7f0800df;
-        public static final int telegram_detail_confirmation_label=0x7f0800e0;
-        public static final int telegram_detail_data_label=0x7f0800db;
-        public static final int telegram_detail_destination_address_label=0x7f0800d6;
-        public static final int telegram_detail_dptid_label=0x7f0800de;
-        public static final int telegram_detail_framelength_label=0x7f0800dd;
-        public static final int telegram_detail_hopcount_label=0x7f0800d7;
-        public static final int telegram_detail_id_label=0x7f0800d2;
-        public static final int telegram_detail_msgCode_label=0x7f0800d9;
-        public static final int telegram_detail_priority_label=0x7f0800d4;
-        public static final int telegram_detail_rawdata_label=0x7f0800da;
-        public static final int telegram_detail_rawframe_label=0x7f0800dc;
-        public static final int telegram_detail_repeated_label=0x7f0800e1;
-        public static final int telegram_detail_source_address_label=0x7f0800d5;
-        public static final int telegram_detail_time_label=0x7f0800d3;
-        public static final int telegram_detail_type_label=0x7f0800d8;
-        public static final int telegram_response_timeout=0x7f0800e3;
-        public static final int telegrams_activity_details_title=0x7f0800ce;
+        public static final int telegram_ab_read_write_item=0x7f0800c1;
+        public static final int telegram_detail_ack_label=0x7f0800ef;
+        public static final int telegram_detail_confirmation_label=0x7f0800f0;
+        public static final int telegram_detail_data_label=0x7f0800eb;
+        public static final int telegram_detail_destination_address_label=0x7f0800e6;
+        public static final int telegram_detail_dptid_label=0x7f0800ee;
+        public static final int telegram_detail_framelength_label=0x7f0800ed;
+        public static final int telegram_detail_hopcount_label=0x7f0800e7;
+        public static final int telegram_detail_id_label=0x7f0800e2;
+        public static final int telegram_detail_msgCode_label=0x7f0800e9;
+        public static final int telegram_detail_priority_label=0x7f0800e4;
+        public static final int telegram_detail_rawdata_label=0x7f0800ea;
+        public static final int telegram_detail_rawframe_label=0x7f0800ec;
+        public static final int telegram_detail_repeated_label=0x7f0800f1;
+        public static final int telegram_detail_source_address_label=0x7f0800e5;
+        public static final int telegram_detail_time_label=0x7f0800e3;
+        public static final int telegram_detail_type_label=0x7f0800e8;
+        public static final int telegram_response_timeout=0x7f0800f3;
+        public static final int telegrams_activity_details_title=0x7f0800de;
         /**  TELEGRAM DETAILS 
          */
-        public static final int telegrams_activity_title=0x7f0800cd;
-        public static final int telegrams_item_from_label=0x7f0800cf;
-        public static final int telegrams_item_image_description=0x7f0800d1;
-        public static final int telegrams_item_to_label=0x7f0800d0;
+        public static final int telegrams_activity_title=0x7f0800dd;
+        public static final int telegrams_item_from_label=0x7f0800df;
+        public static final int telegrams_item_image_description=0x7f0800e1;
+        public static final int telegrams_item_to_label=0x7f0800e0;
         public static final int timeout_key=0x7f08000e;
-        public static final int timeout_summary=0x7f08004c;
-        public static final int timeout_title=0x7f08004b;
-        public static final int toast_icon_description=0x7f08005b;
+        public static final int timeout_summary=0x7f080059;
+        public static final int timeout_title=0x7f080058;
+        public static final int toast_icon_description=0x7f080068;
         public static final int use_nat_key=0x7f08000b;
-        public static final int use_nat_summary_off=0x7f080045;
-        public static final int use_nat_summary_on=0x7f080044;
-        public static final int use_nat_title=0x7f080043;
-        public static final int use_ssl_key=0x7f080015;
-        public static final int use_ssl_summary=0x7f080056;
-        public static final int use_ssl_title=0x7f080055;
+        public static final int use_nat_summary_off=0x7f080052;
+        public static final int use_nat_summary_on=0x7f080051;
+        public static final int use_nat_title=0x7f080050;
+        public static final int use_ssl_key=0x7f080017;
+        public static final int use_ssl_summary=0x7f080063;
+        public static final int use_ssl_title=0x7f080062;
         public static final int use_tp1_key=0x7f08000d;
-        public static final int use_tp1_summary_off=0x7f08004a;
-        public static final int use_tp1_summary_on=0x7f080049;
-        public static final int use_tp1_title=0x7f080048;
-        public static final int webapp_password=0x7f080037;
+        public static final int use_tp1_summary_off=0x7f080057;
+        public static final int use_tp1_summary_on=0x7f080056;
+        public static final int use_tp1_title=0x7f080055;
+        public static final int webapp_password=0x7f080039;
         /**  WEBAPP DEFAULT VALUES 
          */
-        public static final int webapp_password_default_value=0x7f08001d;
+        public static final int webapp_password_default_value=0x7f08001f;
         public static final int webapp_password_key=0x7f080012;
-        public static final int webapp_password_summary=0x7f080038;
-        public static final int webapp_settings_summary=0x7f080036;
-        public static final int webapp_settings_title=0x7f080035;
-        public static final int webserver_port_key=0x7f080014;
-        public static final int webserver_port_summary=0x7f080054;
+        public static final int webapp_password_summary=0x7f08003a;
+        public static final int webapp_server_not_started_message=0x7f08008f;
+        /**  PROJECT WEBAPP START DIALOG 
+         */
+        public static final int webapp_server_not_started_title=0x7f08008e;
+        public static final int webapp_settings_summary=0x7f080038;
+        public static final int webapp_settings_title=0x7f080037;
+        public static final int webserver_port_key=0x7f080016;
+        public static final int webserver_port_summary=0x7f080061;
         /**  WebServer Settings 
          */
-        public static final int webserver_port_title=0x7f080053;
-        public static final int webserver_service_deploy=0x7f0800ca;
-        public static final int webserver_service_failed=0x7f0800c8;
-        public static final int webserver_service_message=0x7f0800cc;
-        public static final int webserver_service_started=0x7f0800c5;
+        public static final int webserver_port_title=0x7f080060;
+        public static final int webserver_service_deploy=0x7f0800da;
+        public static final int webserver_service_failed=0x7f0800d8;
+        public static final int webserver_service_message=0x7f0800dc;
+        public static final int webserver_service_started=0x7f0800d5;
         /**  WEBSERVER STRINGS 
          */
-        public static final int webserver_service_starting=0x7f0800c4;
-        public static final int webserver_service_stopped=0x7f0800c7;
-        public static final int webserver_service_stopping=0x7f0800c6;
-        public static final int webserver_service_title=0x7f0800cb;
-        public static final int webserver_service_unknown=0x7f0800c9;
-        public static final int webserver_ssl_port_key=0x7f080016;
-        public static final int webserver_ssl_port_summary=0x7f080058;
-        public static final int webserver_ssl_port_title=0x7f080057;
-        public static final int webserver_state_key=0x7f080013;
-        public static final int webserver_title=0x7f080029;
+        public static final int webserver_service_starting=0x7f0800d4;
+        public static final int webserver_service_stopped=0x7f0800d7;
+        public static final int webserver_service_stopping=0x7f0800d6;
+        public static final int webserver_service_title=0x7f0800db;
+        public static final int webserver_service_unknown=0x7f0800d9;
+        public static final int webserver_ssl_port_key=0x7f080018;
+        public static final int webserver_ssl_port_summary=0x7f080065;
+        public static final int webserver_ssl_port_title=0x7f080064;
+        public static final int webserver_state_key=0x7f080015;
+        public static final int webserver_title=0x7f08002b;
         public static final int webserver_toggle=0x7f080004;
-        public static final int webserver_toggle_summary_off=0x7f08002c;
-        public static final int webserver_toggle_summary_off_on=0x7f08002e;
-        public static final int webserver_toggle_summary_on=0x7f08002b;
-        public static final int webserver_toggle_summary_on_off=0x7f08002d;
-        public static final int webserver_toggle_title=0x7f08002a;
-        public static final int yes=0x7f080060;
+        public static final int webserver_toggle_summary_off=0x7f08002e;
+        public static final int webserver_toggle_summary_off_on=0x7f080030;
+        public static final int webserver_toggle_summary_on=0x7f08002d;
+        public static final int webserver_toggle_summary_on_off=0x7f08002f;
+        public static final int webserver_toggle_title=0x7f08002c;
+        public static final int yes=0x7f08006d;
     }
     public static final class style {
-        public static final int actionBarPreferencesStyle=0x7f0c0007;
-        public static final int actionBarStyle=0x7f0c0009;
-        public static final int actionBarStyleNoTitle=0x7f0c0005;
-        public static final int actionBarStyleTitle=0x7f0c0006;
-        public static final int actionBarTelegramsStyle=0x7f0c0008;
-        public static final int dialogConfirmTheme=0x7f0c000b;
-        public static final int dialogTheme=0x7f0c000a;
+        public static final int actionBarPreferencesStyle=0x7f0c0008;
+        public static final int actionBarStyle=0x7f0c000a;
+        public static final int actionBarStyleNoTitle=0x7f0c0006;
+        public static final int actionBarStyleTitle=0x7f0c0007;
+        public static final int actionBarTelegramsStyle=0x7f0c0009;
+        public static final int dialogConfirmTheme=0x7f0c000c;
+        public static final int dialogTheme=0x7f0c000b;
         public static final int iHousePreferencesTheme=0x7f0c0001;
         public static final int iHouseProjectTheme=0x7f0c0003;
         public static final int iHouseTelegramsTheme=0x7f0c0002;
         public static final int iHouseTheme=0x7f0c0000;
-        public static final int iHouseTitleTheme=0x7f0c0004;
+        public static final int iHouseTitleTheme=0x7f0c0005;
+        public static final int iHouseWebAppTheme=0x7f0c0004;
     }
     public static final class xml {
         public static final int connection_prefs=0x7f050000;
         public static final int discoverer_prefs=0x7f050001;
         public static final int preferences_headers=0x7f050002;
-        public static final int webapp_prefs=0x7f050003;
-        public static final int webserver_prefs=0x7f050004;
+        public static final int reset_prefs=0x7f050003;
+        public static final int webapp_prefs=0x7f050004;
+        public static final int webserver_prefs=0x7f050005;
     }
     public static final class styleable {
         /** Attributes that can be used with a GroupAddressLevelChooser.

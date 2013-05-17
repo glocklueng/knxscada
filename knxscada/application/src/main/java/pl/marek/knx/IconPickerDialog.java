@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class IconPickerDialog extends Dialog implements View.OnClickListener, Ad
 	private TextView titleView;
 	private Button cancelButton;
 	private OnIconPickListener listener;
+	private int screenSize;
 	
 	private ArrayList<Integer> icons;
 	
@@ -74,6 +76,10 @@ public class IconPickerDialog extends Dialog implements View.OnClickListener, Ad
 		dismiss();
     }
 	
+	public void setScreenSize(int size){
+		this.screenSize = size;
+	}
+	
 	public interface OnIconPickListener{
 		public void onIconPick(int iconRes);
 	}
@@ -104,7 +110,16 @@ public class IconPickerDialog extends Dialog implements View.OnClickListener, Ad
 	        ImageView imageView;
 	        if (convertView == null) {
 	            imageView = new ImageView(context);
-	            imageView.setLayoutParams(new GridView.LayoutParams(48, 48));
+
+	            switch(screenSize) {
+	                case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+	                	imageView.setLayoutParams(new GridView.LayoutParams(48, 48));
+	                    break;
+	                default:
+	                	imageView.setLayoutParams(new GridView.LayoutParams(80, 80));
+	                	break;
+	            }
+	            
 	            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 	            imageView.setPadding(8, 8, 8, 8);
 	            convertView = imageView;

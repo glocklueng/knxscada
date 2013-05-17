@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/project_open_webapp_menu_item"
+        android:icon="@drawable/www_logo"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/project_action_bar_menu_open_webapp"/>
+    
+    <item
         android:id="@+id/project_add_sublayer_menu_item"
         android:icon="@drawable/new_room"
         android:showAsAction="ifRoom|withText"

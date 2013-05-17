@@ -69,7 +69,6 @@ public class WebServer {
 
 		for(Connector connector: webServer.getConnectors()){
 			connector.close();
-			connector.stop();
 		}
 		webServer.stop();
 	}
@@ -110,11 +109,15 @@ public class WebServer {
 
 	    try {
 	    	cf.setKeyStoreType("BKS");
+	    	cf.setKeyStoreProvider("BC");
+	    	cf.setKeyStorePath(getKeystoreFile().getAbsolutePath());
 	    	cf.setKeyStorePassword(appContext.getString(R.string.jetty_keystore_password));
 		    
 		    cf.setNeedClientAuth(false);
+		    cf.setCertAlias("jetty");
 		    cf.setTrustStore(getKeystoreFile().getAbsolutePath());
 		    cf.setTrustStoreType("BKS");
+		    cf.setTrustStoreProvider("BC");
 		    cf.setKeyManagerPassword(appContext.getString(R.string.jetty_keymanager_password));
 		    cf.setTrustStorePassword(appContext.getString(R.string.jetty_truststore_password));
 		    
@@ -124,7 +127,6 @@ public class WebServer {
 	    SslSelectChannelConnector sslConnector = new SslSelectChannelConnector(cf);
 	    sslConnector.setPort(settings.getSSLPort());
 	    sslConnector.setConfidentialPort(settings.getSSLPort());
-
 		return sslConnector;
 	}
 	

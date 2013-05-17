@@ -63,8 +63,10 @@ public class FileUtils {
 		File file = new File(path);
 		if(file.isDirectory()){
 			String[] childs = file.list();
-			for(String child : childs){
-				delete(new File(path,child).getAbsolutePath());
+			if(childs != null){
+				for(String child : childs){
+					delete(new File(path,child).getAbsolutePath());
+				}
 			}
 		}
 		file.delete();

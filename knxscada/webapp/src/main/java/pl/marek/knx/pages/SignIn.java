@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.util.value.ValueMap;
 
 import android.content.Context;
@@ -17,6 +18,7 @@ import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.utils.PasswordUtil;
 
 @HtmlFile("signin.html")
+@RequireHttps
 public class SignIn extends WebPage {
 
 	private static final long serialVersionUID = 1L;

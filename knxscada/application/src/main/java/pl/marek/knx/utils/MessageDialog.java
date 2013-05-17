@@ -30,8 +30,4 @@ public class MessageDialog {
 
 		builder.create().show();
 	}
-	
-	
-	
-
 }

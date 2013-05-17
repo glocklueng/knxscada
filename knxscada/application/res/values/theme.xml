@@ -19,6 +19,10 @@
         <item name="android:actionBarStyle">@style/actionBarStyleTitle</item>
     </style>
 
+    <style name="iHouseWebAppTheme" parent="@style/iHouseTheme">
+        <item name="android:actionBarStyle">@android:style/Theme.Holo.NoActionBar</item>
+    </style>
+    
     <style name="iHouseTitleTheme" parent="@style/iHouseTheme">
         <item name="android:actionBarStyle">@style/actionBarStyleTitle</item>
     </style>

@@ -21,7 +21,8 @@
     <string name="discover_search_key">discover_search</string>
     <string name="webapp_password_key">webapp_password</string>
     
-    
+    <string name="reset_settings_key">reset_settings</string>
+    <string name="reset_application_key">reset_application</string>
 
     <string name="webserver_state_key">webserver_state</string>
     <string name="webserver_port_key">webserver_port</string>

@@ -19,10 +19,14 @@ import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.utils.DrawableUtils;
 import pl.marek.knx.utils.MessageDialog;
+import pl.marek.knx.web.WebServerSettings;
+import pl.marek.knx.web.WebServerState;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -305,10 +309,62 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    				getResources().getDrawable(android.R.drawable.ic_dialog_alert));
 	    	}
 	    	break;
+	    case R.id.project_open_webapp_menu_item:
+	    	
+	    	MainApplication mainApp = (MainApplication)getApplication();
+			WebServerState wSState = mainApp.getWebServerState();
+			
+			if(wSState.equals(WebServerState.STARTED)){
+		    	openWebApp();
+			}else{
+				showWebAppStartDialog();
+			}
+	    	
+	    	break;
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
 	    return true;
+	}
+	
+	private void showWebAppStartDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialogConfirmTheme);
+		builder.setTitle(getString(R.string.webapp_server_not_started_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(getString(R.string.webapp_server_not_started_message));
+		builder.setPositiveButton(getString(android.R.string.yes), new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				startService(new Intent(getApplicationContext(), WebServerService.class));
+			}
+		});
+		builder.setNegativeButton(getString(android.R.string.no), new OnClickListener(){
+
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+
+		builder.create().show();
+	}
+	
+	private void openWebApp(){
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(createProjectUrl()));
+		startActivity(i);
+	}
+	
+//	private void openWebAppInWebView(){
+//		Intent intent = new Intent(this, WebAppActivity.class);
+//		intent.putExtra(Project.PROJECT, (Parcelable)project);
+//		startActivity(intent);
+//	}
+	
+	private String createProjectUrl(){
+		String url = "";
+		WebServerSettings settings  = new WebServerSettings(this);
+		url = String.format("http://localhost:%d/?project=%d", settings.getPort(), project.getId());	
+		return url;
 	}
 	
 	@Override

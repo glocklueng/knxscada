@@ -30,6 +30,19 @@
     <string name="webapp_password">Hasło</string>
     <string name="webapp_password_summary">Hasło logowania do aplikacji</string>
     
+    <string name="other_settings_title">Inne</string>
+    <string name="reset_title">Reset danych</string>
+    <string name="reset_summary">Reset danych aplikacji</string>
+    <string name="reset_settings_title">Reset ustawień</string>
+    <string name="reset_settings_summary">Przywraca domyślne ustawienia</string>
+    <string name="reset_settings_confirmation_title">Reset ustawień</string>
+    <string name="reset_settings_confirmation_msg">Czy napewno chcesz przywrócić ustawienia domyślne?</string>
+    
+    <string name="reset_application_title">Reset aplikacji</string>
+    <string name="reset_application_summary">Usuwa wszystkie dane aplikacji</string>
+    <string name="reset_application_confirmation_title">Reset aplikacji</string>
+    <string name="reset_application_confirmation_msg">Czy napewno chcesz usunąć wszystkie dane aplikacji?</string>
+    
     
     <!-- KNX Connection Settings -->
     

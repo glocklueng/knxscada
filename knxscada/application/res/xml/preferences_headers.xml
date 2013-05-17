@@ -56,5 +56,19 @@
     >
         <extra android:name="title" android:value="@string/webapp_settings_title" />
     </header>
+    
+    <header
+        android:id="@+id/header_category"
+        android:title="@string/other_settings_title"
+    />
+    
+     <header
+        android:title="@string/reset_title"
+        android:summary="@string/reset_summary"
+        android:fragment="pl.marek.knx.preferences.ResetSettingsFragment"
+    >
+        <extra android:name="title" android:value="@string/reset_title" />
+    </header>
+    
        
 </preference-headers>
