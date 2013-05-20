@@ -33,9 +33,9 @@ public class BaseDialog extends Dialog{
 		
 		if(getScreenType() == Configuration.SCREENLAYOUT_SIZE_XLARGE){
 			if(rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270){
-				width = getScaledWidth(width, 0.5f);
-			}else{
 				width = getScaledWidth(width, 0.3f);
+			}else{
+				width = getScaledWidth(width, 0.5f);
 			}
 		}else{
 			if(rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270){

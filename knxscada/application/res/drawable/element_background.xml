@@ -5,12 +5,12 @@
         <shape android:shape="rectangle" >
             <solid android:color="@color/control_off_background" />
 
-            <stroke
-                android:width="1dp"
-                android:color="#bebfc1" />
+<!--             <stroke -->
+<!--                 android:width="1dp" -->
+<!--                 android:color="#bebfc1" /> -->
 
             <corners
-                android:radius="10dp" />
+                android:radius="1dp" />
         </shape>
     </item>
 

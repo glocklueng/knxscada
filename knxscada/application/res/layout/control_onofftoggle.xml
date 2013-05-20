@@ -17,7 +17,7 @@
         android:layout_marginLeft="2dip"
         android:layout_marginRight="6dip"
         android:layout_marginTop="6dip"
-        android:layout_weight="0.75" >
+        android:layout_weight="0.85" >
 
         <TextView
             android:id="@+android:id/title"
@@ -42,7 +42,7 @@
             android:textIsSelectable="false" />
     </RelativeLayout>
 
-    <Switch
+	<ToggleButton 
         android:id="@+android:id/toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:clickable="true"
         android:focusable="false"
  		android:switchMinWidth="20dip"
- 		android:layout_weight="0.25"
-     />
-
+ 		android:layout_marginRight="15dp"
+	/>
+    
 </LinearLayout>

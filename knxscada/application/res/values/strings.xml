@@ -65,6 +65,10 @@
     <string name="webapp_server_not_started_title">Serwer aplikacji</string>
     <string name="webapp_server_not_started_message">Serwer aplikacji webowej nie jest uruchomiony. Czy chcesz uruchomić go teraz?</string>
     
+    <!-- PROJECT KNX CONNECTION START DIALOG -->
+    <string name="connection_not_started_title">Brak połączenia KNX</string>
+    <string name="connection_not_started_message">Nie nawiązano połączenia z magistralą KNX. Czy chcesz nawiązać je teraz?</string>
+    
     
     <!-- LAYER DIALOG -->
     <string name="dialog_new_layer_title">Nowe piętro</string>
@@ -124,14 +128,19 @@
     <string name="dialog_controller_add_address_button">Dodaj adres</string>
     <string name="dialog_controller_remove_address_button">Usuń adres</string>
     
+    <string name="dialog_controller_max_value_title">Wartość maksymalna</string>
+    <string name="dialog_controller_max_value">Podaj nazwę!</string>
+    <string name="dialog_controller_max_value_hint">0 - 255</string>
+    
     <string name="dialog_controller_name_empty_title">Brak nazwy</string>
     <string name="dialog_controller_name_empty">Podaj nazwę!</string>
     <string name="dialog_controller_wrong_address_title">Błędny adres</string>
     <string name="dialog_controller_wrong_address">Podany adres grupowy jest błędny!</string>
     
     <!-- GROUP ADDRESS LABELS -->
-    <string name="dialog_controller_group_address_default_label">Adres grupowy</string>
-    <string name="dialog_controller_group_address_other_label">Inny</string>
+    <string name="group_address_default_label">Adres grupowy</string>
+    <string name="group_address_status_label">Status</string>
+    <string name="group_address_other_label">Inny</string>
     
     
     <!-- ELEMENT POPUP MENU -->
@@ -214,7 +223,12 @@
 	
 	<!-- ELEMENTS -->
 	<string name="element_switch">Włącznik</string>
-	
+	<string name="element_toggle">Włącznik 1</string>
+	<string name="element_light_switch">Włącznik światła</string>
+	<string name="element_slider">Regulator</string>
+	<string name="element_light_slider">Regulator światła</string>
+	<string name="element_digital_value">Wartość cyfrowa</string>
+	<string name="element_analog_value">Wartość analogowa</string>
 	
 	<string name="telegram_response_timeout">Czas oczekiwania na odpowiedź z adresu %s minął!</string>
 </resources>

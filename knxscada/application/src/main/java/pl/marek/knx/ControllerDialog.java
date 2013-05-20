@@ -38,6 +38,9 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 	private Button cancelButton;
 	private Button addAddressButton;
 	private Button removeAddressButton;
+	private LinearLayout extraFieldsView;
+	
+	private EditText maxValueView;
 	
 	private boolean editMode;
 	private Element element;
@@ -89,6 +92,10 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 		cancelButton.setOnClickListener(this);
 		addAddressButton.setOnClickListener(this);
 		removeAddressButton.setOnClickListener(this);
+		
+		extraFieldsView = (LinearLayout)findViewById(R.id.dialog_controller_extra_data_fields);
+		maxValueView = (EditText)findViewById(R.id.dialog_controller_max_value);
+		
 	}
 	
 	private void initValues(){
@@ -106,6 +113,7 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 				addGroupAddressView(v, aType);
 				currentGroupAddressLevel = v.getGroupAddressLevel();
 			}
+			maxValueView.setText(String.valueOf(element.getMaxValue()));
 			groupAddressLevelChooser.setLevel(currentGroupAddressLevel);
 		} else{
 			if(addressTypes == null || addressTypes.isEmpty()){
@@ -177,6 +185,11 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 	
 	public void setType(ControllerType type){
 		this.type = type;
+		if(type.equals(ControllerType.SLIDER) || type.equals(ControllerType.LIGHT_SLIDER)){
+			extraFieldsView.setVisibility(View.VISIBLE);
+		}else{
+			extraFieldsView.setVisibility(View.GONE);
+		}
 	}
 	
 	public void setTitle(String title){
@@ -216,6 +229,14 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 	
 	public String getDescription(){
 		return descriptionView.getText().toString();
+	}
+	
+	public double getMaxValue(){
+		String max = "0";
+		if(type.equals(ControllerType.SLIDER) || type.equals(ControllerType.LIGHT_SLIDER)){
+			max = maxValueView.getText().toString();	
+		}
+		return Double.parseDouble(max);
 	}
 	
 	public ArrayList<ElementGroupAddress> getGroupAddresses(){
@@ -280,6 +301,7 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 							element.setDescription(getDescription());
 							element.setGroupAddresses(getGroupAddresses());
 							element.setDeviceAddress("");
+							element.setMaxValue(getMaxValue());
 							listener.onControllerDialogEditAction(element);
 						}
 					}else{
@@ -288,6 +310,7 @@ public class ControllerDialog extends BaseDialog implements View.OnClickListener
 						element.setDescription(getDescription());
 						element.setGroupAddresses(getGroupAddresses());
 						element.setDeviceAddress("");
+						element.setMaxValue(getMaxValue());
 						element.setType(type.name());
 						listener.onControllerDialogAddAction(element);
 					}

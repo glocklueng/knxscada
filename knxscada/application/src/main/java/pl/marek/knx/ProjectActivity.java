@@ -9,6 +9,7 @@ import pl.marek.knx.SideBarItem;
 import pl.marek.knx.PopupMenuDialog.PopupMenuItemListener;
 import pl.marek.knx.SideBarView.SideBarListener;
 import pl.marek.knx.SideBarView.SideBarMode;
+import pl.marek.knx.connection.ConnectionState;
 import pl.marek.knx.controls.Controller;
 import pl.marek.knx.controls.ControllerType;
 import pl.marek.knx.database.DatabaseManagerImpl;
@@ -105,6 +106,7 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		
 		setControllersSideBar();
 		setLayersSideBar();
+		establishKNXConnection();
 	}
 		
 	@Override
@@ -114,6 +116,13 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	    return true;
 	}
 	
+	private void establishKNXConnection(){
+		MainApplication mainApp = (MainApplication)getApplication();
+		ConnectionState connState = mainApp.getKNXConnectionState();
+		if(!connState.equals(ConnectionState.CONNECTED)){
+			showKNXConnectionStartDialog();
+		}
+	}
 	
 	
 	private void setActionBar(){
@@ -325,6 +334,27 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 	        return super.onOptionsItemSelected(item);
 	    }
 	    return true;
+	}
+
+	private void showKNXConnectionStartDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialogConfirmTheme);
+		builder.setTitle(getString(R.string.connection_not_started_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(getString(R.string.connection_not_started_message));
+		builder.setPositiveButton(getString(android.R.string.yes), new OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				startService(new Intent(getApplicationContext(), KNXConnectionService.class));
+			}
+		});
+		builder.setNegativeButton(getString(android.R.string.no), new OnClickListener(){
+
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+
+		builder.create().show();
 	}
 	
 	private void showWebAppStartDialog(){

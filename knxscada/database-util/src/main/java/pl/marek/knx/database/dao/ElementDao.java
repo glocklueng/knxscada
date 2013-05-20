@@ -26,8 +26,10 @@ public class ElementDao implements Dao<Element>{
 			+ ElementColumns.NAME + ", "
 			+ ElementColumns.DESCRIPTION + ", "
 			+ ElementColumns.DEVICE_ADDRESS + ", "
-			+ ElementColumns.TYPE + ") "
-			+ "values(?,?,?,?,?,?,?,?,?);";
+			+ ElementColumns.TYPE + ", "
+			+ ElementColumns.MIN_VALUE + ", "
+			+ ElementColumns.MAX_VALUE + ") "
+			+ "values(?,?,?,?,?,?,?,?,?,?,?);";
 	
 
 	private SQLiteDatabase db;
@@ -53,6 +55,8 @@ public class ElementDao implements Dao<Element>{
 		insertStatement.bindString(7, element.getDescription());
 		insertStatement.bindString(8, element.getDeviceAddress());
 		insertStatement.bindString(9, element.getType());
+		insertStatement.bindDouble(10, element.getMinValue());
+		insertStatement.bindDouble(11, element.getMaxValue());
 		long id = insertStatement.executeInsert();
 		for(ElementGroupAddress address: element.getGroupAddresses()){
 			address.setElementId((int)id);
@@ -70,6 +74,8 @@ public class ElementDao implements Dao<Element>{
 		values.put(ElementColumns.DESCRIPTION, element.getDescription());
 		values.put(ElementColumns.DEVICE_ADDRESS, element.getDeviceAddress());
 		values.put(ElementColumns.TYPE, element.getType());
+		values.put(ElementColumns.MIN_VALUE, element.getMinValue());
+		values.put(ElementColumns.MAX_VALUE, element.getMaxValue());
 		
 		elementGroupAddressDao.deleteByElementId(element.getId());
 		for(ElementGroupAddress address: element.getGroupAddresses()){
@@ -113,7 +119,9 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
 									ElementColumns.DEVICE_ADDRESS,
-									ElementColumns.TYPE
+									ElementColumns.TYPE,
+									ElementColumns.MIN_VALUE,
+									ElementColumns.MAX_VALUE
 						},
 						column + " = ?", new String[]{String.valueOf(value)}, 
 						null, null ,null, "1");
@@ -165,7 +173,9 @@ public class ElementDao implements Dao<Element>{
 									ElementColumns.NAME,
 									ElementColumns.DESCRIPTION,
 									ElementColumns.DEVICE_ADDRESS,
-									ElementColumns.TYPE
+									ElementColumns.TYPE,
+									ElementColumns.MIN_VALUE,
+									ElementColumns.MAX_VALUE
 						}, 
 						selection, selectionArgs, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
@@ -196,6 +206,8 @@ public class ElementDao implements Dao<Element>{
 			element.setDescription(cursor.getString(7));
 			element.setDeviceAddress(cursor.getString(8));
 			element.setType(cursor.getString(9));
+			element.setMinValue(cursor.getDouble(10));
+			element.setMaxValue(cursor.getDouble(11));
 			element.setGroupAddresses((ArrayList<ElementGroupAddress>)elementGroupAddressDao.getByElementId(element.getId()));
 		}
 		return element;

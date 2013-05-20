@@ -21,6 +21,8 @@ public class Element implements Parcelable{
 	private ArrayList<ElementGroupAddress> groupAddresses;
 	private String deviceAddress;
 	private String type;
+	private double minValue;
+	private double maxValue;
 	
 	public Element(){
 		name = "";
@@ -29,6 +31,8 @@ public class Element implements Parcelable{
 		type = "";
 		x = NOT_VISUALISATION_VALUE;
 		y = NOT_VISUALISATION_VALUE;
+		minValue = 0;
+		maxValue = 0;
 	}
 	
 	public Element(int id, int projectId, int layerId, int subLayerId, int x, int y, String name, String description, ArrayList<ElementGroupAddress> groupAddresses, String deviceAddress, String type){
@@ -144,6 +148,22 @@ public class Element implements Parcelable{
 		this.type = type;
 	}
 	
+	public double getMinValue() {
+		return minValue;
+	}
+
+	public void setMinValue(double minValue) {
+		this.minValue = minValue;
+	}
+
+	public double getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(double maxValue) {
+		this.maxValue = maxValue;
+	}
+
 	public boolean isVisualisationElement(){
 		if(x != NOT_VISUALISATION_VALUE && y !=NOT_VISUALISATION_VALUE){
 			return true;
@@ -174,6 +194,8 @@ public class Element implements Parcelable{
 		parcel.writeString(description);
 		parcel.writeString(deviceAddress);
 		parcel.writeString(type);
+		parcel.writeDouble(minValue);
+		parcel.writeDouble(maxValue);
 	}
 	
 	public void readFromParcel(Parcel parcel){
@@ -187,5 +209,7 @@ public class Element implements Parcelable{
 		description = parcel.readString();
 		deviceAddress = parcel.readString();
 		type = parcel.readString();
+		minValue = parcel.readDouble();
+		maxValue = parcel.readDouble();
 	}
 }

@@ -18,6 +18,8 @@ public class ElementTable {
 		public static final String DESCRIPTION = "description";
 		public static final String DEVICE_ADDRESS = "device_address";
 		public static final String TYPE = "type";
+		public static final String MIN_VALUE = "min_value";
+		public static final String MAX_VALUE = "max_value";
 	}
 	
 	public static final String TABLE_NAME = "elements";
@@ -31,7 +33,9 @@ public class ElementTable {
 												   + ElementColumns.NAME + " TEXT, "
 												   + ElementColumns.DESCRIPTION + " TEXT, "
 												   + ElementColumns.DEVICE_ADDRESS + " TEXT, " 
-												   + ElementColumns.TYPE + " TEXT, " 
+												   + ElementColumns.TYPE + " TEXT, "
+												   + ElementColumns.MIN_VALUE + " REAL, "
+												   + ElementColumns.MAX_VALUE + " REAL, "
 												   + "FOREIGN KEY("+ElementColumns.PROJECT_ID+") REFERENCES "
 												   + ProjectTable.TABLE_NAME + "("+ProjectColumns._ID+"), "
 												   + "FOREIGN KEY("+ElementColumns.LAYER_ID+") REFERENCES " 

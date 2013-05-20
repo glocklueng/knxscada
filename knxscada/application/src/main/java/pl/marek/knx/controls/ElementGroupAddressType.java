@@ -7,13 +7,19 @@ public enum ElementGroupAddressType{
 	MAIN {
 		@Override
 		public String getLabel(Context context) {
-			return context.getString(R.string.dialog_controller_group_address_default_label);
+			return context.getString(R.string.group_address_default_label);
+		}
+	},
+	STATUS {
+		@Override
+		public String getLabel(Context context) {
+			return context.getString(R.string.group_address_status_label);
 		}
 	},
 	OTHER {
 		@Override
 		public String getLabel(Context context) {
-			return context.getString(R.string.dialog_controller_group_address_other_label);
+			return context.getString(R.string.group_address_other_label);
 		}
 	};
 	

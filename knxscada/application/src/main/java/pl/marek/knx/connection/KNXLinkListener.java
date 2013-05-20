@@ -147,7 +147,7 @@ public class KNXLinkListener implements NetworkLinkListener{
 				translator = TranslatorTypes.createTranslator(dpt);
 				translator.setData(rawdata, rawdata.length-1);
 			} else{
-				throw new KNXException("DPT IS NULL");
+				throw new KNXException("DPT is not declared");
 			}
 			
 		} catch (KNXException e) {

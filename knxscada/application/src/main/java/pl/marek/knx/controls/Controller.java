@@ -74,6 +74,7 @@ public abstract class Controller extends LinearLayout implements KNXTelegramList
 		if(element != null){
 			setName(element.getName());
 			setDescription(element.getDescription());
+			setMaxValue(element.getMaxValue());
 		}
 	}
 	
@@ -117,6 +118,8 @@ public abstract class Controller extends LinearLayout implements KNXTelegramList
 	public abstract void setName(String name);
 	public abstract String getName();
 	public abstract void setDescription(String description);
+	public abstract void setMinValue(double minValue);
+	public abstract void setMaxValue(double maxValue);
 	public abstract String getDescription();
 
 }

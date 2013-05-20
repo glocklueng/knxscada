@@ -59,7 +59,39 @@
                 android:textSize="15sp"
                 android:textStyle="italic|bold" />
         </LinearLayout>
+		
+        <LinearLayout
+            android:id="@+id/dialog_controller_extra_data_fields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:enabled="false"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+		    	android:layout_weight="0.5"
+		    	android:textIsSelectable="false"
+		    	android:textStyle="italic|bold"
+		    	android:gravity="center_vertical"
+                android:text="@string/dialog_controller_max_value_title" />
 
+            <EditText
+                android:id="@+id/dialog_controller_max_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="0.5"
+                android:hint="@string/dialog_controller_max_value_hint"
+                android:text="255"
+                android:inputType="numberDecimal" />
+            
+        </LinearLayout>
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
