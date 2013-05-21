@@ -1,0 +1,39 @@
+<html>
+	<wicket:head>
+		<link rel="stylesheet" href="css/components/controllers/lightslider.css" />
+	</wicket:head>
+	<body>	
+		<wicket:panel>
+
+			<div class="light-slider" 
+				 onmouseover="setFocused(this);" 
+				 onmouseout="unsetFocused(this);" >
+				
+				<div  wicket:id="controller-name" class="controller-name">Name
+				</div>
+				
+				<div  wicket:id="controller-description" class="controller-description">Description
+				</div>
+				
+				<div wicket:id="controller-value" class="controller-visualisation controller-value">
+					<img src="images/elements/element_bulb_off.png" class="controller-slider-image slider_off"/>
+					<img src="images/elements/element_bulb_on_1.png" class="controller-slider-image slider_10"/>
+					<img src="images/elements/element_bulb_on_2.png" class="controller-slider-image slider_20"/>
+					<img src="images/elements/element_bulb_on_3.png" class="controller-slider-image slider_30"/>
+					<img src="images/elements/element_bulb_on_4.png" class="controller-slider-image slider_40"/>
+					<img src="images/elements/element_bulb_on_5.png" class="controller-slider-image slider_50"/>
+					<img src="images/elements/element_bulb_on_6.png" class="controller-slider-image slider_60"/>
+					<img src="images/elements/element_bulb_on_7.png" class="controller-slider-image slider_70"/>
+					<img src="images/elements/element_bulb_on_8.png" class="controller-slider-image slider_80"/>
+					<img src="images/elements/element_bulb_on_9.png" class="controller-slider-image slider_90"/>
+					<img src="images/elements/element_bulb_on_10.png" class="controller-slider-image slider_100"/>
+				</div>
+				
+				<div wicket:id="controller-slider" class="controller-slider light-controller-slider"></div>
+				
+			</div>
+			
+			<div wicket:id="popup-menu" class="popup-menu"></div> 
+		</wicket:panel>
+	</body>
+</html>

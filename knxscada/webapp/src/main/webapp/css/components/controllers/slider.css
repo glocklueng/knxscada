@@ -1,11 +1,11 @@
-.onoffswitch{
+.slider{
 	position: relative;
 	margin-top: 5px;
 	margin-left: 5px;
 	margin-right: 5px;
 
 	width: 190px;
-	height: 70px;
+	height: 90px;
 	text-align: left;
 	
 	-webkit-border-radius: 5px;
@@ -14,7 +14,7 @@
 	background-color: rgba(178,227,244,0.5);
 }
 
-.onoffswitch .controller-name{
+.slider .controller-name{
 	position: absolute;
 	top: 0;
 	width: 120px;
@@ -27,7 +27,7 @@
 	font-style: italic;
 }
 
-.onoffswitch .controller-description{
+.slider .controller-description{
 	position: absolute;
 	top: 30px;
 	width: 120px;
@@ -40,7 +40,7 @@
 	font-style: italic;
 }
 
-.onoffswitch .controller-visualisation{
+.slider .controller-visualisation{
 	position: absolute;
 	width: 70px;
 	height: 70px;
@@ -51,13 +51,32 @@
 	border-radius: 5px;
 }
 
+.slider .controller-value{
+	font-size: x-large;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	padding-top: 15px;
+	color: rgba(255, 255, 255, 0.6);
+}
 
-.onoffswitch-v{
+.slider .controller-slider{
+	position: absolute;
+	bottom: 5px;
+	width: 155px;
+	margin-left: 15px;
+}
+
+
+.slider-v{
 	position: relative;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
 
-	width: 70px;
-	height: 70px;
-	background-color: rgba(178,227,244,0.5);
+	width: 190px;
+	height: 90px;
+	text-align: left;
 	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -65,21 +84,37 @@
 	background-color: rgba(178,227,244,0.5);
 }
 
-.onoffswitch-v .controller-name{
+.slider-v .controller-name{
 	display: none;
 }
 
-.onoffswitch-v .controller-description{
+.slider-v .controller-description{
 	display: none;
 }
 
-.onoffswitch-v .controller-visualisation{
+.slider-v .controller-visualisation{
 	position: absolute;
-	width: 70px;
-	height: 70px;
+	width: 170px;
+	height: 170px;
 	right: 0;
 	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.slider-v .controller-value{
+	font-size: x-large;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	padding-top: 15px;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.slider-v .controller-slider{
+	position: absolute;
+	bottom: 5px;
+	width: 155px;
+	margin-left: 15px;
 }

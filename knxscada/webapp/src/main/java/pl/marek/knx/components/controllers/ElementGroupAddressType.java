@@ -8,7 +8,7 @@ public enum ElementGroupAddressType{
 			return "group-address-default-label";
 		}
 	},
-	STATE {
+	STATUS {
 		@Override
 		public String getLabel() {
 			return "group-address-state-label";

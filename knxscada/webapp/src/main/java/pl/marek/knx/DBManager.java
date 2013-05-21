@@ -62,7 +62,17 @@ public class DBManager implements DatabaseManager{
 						element.setSubLayerId(k);
 						element.setName("Nazwa");
 						element.setDescription("Opis");
-						element.setType(ControllerType.ON_OFF_SWITCH.name());
+						
+						if(l == 1){
+							element.setType(ControllerType.ON_OFF_SWITCH.name());
+						}
+						if(l == 2){
+							element.setType(ControllerType.ON_OFF_TOGGLE.name());
+						}
+						if(l == 3){
+							element.setType(ControllerType.LIGHT_ON_OFF_SWITCH.name());
+						}
+						
 						
 						if(l == 2){
 							element.setX(100);

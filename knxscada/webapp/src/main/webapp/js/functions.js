@@ -204,6 +204,7 @@ function initDragAndDrop(){
 				if(!isRemoved){
 					changeElementPosition(callback, elementid, x, y);
 	      		}
+				loadControllers();
 	      }
 	});
 	$("#elements-area").droppable({
@@ -297,7 +298,6 @@ function sendJSONData(callback, data){
 		contentType : 'application/json',
 		dataType : 'json',
 		complete : function(xhr, status) {
-			
 		}
 	});
 }

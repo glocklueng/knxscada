@@ -1,4 +1,4 @@
-.onoffswitch{
+.valueviewer{
 	position: relative;
 	margin-top: 5px;
 	margin-left: 5px;
@@ -14,7 +14,7 @@
 	background-color: rgba(178,227,244,0.5);
 }
 
-.onoffswitch .controller-name{
+.valueviewer .controller-name{
 	position: absolute;
 	top: 0;
 	width: 120px;
@@ -27,7 +27,7 @@
 	font-style: italic;
 }
 
-.onoffswitch .controller-description{
+.valueviewer .controller-description{
 	position: absolute;
 	top: 30px;
 	width: 120px;
@@ -40,7 +40,7 @@
 	font-style: italic;
 }
 
-.onoffswitch .controller-visualisation{
+.valueviewer .controller-visualisation{
 	position: absolute;
 	width: 70px;
 	height: 70px;
@@ -51,8 +51,17 @@
 	border-radius: 5px;
 }
 
+.controller-value{
+	font-size: xx-large;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	padding-top: 15px;
+	color: rgba(255, 255, 255, 0.6);
+}
 
-.onoffswitch-v{
+
+.valueviewer-v{
 	position: relative;
 
 	width: 70px;
@@ -62,18 +71,17 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: rgba(178,227,244,0.5);
 }
 
-.onoffswitch-v .controller-name{
+.valueviewer-v .controller-name{
 	display: none;
 }
 
-.onoffswitch-v .controller-description{
+.valueviewer-v .controller-description{
 	display: none;
 }
 
-.onoffswitch-v .controller-visualisation{
+.valueviewer-v .controller-visualisation{
 	position: absolute;
 	width: 70px;
 	height: 70px;

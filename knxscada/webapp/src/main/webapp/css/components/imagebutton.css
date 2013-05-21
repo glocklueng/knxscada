@@ -1,0 +1,35 @@
+.image-button{
+	position: relative;
+	padding-left: 3px;
+	width: 64px;
+	height: 64px;
+	
+}
+
+.image-on{
+	position: absolute;
+	width: 100%;
+	height: 100%;	
+}
+
+.image-off{
+	position: absolute;
+	width: 100%;
+	height: 100%;	
+}
+
+.compound-button-on .image-on{
+	display: block;
+}
+
+.compound-button-on .image-off{
+	display: none;
+}
+
+.compound-button-off .image-on{
+	display: none;
+}
+
+.compound-button-off .image-off{
+	display: block;
+}

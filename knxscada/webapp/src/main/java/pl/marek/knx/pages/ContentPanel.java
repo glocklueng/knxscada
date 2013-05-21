@@ -119,7 +119,10 @@ public class ContentPanel extends BasePanel{
 			}
 		}
 		
-		add(visualisationElements);		
+		add(visualisationElements);
+		
+		Controller c = ControllerType.LIGHT_SLIDER.getController("value-viewer", subLayer.getElements().get(0));
+		add(c);
 	}
 
 	public void setSubLayer(SubLayer subLayer) {

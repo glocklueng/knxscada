@@ -14,6 +14,7 @@ $(function(){
 	
 	loadElementsPanel();
 	loadSettingsPanel();
+	loadControllers();
 	
 });
 
@@ -49,6 +50,7 @@ function loadSubLayer(){
 	load();  
 	loadElementsPanel(); 
 	loadSettingsPanel();
+	loadControllers();
 }
 
 function loadElements(){
