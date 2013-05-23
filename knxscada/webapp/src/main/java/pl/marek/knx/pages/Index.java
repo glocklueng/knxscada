@@ -7,12 +7,8 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import android.content.Context;
-
-import pl.marek.knx.DBManager;
 import pl.marek.knx.KNXWebApplication;
 import pl.marek.knx.annotations.HtmlFile;
-import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.interfaces.DatabaseManager;
@@ -46,12 +42,7 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 	
 	private void init(){
 		KNXWebApplication app = (KNXWebApplication)getApplication();
-		Context context = app.getAndroidContext();
-		if(context != null){
-			dbManager = new DatabaseManagerImpl(context);
-		}else{
-			dbManager = new DBManager();
-		}
+		dbManager = app.getDatabaseManager();
 		
 		pageTitle = new Label("page-title", new ResourceModel("page-title"));
 		add(pageTitle);
@@ -60,7 +51,7 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 	public Index(IModel<?> model) {
         super(model);
     }
- 
+	 
     protected void onBeforeRender() {
     	
         if(get("header") == null){

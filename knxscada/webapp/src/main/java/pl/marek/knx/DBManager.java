@@ -54,7 +54,7 @@ public class DBManager implements DatabaseManager{
 					
 					
 					ArrayList<Element> elems = new ArrayList<Element>();
-					for(int l=1;l<4;l++){
+					for(int l=1;l<7;l++){
 						Element element = new Element();
 						element.setId(l);
 						element.setProjectId(i);
@@ -65,19 +65,35 @@ public class DBManager implements DatabaseManager{
 						
 						if(l == 1){
 							element.setType(ControllerType.ON_OFF_SWITCH.name());
+							element.setX(10);
+							element.setY(10);
 						}
 						if(l == 2){
 							element.setType(ControllerType.ON_OFF_TOGGLE.name());
+							element.setX(200);
+							element.setY(10);
 						}
 						if(l == 3){
 							element.setType(ControllerType.LIGHT_ON_OFF_SWITCH.name());
+							element.setX(400);
+							element.setY(10);
 						}
-						
-						
-						if(l == 2){
-							element.setX(100);
+						if(l == 4){
+							element.setType(ControllerType.DIGITAL_VALUE.name());
+							element.setX(10);
 							element.setY(100);
 						}
+						if(l == 5){
+							element.setType(ControllerType.SLIDER.name());
+							element.setX(200);
+							element.setY(100);
+						}
+						if(l == 6){
+							element.setType(ControllerType.LIGHT_SLIDER.name());
+							element.setX(400);
+							element.setY(100);
+						}
+						
 						ElementGroupAddress addr = new ElementGroupAddress();
 						addr.setElementId(l);
 						addr.setAddress("0/0/1");

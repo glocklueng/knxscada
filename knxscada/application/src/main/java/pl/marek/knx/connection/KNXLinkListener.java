@@ -176,8 +176,12 @@ public class KNXLinkListener implements NetworkLinkListener{
     	Datapoint datapoint = null;
     	DatapointEntity dpEntity = dbManager.getDatapointEntityByAddress(addr.toString());
     	Group group = dbManager.getGroupByAddress(addr.toString());
-    	if (group != null){
-    		datapoint = new StateDP(addr, group.getName(), 0, dpEntity.getDptId());
+    	if (dpEntity != null){
+    		String name = "";
+    		if(group != null){
+    			name = group.getName();
+    		}
+    		datapoint = new StateDP(addr, name, 0, dpEntity.getDptId());
     	} else if (tmpDatapoint != null){
     		datapoint = tmpDatapoint;
     	}

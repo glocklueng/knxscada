@@ -9,7 +9,7 @@ import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Element;
 
 @HtmlFile("components/controllers/valueviewer.html")
-public class ValueViewer extends Controller{
+public abstract class ValueViewer extends Controller{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -48,6 +48,12 @@ public class ValueViewer extends Controller{
 		descriptionView.setDefaultModelObject(description);
 	}
 	
+	@Override
+	public void setMinValue(double minValue) {	}
+	
+	@Override
+	public void setMaxValue(double maxValue) {}
+	
 	public void setValue(String value){
 		valueView.setDefaultModelObject(value);
 	}
@@ -62,10 +68,10 @@ public class ValueViewer extends Controller{
 		
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
-			System.out.println("click");
-			
+			readTelegram();
 		}
-		
 	}
-		
+	
+	protected abstract void readTelegram();
+	
 }

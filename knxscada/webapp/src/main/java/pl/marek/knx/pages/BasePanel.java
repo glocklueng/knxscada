@@ -55,8 +55,11 @@ public abstract class BasePanel extends Panel{
 	}
 	
 	protected Context getAndroidContext(){
-		KNXWebApplication app = (KNXWebApplication)getApplication();
-		return app.getAndroidContext();
+		return getKNXWebApplication().getAndroidContext();
+	}
+	
+	protected KNXWebApplication getKNXWebApplication(){
+		return (KNXWebApplication)getApplication();
 	}
 	
 	protected Index getIndexPage(){

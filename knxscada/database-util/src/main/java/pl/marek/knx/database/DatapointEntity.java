@@ -6,15 +6,17 @@ public class DatapointEntity {
 	
 	private String groupAddress;
 	private int projectId;
+	private int elementId;
 	private String dptId;
 	private String state;
 	private Date modifyDate;
 	
 	public DatapointEntity(){}
 	
-	public DatapointEntity(String groupAddress, int projectId, String dptId, String state, Date modifyDate){
+	public DatapointEntity(String groupAddress, int projectId, int elementId, String dptId, String state, Date modifyDate){
 		this.groupAddress = groupAddress;
 		this.projectId = projectId;
+		this.elementId = elementId;
 		this.dptId = dptId;
 		this.state = state;
 		this.modifyDate = modifyDate;
@@ -58,5 +60,13 @@ public class DatapointEntity {
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public int getElementId() {
+		return elementId;
+	}
+
+	public void setElementId(int elementId) {
+		this.elementId = elementId;
 	}
 }

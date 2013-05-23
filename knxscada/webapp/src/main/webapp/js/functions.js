@@ -298,6 +298,7 @@ function sendJSONData(callback, data){
 		contentType : 'application/json',
 		dataType : 'json',
 		complete : function(xhr, status) {
+			console.log(status);
 		}
 	});
 }

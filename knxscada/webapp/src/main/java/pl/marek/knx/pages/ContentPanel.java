@@ -83,6 +83,8 @@ public class ContentPanel extends BasePanel{
 	private void loadComponents(){
 		removeAll();
 		
+		getKNXWebApplication().removeAllTelegramListeners();
+		
 		ExternalImageResource imageResource = new ExternalImageResource("");
 		if(subLayer != null){
 			imageResource = new ExternalImageResource(subLayer.getBackgroundImage());
@@ -120,9 +122,6 @@ public class ContentPanel extends BasePanel{
 		}
 		
 		add(visualisationElements);
-		
-		Controller c = ControllerType.LIGHT_SLIDER.getController("value-viewer", subLayer.getElements().get(0));
-		add(c);
 	}
 
 	public void setSubLayer(SubLayer subLayer) {

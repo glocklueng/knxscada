@@ -14,6 +14,7 @@ $(function(){
 	
 	loadElementsPanel();
 	loadSettingsPanel();
+	loadControllers();
 	
 });
 
@@ -49,6 +50,7 @@ function loadSubLayer(){
 	load();  
 	loadElementsPanel(); 
 	loadSettingsPanel();
+	loadControllers();
 }
 
 function loadElements(){
@@ -63,7 +65,18 @@ function loadElements(){
 
 function onMessage(event){
 	if (event.data) {						
-		var json = $.secureEvalJSON(event.data);
-		console.log(json.msg);
+		var object = $.secureEvalJSON(event.data);
+		console.log(event.data);
+		if(object.operation != 'undefined'){
+			if(object.operation == "update"){
+				if(object.type == "compound-button"){
+					updateCompoundButtonValue(object.id, object.value);
+				}else if(object.type == "slider"){
+					updateSliderValue(object.id, object.value);
+				}else if(object.type == "value-viewer"){
+					updateValueViewerValue(object.id, object.value);
+				}
+			}
+		}
 	};
 };

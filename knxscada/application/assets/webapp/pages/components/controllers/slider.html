@@ -1,0 +1,27 @@
+<html>
+	<wicket:head>
+		<link rel="stylesheet" href="css/components/controllers/slider.css" />
+	</wicket:head>
+	<body>	
+		<wicket:panel>
+
+			<div class="slider" 
+				 onmouseover="setFocused(this);" 
+				 onmouseout="unsetFocused(this);" >
+				
+				<div  wicket:id="controller-name" class="controller-name">Name
+				</div>
+				
+				<div  wicket:id="controller-description" class="controller-description">Description
+				</div>
+				
+				<div wicket:id="controller-value" class="controller-visualisation controller-value"></div>
+				
+				<div wicket:id="controller-slider" class="controller-slider"></div>
+				
+			</div>
+			
+			<div wicket:id="popup-menu" class="popup-menu"></div> 
+		</wicket:panel>
+	</body>
+</html>

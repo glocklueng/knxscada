@@ -39,7 +39,7 @@ public class DigitalValue extends Controller implements OnClickListener{
 		nameView = (TextView)getMainView().findViewById(android.R.id.title);
 		descriptionView = (TextView)getMainView().findViewById(android.R.id.summary);
 		valueView = (TextView)getMainView().findViewById(R.id.controller_digital_value);
-		getMainView().setOnClickListener(this);
+		setOnClickListener(this);
 		
 		onBackgroundColor = getResources().getColor(R.color.control_on_background);
 		offBackgroundColor = getResources().getColor(R.color.control_off_background);

@@ -17,14 +17,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class WebServerService extends Service implements StateSender, WebServerController, LifeCycle.Listener{
@@ -109,23 +106,16 @@ public class WebServerService extends Service implements StateSender, WebServerC
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
+		stopWebServer();
+		while(!state.equals(WebServerState.STOPPED) && !state.equals(WebServerState.FAILED)){}
 		unregisterReceiver(stateRequestReceiver);
 		unregisterReceiver(controlReceiver);
-		stopWebServer();
 		clearWakeLock();
-		setStoppedStateInPreferences();
-		stopForeground(true);		
+		stopForeground(true);
+		super.onDestroy();
 	}
 	
-	private void setStoppedStateInPreferences(){
-		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-		Editor editor = p.edit();
-		editor.putString(getString(R.string.webserver_state_key), WebServerState.STOPPED.name());
-		editor.commit();
-	}
-	
-	private void setState(WebServerState state){		
+	private void setState(WebServerState state){
 		this.state = state;
 		state.showToast(this);
 		sendState();
@@ -152,6 +142,7 @@ public class WebServerService extends Service implements StateSender, WebServerC
 	public void lifeCycleFailure(LifeCycle event, Throwable cause) {
 		Log.e(LogTags.WEB_SERVER, getString(R.string.webserver_service_failed));
 		Log.e(LogTags.WEB_SERVER, cause.getMessage());
+		state = WebServerState.FAILED;
 		sendStateMessage(WebServerState.FAILED);
 	}
 
@@ -162,6 +153,7 @@ public class WebServerService extends Service implements StateSender, WebServerC
 
 	public void lifeCycleStopped(LifeCycle event) {
 		Log.d(LogTags.WEB_SERVER, getString(R.string.webserver_service_stopped));
+		state = WebServerState.STOPPED;
 		sendStateMessage(WebServerState.STOPPED);
 	}
 	
@@ -228,10 +220,8 @@ public class WebServerService extends Service implements StateSender, WebServerC
 		
 		@Override
 		public void run() {
-			sendStateMessage(WebServerState.STOPPING);
 			try {
 				server.stop();
-				sendStateMessage(WebServerState.STOPPED);
 			} catch (Exception e) {
 				sendStateMessage(WebServerState.FAILED);
 			}

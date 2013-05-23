@@ -1,0 +1,36 @@
+.switch{
+	position: relative;
+	width: 60px;
+	height: 20px;
+	background-color: rgba(38, 38, 38, 1);
+	
+	-webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 1);
+	box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 1);
+	margin: auto;
+}
+
+.switch-thumb{
+	position: absolute;
+	top: 1px;
+	width: 30px;
+	height: 14px;
+	padding: 2px;
+	background-color: rgba(80, 80, 80, 1);
+	
+	font-weight: bold;
+	font-size: small;
+	text-align: center;
+	color: white;
+	
+	-webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 1);
+	box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 1);
+
+}
+
+.compound-button-on .switch-thumb{
+	right: 1px;
+}
+
+.compound-button-off .switch-thumb{
+	left: 1px;
+}

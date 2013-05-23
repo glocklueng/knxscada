@@ -10,6 +10,10 @@ import pl.marek.knx.components.LightImageButton;
 import pl.marek.knx.components.Switch;
 import pl.marek.knx.components.ToggleButton;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.database.ElementGroupAddress;
+import pl.marek.knx.interfaces.KNXDataTransceiver;
+import pl.marek.knx.telegram.Telegram;
+import tuwien.auto.calimero.dptxlator.DPTXlatorBoolean;
 
 @HtmlFile("components/controllers/onoffswitch.html")
 public class OnOffSwitch extends Controller implements OnChangeListener{
@@ -44,6 +48,8 @@ public class OnOffSwitch extends Controller implements OnChangeListener{
 			case LIGHT_ON_OFF_SWITCH:
 				buttonView = new LightImageButton("controller-button");
 				break;
+			default:
+				break;
 		}
 		buttonView.setOnChangeListener(this);
 		
@@ -61,10 +67,53 @@ public class OnOffSwitch extends Controller implements OnChangeListener{
 	public void setDescription(String description) {
 		descriptionView.setDefaultModelObject(description);
 	}
+	
+	@Override
+	public void setMinValue(double minValue) {}
+
+	@Override
+	public void setMaxValue(double maxValue) {}
 
 	@Override
 	public void onChange(boolean state) {
-		System.out.println(state);
+		String value = "";
+		if(state){
+			value = "on";
+		}else{
+			value = "off";
+		}
+		writeTelegram(value);
 	}
 	
+	@Override
+	public void telegramReceived(Telegram telegram) {
+		if(element != null){
+			for(ElementGroupAddress address: element.getGroupAddresses()){
+				if(address.getAddress().equals(telegram.getDestinationAddress())){
+					if(!telegram.getType().equals("Read")){
+						String value = telegram.getData();
+						String lastChar = value.substring(value.length()-1).trim();
+						
+						if(value.equals("on") || lastChar.equals("1")){
+							updateValue("on", "compound-button");
+						}else if(value.equals("off") || lastChar.equals("0")){
+							updateValue("off", "compound-button");
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void writeTelegram(String value) {
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, value);
+		}
+	}
+	
+	public void readTelegram() {
+		for(ElementGroupAddress address: element.getGroupAddresses()){
+			transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, null);
+		}
+	}
 }

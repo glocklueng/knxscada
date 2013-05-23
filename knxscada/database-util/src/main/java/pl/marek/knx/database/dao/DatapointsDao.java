@@ -19,9 +19,9 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 	private static final String INSERT_QUERY  = "INSERT INTO " + DatapointsTable.TABLE_NAME + " ("
 			   + DatapointsColumns.GROUP_ADDRESS + ", "
 			   + DatapointsColumns.PROJECT_ID + ", "
+			   + DatapointsColumns.ELEMENT_ID + ", "
 			   + DatapointsColumns.DPT_ID + ", "
-			   + DatapointsColumns.STATE + ", "
-			   + DatapointsColumns.MODIFY_DATE + ") "
+			   + DatapointsColumns.STATE + ") "
 			   + "values(?,?,?,?,?);";
 	
 	private SQLiteDatabase db;
@@ -36,9 +36,10 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 	public long save(DatapointEntity datapoint) {
 		insertStatement.clearBindings();
 		insertStatement.bindString(1, datapoint.getGroupAddress());
-		insertStatement.bindString(2, String.valueOf(datapoint.getProjectId()));
-		insertStatement.bindString(3, datapoint.getDptId());
-		insertStatement.bindString(4, datapoint.getState());
+		insertStatement.bindLong(2, datapoint.getProjectId());
+		insertStatement.bindLong(3, datapoint.getElementId());
+		insertStatement.bindString(4, datapoint.getDptId());
+		insertStatement.bindString(5, datapoint.getState());
 		return insertStatement.executeInsert();
 	}
 
@@ -63,6 +64,7 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 				db.query(DatapointsTable.TABLE_NAME, 
 						new String[]{DatapointsColumns.GROUP_ADDRESS,
 									 DatapointsColumns.PROJECT_ID,
+									 DatapointsColumns.ELEMENT_ID,
 									 DatapointsColumns.DPT_ID,
 									 DatapointsColumns.STATE,
 									 DatapointsColumns.MODIFY_DATE
@@ -102,6 +104,7 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 				db.query(DatapointsTable.TABLE_NAME, 
 						new String[]{DatapointsColumns.GROUP_ADDRESS,
 									 DatapointsColumns.PROJECT_ID,
+									 DatapointsColumns.ELEMENT_ID,
 									 DatapointsColumns.DPT_ID,
 									 DatapointsColumns.STATE,
 									 DatapointsColumns.MODIFY_DATE
@@ -127,11 +130,11 @@ public class DatapointsDao implements Dao<DatapointEntity>{
 			datapoint = new DatapointEntity();
 			datapoint.setGroupAddress(c.getString(0));
 			datapoint.setProjectId(c.getInt(1));
-			datapoint.setDptId(c.getString(2));
-			datapoint.setState(c.getString(3));
-			datapoint.setModifyDate(new DateConversion().getDateFromString(c.getString(3)));
+			datapoint.setElementId(c.getInt(2));
+			datapoint.setDptId(c.getString(3));
+			datapoint.setState(c.getString(4));
+			datapoint.setModifyDate(new DateConversion().getDateFromString(c.getString(5)));
 		}
 		return datapoint;
 	}
-
 }

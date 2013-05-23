@@ -137,7 +137,6 @@ public class OnOff extends Controller implements OnCheckedChangeListener{
 	}
 
 	public void telegramReceived(Telegram telegram) {
-
 		for(ElementGroupAddress address: element.getGroupAddresses()){
 			if(address.getAddress().equals(telegram.getDestinationAddress())){
 				if(!telegram.getType().equals("Read")){
@@ -156,7 +155,6 @@ public class OnOff extends Controller implements OnCheckedChangeListener{
 				}
 			}
 		}
-		
 	}
 	
 	private void writeTelegram(String value) {
