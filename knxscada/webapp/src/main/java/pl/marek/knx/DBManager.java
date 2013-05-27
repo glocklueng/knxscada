@@ -1,6 +1,8 @@
 package pl.marek.knx;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import pl.marek.knx.components.controllers.ControllerType;
@@ -16,6 +18,7 @@ import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.telegram.Telegram;
+import pl.marek.knx.telegram.TelegramFlags;
 
 public class DBManager implements DatabaseManager{
 	
@@ -23,6 +26,7 @@ public class DBManager implements DatabaseManager{
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
 	private ArrayList<SubLayer> subLayers = new ArrayList<SubLayer>();
 	private ArrayList<Element> elements = new ArrayList<Element>();
+	private ArrayList<Telegram> telegrams = new ArrayList<Telegram>();
 	
 	public DBManager(){
 		
@@ -109,6 +113,7 @@ public class DBManager implements DatabaseManager{
 						addrs.add(addr1);
 						element.setGroupAddresses(addrs);
 						
+						if(j > 1)
 						elems.add(element);
 						elements.add(element);
 					}
@@ -127,11 +132,60 @@ public class DBManager implements DatabaseManager{
 	        project.setName(String.format("Project %d", i));
 	        project.setDescription(String.format("Description %d", i));
 	        project.setImage("/home/marek/Magisterka/Grafika/WWW/logo.png");
-	      
+	        
+	        if(i == 2){
+	        	project.setImage("");
+	        }
 	        project.setLayers(projectLayers);
 	        
 	        projects.add(project);
 	        
+		}
+		
+		for(int i=0; i<100;i++){
+			Telegram telegram = new Telegram();
+			telegram.setId(i);
+			if(i%2 == 0){
+				telegram.setSourceAddress("1.1.2");
+				telegram.setDestinationAddress("0/0/1");
+				telegram.setPriority("low");
+			}else if(i%3 == 0){
+				telegram.setSourceAddress("1.1.3");
+				telegram.setDestinationAddress("0/0/2");
+				telegram.setPriority("normal");
+			}else if(i%5 == 0){
+				telegram.setSourceAddress("1.1.5");
+				telegram.setDestinationAddress("0/0/3");
+				telegram.setPriority("urgent");
+			}else if(i%7 == 0){
+				telegram.setSourceAddress("1.1.7");
+				telegram.setDestinationAddress("0/0/4");
+				telegram.setPriority("system");
+			}else{
+				telegram.setSourceAddress("1.1.1");
+				telegram.setDestinationAddress("0/0/5");
+				telegram.setPriority("normal");
+			}
+			telegram.setData(String.valueOf(i));
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(System.currentTimeMillis() - (i*(1800000)));
+			
+			telegram.setTime(cal.getTime());
+			telegram.setDptId("1.001");
+			telegram.setFrameLength(11);
+			telegram.setHopcount((byte)5);
+			telegram.setMsgCode("L_data.ind");
+			telegram.setFlags(new TelegramFlags());
+			
+			if(i%5 == 0){
+				telegram.setType("Read");
+			}else if((i-1)%5 == 0){
+				telegram.setType("Response");
+			}else{
+				telegram.setType("Write");
+			}
+			telegrams.add(telegram);
 		}
 		
 		
@@ -205,14 +259,12 @@ public class DBManager implements DatabaseManager{
 
 	@Override
 	public List<Telegram> getAllTelegrams() {
-		// TODO Auto-generated method stub
-		return null;
+		return telegrams;
 	}
 
 	@Override
 	public Telegram getTelegramById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return telegrams.get(id);
 	}
 
 	@Override
@@ -231,6 +283,26 @@ public class DBManager implements DatabaseManager{
 	public List<Telegram> getRecentTelegrams(int number) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public List<Telegram> getTelegrams(String source, String destination,
+			String priority, String type, Date from, Date to, String limit) {
+		if(limit != null){
+			ArrayList<Telegram> tel = new ArrayList<Telegram>();
+			String l = limit.replace(" ", "").trim();
+			String[] ll = l.split(",");
+			
+			int iFrom = Integer.parseInt(ll[0]);
+			int count = Integer.parseInt(ll[1]);
+			
+			for(int i=iFrom; i<(iFrom+count) && i<telegrams.size();i++){
+				tel.add(telegrams.get(i));
+			}
+			return tel;
+		}else{
+			return telegrams;
+		}
 	}
 
 	@Override

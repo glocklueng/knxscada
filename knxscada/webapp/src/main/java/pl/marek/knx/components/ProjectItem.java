@@ -1,16 +1,19 @@
 package pl.marek.knx.components;
 
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 import pl.marek.knx.annotations.HtmlFile;
 import pl.marek.knx.database.Project;
 import pl.marek.knx.utils.ExternalImageResource;
+import pl.marek.knx.utils.StaticImage;
 
 @HtmlFile("components/projectitem.html")
 public class ProjectItem extends Panel{
@@ -21,7 +24,7 @@ public class ProjectItem extends Panel{
 	private Label nameLabel;
 	private Label descriptionHint;
 	private Label descriptionLabel;
-	private Image image;
+	private WebComponent image;
 	
 	private PopupMenu menu;
 	
@@ -48,10 +51,9 @@ public class ProjectItem extends Panel{
 		image = new Image("projectItemImage", imageRes);
 		
 		if(!imageRes.exists()){
-			image.setVisible(false);
-			image.setOutputMarkupPlaceholderTag(true);
+			image = new StaticImage("projectItemImage", new Model<String>("images/logo.png"));
 		}else{
-			image.setVisible(true);
+			image = new Image("projectItemImage", imageRes);
 		}
 		
 		add(nameHint);

@@ -1,6 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-    <entry key="message">Message XML</entry>
+    
+    <entry key="page-title">KNX Scada</entry>
+    <entry key="upload-directory">knxscada</entry>
+    
+    <!-- BASE STRINGS -->
+    <entry key="login">Login</entry>
+    <entry key="logout">Logout</entry>
+    <entry key="close">Close</entry>
+    <entry key="project">Project</entry>
+    <entry key="cancel">Cancel</entry>
+    <entry key="yes">Yes</entry>
+    <entry key="no">No</entry>
+    <entry key="settings">Setting</entry>
+    <entry key="on">On</entry>
+    <entry key="off">Off</entry>
+    
+    
+    <!-- SIGN IN -->
+    <entry key="password.Required">Enter password!</entry>
+    <entry key="password.Incorrect">Password is incorrect!</entry>
+    <entry key="password.NotSet">Access password is not set. Set password in application to access web application.</entry>
+    
+    
+    <!-- PROJECT -->
+    <entry key="projectTooltip">Click, to select other project...</entry>
+    
+    <!-- PROJECT CHOOSER -->
+    <entry key="choose_project">Select project</entry>
+    <entry key="create_new_project">Create new project</entry>
+    <entry key="project.name.label">Name</entry>
+    <entry key="project.description.label">Description</entry>
+    
+    <!-- FORMS STRINGS -->
+    <entry key="new-project">New project</entry>
+    <entry key="edit-project">Edit project</entry>
+    <entry key="delete-project-confirmation-title">Deleting project</entry>
+    <entry key="delete-project-confirmation-message">Do you really want to remove '%s' project?</entry>
+<!--     <entry key="project.name.Required">Podaj nazwę projektu</entry> -->
+    <entry key="project-form.name.RequiredValidator">Enter project name</entry>
+<!--     <entry key="RequiredValidator">Podaj nazwę projektu</entry> -->
+<!--     <entry key="Required">Podaj nazwę projektu</entry> -->
+	<entry key="project-form.name.label">Project name</entry>
+    <entry key="project-form.description.label">Description</entry>
+    <entry key="project-image-form.choose.button">Choose image</entry>
+    <entry key="project-image-form.remove.button">Remove image</entry>
+    <entry key="project-image-form.noimage.message">Project image is not selected</entry>
+    <entry key="project-image-form.image.uploaded">Project image added</entry>
+    <entry key="project-image-form.image.removed">Project image removed</entry>
+    
+    <entry key="new-layer">New floor</entry>
+    <entry key="add-layer">Add floor</entry>
+    <entry key="edit-layer">Edit floor</entry>
+    <entry key="delete-layer-confirmation-title">Removing floor</entry>
+    <entry key="delete-layer-confirmation-message">Do you really want to remove '%s' floor?</entry>
+    <entry key="layer-form.name.RequiredValidator">Enter floor name</entry>
+	<entry key="layer-form.name.label">Floor name</entry>
+    <entry key="layer-form.description.label">Description</entry>
+    
+    <entry key="new-sublayer">New room</entry>
+    <entry key="edit-sublayer">Edit room</entry>
+    <entry key="delete-sublayer-confirmation-title">Removing room</entry>
+    <entry key="delete-sublayer-confirmation-message">Do you really want to remove '%s' room?</entry>
+    <entry key="sublayer-form.name.RequiredValidator">Enter room name</entry>
+	<entry key="sublayer-form.name.label">Room name</entry>
+    <entry key="sublayer-form.description.label">Description</entry>
+    
+    <!-- ELEMENTS STRING -->
+    <entry key="elements-trigger-label">Elements</entry>
+    <entry key="element-position-update-failed">Problem occured while trying update element position!</entry>
+    
+    <entry key="element-form.name.label">Element name</entry>
+    <entry key="element-form.description.label">Description</entry>
+    
+    <entry key="group-address-add-button-label">Add address</entry>
+    <entry key="group-address-delete-button-label">Remove address</entry>
+    <entry key="group-address-not-removable-addresses">You can't remove more group address!</entry>
+    
+    
+    <entry key="group-address">Group address</entry>
+    
+    <entry key="group-address-default-label">Group address</entry>
+    <entry key="group-address-state-label">State</entry>
+    <entry key="group-address-other-label">Other</entry>
+    
+    <entry key="group-address-level-chooser-title">Address type</entry>
+    <entry key="group-address-level-chooser-two-levels">2 levels</entry>
+    <entry key="group-address-level-chooser-three-levels">3 levels</entry>
+    
+    <entry key="wrong-group-address">Field '%s' contains not valid group address!</entry>
+    
+    
+    <!-- ELEMENTS AND SETTINGS PANEL -->
+    <entry key="add-element">Add element</entry>
+    <entry key="new-element">New element</entry>
+    <entry key="edit-element">Edit element</entry>
+    <entry key="delete-element-confirmation-title">Removing element</entry>
+    <entry key="delete-element-confirmation-message">Do you really want to remove '%s' element?</entry>
+    
 
+    
+    <entry key="background-image.choose.button">Choose image</entry>
+    <entry key="background-image.remove.button">Remove image</entry>
+    <entry key="background-image-panel-title">Background image</entry>
+    
+    <!-- TELEGRAMS -->
+    <entry key="telegram">Telegram</entry>
+    <entry key="telegram-details">Telegram - details</entry>
+    <entry key="telegrams">Telegrams</entry>
+    <entry key="telegram-id">ID</entry>
+    <entry key="telegram-time">Time</entry>
+    <entry key="telegram-priority">Priority</entry>
+    <entry key="telegram-source-address">Source address</entry>
+    <entry key="telegram-destination-address">Destination address</entry>
+    <entry key="telegram-hopcount">Hop count</entry>
+    <entry key="telegram-type">Type</entry>
+	<entry key="telegram-msgcode">Code</entry>
+    <entry key="telegram-rawdata">Data</entry>
+    <entry key="telegram-data">Value</entry>
+    <entry key="telegram-rawframe">Frame</entry>
+    <entry key="telegram-framelength">Frame length</entry>
+    <entry key="telegram-dptid">Data type</entry>
+    <entry key="telegram-ack">ACK</entry>
+    <entry key="telegram-confirmation">Confirmed</entry>
+    <entry key="telegram-repeated">Repeated</entry>
+    
+    <!-- FILTERS -->
+    <entry key="telegram-filter">Filter</entry>
+    <entry key="telegram-from">From</entry>
+    <entry key="telegram-to">To</entry>
+	<entry key="telegram-type-read">Read</entry>    
+	<entry key="telegram-type-write">Write</entry>    
+	<entry key="telegram-type-response">Response</entry>    
+	<entry key="telegram-priority-low">Low</entry>    
+	<entry key="telegram-priority-normal">Normal</entry>    
+	<entry key="telegram-priority-urgent">Urgent</entry>    
+	<entry key="telegram-priority-system">System</entry>    
+	<entry key="telegram-apply-filter">Show telegrams</entry>    
+	<entry key="telegram-number-on-page">Telegrams per page</entry>    
+	    
+    
+    <!-- POPUP MENU STRINGS -->
+    <entry key="project.edit.menuitem">Edit project</entry>
+    <entry key="project.remove.menuitem">Delete project</entry>
+    <entry key="layer.edit.menuitem">Edit floor</entry>
+    <entry key="layer.remove.menuitem">Delete floor</entry>
+    <entry key="sublayer.edit.menuitem">Edit</entry>
+    <entry key="sublayer.remove.menuitem">Delete</entry>
+    <entry key="element.edit.menuitem">Edit</entry>
+    <entry key="element.remove.menuitem">Delete</entry>
+    <!-- OTHERS -->
+    <entry key="read-message-failed">Read message failed</entry>
+    
+    <!-- ELEMENTS -->
+    <entry key="element-switch">Switch</entry>
+	<entry key="element-toggle">Toggle</entry>
+	<entry key="element-light-switch">Light switch</entry>
+	<entry key="element-slider">Regulator</entry>
+	<entry key="element-light-slider">Light regulator</entry>
+	<entry key="element-digital-value">Digital value</entry>
+	<entry key="element-analog-value">Analog value</entry>
+	
+	<!-- APPLICATION CLOSED -->
+    <entry key="application-closed-title">Application stopped</entry>
+    <entry key="application-closed-message">Application server stopped. To continue, start again web application server.</entry>
+    
 </properties>

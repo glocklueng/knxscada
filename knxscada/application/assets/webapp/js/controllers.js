@@ -1,11 +1,6 @@
 function loadControllers(){
 	loadCompoundButtons();
 	loadSliders();
-	
-	$(".visualisation-element").each(function(){
-		var id = $(this).attr("id");
-		console.log(id);
-	});
 }
 
 function loadCompoundButtons(){

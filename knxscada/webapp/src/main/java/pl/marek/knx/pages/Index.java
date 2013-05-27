@@ -41,11 +41,12 @@ public class Index extends WebPage implements AuthenticatedWebPage{
 	}
 	
 	private void init(){
+		setVersioned(false);
 		KNXWebApplication app = (KNXWebApplication)getApplication();
 		dbManager = app.getDatabaseManager();
 		
 		pageTitle = new Label("page-title", new ResourceModel("page-title"));
-		add(pageTitle);
+		add(pageTitle);		
 	}
 	
 	public Index(IModel<?> model) {

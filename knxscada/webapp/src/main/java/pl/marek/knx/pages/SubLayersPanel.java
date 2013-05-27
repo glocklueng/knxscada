@@ -91,6 +91,7 @@ public class SubLayersPanel extends BasePanel{
 	
 	public void setLayer(Layer layer){
 		this.layer = layer;
+		currentSubLayer = null;
 		loadComponents();
 	}
 	

@@ -1,6 +1,7 @@
 package pl.marek.knx.database.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -140,11 +141,11 @@ public class TelegramDao implements Dao<Telegram>{
 	}
 	
 	public List<Telegram> getBySrcAddr(String addr) {
-		return getList(TelegramColumns.SOURCE_ADDRESS, addr, null, null, null, null);
+		return getList(TelegramColumns.SOURCE_ADDRESS+"=?", new String[]{addr}, null, null, null, null);
 	}
 	
 	public List<Telegram> getByDstAddr(String addr) {
-		return getList(TelegramColumns.DESTINATION_ADDRESS, addr, null, null, null,null);
+		return getList(TelegramColumns.DESTINATION_ADDRESS+"=?", new String[]{addr}, null, null, null,null);
 	}
 	
 	public List<Telegram> getRecentTelegrams(int limit){
@@ -152,7 +153,97 @@ public class TelegramDao implements Dao<Telegram>{
 	}
 	
 	public List<Telegram> getByProjectId(int id){
-		return getList(TelegramColumns.PROJECT_ID, String.valueOf(id), null, null, TelegramColumns.TIME+" DESC", null);
+		return getList(TelegramColumns.PROJECT_ID+"=?", new String[]{String.valueOf(id)}, null, null, TelegramColumns.TIME+" DESC", null);
+	}
+	
+	public List<Telegram> getTelegrams(String source, String destination, String priority, String type, Date from, Date to, String limit){
+		
+		String selection = "";
+		ArrayList<String> args = new ArrayList<String>();
+		boolean isFirst = true;
+		if(source != null && !source.isEmpty()){
+			selection = TelegramColumns.SOURCE_ADDRESS + "=?";
+			args.add(source);
+			isFirst = false;
+		}
+		if(destination != null && !destination.isEmpty()){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + TelegramColumns.DESTINATION_ADDRESS + "=?";
+			args.add(destination);
+			isFirst = false;
+		}
+		if(priority != null && !priority.isEmpty()){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + " (";
+			String[] pr = priority.split(",");
+			boolean isFirstPriority = true;
+			for(String p: pr){
+				if(!p.isEmpty()){
+					if(!isFirstPriority){
+						selection = selection + " OR ";
+					}
+					selection = selection + TelegramColumns.PRIORITY + "=?";
+					args.add(p);
+					isFirstPriority = false;
+				}
+			}
+			selection = selection + " )";
+			isFirst = false;
+		}
+		if(type != null && !type.isEmpty()){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + " (";
+			boolean isFirstType = true;
+			String[] tt = type.split(",");
+			for(String t: tt){
+				if(!isFirstType){
+					selection = selection + " OR ";
+				}
+				selection = selection + TelegramColumns.TYPE + "=?";
+				args.add(t);
+				isFirstType = false;
+			}
+			selection = selection + ") ";
+			isFirst = false;
+		}
+		if(from != null && to == null){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + TelegramColumns.TIME + ">=?";
+			args.add(DateConversion.getDateTimeString(from));
+			
+			isFirst = false;
+		}
+		else if(to != null && from == null){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + TelegramColumns.TIME + "<=?";
+			args.add(DateConversion.getDateTimeString(to));
+			isFirst = false;
+		}
+		else if(from != null && to != null){
+			if(!isFirst){
+				selection = selection + " AND ";
+			}
+			selection = selection + TelegramColumns.TIME + ">=? AND "+TelegramColumns.TIME+"<=?";
+			args.add(DateConversion.getDateTimeString(from));
+			args.add(DateConversion.getDateTimeString(to));
+		}
+				
+		String[] arguments = new String[args.size()];
+		for(int i=0; i<args.size();i++){
+			arguments[i] = args.get(i);
+		}
+		
+		return getList(selection, arguments, null, null, TelegramColumns.TIME+" DESC", limit);
 	}
 	
 	@Override
@@ -160,17 +251,8 @@ public class TelegramDao implements Dao<Telegram>{
 		return getList(null,null,null,null,null,null);
 	}
 	
-	private List<Telegram> getList(String column, String arg, String groupBy, String having, String orderBy, String limit){
-		
-		String selection = null;
-		if(column != null)
-			selection = column + " = ?";
-		
-		String[] selectionArgs = null;
-		if(arg != null)
-			selectionArgs = new String[]{String.valueOf(arg)};
-		
-		
+	private List<Telegram> getList(String selection, String[] args, String groupBy, String having, String orderBy, String limit){
+						
 		List<Telegram> telegrams = new ArrayList<Telegram>();
 		Cursor c = 
 				db.query(TelegramTable.TABLE_NAME, 
@@ -192,7 +274,7 @@ public class TelegramDao implements Dao<Telegram>{
 								    TelegramColumns.CONFIRMATION,
 								    TelegramColumns.REPEATED
 						}, 
-						selection, selectionArgs, groupBy, having ,orderBy, limit);
+						selection, args, groupBy, having ,orderBy, limit);
 		if(c.moveToFirst()){
 			do{
 				Telegram telegram = this.buildTelegram(c);
@@ -213,7 +295,8 @@ public class TelegramDao implements Dao<Telegram>{
 			telegram = new Telegram();
 			telegram.setId(cursor.getLong(0));
 			telegram.setProjectId(cursor.getInt(1));
-			telegram.setTime(new DateConversion().getDateFromString(cursor.getString(2)));
+			new DateConversion();
+			telegram.setTime(DateConversion.getDateFromString(cursor.getString(2)));
 			telegram.setPriority(cursor.getString(3));
 			telegram.setSourceAddress(cursor.getString(4));
 			telegram.setDestinationAddress(cursor.getString(5));

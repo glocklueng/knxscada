@@ -14,25 +14,31 @@ public class AnalogValueViewer extends ValueViewer{
 
 	public AnalogValueViewer(String id, Element element, ControllerType type) {
 		super(id, element, type);
+		if(getElement() == null){
+			setValue("255");
+		}
 	}
 	
 	public void telegramReceived(Telegram telegram) {
-
-		for(ElementGroupAddress address: element.getGroupAddresses()){
-			if(address.getAddress().equals(telegram.getDestinationAddress())){
-				if(!telegram.getType().equals("Read")){
-					byte[] rawValue = telegram.getRawdata();				
-					int rawVal = rawValue[rawValue.length - 1] & 0xff;
-					
-					updateValue(String.valueOf(rawVal), "value-viewer");
+		if(element != null){
+			for(ElementGroupAddress address: element.getGroupAddresses()){
+				if(address.getAddress().equals(telegram.getDestinationAddress())){
+					if(!telegram.getType().equals("Read")){
+						byte[] rawValue = telegram.getRawdata();				
+						int rawVal = rawValue[rawValue.length - 1] & 0xff;
+						
+						updateValue(String.valueOf(rawVal), "value-viewer");
+					}
 				}
 			}
 		}
 	}
 	
 	public void readTelegram() {
-		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, null);
+		if(element != null){
+			for(ElementGroupAddress address: element.getGroupAddresses()){
+				transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, null);
+			}
 		}
 	}
 }

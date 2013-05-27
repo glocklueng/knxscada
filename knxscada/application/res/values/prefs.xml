@@ -23,7 +23,8 @@
     
     <string name="reset_settings_key">reset_settings</string>
     <string name="reset_application_key">reset_application</string>
-
+    <string name="reset_webapp_key">reset_webapp</string>
+    
     <string name="webserver_state_key">webserver_state</string>
     <string name="webserver_port_key">webserver_port</string>
     <string name="use_ssl_key">use_ssl</string>

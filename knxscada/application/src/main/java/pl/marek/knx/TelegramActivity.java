@@ -1,8 +1,13 @@
 package pl.marek.knx;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import pl.marek.knx.ReadWriteDialog.ReadWriteListener;
+import pl.marek.knx.TelegramFilters.TelegramFiltersListener;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.interfaces.DatabaseManager;
 import pl.marek.knx.interfaces.KNXDataTransceiver;
@@ -20,9 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-public class TelegramActivity extends ListActivity implements KNXTelegramListener, ReadWriteListener{
+public class TelegramActivity extends ListActivity implements KNXTelegramListener, ReadWriteListener, TelegramFiltersListener{
 	
-	public static int NUMBER_OF_SHOW_TELEGRAMS = 100;
+	public static int NUMBER_OF_SHOW_TELEGRAMS = 200;
 	
 	private TelegramBroadcastReceiver telegramReceiver;
 	private TelegramAdapter telegramAdapter;
@@ -30,19 +35,34 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	private LinkedList<Telegram> telegrams;
 	
 	private ReadWriteDialog rwDialog;
+	private TelegramFilters filters;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.telegram_list);
+		filters = (TelegramFilters)findViewById(R.id.telegram_filters_view);
+		filters.setListener(this);
 		telegramReceiver = new TelegramBroadcastReceiver(this);
 		registerReceiver(telegramReceiver, new IntentFilter(KNXTelegramListener.TELEGRAM_RECEIVED));
 		
 		dbManager = new DatabaseManagerImpl(this);
+		
 		telegrams = new LinkedList<Telegram>(dbManager.getRecentTelegrams(NUMBER_OF_SHOW_TELEGRAMS));
 		
 		telegramAdapter = new TelegramAdapter(this,telegrams);
 		setListAdapter(telegramAdapter);
+		setFiltersDates();
+	}
+	
+	private void setFiltersDates(){
+		Telegram telegram = telegrams.getLast();
+		if(telegram != null){
+			filters.setFromDate(telegram.getTime());
+		}else{
+			filters.setFromDate(new Date(0));
+		}
+		filters.setToDate(Calendar.getInstance().getTime());
 	}
 	
 	@Override
@@ -96,11 +116,65 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	    	  rwDialog.show();
 	    	  	    	  
 	    	  break;
+	      case R.id.telegram_menu_filter_item:
+	    	  
+	    	  filters.toggle();
+	    	  
+	    	  break;
 	      default:            
 	         return super.onOptionsItemSelected(item);    
 	   }
 	   return true;
 	}
+	
+	public void onTelegramFiltersApply(String source, String destination,
+			Date from, Date to, Map<String, Boolean> priorities,
+			Map<String, Boolean> types) {
+		
+		telegrams.clear();
+		
+		String priority = "";
+		for(Entry<String, Boolean> e: priorities.entrySet()){
+			String key = e.getKey();
+			boolean value = e.getValue();
+			
+			if(value){
+				if(!priority.isEmpty()){
+					priority = priority + ",";
+				}
+				priority = priority + key;
+			}
+		}
+		if(priority.isEmpty()){
+			priority = "empty";
+		}
+		
+		String type = "";
+		for(Entry<String, Boolean> e: types.entrySet()){
+			String key = e.getKey();
+			boolean value = e.getValue();
+			if(value){
+				if(!type.isEmpty()){
+					type = type+",";
+				}
+				type = type + key;
+			}
+		}
+		if(type.isEmpty()){
+			type = "empty";
+		}
+		
+		LinkedList<Telegram> t = new LinkedList<Telegram>(dbManager.getTelegrams(source, destination, priority, type, from, to, null));
+		for(Telegram telegram:t){
+			telegrams.add(telegram);
+		}
+		updateTelegramList();
+	}
+	
+	private void updateTelegramList(){
+		telegramAdapter.notifyDataSetChanged();
+	}
+	
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -116,8 +190,7 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 			telegrams.removeLast();
 		}
 		telegrams.addFirst(telegram);
-		telegramAdapter.notifyDataSetChanged();
-		
+		updateTelegramList();
 	}
 
 	public void read(String address, DPT dpt) {

@@ -1,5 +1,7 @@
 package pl.marek.knx;
 
+import tuwien.auto.calimero.GroupAddress;
+import tuwien.auto.calimero.exception.KNXFormatException;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,6 +21,8 @@ public class GroupAddressView extends LinearLayout{
 	private TextView secondSeparatorView;
 	
 	private GroupAddressLevel level;
+	
+	private String separator = "/";
 		
 	public GroupAddressView(Context context) {
 		super(context);
@@ -82,12 +86,13 @@ public class GroupAddressView extends LinearLayout{
 	}
 	
 	public void setSeparator(String separator){
+		this.separator = separator;
 		firstSeparatorView.setText(separator);
 		secondSeparatorView.setText(separator);
 	}
 	
 	public void setGroupAddress(String groupAddress){
-		String[] addr = groupAddress.split("/");
+		String[] addr = groupAddress.split(separator);
 		
 		if(addr.length == 2){
 			level = GroupAddressLevel.TWO;
@@ -118,13 +123,23 @@ public class GroupAddressView extends LinearLayout{
 		
 		switch(level){
 			case TWO:
-				address = String.format("%s/%s", sub, group);
+				address = String.format("%s%s%s", sub, separator, group);
 			break;
 			default:
-				address = String.format("%s/%s/%s", main, sub, group);
+				address = String.format("%s%s%s%s%s", main, separator, sub, separator, group);
 			break;
 		}	
 		return address;
+	}
+	
+	public boolean isCorrectGroupAddress(){
+		try{
+			new GroupAddress(getGroupAddress());
+			return true;
+		}catch(KNXFormatException ex){
+			return false;
+		}
+		
 	}
 	
 	public enum GroupAddressLevel{

@@ -36,7 +36,7 @@
             android:title="@string/individual_address_title"
             android:summary="@string/individual_address_summary"
             android:defaultValue="@string/individual_address_default_value"
-            android:numeric="integer"
+            android:inputType="phone"
         />
 		
 		<pl.marek.knx.preferences.IntegerListPreference

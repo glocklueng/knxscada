@@ -1,11 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<wicked:head>
-	</wicked:head>
-    <body>
-        <wicket:panel>
-        	Telegrams Dialog
+<body>
+	<wicket:panel>
+		<div class="telegrams-filters">
+			<form wicket:id="telegrams-filters-form" id="telegrams-filters-form">
+				<table class="telegrams-filters-table">
+					<tr>
+						<td class="telegrams-filters-label"><wicket:message key="telegram-source-address"></wicket:message></td>
+						<td><input type="text" wicket:id="sourceAddress" id="telegram-filter-source-address" size="5" /></td>
+						<td class="telegrams-filters-label"><wicket:message key="telegram-destination-address"></wicket:message></td>
+						<td><input type="text" wicket:id="destinationAddress" id="telegram-filter-destination-address" size="5" /></td>
+					
+						<td class="telegrams-filters-label"><wicket:message key="telegram-from"></wicket:message></td>
+						<td><input type="text" wicket:id="fromDate" id="telegram-filter-date-from" name="telegram-filter-date-from" readonly="readonly" size="10" /></td>
+						<td class="telegrams-filters-label"><wicket:message key="telegram-to"></wicket:message></td>
+						<td><input type="text" wicket:id="toDate" id="telegram-filter-date-to" readonly="readonly" size="10" /></td>
+					
+					</tr>
+					<tr>
+						<td class="telegrams-filters-label" colspan="1"><wicket:message key="telegram-priority"></wicket:message></td>
+						<td colspan="3">
+							<div id="telegram-priorities">
+							  <input type="checkbox" wicket:id="lowPriority" id="telegram-filter-priority-low" checked="checked"/><label for="telegram-filter-priority-low"><wicket:message key="telegram-priority-low"></wicket:message></label>
+							  <input type="checkbox" wicket:id="normalPriority" id="telegram-filter-priority-normal" checked="checked"/><label for="telegram-filter-priority-normal"><wicket:message key="telegram-priority-normal"></wicket:message></label>
+							  <input type="checkbox" wicket:id="urgentPriority" id="telegram-filter-priority-urgent" checked="checked"/><label for="telegram-filter-priority-urgent"><wicket:message key="telegram-priority-urgent"></wicket:message></label>
+							  <input type="checkbox" wicket:id="systemPriority" id="telegram-filter-priority-system" checked="checked"/><label for="telegram-filter-priority-system"><wicket:message key="telegram-priority-system"></wicket:message></label>
+							</div>
+						</td>
+						<td class="telegrams-filters-label" colspan="1"><wicket:message key="telegram-type"></wicket:message></td>
+						<td colspan="3">
+							<div id="telegram-types">
+							  <input type="checkbox" wicket:id="readType" id="telegram-filter-type-read" checked="checked"/><label for="telegram-filter-type-read"><wicket:message key="telegram-type-read"></wicket:message></label>
+							  <input type="checkbox" wicket:id="writeType" id="telegram-filter-type-write" checked="checked"/><label for="telegram-filter-type-write"><wicket:message key="telegram-type-write"></wicket:message></label>
+							  <input type="checkbox" wicket:id="responseType" id="telegram-filter-type-response" checked="checked"/><label for="telegram-filter-type-response"><wicket:message key="telegram-type-response"></wicket:message></label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="telegrams-filters-label" colspan="3"><wicket:message key="telegram-number-on-page"></wicket:message></td>
+						<td colspan="1">
+							<input wicket:id="numOfTelegramsOnPage" id="telegrams-filters-on-page" type="text" readonly="readonly" value="5" />
+						</td>
+						<td colspan="4">
+							<span wicket:id="navigator" class="telegram-navigator"></span>
+							<input type="submit" wicket:id="telegrams-filters-submit-button" id="telegrams-filters-submit-button" style="display:none;"/>
+						</td>
+					</tr>
+					
+				</table>
+			</form>
+		
 			
-        </wicket:panel>
-    </body>
+		</div>
+		
+		
+		<table cellspacing="0" class="ui-widget ui-widget-content telegrams-table" wicket:id="telegrams-table">
+			<tr class="ui-widget-header telegrams-table-header">
+				<th><wicket:message key="telegram-time"></wicket:message></th>
+				<th><wicket:message key="telegram-source-address"></wicket:message></th>
+				<th><wicket:message key="telegram-destination-address"></wicket:message></th>
+				<th><wicket:message key="telegram-data"></wicket:message></th>
+				<th><wicket:message key="telegram-type"></wicket:message></th>
+				<th><wicket:message key="telegram-priority"></wicket:message></th>		
+			</tr>
+			
+			<tr wicket:id="telegram-row" class="telegrams-table-row" onmouseover="setFocused(this);" onmouseout="unsetFocused(this);">
+				<td><span wicket:id="telegram-time"></span></td>
+				<td><span wicket:id="telegram-source"></span></td>
+				<td><span wicket:id="telegram-destination"></span></td>
+				<td><span wicket:id="telegram-data"></span></td>
+				<td><span wicket:id="telegram-type"></span></td>
+				<td><span wicket:id="telegram-priority-text"></span><img wicket:id="telegram-priority-img"/></td>
+			</tr>
+		</table>
+		
+		<div wicket:id="telegram-details" class="telegram-details" wicket:message="title:telegram">
+			<table class="telegram-details-table">
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-id"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-id"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-time"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-time"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-priority"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-priority"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-source-address"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-source-address"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-destination-address"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-destination-address"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-hopcount"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-hopcount"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-type"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-type"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-msgcode"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-msgcode"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-rawdata"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-rawdata"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-data"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-data"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-rawframe"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-rawframe"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-framelength"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-framelength"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-dptid"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-dptid"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-ack"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-ack"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-confirmation"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-confirmation"></span></td>
+				</tr>
+				<tr>
+					<td class="telegram-value-label"><wicket:message key="telegram-repeated"></wicket:message></td>
+					<td class="telegram-value"><span wicket:id="telegram-repeated"></span></td>
+				</tr>
+			</table>
+			
+		</div>
+	</wicket:panel>
+</body>
 </html>

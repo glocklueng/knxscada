@@ -19,7 +19,7 @@ public class DefaultSlider extends Slider{
 	}
 	
 	private void loadComponents(){
-		valueView = new Label("controller-value", Model.of(""));
+		valueView = new Label("controller-value", new Model<String>("0 %"));
 		
 		add(valueView);
 	}

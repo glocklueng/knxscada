@@ -113,7 +113,10 @@ public class OnOffSwitch extends Controller implements OnChangeListener{
 	
 	public void readTelegram() {
 		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, null);
+			ElementGroupAddressType type = ElementGroupAddressType.valueOf(address.getType());
+			if(type.equals(ElementGroupAddressType.STATUS)){
+				transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, null);
+			}
 		}
 	}
 }

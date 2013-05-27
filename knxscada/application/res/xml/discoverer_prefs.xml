@@ -31,7 +31,7 @@
             android:summary="@string/remote_ip_summary"
             android:defaultValue="@string/remote_ip_default_value"
             android:dependency="@string/discover_while_connecting_key"
-            android:numeric="integer"
+            android:inputType="text"
         />
         
 </PreferenceScreen>

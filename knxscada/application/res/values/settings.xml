@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="settings">Ustawienia</string>
-    <string name="settings_swith_text_on">Wł</string>
-    <string name="settings_swith_text_off">Wył</string>
-    <string name="settings_swith_summary_on">Usługa uruchomiona</string>
-    <string name="settings_swith_summary_off">Usługa zatrzymana</string>
-    <string name="knx_connection_title">Ustawienia połączenia</string>
-    <string name="knx_connection_toggle_title">Połączenie KNX</string>
-    <string name="knx_connection_toggle_summary_on">Połączono</string>
-    <string name="knx_connection_toggle_summary_off">Brak połączenia</string>
-    <string name="knx_connection_toggle_summary_on_off">Rozłączanie...</string>
-    <string name="knx_connection_toggle_summary_off_on">Łączenie...</string>
-    <string name="webserver_title">Interfejs webowy</string>
-    <string name="webserver_toggle_title">Serwer WWW</string>
-    <string name="webserver_toggle_summary_on">Uruchomiony</string>
-    <string name="webserver_toggle_summary_off">Zatrzymany</string>
-    <string name="webserver_toggle_summary_on_off">Zatrzymywanie...</string>
-    <string name="webserver_toggle_summary_off_on">Uruchamianie...</string>
+	<string name="settings">Settings</string>
+    <string name="settings_swith_text_on">On</string>
+    <string name="settings_swith_text_off">Off</string>
+    <string name="settings_swith_summary_on">Service started</string>
+    <string name="settings_swith_summary_off">Service stopped</string>
+    <string name="knx_connection_title">Connection settings</string>
+    <string name="knx_connection_toggle_title">KNX Connection</string>
+    <string name="knx_connection_toggle_summary_on">Connected</string>
+    <string name="knx_connection_toggle_summary_off">Not connected</string>
+    <string name="knx_connection_toggle_summary_on_off">Disconnecting...</string>
+    <string name="knx_connection_toggle_summary_off_on">Connecting...</string>
+    <string name="webserver_title">Web application</string>
+    <string name="webserver_toggle_title">Web server</string>
+    <string name="webserver_toggle_summary_on">Started</string>
+    <string name="webserver_toggle_summary_off">Stopped</string>
+    <string name="webserver_toggle_summary_on_off">Stopping...</string>
+    <string name="webserver_toggle_summary_off_on">Starting...</string>
     
-    <string name="discoverer_item_title">Interfejsy KNX</string>
-    <string name="discoverer_item_summary">Wybierz interfejs KNX, z którym chcesz się połączyć.</string>
-    <string name="discoverer_dialog_title">Interfejsy KNX/IP</string>
-    <string name="discoverer_dialog_text_searching">Wyszukiwanie interfejsów</string>
-    <string name="discoverer_dialog_text_finished">Zakończono wyszukiwanie</string>
-    <string name="discoverer_dialog_text_not_found">Nie znaleziono żadnych interfejsów KNX/IP</string>
+    <string name="discoverer_item_title">KNX Interfaces</string>
+    <string name="discoverer_item_summary">Choose KNX connection interface</string>
+    <string name="discoverer_dialog_title">KNXnet/IP interfaces</string>
+    <string name="discoverer_dialog_text_searching">Interfaces search</string>
+    <string name="discoverer_dialog_text_finished">Serching is finished</string>
+    <string name="discoverer_dialog_text_not_found">Not found and KNXnet/IP interfaces</string>
     
-    <string name="webapp_settings_title">Hasło</string>
-    <string name="webapp_settings_summary">Ustaw hasło logowania</string>
-    <string name="webapp_password">Hasło</string>
-    <string name="webapp_password_summary">Hasło logowania do aplikacji</string>
+    <string name="webapp_settings_title">Password</string>
+    <string name="webapp_settings_summary">Set login password</string>
+    <string name="webapp_password">Password</string>
+    <string name="webapp_password_summary">Application password</string>
     
-    <string name="other_settings_title">Inne</string>
-    <string name="reset_title">Reset danych</string>
-    <string name="reset_summary">Reset danych aplikacji</string>
-    <string name="reset_settings_title">Reset ustawień</string>
-    <string name="reset_settings_summary">Przywraca domyślne ustawienia</string>
-    <string name="reset_settings_confirmation_title">Reset ustawień</string>
-    <string name="reset_settings_confirmation_msg">Czy napewno chcesz przywrócić ustawienia domyślne?</string>
+    <string name="other_settings_title">Other</string>
+    <string name="reset_title">Data reset</string>
+    <string name="reset_summary">Application data reset</string>
+    <string name="reset_settings_title">Settings reset</string>
+    <string name="reset_settings_summary">Restore default settings</string>
+    <string name="reset_settings_confirmation_title">Settings reset</string>
+    <string name="reset_settings_confirmation_msg">Do you really want to restore default settings?</string>
     
-    <string name="reset_application_title">Reset aplikacji</string>
-    <string name="reset_application_summary">Usuwa wszystkie dane aplikacji</string>
-    <string name="reset_application_confirmation_title">Reset aplikacji</string>
-    <string name="reset_application_confirmation_msg">Czy napewno chcesz usunąć wszystkie dane aplikacji?</string>
-    
+    <string name="reset_application_title">Application reset</string>
+    <string name="reset_application_summary">Remove all application data</string>
+    <string name="reset_application_confirmation_title">Application reset</string>
+    <string name="reset_application_confirmation_msg">Do you really want to remove all application data?</string>
+
+    <string name="reset_webapp_title">Web application reset</string>
+    <string name="reset_webapp_summary">Remove web application files</string>
+    <string name="reset_webapp_confirmation_title">Web application reset</string>
+    <string name="reset_webapp_confirmation_msg">Do you really want to remove web application files?</string>
     
     <!-- KNX Connection Settings -->
     
-    <string name="service_mode_title">Tryb połączenia</string>
-    <string name="service_mode_summary">Wybierz sposób połączenia z magistralą KNX</string>
+    <string name="service_mode_title">Connection mode</string>
+    <string name="service_mode_summary">Choose KNX bus connection type</string>
     
     <string-array name="service_modes">
         <item name="service_mode_tunneling">Tunelling</item>
@@ -59,41 +63,41 @@
         <item name="service_mode_routing">2</item>
     </string-array>
     
-    <string name="local_ip_title">Lokalny adres IP</string>
+    <string name="local_ip_title">Local IP address</string>
     <string name="local_ip_summary"></string>
-    <string name="local_port_title">Lokalny port</string>
+    <string name="local_port_title">Local port</string>
     <string name="local_port_summary"></string>
     
-    <string name="remote_ip_title">Adres IP</string>
-    <string name="remote_ip_summary">Kliknij, aby wybrać...</string>
+    <string name="remote_ip_title">IP address</string>
+    <string name="remote_ip_summary">Click to choose...</string>
     <string name="remote_port_title">Port</string>
     <string name="remote_port_summary"></string>
     
     <string name="use_nat_title">NAT</string>
-    <string name="use_nat_summary_on">Translacja adresów sieciowych</string>
-    <string name="use_nat_summary_off">Brak translacji adresów sieciowych</string>
-    <string name="individual_address_title">Indywidualny adres</string>
-    <string name="individual_address_summary">Adres magistrali KNX przypisany do aplikacji</string>
+    <string name="use_nat_summary_on">Network address translation</string>
+    <string name="use_nat_summary_off">No network address translation</string>
+    <string name="individual_address_title">Individual address</string>
+    <string name="individual_address_summary">Application KNX individual address</string>
     <string name="use_tp1_title">TP1</string>
-    <string name="use_tp1_summary_on">Magistrala w standardzie TP1</string>
-    <string name="use_tp1_summary_off">Magistrala w standardzie TP0</string>
-    <string name="timeout_title">Czas oczekiwania</string>
-    <string name="timeout_summary">Maksymalny czas oczekiwania na odpowiedź magistrali</string>
+    <string name="use_tp1_summary_on">TP1 bus standard</string>
+    <string name="use_tp1_summary_off">TP0 bus standard</string>
+    <string name="timeout_title">Timeout</string>
+    <string name="timeout_summary">Maximal waiting time for response from KNX bus</string>
     
     <!-- Discoverer Settings -->
-    <string name="discover_while_connecting_title">Wyszukiwanie automatyczne</string>
-    <string name="discover_while_connecting_summary">Wykrywa parametry interfejsu KNX podczas łączenia</string> 
-    <string name="discover_timeout_title">Czas wyszukiwania</string>
-    <string name="discover_timeout_summary">Określa czas wyszukiwania urządzeń KNX</string>
-    <string name="discover_item_title">Wyszukaj</string>
-    <string name="discover_item_summary">Wyszukaj podłączone do sieci interfejsy KNXnet/IP</string>
+    <string name="discover_while_connecting_title">Automatic search</string>
+    <string name="discover_while_connecting_summary">Discover connection settings before connecting</string> 
+    <string name="discover_timeout_title">Search time</string>
+    <string name="discover_timeout_summary">Describe KNX interfaces searching time</string>
+    <string name="discover_item_title">Search</string>
+    <string name="discover_item_summary">Search KNXnet/IP interfaces</string>
     
     <!-- WebServer Settings -->
     
     <string name="webserver_port_title">Port</string>
-    <string name="webserver_port_summary">Port połączenia z interfejsem webowym</string>
+    <string name="webserver_port_summary">Web application port</string>
     <string name="use_ssl_title">SSL</string>
-    <string name="use_ssl_summary">Umożliwia bezpieczne połączenie przez interfejs webowy</string>
-    <string name="webserver_ssl_port_title">Port SSL</string>
-    <string name="webserver_ssl_port_summary">Port służący do szyfrowanego połączenia przez interfejs webowy</string>
+    <string name="use_ssl_summary">Secure connection to web application</string>
+    <string name="webserver_ssl_port_title">SSL port</string>
+    <string name="webserver_ssl_port_summary">Secure connection port</string>
 </resources>

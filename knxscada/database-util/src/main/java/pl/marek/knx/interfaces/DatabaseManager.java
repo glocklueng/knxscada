@@ -1,5 +1,6 @@
 package pl.marek.knx.interfaces;
 
+import java.util.Date;
 import java.util.List;
 
 import pl.marek.knx.database.DPTEntity;
@@ -34,6 +35,7 @@ public interface DatabaseManager {
 	public List<Telegram> getTelegramBySourceAddr(String sourceAddr);
 	public List<Telegram> getTelegramByDestAddr(String destAddr);
 	public List<Telegram> getRecentTelegrams(int number);
+	public List<Telegram> getTelegrams(String source, String destination, String priority, String type, Date from, Date to, String limit);
 	
 	//Project Operations
 	public void addProject(Project project);

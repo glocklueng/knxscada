@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- BASIC STRINGS -->
+    <string name="application_name">KNX Scada</string>
+    <string name="default_preference_file">pl.marek.knx_preferences</string>
+    <string name="toast_icon_description">Ikona aplikacji</string>
+    <string name="connected">Połączono</string>	
+    <string name="menu_preferences">Ustawienia</string>
+    <string name="ab_telegram_item">Telegramy</string>
+    <string name="ab_new_project_item">Nowy projekt</string>
+    <string name="yes">Tak</string> 
+    <string name="no">Nie</string> 
+    <string name="group_address_separator">/</string>
+    <string name="group_address_level_label">Typ adresu</string>
+    <string name="group_address_level_2_label">2 poziomy</string>
+    <string name="group_address_level_3_label">3 poziomy</string>
+    <string name="cancel">Anuluj</string>
+    
+    <string name="project_list_empty">Brak projektów</string>
+    <string name="controllers_list_empty">Brak elementów sterujących</string>
+    
+    <!-- ICON PICKER DIALOG -->
+    <string name="icon_picker_title">Wybierz ikonę</string>
+    
+    <!-- NEW PROJECT DIALOG -->
+    <string name="dialog_new_project_title">Nowy projekt</string>
+    <string name="dialog_edit_project_title">Edycja projektu</string>
+    <string name="dialog_new_project_name">Nazwa projektu</string>
+    <string name="dialog_new_project_name_hint">Wpisz nazwę projektu</string>
+    <string name="dialog_new_project_description">Opis</string>
+    <string name="dialog_new_project_description_hint">Opisz nowy projekt</string>
+    <string name="dialog_new_project_image">Obraz</string>
+    <string name="dialog_new_project_image_hint">Wybierz obrazek projektu...</string>
+    <string name="dialog_project_add_button">Utwórz projekt</string>
+    <string name="dialog_project_edit_button">Zapisz zmiany</string>
+    <string name="dialog_project_cancel_button">Anuluj</string>
+    
+    
+    <!-- PROJECT ACTION BAR MENU -->
+    <string name="project_action_bar_menu_new_room">Nowe pomieszczenie</string>
+    <string name="project_action_bar_menu_new_element">Nowy element</string>
+    <string name="project_action_bar_menu_open_webapp">Aplikacja webowa</string>
+    
+    
+    <!-- PROJECT POPUP MENU -->
+    <string name="project_popup_menu_item_edit">Edytuj projekt</string>
+    <string name="project_popup_menu_item_delete">Usuń projekt</string>
+    
+    <!-- IMAGE POPUP MENU -->
+    <string name="image_popup_menu_title">Obraz</string>
+    <string name="select_image">Wybierz obraz...</string>
+    <string name="image_popup_menu_item_choose">Wybierz obraz</string>
+    <string name="image_popup_menu_item_remove">Usuń obraz</string>
+    
+    <!-- PROJECT DELETE CONFIRMATION -->
+    <string name="project_delete_confirmation_title">Potwierdzenie usunięcia</string>
+    <string name="project_delete_confirmation_text">Czy napewno chcesz usunąć projekt \"%s\"?</string>
+    
+    <!-- PROJECT INFORMATION DIALOG -->
+    <string name="project_name_empty_title">Brak nazwy</string>
+    <string name="project_name_empty_text">Podaj nazwę projektu!</string>
+    
+    <!-- PROJECT -->
+    <string name="project_add_layer_item">Dodaj piętro</string>
+    
+    <!-- PROJECT WEBAPP START DIALOG -->
+    <string name="webapp_server_not_started_title">Serwer aplikacji</string>
+    <string name="webapp_server_not_started_message">Serwer aplikacji webowej nie jest uruchomiony. Czy chcesz uruchomić go teraz?</string>
+    
+    <!-- PROJECT KNX CONNECTION START DIALOG -->
+    <string name="connection_not_started_title">Brak połączenia KNX</string>
+    <string name="connection_not_started_message">Nie nawiązano połączenia z magistralą KNX. Czy chcesz nawiązać je teraz?</string>
+    
+    
+    <!-- LAYER DIALOG -->
+    <string name="dialog_new_layer_title">Nowe piętro</string>
+    <string name="dialog_edit_layer_title">Edycja piętra</string>
+    <string name="dialog_new_layer_name">Nazwa piętra</string>
+    <string name="dialog_new_layer_name_hint">Wpisz nazwę piętra</string>
+    <string name="dialog_new_layer_description_hint">Opis</string>
+    <string name="dialog_new_layer_description">Opisz piętro</string>
+    <string name="dialog_layer_add_button">Utwórz piętro</string>
+    <string name="dialog_layer_edit_button">Zapisz zmiany</string>
+    <string name="dialog_layer_cancel_button">Anuluj</string>
+    
+    <string name="dialog_new_sublayer_title">Nowe pomieszczenie</string>
+    <string name="dialog_edit_sublayer_title">Edycja pomieszczenia</string>
+    <string name="dialog_new_sublayer_name">Nazwa pomieszczenia</string>
+    <string name="dialog_new_sublayer_name_hint">Wpisz nazwę pomieszczenia</string>
+    <string name="dialog_new_sublayer_description_hint">Opis</string>
+    <string name="dialog_new_sublayer_description">Opisz pomieszczenie</string>
+    <string name="dialog_sublayer_add_button">Utwórz pomieszczenie</string>
+    
+    <!-- LAYER INFORMATION DIALOG -->
+    <string name="layer_name_empty_title">Brak nazwy</string>
+    <string name="layer_name_empty_text">Podaj nazwę piętra!</string>
+    
+    <string name="sublayer_name_empty_title">Brak nazwy</string>
+    <string name="sublayer_name_empty_text">Podaj nazwę pomieszczenia!</string>
+        
+    <!-- LAYER POPUP MENU -->
+    <string name="layer_popup_menu_item_edit">Edytuj piętro</string>
+    <string name="layer_popup_menu_item_delete">Usuń piętro</string>
+
+    <string name="sublayer_popup_menu_item_edit">Edytuj pomieszczenie</string>
+    <string name="sublayer_popup_menu_item_delete">Usuń pomieszczenie</string>
+    
+    <!-- LAYER DELETE CONFIRMATION -->
+    <string name="layer_delete_confirmation_title">Potwierdzenie usunięcia</string>
+    <string name="layer_delete_confirmation_text">Czy napewno chcesz usunąć piętro \"%s\"?</string>
+    <string name="sublayer_delete_confirmation_text">Czy napewno chcesz usunąć pomieszczenie \"%s\"?</string>
+    
+    <!-- INFORMATIONS -->
+    <string name="choose_layer_msg_title">Brak piętra</string>
+    <string name="choose_layer_msg">Dodaj lub wybierz piętro zanim dodasz pomieszczenie!</string>
+    <string name="choose_sublayer_msg_title">Brak pomieszczenia</string>
+    <string name="choose_sublayer_msg">Dodaj lub wybierz pomieszczenie zanim dodasz element sterujący!</string>
+    
+    
+    
+    <!-- CONTROLLER DIALOG -->
+    <string name="dialog_controller_address_label">Adres</string>
+    <string name="dialog_controller_name_label">Nazwa</string>
+    <string name="dialog_controller_name_hint">Podaj nazwę</string>
+    <string name="dialog_controller_description_label">Opis</string>
+    <string name="dialog_controller_description_hint">Podaj opis</string>
+    <string name="dialog_controller_cancel_button">Anuluj</string>
+    <string name="dialog_controller_add_button">Dodaj</string>
+    <string name="dialog_controller_edit_button">Zapisz zmiany</string>
+    <string name="dialog_controller_add_address_button">Dodaj adres</string>
+    <string name="dialog_controller_remove_address_button">Usuń adres</string>
+    
+    <string name="dialog_controller_max_value_title">Wartość maksymalna</string>
+    <string name="dialog_controller_max_value">Podaj nazwę!</string>
+    <string name="dialog_controller_max_value_hint">0 - 255</string>
+    
+    <string name="dialog_controller_name_empty_title">Brak nazwy</string>
+    <string name="dialog_controller_name_empty">Podaj nazwę!</string>
+    <string name="dialog_controller_wrong_address_title">Błędny adres</string>
+    <string name="dialog_controller_wrong_address">Podany adres grupowy jest błędny!</string>
+    
+    <!-- GROUP ADDRESS LABELS -->
+    <string name="group_address_default_label">Adres grupowy</string>
+    <string name="group_address_status_label">Status</string>
+    <string name="group_address_other_label">Inny</string>
+    
+    
+    <!-- ELEMENT POPUP MENU -->
+    <string name="element_popup_menu_item_edit">Edytuj element</string>
+    <string name="element_popup_menu_item_delete">Usuń element</string>
+    
+    
+    <!-- TELEGRAM ACTIVITY/DIALOG -->
+    <string name="telegram_ab_read_write_item">Wyślij telegram</string>
+    <string name="telegram_ab_filter_item">Filtruj</string>
+    <string name="dialog_rw_telegram_title">Wyślij telegram</string>
+    <string name="dialog_rw_telegram_cancel_button">Anuluj</string>
+    <string name="dialog_rw_telegram_read_button">Czytaj</string>
+    <string name="dialog_rw_telegram_write_button">Zapisz</string>
+    <string name="dialog_rw_telegram_address">Adres</string>
+    <string name="dialog_rw_telegram_data_type">Typ danych</string>
+    <string name="dialog_rw_telegram_function">Funkcja</string>
+    <string name="dialog_rw_telegram_value">Wartość</string>
+    
+    <string-array name="dialog_rw_data_types">
+        <item name="data_type_binary">Binarne (1 bit)</item>
+        <item name="data_type_controlled">Kontrolne (3 bity)</item>
+        <item name="data_type_unsigned_1byte">Całkowite (1 bajt)</item>
+        <item name="data_type_unsigned_2bytes">Całkowite (2 bajty)</item>
+        <item name="data_type_unsigned_4bytes">Całkowite (4 bajty)</item>
+		<item name="data_type_float">Zmiennopozycyjne (2 bajty)</item>
+		<item name="data_type_date">Data</item>
+		<item name="data_type_time">Czas</item>
+		<item name="data_type_datetime">Data i czas</item>
+		<item name="data_type_string">Tekst</item>
+    </string-array>
+    <string name="dialog_rw_telegram_wrong_address_title">Ostrzeżenie</string>
+    <string name="dialog_rw_telegram_wrong_address_msg">Podano niepoprawny adres KNX!</string>
+    
+    <!-- TELEGRAM FILTERS -->
+    <string name="telegram_filter">Filtruj</string>
+    <string name="telegram_source_address">Adres źródłowy</string>
+    <string name="telegram_destination_address">Adres docelowy</string>
+    <string name="telegram_from_date">Od</string>
+    <string name="telegram_to_date">Do</string>
+    <string name="telegram_type">Typ</string>
+    <string name="telegram_type_read">Odczyt</string>
+    <string name="telegram_type_write">Zapis</string>
+    <string name="telegram_type_response">Odpowiedź</string>
+    <string name="telegram_priority">Priorytet</string>
+    <string name="telegram_priority_low">Niski</string>
+    <string name="telegram_priority_normal">Normalny</string>
+    <string name="telegram_priority_urgent">Ważny</string>
+    <string name="telegram_priority_system">Systemowy</string>
+    <string name="telegram_filter_apply_button">Wyświetl telegramy</string>
+    
+    
+    <!-- KNX CONNECTION STRINGS -->
+    <string name="connection_service_connecting">Nawiązywanie połączenia z magistralą KNX</string>
+    <string name="connection_service_connected">Połączenie nawiązane</string>
+    <string name="connection_service_disconnecting">Rozłączanie z magistralą KNX</string>
+    <string name="connection_service_disconnected">Rozłączono z magistralą KNX</string>
+    <string name="connection_service_failed">Nie udało się nawiązać połączenia z magistralą KNX</string>
+    <string name="connection_service_unknown">Nieznany status połaczenia</string>
+    <string name="connection_service_title">Połączenie z magistralą KNX</string>
+    <string name="connection_service_message">Połączono</string>
+    
+    <!-- WEBSERVER STRINGS -->
+    <string name="webserver_service_starting">Uruchamianie serwera WWW</string>
+    <string name="webserver_service_started">Serwer WWW uruchomiony</string>
+    <string name="webserver_service_stopping">Zatrzymywanie serwera WWW</string>
+    <string name="webserver_service_stopped">Serwer WWW został zatrzymany</string>
+    <string name="webserver_service_failed">Błąd serwera WWW</string>
+    <string name="webserver_service_unknown">Nieznany status serwera WWW</string>
+    <string name="webserver_service_deploy">Przygotowywanie aplikacji webowej</string>
+    <string name="webserver_service_title">Serwer WWW</string>
+    <string name="webserver_service_message">Uruchomiono</string>
+   
+	
+	<!-- TELEGRAM DETAILS -->
+	<string name="telegrams_activity_title">Telegramy</string>
+	<string name="telegrams_activity_details_title">Telegram - szczegóły</string>
+	<string name="telegrams_item_from_label">OD:</string>
+	<string name="telegrams_item_to_label">DO:</string>
+	<string name="telegrams_item_image_description">Ikona priorytetu</string>
+	<string name="telegram_detail_id_label">ID</string>
+	<string name="telegram_detail_time_label">Odebrany</string>
+	<string name="telegram_detail_priority_label">Priorytet</string>
+	<string name="telegram_detail_source_address_label">Źródło</string>
+	<string name="telegram_detail_destination_address_label">Cel</string>
+	<string name="telegram_detail_hopcount_label">Ilość przeskoków</string>
+	<string name="telegram_detail_type_label">Typ</string>
+	<string name="telegram_detail_msgCode_label">Kod</string>
+	<string name="telegram_detail_rawdata_label">Dane</string>
+	<string name="telegram_detail_data_label">Wartość</string>
+	<string name="telegram_detail_rawframe_label">Ramka</string>
+	<string name="telegram_detail_framelength_label">Długość ramki</string>
+	<string name="telegram_detail_dptid_label">Typ danych</string>
+	<string name="telegram_detail_ack_label">Zatwierdzony</string>
+	<string name="telegram_detail_confirmation_label">Potwierdzony</string>
+	<string name="telegram_detail_repeated_label">Powtórzony</string>
+	
+	
+	<!-- ELEMENTS -->
+	<string name="element_switch">Włącznik</string>
+	<string name="element_toggle">Włącznik 1</string>
+	<string name="element_light_switch">Włącznik światła</string>
+	<string name="element_slider">Regulator</string>
+	<string name="element_light_slider">Regulator światła</string>
+	<string name="element_digital_value">Wartość cyfrowa</string>
+	<string name="element_analog_value">Wartość analogowa</string>
+	
+	<string name="telegram_response_timeout">Czas oczekiwania na odpowiedź z adresu %s minął!</string>
+</resources>

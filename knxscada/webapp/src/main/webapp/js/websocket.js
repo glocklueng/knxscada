@@ -11,13 +11,14 @@ var WebSocketServer = {
 
 	_onopen : function() {
 		var msg = {
-				msg :'websockets are open for communications!'
+				msg :'Application started!'
 		};
 		WebSocketServer.sendJSON(msg);
 	},
 	
 	_onclose : function(event) {
 		this._ws = null;
+		showApplicationClosedMessage();
 	},
 	
 	_onmessage : function(event) {

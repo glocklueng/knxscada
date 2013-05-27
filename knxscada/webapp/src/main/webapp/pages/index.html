@@ -6,6 +6,7 @@
 		
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.datepicker-pl.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
 		<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
@@ -23,6 +24,7 @@
 		<link type="text/css" rel="stylesheet" href="css/style.css" />
 		<link type="text/css" rel="stylesheet" href="css/inputs.css" />
 		<link type="text/css" rel="stylesheet" href="css/projectchooser.css" />
+		<link type="text/css" rel="stylesheet" href="css/telegrams.css" />
 		
 	</wicket:head>
 	<body>
@@ -49,6 +51,10 @@
 		
 		<div id="loading"  onclick="hideLoadingPanel();">
             <img id="loading-img" src="images/loading.gif"/>
+        </div>
+        
+        <div id="application-closed" wicket:message="title:application-closed-title">
+        	<wicket:message key="application-closed-message"></wicket:message>
         </div>
 	</body>
 </html>

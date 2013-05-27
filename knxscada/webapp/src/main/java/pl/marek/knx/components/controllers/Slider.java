@@ -120,7 +120,10 @@ public class Slider extends Controller{
 	
 	public void readTelegram() {
 		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, null);
+			ElementGroupAddressType type = ElementGroupAddressType.valueOf(address.getType());
+			if(type.equals(ElementGroupAddressType.STATUS)){
+				transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, null);
+			}
 		}
 	}
 }

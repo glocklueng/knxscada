@@ -18,9 +18,19 @@ public enum ControllerType {
 		public ArrayList<ElementGroupAddressType> getAddressTypes() {
 			ArrayList<ElementGroupAddressType> types = new ArrayList<ElementGroupAddressType>();
 			types.add(ElementGroupAddressType.MAIN);
-			types.add(ElementGroupAddressType.OTHER);
+			types.add(ElementGroupAddressType.STATUS);
 			
 			return types;
+		}
+
+		@Override
+		public String getName() {
+			return "element-switch";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_switch.png";
 		}
 	},
 	ON_OFF_TOGGLE {
@@ -36,6 +46,16 @@ public enum ControllerType {
 			types.add(ElementGroupAddressType.MAIN);
 			types.add(ElementGroupAddressType.STATUS);
 			return types;
+		}
+
+		@Override
+		public String getName() {
+			return "element-toggle";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_toggle.png";
 		}
 
 	},
@@ -54,6 +74,16 @@ public enum ControllerType {
 			return types;
 		}
 
+		@Override
+		public String getName() {
+			return "element-light-switch";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_bulb_on_10.png";
+		}
+
 	},
 	SLIDER {
 		@Override
@@ -68,6 +98,16 @@ public enum ControllerType {
 			types.add(ElementGroupAddressType.MAIN);
 			types.add(ElementGroupAddressType.STATUS);
 			return types;
+		}
+
+		@Override
+		public String getName() {
+			return "element-slider";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_slider_cut.png";
 		}
 
 	},
@@ -86,6 +126,16 @@ public enum ControllerType {
 			return types;
 		}
 
+		@Override
+		public String getName() {
+			return "element-light-slider";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_light_slider.png";
+		}
+
 	},
 	
 	DIGITAL_VALUE{
@@ -101,6 +151,16 @@ public enum ControllerType {
 			ArrayList<ElementGroupAddressType> types = new ArrayList<ElementGroupAddressType>();
 			types.add(ElementGroupAddressType.MAIN);
 			return types;
+		}
+
+		@Override
+		public String getName() {
+			return "element-digital-value";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_digital_value.png";
 		}
 		
 	},
@@ -118,10 +178,22 @@ public enum ControllerType {
 			types.add(ElementGroupAddressType.MAIN);
 			return types;
 		}
+
+		@Override
+		public String getName() {
+			return "element-analog-value";
+		}
+
+		@Override
+		public String getIcon() {
+			return "images/elements/element_analog_value.png";
+		}
 		
 	};
 	
 	public abstract Controller getController(String id, Element element);
 	public abstract ArrayList<ElementGroupAddressType> getAddressTypes();
+	public abstract String getName();
+	public abstract String getIcon();
 
 }

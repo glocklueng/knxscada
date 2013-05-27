@@ -104,9 +104,13 @@ public class CreateEditElementFormPanel  extends BasePanel{
 		};
 		elementChooser = new RepeatingView("element-chooser-item");
 		for(ControllerType type: ControllerType.values()){
-			Controller controller = type.getController(elementChooser.newChildId(), null);
-			controller.add(new OnElementChooserItemClick(controller));
-			elementChooser.add(controller);
+			String id = elementChooser.newChildId();
+			
+			PopupMenuItem item = new PopupMenuItem(id, 
+												   new Model<String>(new ResourceModel(type.getName()).getObject()), 
+												   new Model<String>(type.getIcon()));
+			item.add(new OnElementChooserItemClick(type));
+			elementChooser.add(item);
 		}
 		elementChooserView.add(elementChooser);
 		add(elementChooserView);
@@ -124,22 +128,21 @@ public class CreateEditElementFormPanel  extends BasePanel{
 
 		private static final long serialVersionUID = 1L;
 		
-		private Controller controller;
+		private ControllerType type;
 		
-		public OnElementChooserItemClick(Controller controller) {
+		public OnElementChooserItemClick(ControllerType type) {
 			super("click");
-			this.controller = controller;
+			this.type = type;
 		}
 		
 		@Override
 		protected void onEvent(AjaxRequestTarget target) {
-			elementForm.setGroupAddressFieldsByControllerType(controller.getType());
-			setElementChooserPreview(controller.getType());
+			elementForm.setGroupAddressFieldsByControllerType(type);
+			setElementChooserPreview(type);
 			target.add(elementChooserPreview);
 			target.add(elementForm);
 			target.appendJavaScript("initElementChooserPreview(); hideElementChooser();");
 		}
-		
 	}
 	
 	private class ElementForm extends Form<Void>{

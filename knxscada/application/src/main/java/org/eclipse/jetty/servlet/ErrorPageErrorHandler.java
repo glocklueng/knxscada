@@ -241,7 +241,6 @@ public class ErrorPageErrorHandler extends ErrorHandler
     @Override
     protected void doStop() throws Exception
     {
-        // TODO Auto-generated method stub
         super.doStop();
     }
 

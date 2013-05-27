@@ -78,7 +78,7 @@ public class HeaderPanel extends BasePanel {
 			dialogs.setType(DialogType.TELEGRAMS);
 			dialogs.setDialogPanel(new TelegramsDialog("dialog", getDBManager()));
 			target.add(dialogs);
-			target.appendJavaScript("initTelegramsDialog('"+getString("close")+"'); showDialog();");
+			target.appendJavaScript("initTelegramsDialog('"+getString("close")+"'); initTelegramDetails(); showDialog();");
 		
 		}
 		

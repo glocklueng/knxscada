@@ -108,7 +108,39 @@
     
     <!-- TELEGRAMS -->
     <entry key="telegram">Telegram</entry>
+    <entry key="telegram-details">Telegram - szczegóły</entry>
     <entry key="telegrams">Telegramy</entry>
+    <entry key="telegram-id">ID</entry>
+    <entry key="telegram-time">Czas</entry>
+    <entry key="telegram-priority">Priorytet</entry>
+    <entry key="telegram-source-address">Adres źródłowy</entry>
+    <entry key="telegram-destination-address">Adres docelowy</entry>
+    <entry key="telegram-hopcount">Ilość przeskoków</entry>
+    <entry key="telegram-type">Typ</entry>
+	<entry key="telegram-msgcode">Kod</entry>
+    <entry key="telegram-rawdata">Dane</entry>
+    <entry key="telegram-data">Wartość</entry>
+    <entry key="telegram-rawframe">Ramka</entry>
+    <entry key="telegram-framelength">Długość ramki</entry>
+    <entry key="telegram-dptid">Typ danych</entry>
+    <entry key="telegram-ack">Zatwierdzony</entry>
+    <entry key="telegram-confirmation">Potwierdzony</entry>
+    <entry key="telegram-repeated">Powtórzony</entry>
+    
+    <!-- FILTERS -->
+    <entry key="telegram-filter">Filtruj</entry>
+    <entry key="telegram-from">Od</entry>
+    <entry key="telegram-to">Do</entry>
+	<entry key="telegram-type-read">Odczyt</entry>    
+	<entry key="telegram-type-write">Zapis</entry>    
+	<entry key="telegram-type-response">Odpowiedź</entry>    
+	<entry key="telegram-priority-low">Niski</entry>    
+	<entry key="telegram-priority-normal">Normalny</entry>    
+	<entry key="telegram-priority-urgent">Ważny</entry>    
+	<entry key="telegram-priority-system">System</entry>    
+	<entry key="telegram-apply-filter">Pokaż telegramy</entry>    
+	<entry key="telegram-number-on-page">Ilość telegramów na stronie</entry>    
+	    
     
     <!-- POPUP MENU STRINGS -->
     <entry key="project.edit.menuitem">Edytuj projekt</entry>
@@ -122,5 +154,18 @@
     <!-- OTHERS -->
     <entry key="read-message-failed">Problem z odczytem danych</entry>
     
+    <!-- ELEMENTS -->
+    <entry key="element-switch">Włącznik</entry>
+	<entry key="element-toggle">Włącznik 1</entry>
+	<entry key="element-light-switch">Włącznik światła</entry>
+	<entry key="element-slider">Regulator</entry>
+	<entry key="element-light-slider">Regulator światła</entry>
+	<entry key="element-digital-value">Wartość cyfrowa</entry>
+	<entry key="element-analog-value">Wartość analogowa</entry>
+	
+	
+	<!-- APPLICATION CLOSED -->
+    <entry key="application-closed-title">Aplikacja wyłączona</entry>
+    <entry key="application-closed-message">Serwer aplikacji został zatrzymany. Aby kontynuować pracę włącz ponownie serwer aplikacji webowej.</entry>
     
 </properties>

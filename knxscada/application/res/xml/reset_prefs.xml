@@ -7,8 +7,13 @@
         android:title="@string/reset_settings_title" />
 
     <Preference
+        android:key="@string/reset_webapp_key"
+        android:summary="@string/reset_webapp_summary"
+        android:title="@string/reset_webapp_title" />
+    
+    <Preference
         android:key="@string/reset_application_key"
         android:summary="@string/reset_application_summary"
-        android:title="@string/reset_application_summary" />
+        android:title="@string/reset_application_title" />
     
 </PreferenceScreen>

@@ -6,6 +6,8 @@ import pl.marek.knx.controls.Controller;
 import pl.marek.knx.controls.ControllerType;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.database.Element;
+import pl.marek.knx.database.Layer;
+import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 
 public class SubLayerFragment extends ListFragment{
 	
+	private Project project;
+	private Layer layer;
 	private SubLayer subLayer;
 	
 	private DatabaseManager dbManager;
@@ -30,15 +34,28 @@ public class SubLayerFragment extends ListFragment{
         View rootView = inflater.inflate(R.layout.sublayer, container, false);
         dbManager = new DatabaseManagerImpl(getActivity());
         
+        project = getArguments().getParcelable(Project.PROJECT);
+        layer = getArguments().getParcelable(Layer.LAYER);
         subLayer = getArguments().getParcelable(SubLayer.SUBLAYER);
         subLayer = dbManager.getSubLayerByIdWithDependencies(subLayer.getId());
         
         subLayerDescriptionTextView = (TextView) rootView.findViewById(R.id.sublayer_description_textview);
         String description = subLayer.getDescription();
-        subLayerDescriptionTextView.setText(description);
+        
+        if(subLayer.isMainSubLayer()){
+	        if(layer != null){
+	        	if(layer.isMainLayer()){
+	        		description = project.getDescription();
+	        	}else{
+	        		description = layer.getDescription();
+	        	}
+	        }
+        }
+        
         if(description.isEmpty()){
         	subLayerDescriptionTextView.setVisibility(View.GONE);
         }else{
+        	subLayerDescriptionTextView.setText(description);
         	subLayerDescriptionTextView.setVisibility(View.VISIBLE);
         }
         return rootView;

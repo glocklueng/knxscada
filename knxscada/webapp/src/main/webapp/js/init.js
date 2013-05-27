@@ -44,6 +44,7 @@ function loadLayer(){
 	initSubLayers(); 
 	loadElementsPanel(); 
 	loadSettingsPanel();
+	loadControllers();
 }
 
 function loadSubLayer(){
@@ -56,10 +57,11 @@ function loadSubLayer(){
 function loadElements(){
 	load();  
 	hideDialog();
-	loadElementsPanel();
-	loadSettingsPanel(); 
+	loadSettingsPanel();
+	initDraggableElements();
 	setElementPanelVisible(); 
 	showElementPanel();
+	loadControllers();
 }
 
 

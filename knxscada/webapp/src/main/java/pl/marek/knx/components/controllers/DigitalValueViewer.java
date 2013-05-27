@@ -14,20 +14,24 @@ public class DigitalValueViewer extends ValueViewer{
 
 	public DigitalValueViewer(String id, Element element, ControllerType type) {
 		super(id, element, type);
+		if(getElement() == null){
+			setValue("0");
+		}
 	}
 	
 	public void telegramReceived(Telegram telegram) {
-
-		for(ElementGroupAddress address: element.getGroupAddresses()){
-			if(address.getAddress().equals(telegram.getDestinationAddress())){
-				if(!telegram.getType().equals("Read")){
-					String value = telegram.getData();
-					String lastChar = value.substring(value.length()-1).trim();
-					
-					if(value.equals("on") || lastChar.equals("1")){
-						updateValue("1", "value-viewer");
-					}else if(value.equals("off") || lastChar.equals("0")){
-						updateValue("0", "value-viewer");
+		if(element != null){
+			for(ElementGroupAddress address: element.getGroupAddresses()){
+				if(address.getAddress().equals(telegram.getDestinationAddress())){
+					if(!telegram.getType().equals("Read")){
+						String value = telegram.getData();
+						String lastChar = value.substring(value.length()-1).trim();
+						
+						if(value.equals("on") || lastChar.equals("1")){
+							updateValue("1", "value-viewer");
+						}else if(value.equals("off") || lastChar.equals("0")){
+							updateValue("0", "value-viewer");
+						}
 					}
 				}
 			}
@@ -35,8 +39,10 @@ public class DigitalValueViewer extends ValueViewer{
 	}
 	
 	public void readTelegram() {
-		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, null);
+		if(element != null){
+			for(ElementGroupAddress address: element.getGroupAddresses()){
+				transferTelegram(KNXDataTransceiver.READ_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, null);
+			}
 		}
 	}
 }

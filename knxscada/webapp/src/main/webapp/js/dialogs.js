@@ -112,8 +112,8 @@ function initTelegramsDialog(cancelButtonLabel){
 	$("#dialog-window").dialog({
 		  autoOpen: false,
 	      resizable: true,
-	      width: 500,
-	      height: 350,
+	      width: 650,
+	      height: 470,
 	      draggable: true,
 	      show: {
 	        effect: "fade",
@@ -122,6 +122,12 @@ function initTelegramsDialog(cancelButtonLabel){
 	      hide: {
 	        effect: "fade",
 	        duration: 500
+	      },
+	      open: function(){
+	    	  initTelegramFilters();
+	      },
+	      close: function(){
+	    	  $("#telegram-filter-date-from, #telegram-filter-date-to").datepicker('destroy');
 	      },
 	      modal: false,
 	      buttons: dialog_buttons
@@ -165,8 +171,8 @@ function initRemoveDialog(yesButtonLabel, noButtonLabel){
 					}
 				} else{
 					if(select != 'undefined'){
-						$("#"+select).children().children().click();
-						$("#"+select).children().children().css("background", "#88c9e8");
+						$("#"+select).children().click();
+						$("#"+select).children().css("background", "#88c9e8");
 					}
 				}
 				
@@ -207,4 +213,33 @@ function showDialog(){
 
 function hideDialog(){
 	$("#dialog-window").dialog("close");
+}
+
+function showApplicationClosedMessage(){
+	$("#application-closed").dialog({
+		  autoOpen: true,
+	      resizable: false,
+	      draggable: false,
+	      modal: true,
+	      width: 400,
+	      height: 160,
+	      show: {
+	        effect: "fade",
+	        duration: 300
+	      },
+	      hide: {
+	        effect: "fade",
+	        duration: 300
+	      },
+	      modal: true,
+	      buttons: {
+	    	  "OK": function(){
+	    		  $(this).dialog('close');
+	    	  }
+	      },
+	      close: function(){
+	    	  var win = window.open("","_self");
+    		  win.close();
+	      }
+	});
 }

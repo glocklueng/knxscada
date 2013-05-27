@@ -157,6 +157,8 @@ public class ProjectActivity extends FragmentActivity implements SideBarListener
 		}
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(SubLayer.SUBLAYER, subLayer);
+		bundle.putParcelable(Project.PROJECT, project);
+		bundle.putParcelable(Layer.LAYER, currentLayer);
 		subLayerPagerAdapter.addPage(Fragment.instantiate(this, SubLayerFragment.class.getName(), bundle));
 		if(subLayerPagerAdapter.getCount() == 1){
 			currentSubLayer = subLayer;

@@ -10,6 +10,7 @@ public class SignOut extends WebPage{
 	private static final long serialVersionUID = 1L;
 
 	public SignOut(){
+		setVersioned(false);
 		getSession().invalidateNow();
 		redirectToInterceptPage(new SignIn());
 	}

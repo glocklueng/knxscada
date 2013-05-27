@@ -26,12 +26,12 @@ public class SignIn extends WebPage {
 	private FeedbackPanel feedback;
 	
 	public SignIn() {
+		super();
+		setVersioned(false);
 		feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		add(feedback);
 		add(new SignInForm("signInForm"));
-		
-
 	}
 	
 	@Override

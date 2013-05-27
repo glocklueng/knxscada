@@ -25,9 +25,9 @@ public final class SignInSession extends AuthenticatedWebSession {
 			if (pass.equals(storedPassword)) {
 				logged = true;
 			}
-		}
-		//TODO Remove!!!
-		logged = true;
+		}	
+		
+		//logged = true;
 		
 		return logged;
 	}
@@ -39,5 +39,4 @@ public final class SignInSession extends AuthenticatedWebSession {
 		}
 		return null;
 	}
-
 }

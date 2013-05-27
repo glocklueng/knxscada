@@ -5,6 +5,7 @@ import java.io.File;
 import pl.marek.knx.MainApplication;
 import pl.marek.knx.R;
 import pl.marek.knx.utils.FileUtils;
+import pl.marek.knx.web.WebServer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -17,6 +18,7 @@ public class ResetSettingsFragment extends SettingsFragment implements OnPrefere
 	
 	private Preference resetPreferences;
 	private Preference resetApplication;
+	private Preference resetWebapp;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,20 +37,38 @@ public class ResetSettingsFragment extends SettingsFragment implements OnPrefere
 	private void loadPreferencesObjects(){
 		resetPreferences = getPreferenceScreen().findPreference(getString(R.string.reset_settings_key));
 		resetApplication = getPreferenceScreen().findPreference(getString(R.string.reset_application_key));
+		resetWebapp = getPreferenceScreen().findPreference(getString(R.string.reset_webapp_key));
 	}
 	
 	private void addPreferencesListeners(){
 		resetPreferences.setOnPreferenceClickListener(this);
 		resetApplication.setOnPreferenceClickListener(this);
+		resetWebapp.setOnPreferenceClickListener(this);
 	}
 
 	public boolean onPreferenceClick(Preference preference) {
 		if(preference.equals(resetPreferences)){
-			showResetSettingsConfirmationDialog();
+			showResetConfirmationDialog(ResetMode.SETTINGS);
 		}else if(preference.equals(resetApplication)){
-			showResetApplicationConfirmationDialog();
+			showResetConfirmationDialog(ResetMode.APPLICATION);
+		}else if(preference.equals(resetWebapp)){
+			showResetConfirmationDialog(ResetMode.WEBAPP);
 		}
 		return false;
+	}
+	
+	private void reset(ResetMode mode){
+		switch(mode){
+		case SETTINGS:
+			resetSettings();
+			break;
+		case APPLICATION:
+			resetApplication();
+			break;
+		case WEBAPP:
+			resetWebapp();
+			break;
+		}
 	}
 	
 	private void resetSettings(){
@@ -73,36 +93,20 @@ public class ResetSettingsFragment extends SettingsFragment implements OnPrefere
         
 	}
 	
-	private void showResetSettingsConfirmationDialog(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.dialogConfirmTheme);
-		builder.setTitle(getString(R.string.reset_settings_confirmation_title));
-		builder.setIcon(android.R.drawable.ic_dialog_alert);
-		builder.setMessage(getString(R.string.reset_settings_confirmation_msg));
-		builder.setPositiveButton(getString(android.R.string.yes), new OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
-				resetSettings();
-			}
-		});
-		builder.setNegativeButton(getString(android.R.string.no), new OnClickListener(){
-
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-
-		builder.create().show();
+	private void resetWebapp(){
+		WebServer webServer = new WebServer(null, getActivity(), null);
+		webServer.undeployWebApp();
 	}
 	
-	private void showResetApplicationConfirmationDialog(){
+	private void showResetConfirmationDialog(final ResetMode mode){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.dialogConfirmTheme);
-		builder.setTitle(getString(R.string.reset_application_confirmation_title));
+		builder.setTitle(mode.getTitle());
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
-		builder.setMessage(getString(R.string.reset_application_confirmation_msg));
+		builder.setMessage(mode.getMessage());
 		builder.setPositiveButton(getString(android.R.string.yes), new OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
-				resetApplication();
+				reset(mode);
 			}
 		});
 		builder.setNegativeButton(getString(android.R.string.no), new OnClickListener(){
@@ -114,5 +118,43 @@ public class ResetSettingsFragment extends SettingsFragment implements OnPrefere
 
 		builder.create().show();
 	}
+		
+	private enum ResetMode{
+		SETTINGS {
+			@Override
+			public int getTitle() {
+				return R.string.reset_settings_confirmation_title;
+			}
 
+			@Override
+			public int getMessage() {
+				return R.string.reset_settings_confirmation_msg;
+			}
+		},
+		WEBAPP {
+			@Override
+			public int getTitle() {
+				return R.string.reset_webapp_confirmation_title;
+			}
+
+			@Override
+			public int getMessage() {
+				return R.string.reset_webapp_confirmation_msg;
+			}
+		},
+		APPLICATION {
+			@Override
+			public int getTitle() {
+				return R.string.reset_application_confirmation_title;
+			}
+
+			@Override
+			public int getMessage() {
+				return R.string.reset_application_confirmation_msg;
+			}
+		};
+		
+		public abstract int getTitle();
+		public abstract int getMessage();	
+	}
 }

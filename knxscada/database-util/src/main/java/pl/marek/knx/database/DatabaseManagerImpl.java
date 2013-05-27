@@ -1,5 +1,6 @@
 package pl.marek.knx.database;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -158,6 +159,11 @@ public class DatabaseManagerImpl implements DatabaseManager{
 	@Override
 	public List<Telegram> getRecentTelegrams(int limit) {
 		return telegramDao.getRecentTelegrams(limit);
+	}
+	@Override
+	public List<Telegram> getTelegrams(String source, String destination,
+			String priority, String type, Date from, Date to, String limit) {
+		return telegramDao.getTelegrams(source, destination, priority, type, from, to, limit);
 	}
 	
 	

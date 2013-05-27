@@ -366,7 +366,7 @@ body {
 }
 
 .focused{
-	background: rgba(245,187,61,1);
+	background-color: rgba(245,187,61,1);
 }
 
 #elements-area{
@@ -596,7 +596,53 @@ body {
 
 .element-chooser-preview-item{
 	display: inline-block;
-	
+}
+
+.element-chooser-preview-item .slider{
+	height: 70px;
+}
+
+.element-chooser-preview-item .light-slider{
+	height: 70px;
+}
+
+.element-chooser-preview-item .controller-slider-image{
+	display: none;
+}
+
+.element-chooser-preview-item .slider_50{
+	position: absolute;
+	display: inline-block;
+	left: 5px;
+	top: 40px;
+}
+
+.element-chooser-item{
+	position: relative;
+	display: inline-block;
+	margin: 5px;
+}
+
+.element-chooser-item .popup-menu-item-body{
+	width: 150px;
+	height: 50px;
+}
+
+.element-chooser-item .popup-menu-item-icon{
+	position: absolute;
+	left: 5px;
+	width: 50px;
+	height: 50px;
+}
+
+.element-chooser-item .popup-menu-item-name{
+	position: absolute;
+	padding: 5px;
+	left: 50px;
+	width: 100px;
+	height: 50px;
+	text-align: center;
+	font-size: medium;
 }
 
 #element-form-div{
@@ -669,4 +715,11 @@ body {
 
 .visualisation-element{
 	position: absolute;
+}
+
+#application-closed{
+	display: none;
+	font-size: small;
+	font-weight: bold;
+	text-align: center;
 }

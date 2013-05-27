@@ -1,0 +1,181 @@
+.telegrams-filters{
+	position: absolute;
+	width: 600px;
+	height: 100px;
+}
+
+.telegrams-filters-table{
+	
+	font-size: small;
+	text-align: right;	
+}
+
+.telegrams-filters-label{
+	font-style: italic;
+	font-weight: bold;
+	text-align: center;
+}
+
+.ui-buttonset {
+	padding: 0;
+	font-size: xx-small;
+}
+.ui-buttonset .ui-button {
+	padding: 0px;
+}
+
+#telegrams-filters-on-page{
+	width: 50px;
+}
+
+.telegram-navigator{
+/* 	position: absolute; */
+}
+
+.telegrams-table{
+	position: absolute;
+	top: 100px;
+	width: 600px;
+	
+}
+
+.telegrams-table-header{
+	font-size: small;
+	height: 30px;
+	
+}
+
+.telegrams-table-header td{
+	padding: 5px;
+}
+
+.telegrams-table-row{
+	height: 25px;
+	font-size: small;
+}
+
+.telegrams-table-row td{
+	text-align: center;
+}
+
+.telegrams-table-row img{
+	text-align: center;
+	width: 32px;
+	height: 32px;
+}
+
+.telegram-details{
+	position: absolute;
+	width: 600px;
+	height: 355px;
+	background: rgba(0, 0, 0, 0.8);
+	border: 1px solid silver;
+	display: none;
+}
+
+.telegram-details-table{
+	width: 550px;
+	height: 100%;
+	margin: auto;
+	color: white;
+	font-size: small;
+	border-collapse: collapse;
+	
+}
+.telegram-details-table tr{
+	border: 1px solid silver;
+}
+
+.telegram-value-label{
+	width: 40%;
+	font-style: italic;
+	font-weight: bold;
+}
+.telegram-value{
+	width: 60%;
+}
+
+/* TELEGRAMS NAVIGATION */
+.goto{
+/* 	display: none; */
+}
+
+.first{
+	height: 20px;
+	padding-top: 3px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-color: #79bbff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: inline-block;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+}
+
+.next{
+	height: 20px;
+	padding-top: 3px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-color: #79bbff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: inline-block;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+}
+
+.last{
+	height: 20px;
+	padding-top: 3px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-color: #79bbff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: inline-block;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+}
+
+.prev{
+	height: 20px;
+	padding-top: 3px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-color: #79bbff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: inline-block;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+}

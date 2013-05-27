@@ -24,6 +24,10 @@ function unsetFocused(elem){
 	$(elem).removeClass("focused");
 }
 
+function setBackgroundColor(element, color){
+	$(element).css("background-color", color);
+}
+
 function showLoadingPanel(){
 	$("#loading").show("fade", {}, 200);
 }
@@ -87,7 +91,7 @@ function loadSettingsPanel(){
 	      heightStyle: "content",
 	      collapsible: true
 		});
-	
+	$("#settings-area-trigger").off("click");
 	$("#settings-area-trigger").click(function(e){
 		$(".settings-panel").toggle();
 			var elementsDisplay = $(".settings-panel").css("display");
@@ -99,11 +103,13 @@ function loadSettingsPanel(){
 			}	
 	});
 	
+	$('#background-image-file').off("change");
 	$('#background-image-file').on("change", function(){
 		showLoadingPanel();
 		$("#background-image-submit-button").click();
 	});
 	
+	$("#background-image-choose-button").off("click");
 	$("#background-image-choose-button").click(function(e){
 		$("#background-image-file").click();
 	});
@@ -128,6 +134,7 @@ function loadElementsPanel(){
         }
 	});
 	
+	$("#elements-area-trigger").off("click");
 	$("#elements-area-trigger").click(function(e){
 			$(".elements-panel").toggle();
 			var elementsDisplay = $(".elements-panel").css("display");
@@ -152,24 +159,13 @@ function loadElementsPanel(){
 	setElementPanelHide();
 }
 
+
+
 function initDragAndDrop(){
 
-	$(".draggable-element").each(function(){
-			var element = $(this);
-			makeElementDraggable(element);
-			
-			var isDraggable = element.attr("draggable");
-			
-			if(isDraggable !== undefined && isDraggable=="false"){
-				disableElementDraggable(this);
-			}
-	});
-		
-	$(".visualisation-element").each(function(){
-		makeElementRemovable(this);
-		transformElement($(this).children().children());
-	});
-	
+	initDraggableElements();
+	initVisualisationElements();
+
 	$("#elements-container").droppable({
 		  accept: ".draggable-element, .visualisation-element",
 	      drop: function( event, ui ) {
@@ -183,7 +179,7 @@ function initDragAndDrop(){
 				if(isDraggableElement){
 					var element = elem.clone();
 					
-					transformElement($(element).children().children());
+					transformElement($(element).children());
 					
 					$(element).css("position", "absolute");
 					$(element).css("top", y);
@@ -212,6 +208,26 @@ function initDragAndDrop(){
 	});
 }
 
+function initDraggableElements(){
+	$(".draggable-element").each(function(){
+		var element = $(this);
+		makeElementDraggable(element);
+		
+		var isDraggable = element.attr("draggable");
+		
+		if(isDraggable !== undefined && isDraggable=="false"){
+			disableElementDraggable(this);
+		}
+	});
+}
+
+function initVisualisationElements(){
+	$(".visualisation-element").each(function(){
+		makeElementRemovable(this);
+		transformElement($(this).children());
+	});
+}
+
 function transformElement(element){
 	$(element).removeClass("focused");
 	
@@ -227,7 +243,7 @@ function makeElementDraggable(element){
 		helper: "clone",
 		start: function( event, ui ) {
 			
-			transformElement($(ui.helper).children().children());
+			transformElement($(ui.helper).children());
 			
 			$(".elements-panel").css("overflow","visible");
 			$(".elements").css("overflow","visible");
@@ -359,7 +375,7 @@ function initLayers(){
  	
  	var isSelected = false;
  	$(".layerItem").each(function(e){
- 		var layerid = $(this).parent().parent().attr("layerid");
+ 		var layerid = $(this).parent().attr("layerid");
  		if(layerid == selectedLayerId){
  			$(this).addClass("selected");
  			$(this).css("background","#88c9e8");
@@ -384,7 +400,7 @@ function initLayers(){
 		$(this).addClass("selected");
 		$(this).css("background", "rgba(245,187,61,1)");
 		
-		selectedLayerId = $(this).parent().parent().attr("layerid");
+		selectedLayerId = $(this).parent().attr("layerid");
 		selectedSubLayerId = 0;
 		
 	});
@@ -408,7 +424,6 @@ function initLayers(){
 
 var selectedSubLayerId = 0;
 function initSubLayers(){
-	
 	$(".sublayer").off("mouseover");
 	$(".sublayer").off("mouseout");
 	$(".subLayerItem").off("mouseover");
@@ -427,7 +442,7 @@ function initSubLayers(){
  	
  	var isSelected = false;
  	$(".subLayerItem").each(function(e){
- 		var sublayerid = $(this).parent().parent().attr("sublayerid");
+ 		var sublayerid = $(this).parent().attr("sublayerid");
  		if(sublayerid == selectedSubLayerId){
  			$(this).addClass("selected");
  			$(this).css("background","#88c9e8");
@@ -450,7 +465,7 @@ function initSubLayers(){
 		});
 		$(this).addClass("selected");
 		$(this).css("background", "rgba(245,187,61,1)");
-		selectedSubLayerId = $(this).parent().parent().attr("sublayerid");
+		selectedSubLayerId = $(this).parent().attr("sublayerid");
 		return true;
 	});
 	
@@ -537,3 +552,51 @@ function initPopupMenu(){
 //		 });
 }
 
+function initTelegramFilters(){
+	$("#telegram-priorities").buttonset();
+	$("#telegram-types").buttonset();
+	
+	$("#telegrams-filters-on-page").spinner({
+	      min: 5,
+	      max: 1000,
+	      step: 5,
+	      start: 5,
+	      numberFormat: "n",
+	      stop: function( event, ui ) {
+	    	  $("#telegrams-filters-submit-button").click();
+	      }
+	 });
+	
+	$("#telegram-filter-date-from, #telegram-filter-date-to").datepicker({
+        defaultDate: "+1w",
+        numberOfMonths: 1,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function( selectedDate ) {
+        	$("#telegrams-filters-submit-button").click();
+        },
+        onClose: function(){
+           
+        }
+    });
+		
+	$("#telegrams-filters-form :input").change(function(){
+		$("#telegrams-filters-submit-button").click();
+	});
+	
+}
+
+function initTelegramDetails(){
+	$(".telegram-details").off("click");
+	$(".telegram-details").click(function(e){
+		hideTelegramDetails();
+	});
+}
+
+function showTelegramDetails(){
+	initTelegramDetails();
+	$(".telegram-details").show();
+}
+
+function hideTelegramDetails(){
+	$(".telegram-details").hide();
+}

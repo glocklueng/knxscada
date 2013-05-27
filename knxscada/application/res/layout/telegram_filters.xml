@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <View
+        android:id="@android:id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#8000"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:fillViewport="true" >
+
+        <TableLayout
+            android:id="@android:id/content"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:background="#D000"
+            android:padding="5dip"
+            
+            android:visibility="gone" >
+			
+            <TableRow>
+                 <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="italic|bold"
+                    android:text="@string/telegram_filter" />
+            </TableRow>
+            
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_source_address" />
+
+                <pl.marek.knx.IndividualAddressView
+                    android:id="@+id/telegram_filter_source_address_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_destination_address" />
+
+                <pl.marek.knx.GroupAddressView
+                    android:id="@+id/telegram_filter_destination_address_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_from_date" />
+
+                <TextView
+                    android:id="@+id/telegram_filter_from_date_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/list_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_to_date" />
+
+                <TextView
+                    android:id="@+id/telegram_filter_to_date_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/list_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_priority" />
+
+                <LinearLayout 
+				    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/telegram_filter_priority_low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_priority_low"
+                        android:checked="true" />
+
+                    <CheckBox
+                        android:id="@+id/telegram_filter_priority_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_priority_normal"
+                        android:checked="true" />
+
+                    <CheckBox
+                        android:id="@+id/telegram_filter_priority_urgent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_priority_urgent"
+                        android:checked="true" />
+
+                    <CheckBox
+                        android:id="@+id/telegram_filter_priority_system"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_priority_system"
+                        android:checked="true" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/FilterLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/telegram_type" />
+
+				<LinearLayout 
+				    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/telegram_filter_type_read"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_type_read"
+                        android:checked="true" />
+                    <CheckBox
+                        android:id="@+id/telegram_filter_type_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_type_write"
+                        android:checked="true" />
+                    <CheckBox
+                        android:id="@+id/telegram_filter_type_response"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telegram_type_response"
+                        android:checked="true" />
+               	</LinearLayout>
+                
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:id="@+id/telegram_filter_apply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/telegram_filter_apply_button"
+                    />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="6dp"
+        android:layout_height="fill_parent"
+        android:background="@drawable/sidebar_shadow_left" />
+
+</RelativeLayout>

@@ -30,7 +30,6 @@ public class DigitalValue extends Controller implements OnClickListener{
 		initViews();
 		initValues();
 		
-		//TODO
 		readTelegram();
 	}
 	
