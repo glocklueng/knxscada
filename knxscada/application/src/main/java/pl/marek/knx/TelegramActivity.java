@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 import pl.marek.knx.ReadWriteDialog.ReadWriteListener;
 import pl.marek.knx.TelegramFilters.TelegramFiltersListener;
@@ -56,7 +57,10 @@ public class TelegramActivity extends ListActivity implements KNXTelegramListene
 	}
 	
 	private void setFiltersDates(){
-		Telegram telegram = telegrams.getLast();
+		Telegram telegram = null;
+		try{
+			telegram = telegrams.getLast();
+		}catch(NoSuchElementException ex){}
 		if(telegram != null){
 			filters.setFromDate(telegram.getTime());
 		}else{

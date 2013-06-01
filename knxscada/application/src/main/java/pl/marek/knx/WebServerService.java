@@ -201,7 +201,7 @@ public class WebServerService extends Service implements StateSender, WebServerC
 		public void run() {
 			try{
 				//TODO Remove
-				server.undeployWebApp();
+				//server.undeployWebApp();
 				
 				if(!server.isDeployed()){
 					sendStateMessage(WebServerState.DEPLOYING);

@@ -2,7 +2,6 @@ package pl.marek.knx.pages;
 
 import java.util.Set;
 import javax.servlet.ServletContext;
-
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;

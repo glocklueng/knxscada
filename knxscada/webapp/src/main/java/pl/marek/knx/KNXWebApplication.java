@@ -55,6 +55,7 @@ public class KNXWebApplication extends WebApplication{
 		} else{
 			dbManager = new DBManager();
 		}
+		
 	}
 	
 	@Override

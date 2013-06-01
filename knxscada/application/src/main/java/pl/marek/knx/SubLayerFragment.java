@@ -11,17 +11,21 @@ import pl.marek.knx.database.Project;
 import pl.marek.knx.database.SubLayer;
 import pl.marek.knx.interfaces.DatabaseManager;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class SubLayerFragment extends ListFragment{
+public class SubLayerFragment extends Fragment{
 	
 	private Project project;
 	private Layer layer;
 	private SubLayer subLayer;
+	
+	private AbsListView listView;
 	
 	private DatabaseManager dbManager;
 	
@@ -32,6 +36,8 @@ public class SubLayerFragment extends ListFragment{
     	super.onCreateView(inflater, container, savedInstanceState);
     	
         View rootView = inflater.inflate(R.layout.sublayer, container, false);
+        listView = (AbsListView)rootView.findViewById(android.R.id.list);
+        
         dbManager = new DatabaseManagerImpl(getActivity());
         
         project = getArguments().getParcelable(Project.PROJECT);
@@ -58,6 +64,7 @@ public class SubLayerFragment extends ListFragment{
         	subLayerDescriptionTextView.setText(description);
         	subLayerDescriptionTextView.setVisibility(View.VISIBLE);
         }
+
         return rootView;
     }
  
@@ -102,5 +109,17 @@ public class SubLayerFragment extends ListFragment{
 			Controller controller = (Controller)getListAdapter().getItem(i);
 			controller.onPause();
 		}
+	}
+	
+	public AbsListView getListView(){
+		return listView;
+	}
+	
+	public void setListAdapter(ListAdapter adapter){
+		listView.setAdapter(adapter);
+	}
+	
+	public ListAdapter getListAdapter(){
+		return listView.getAdapter();
 	}
 }

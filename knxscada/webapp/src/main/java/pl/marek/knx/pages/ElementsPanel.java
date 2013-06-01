@@ -32,6 +32,7 @@ public class ElementsPanel extends BasePanel{
 	
 	private void loadComponents(){
 		removeAll();
+		
 		elementsView = new RepeatingView("elements");
 		
 		PopupMenuItem newElementItem = new PopupMenuItem("new-element-item", 

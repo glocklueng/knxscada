@@ -18,6 +18,7 @@ public class CommunicationSocket implements OnTextMessage{
 	@Override
 	public void onOpen(Connection connection) {
 		this.connection = connection;
+		connection.setMaxIdleTime(3600000);
 		if(listener != null){
 			listener.onOpen(this);
 		}
