@@ -5,8 +5,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.json.simple.JSONObject;
 
-import android.util.Log;
-
 import pl.marek.knx.websocket.CommunicationSocket.CommunicationSocketListener;
 
 public class CommunicationSockets implements CommunicationSocketListener{
@@ -34,17 +32,18 @@ public class CommunicationSockets implements CommunicationSocketListener{
 		sendMessage(message);
 	}
 	
-	public void sendMessage(String message){
-		
-		for (CommunicationSocket socket : sockets) {
-			
-			try{
-				if(socket != null){	
-					socket.getConnection().sendMessage(message);
-				}
-			}catch(Exception ex){
-				Log.w("WebSocket", "Problem with send message via WebSocket!");
+	public CommunicationSocket getSocketByAddress(String ip){
+		for(CommunicationSocket s: sockets){			
+			if(s.getIp().equals(ip)){
+				return s;
 			}
+		}
+		return null;
+	}
+	
+	public void sendMessage(String message){
+		for (CommunicationSocket socket : sockets) {
+			socket.sendMessage(message);
 		}
 	}
 	

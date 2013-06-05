@@ -113,7 +113,6 @@ public class GroupAddressField extends FormComponentPanel<String>{
 	}
 
 	public ElementGroupAddress getAddress() {
-		System.out.println(level.name());
 		address.setAddress(getGroupAddress());
 		return address;
 	}

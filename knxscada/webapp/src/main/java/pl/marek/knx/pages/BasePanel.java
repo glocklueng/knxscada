@@ -2,9 +2,12 @@ package pl.marek.knx.pages;
 
 import java.util.Set;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 
 import android.content.Context;
 
@@ -59,6 +62,12 @@ public abstract class BasePanel extends Panel{
 	
 	protected KNXWebApplication getKNXWebApplication(){
 		return (KNXWebApplication)getApplication();
+	}
+	
+	protected String getClientIPAddress(){
+		 WebRequest req = (WebRequest) RequestCycle.get().getRequest();
+		 HttpServletRequest httpReq = (HttpServletRequest) req.getContainerRequest();
+		 return httpReq.getRemoteHost();
 	}
 	
 	protected Index getIndexPage(){

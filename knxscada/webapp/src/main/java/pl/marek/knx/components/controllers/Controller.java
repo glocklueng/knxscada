@@ -1,9 +1,12 @@
 package pl.marek.knx.components.controllers;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.json.simple.JSONObject;
 
 import android.content.Intent;
@@ -12,12 +15,13 @@ import pl.marek.knx.KNXWebApplication;
 import pl.marek.knx.components.PopupMenu;
 import pl.marek.knx.database.Element;
 import pl.marek.knx.interfaces.KNXDataTransceiver;
-import pl.marek.knx.interfaces.KNXTelegramListener;
+import pl.marek.knx.interfaces.KNXWebTelegramListener;
 import pl.marek.knx.pages.ElementAjaxOperations;
+import pl.marek.knx.websocket.CommunicationSocket;
 import pl.marek.knx.websocket.CommunicationSockets;
 import tuwien.auto.calimero.dptxlator.DPT;
 
-public abstract class Controller extends Panel implements KNXTelegramListener{
+public abstract class Controller extends Panel implements KNXWebTelegramListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,7 +33,9 @@ public abstract class Controller extends Panel implements KNXTelegramListener{
 	
 	protected Element element;
 	protected ControllerType type;
-
+	
+	private String clientIPAddress = "";
+	
 	public Controller(String id, Element element, ControllerType type) {
 		super(id);
 		knxWebApplication = (KNXWebApplication)getApplication();
@@ -44,6 +50,19 @@ public abstract class Controller extends Panel implements KNXTelegramListener{
 		setOutputMarkupId(true);
 		loadComponents();
 		registerTelegramListener();
+		
+		
+		clientIPAddress = getIpAddress();
+	}
+	
+	public String getClientIpAddress(){
+		return clientIPAddress;
+	}
+	
+	private String getIpAddress(){
+		 WebRequest req = (WebRequest) RequestCycle.get().getRequest();
+		 HttpServletRequest httpReq = (HttpServletRequest) req.getContainerRequest();
+		 return httpReq.getRemoteHost();
 	}
 	
 	@Override
@@ -135,6 +154,15 @@ public abstract class Controller extends Panel implements KNXTelegramListener{
 		return (CommunicationSockets)getServletContext().getAttribute(CommunicationSockets.COMMUNICATION_SOCKETS);
 	}
 	
+	protected synchronized CommunicationSocket getCommunicationSocket(){
+		CommunicationSocket socket = null;
+		CommunicationSockets sockets = getCommunicationSockets();
+		if(sockets != null){
+			socket = sockets.getSocketByAddress(clientIPAddress);
+		}
+		return socket;
+	}
+	
 	protected void registerTelegramListener(){
 		getKNXWebApplication().addTelegramListener(this);
 	}
@@ -154,6 +182,7 @@ public abstract class Controller extends Panel implements KNXTelegramListener{
 	}
 	
 	protected void updateValue(String value, String type){
+				
 		if(markupId != null){
 			new UpdateWebElementThread(markupId, value, type).start();
 		}
@@ -179,7 +208,10 @@ public abstract class Controller extends Panel implements KNXTelegramListener{
 			object.put("value", value);
 			object.put("type", type);
 			object.put("operation", "update");
-			getCommunicationSockets().sendJSONMessage(object);
+			CommunicationSocket socket = getCommunicationSocket();
+			if(socket != null){
+				socket.sendMessage(object.toJSONString());
+			}
 		}
 	}
 	

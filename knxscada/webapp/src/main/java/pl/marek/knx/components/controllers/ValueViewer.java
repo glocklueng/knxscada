@@ -39,6 +39,12 @@ public abstract class ValueViewer extends Controller{
 	}
 	
 	@Override
+	protected void onAfterRender() {
+		super.onAfterRender();
+		readTelegram();
+	}
+	
+	@Override
 	public void setName(String name) {
 		nameView.setDefaultModelObject(name);
 	}

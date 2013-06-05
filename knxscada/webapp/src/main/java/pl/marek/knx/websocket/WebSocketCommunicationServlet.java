@@ -26,8 +26,8 @@ public class WebSocketCommunicationServlet extends WebSocketServlet{
 	}
 
 	@Override
-	public WebSocket doWebSocketConnect(HttpServletRequest arg0, String arg1) {
-		return new CommunicationSocket(communicationSockets);
+	public WebSocket doWebSocketConnect(HttpServletRequest req, String arg1) {
+		return new CommunicationSocket(communicationSockets, req.getRemoteHost(), req.getRemotePort());
 	}
 	
 	@Override

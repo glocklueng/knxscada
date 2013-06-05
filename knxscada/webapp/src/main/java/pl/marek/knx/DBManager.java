@@ -1,3 +1,11 @@
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * ONLY FOR TESTING IN LOCAL ENVIRONMENT
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ */
+
+
+
 package pl.marek.knx;
 
 import java.util.ArrayList;

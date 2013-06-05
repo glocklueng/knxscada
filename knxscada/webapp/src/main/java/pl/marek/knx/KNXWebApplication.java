@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 import pl.marek.knx.database.DatabaseManagerImpl;
 import pl.marek.knx.interfaces.AuthenticatedWebPage;
 import pl.marek.knx.interfaces.DatabaseManager;
-import pl.marek.knx.interfaces.KNXTelegramListener;
+import pl.marek.knx.interfaces.KNXWebTelegramListener;
 import pl.marek.knx.pages.*;
 
 public class KNXWebApplication extends WebApplication{
@@ -118,28 +118,28 @@ public class KNXWebApplication extends WebApplication{
 	
 	private void registerTelegramReceiver(){
 		telegramReceiver = new TelegramBroadcastReceiver();
-		getAndroidContext().registerReceiver(telegramReceiver, new IntentFilter(KNXTelegramListener.TELEGRAM_RECEIVED));	
+		getAndroidContext().registerReceiver(telegramReceiver, new IntentFilter(KNXWebTelegramListener.TELEGRAM_RECEIVED));	
 	}
 	
 	private void unregisterTelegramReceiver(){
 		getAndroidContext().unregisterReceiver(telegramReceiver);	
 	}
 	
-	public void addTelegramListener(KNXTelegramListener listener){
+	public void addTelegramListener(KNXWebTelegramListener listener){
 		if(telegramReceiver != null){
 			telegramReceiver.addTelegramListener(listener);
 		}
 	}
 	
-	public void removeTelegramListener(KNXTelegramListener listener){
+	public void removeTelegramListener(KNXWebTelegramListener listener){
 		if(telegramReceiver != null){
 			telegramReceiver.removeTelegramListener(listener);
 		}
 	}
 	
-	public void removeAllTelegramListeners(){
+	public void removeTelegramListenersByIp(String ip){
 		if(telegramReceiver != null){
-			telegramReceiver.removeAllListeners();
+			telegramReceiver.removeListenersByIpAddress(ip);
 		}
 	}
 	

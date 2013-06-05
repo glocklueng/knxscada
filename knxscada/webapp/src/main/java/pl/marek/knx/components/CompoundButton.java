@@ -65,9 +65,7 @@ public abstract class CompoundButton extends Panel{
 		protected void respond(AjaxRequestTarget target) {
 			
 			String msg = getRequestMessage();
-	
 			JSONObject obj = JSONUtil.convertStringToObject(msg);
-			
 			String state = (String)obj.get("state");
 			if("on".equals(state)){
 				setChecked(true);

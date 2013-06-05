@@ -57,6 +57,12 @@ public class OnOffSwitch extends Controller implements OnChangeListener{
 		add(descriptionView);
 		add(buttonView);
 	}
+	
+	@Override
+	protected void onAfterRender() {
+		super.onAfterRender();
+		readTelegram();
+	}
 
 	@Override
 	public void setName(String name) {

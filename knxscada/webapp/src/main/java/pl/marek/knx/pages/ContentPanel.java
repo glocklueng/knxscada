@@ -83,7 +83,7 @@ public class ContentPanel extends BasePanel{
 	private void loadComponents(){
 		removeAll();
 		
-		getKNXWebApplication().removeAllTelegramListeners();
+		getKNXWebApplication().removeTelegramListenersByIp(getClientIPAddress());
 		
 		ExternalImageResource imageResource = new ExternalImageResource("");
 		if(subLayer != null){

@@ -63,6 +63,12 @@ public class Slider extends Controller{
 	}
 	
 	@Override
+	protected void onAfterRender() {
+		super.onAfterRender();
+		readTelegram();
+	}
+	
+	@Override
 	public void setName(String name) {
 		nameView.setDefaultModelObject(name);
 	}
