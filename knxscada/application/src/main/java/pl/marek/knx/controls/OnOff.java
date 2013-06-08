@@ -158,7 +158,10 @@ public class OnOff extends Controller implements OnCheckedChangeListener{
 	
 	private void writeTelegram(String value) {
 		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, value);
+			ElementGroupAddressType type = ElementGroupAddressType.valueOf(address.getType());
+			if(!type.equals(ElementGroupAddressType.STATUS)){
+				transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlatorBoolean.DPT_SWITCH, value);
+			}
 		}
 	}
 	

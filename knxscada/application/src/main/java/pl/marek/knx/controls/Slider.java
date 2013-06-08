@@ -174,7 +174,10 @@ public class Slider extends Controller implements OnSeekBarChangeListener{
 	
 	private void writeTelegram(String value) {
 		for(ElementGroupAddress address: element.getGroupAddresses()){
-			transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, value);
+			ElementGroupAddressType type = ElementGroupAddressType.valueOf(address.getType());
+			if(!type.equals(ElementGroupAddressType.STATUS)){
+				transferTelegram(KNXDataTransceiver.WRITE_DATA, address.getAddress(), DPTXlator8BitUnsigned.DPT_PERCENT_U8, value);
+			}
 		}
 	}
 	
