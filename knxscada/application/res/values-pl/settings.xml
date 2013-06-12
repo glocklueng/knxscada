@@ -55,7 +55,7 @@
     <string name="service_mode_summary">Wybierz sposób połączenia z magistralą KNX</string>
     
     <string-array name="service_modes">
-        <item name="service_mode_tunneling">Tunelling</item>
+        <item name="service_mode_tunneling">Tunneling</item>
         <item name="service_mode_routing">Routing</item>
     </string-array>
     
